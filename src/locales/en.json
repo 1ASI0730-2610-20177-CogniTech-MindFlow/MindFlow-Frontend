@@ -1,0 +1,20 @@
+{
+  "greeting": {
+    "hello": "Hello"
+  },
+  "profile": {
+    "user": "User"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "journal": "Journal",
+    "habits": "Habits",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "premium": {
+    "description": "Unlock PDF and CSV report export for your therapist.",
+    "viewPlans": "View Plans"
+  }
+}
+

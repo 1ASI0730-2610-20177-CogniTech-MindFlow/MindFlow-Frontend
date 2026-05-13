@@ -1,0 +1,20 @@
+{
+  "greeting": {
+    "hello": "Hola"
+  },
+  "profile": {
+    "user": "Usuario"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "journal": "Diario (Journal)",
+    "habits": "Hábitos",
+    "analytics": "Analíticas",
+    "settings": "Configuración"
+  },
+  "premium": {
+    "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
+    "viewPlans": "Ver Planes"
+  }
+}
+
