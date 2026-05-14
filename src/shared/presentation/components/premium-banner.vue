@@ -4,9 +4,19 @@
     <p class="premium-text">
       Desbloquea exportación de reportes PDF y CSV para tu terapeuta.
     </p>
-    <button class="premium-btn">Ver Planes</button>
+    <button class="premium-btn" @click="goToSubscription">Ver Planes</button>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goToSubscription = () => {
+  router.push('/subscription')
+}
+</script>
 
 <style scoped>
 .premium-card {
@@ -36,7 +46,7 @@
   width: 100%;
   padding: 8px;
   border-radius: 8px;
-  background: #7c3aed;
+  background: linear-gradient(90deg, #4f46e5 0%, #10b981 100%);
   color: #fff;
   border: none;
   cursor: pointer;

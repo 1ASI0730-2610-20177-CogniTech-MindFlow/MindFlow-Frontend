@@ -18,6 +18,11 @@ const routes = [
   },
   */
   {
+    path: '/subscription',
+    component: () => import('@/subscription/presentation/views/subscription.vue'),
+    meta: { title: 'Planes y Suscripción' }
+  },
+  {
     path: '/:pathMatch(.*)*',
     component: PageNotFound,
     meta: { title: '404 - No Encontrado' }
