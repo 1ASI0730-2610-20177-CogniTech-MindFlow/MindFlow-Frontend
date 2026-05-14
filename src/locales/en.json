@@ -15,6 +15,56 @@
   "premium": {
     "description": "Unlock PDF and CSV report export for your therapist.",
     "viewPlans": "View Plans"
+  },
+  "plansPage": {
+    "hero": {
+      "title": "Invest in your emotional well-being",
+      "subtitle": "Choose the plan that best fits your pace. Democratic and smart, MindFlow accompanies you every step towards mental calm."
+    },
+    "badges": {
+      "current": "YOUR CURRENT PLAN",
+      "recommended": "RECOMMENDED"
+    },
+    "pricing": {
+      "perMonth": " / month"
+    },
+    "buttons": {
+      "activePlan": "Active Plan",
+      "downgrade": "Downgrade Plan",
+      "upgrade": "Upgrade to Premium"
+    },
+    "freemium": {
+      "title": "Freemium",
+      "desc": "Everything you need to start building self-awareness.",
+      "features": {
+        "f1Bold": "AI Mood Journal:",
+        "f1Text": " Interactive diary with NLP",
+        "f2Bold": "Dynamic Habit Tracker:",
+        "f2Text": " Stress-based adjustment",
+        "f3Bold": "Smart Interventions:",
+        "f3Text": " Breathing guides",
+        "f4Bold": "Basic Analytics:",
+        "f4Text": " Calendar and Word Cloud",
+        "f5": "PDF Report Export",
+        "f6": "CSV Data Export"
+      }
+    },
+    "premium": {
+      "title": "MindFlow Premium",
+      "desc": "For those seeking deep analysis and professional support.",
+      "features": {
+        "f1": "Everything included in Freemium",
+        "f2Bold": "PDF Export:",
+        "f2Text": " Download clinical records.",
+        "f3Bold": "CSV Export:",
+        "f3Text": " Access your raw data.",
+        "f4Bold": "Advanced Analytics:",
+        "f4Text": " Detailed charts.",
+        "f5Bold": "Priority Support:",
+        "f5Text": " Technical issue resolution."
+      }
+    },
+    "footer": "🔒 Payments encrypted and processed securely via Stripe.",
+    "loading": "Loading plan information..."
   }
 }
-

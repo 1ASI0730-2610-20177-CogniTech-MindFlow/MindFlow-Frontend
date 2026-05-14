@@ -2,72 +2,71 @@
   <Layout>
     <main class="container" v-if="!store.isLoading && store.subscriptionData">
       <header class="hero">
-        <h1>Invierte en tu bienestar emocional</h1>
+        <h1>{{ $t('plansPage.hero.title') }}</h1>
         <p>
-          Elige el plan que mejor se adapte a tu ritmo. Demócrata e inteligente,
-          MindFlow te acompaña en cada paso hacia tu calma mental.
+          {{ $t('plansPage.hero.subtitle') }}
         </p>
       </header>
 
       <section class="plans">
         <article class="plan" :class="{ 'plan-featured': !store.isPremium }">
-          <div class="badge" v-if="!store.isPremium">TU PLAN ACTUAL</div>
+          <div class="badge" v-if="!store.isPremium">{{ $t('plansPage.badges.current') }}</div>
 
-          <h2 class="plan-title" :class="{ 'accent': !store.isPremium }">Freemium</h2>
+          <h2 class="plan-title" :class="{ 'accent': !store.isPremium }">{{ $t('plansPage.freemium.title') }}</h2>
           <div class="price">
             <span class="amount">$0</span>
-            <span class="period"> / mes</span>
+            <span class="period">{{ $t('plansPage.pricing.perMonth') }}</span>
           </div>
           <p class="plan-desc">
-            Todo lo necesario para empezar a construir autoconocimiento.
+            {{ $t('plansPage.freemium.desc') }}
           </p>
 
           <ul class="features">
-            <li class="ok"><span class="icon">✓</span><span><b>AI Mood Journal:</b> Diario interactivo con NLP</span></li>
-            <li class="ok"><span class="icon">✓</span><span><b>Dynamic Habit Tracker:</b> Ajuste basado en estrés</span></li>
-            <li class="ok"><span class="icon">✓</span><span><b>Smart Interventions:</b> Guías de respiración</span></li>
-            <li class="ok"><span class="icon">✓</span><span><b>Analíticas Básicas:</b> Calendario y Word Cloud</span></li>
-            <li class="ko"><span class="icon">✗</span><span>Exportación de Reportes PDF</span></li>
-            <li class="ko"><span class="icon">✗</span><span>Exportación de Datos CSV</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f1Bold') }}</b>{{ $t('plansPage.freemium.features.f1Text') }}</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f2Bold') }}</b>{{ $t('plansPage.freemium.features.f2Text') }}</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f3Bold') }}</b>{{ $t('plansPage.freemium.features.f3Text') }}</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f4Bold') }}</b>{{ $t('plansPage.freemium.features.f4Text') }}</span></li>
+            <li class="ko"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f5') }}</span></li>
+            <li class="ko"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f6') }}</span></li>
           </ul>
 
-          <button class="btn btn-outline" disabled v-if="!store.isPremium">Plan Activo</button>
-          <button class="btn btn-outline" v-else>Bajar de Plan</button>
+          <button class="btn btn-outline" disabled v-if="!store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
+          <button class="btn btn-outline" v-else>{{ $t('plansPage.buttons.downgrade') }}</button>
         </article>
 
         <article class="plan" :class="{ 'plan-featured': store.isPremium }">
-          <div class="badge" v-if="store.isPremium">TU PLAN ACTUAL</div>
-          <div class="badge" v-else>RECOMENDADO</div>
+          <div class="badge" v-if="store.isPremium">{{ $t('plansPage.badges.current') }}</div>
+          <div class="badge" v-else>{{ $t('plansPage.badges.recommended') }}</div>
 
-          <h2 class="plan-title" :class="{ 'accent': store.isPremium }">MindFlow Premium</h2>
+          <h2 class="plan-title" :class="{ 'accent': store.isPremium }">{{ $t('plansPage.premium.title') }}</h2>
           <div class="price">
             <span class="amount">$4.99</span>
-            <span class="period"> / mes</span>
+            <span class="period">{{ $t('plansPage.pricing.perMonth') }}</span>
           </div>
           <p class="plan-desc">
-            Para quienes buscan un análisis profundo y acompañamiento profesional.
+            {{ $t('plansPage.premium.desc') }}
           </p>
 
           <ul class="features">
-            <li class="ok"><span class="icon">✓</span><span>Todo lo incluido en Freemium</span></li>
-            <li class="ok"><span class="icon">✓</span><span><b>Exportación PDF:</b> Descarga historiales clínicos.</span></li>
-            <li class="ok"><span class="icon">✓</span><span><b>Exportación CSV:</b> Accede a tus datos en bruto.</span></li>
-            <li class="ok"><span class="icon">✓</span><span><b>Analíticas Avanzadas:</b> Gráficos detallados.</span></li>
-            <li class="ok"><span class="icon">✓</span><span><b>Soporte Prioritario:</b> Resolución de dudas técnicas.</span></li>
+            <li class="ok"><span class="icon">✓</span><span>{{ $t('plansPage.premium.features.f1') }}</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f2Bold') }}</b>{{ $t('plansPage.premium.features.f2Text') }}</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f3Bold') }}</b>{{ $t('plansPage.premium.features.f3Text') }}</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f4Bold') }}</b>{{ $t('plansPage.premium.features.f4Text') }}</span></li>
+            <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f5Bold') }}</b>{{ $t('plansPage.premium.features.f5Text') }}</span></li>
           </ul>
 
-          <button class="btn btn-gradient" disabled v-if="store.isPremium">Plan Activo</button>
-          <button class="btn btn-gradient" v-else>Actualizar a Premium</button>
+          <button class="btn btn-gradient" disabled v-if="store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
+          <button class="btn btn-gradient" v-else>{{ $t('plansPage.buttons.upgrade') }}</button>
         </article>
       </section>
 
       <footer class="footer">
-        🔒 Pagos encriptados y procesados de forma segura a través de Stripe (US34).
+        {{ $t('plansPage.footer') }}
       </footer>
     </main>
 
     <div v-else class="loading-state">
-      <p>Cargando información de planes...</p>
+      <p>{{ $t('plansPage.loading') }}</p>
     </div>
   </Layout>
 </template>
