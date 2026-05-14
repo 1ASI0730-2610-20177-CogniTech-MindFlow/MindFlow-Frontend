@@ -21,6 +21,11 @@ const routes = [
     path: '/:pathMatch(.*)*',
     component: PageNotFound,
     meta: { title: '404 - No Encontrado' }
+  },
+  {
+    path: '/settings',
+    component: () => import('@/settings/presentation/views/settings.vue'),
+    meta: { title: 'Configuración' }
   }
 ]
 
