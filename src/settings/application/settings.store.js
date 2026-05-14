@@ -10,7 +10,12 @@ export const useSettingsStore = defineStore('settings', {
         isLoading: false
     }),
     actions: {
-        async fetchProfile(userId = 'u2') {
+        async fetchProfile(userId) {
+            if (!userId) {
+                console.error('Error Crítico: Se intentó cargar el perfil sin proporcionar un userId.');
+                return;
+            }
+
             this.isLoading = true
             try {
                 const data = await api.getById(userId)
