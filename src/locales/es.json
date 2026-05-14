@@ -15,6 +15,46 @@
   "premium": {
     "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
     "viewPlans": "Ver Planes"
+  },
+  "settings": {
+    "profile": {
+      "changeAvatar": "Cambiar Avatar",
+      "fullName": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "occupation": "Ocupación",
+      "timezone": "Zona Horaria",
+      "saveChanges": "Guardar Cambios"
+    },
+    "privacy": {
+      "title": "Privacidad y Experiencia",
+      "pinLock": "Bloqueo por PIN (AES-256)",
+      "pinLockDesc": "Solicitar código de 4 dígitos al abrir la app.",
+      "darkMode": "Modo Oscuro",
+      "darkModeDesc": "Ideal para registrar emociones en la noche.",
+      "habitReminders": "Recordatorios de Hábitos",
+      "habitRemindersDesc": "Notificaciones push para hidratación y pausas."
+    },
+    "subscription": {
+      "title": "Suscripción",
+      "currentPlan": "Plan Actual",
+      "features": {
+        "journal": "IA Mood Journal",
+        "habits": "Gestor de Hábitos",
+        "pdf": "Exportación a PDF",
+        "clinical": "Reportes Clínicos"
+      },
+      "upgrade": "Mejorar a Premium"
+    },
+    "support": {
+      "title": "Soporte Técnico",
+      "ticket": "Generar Ticket de Ayuda",
+      "faq": "Centro de Preguntas (FAQ)"
+    },
+    "dangerZone": {
+      "title": "Zona de Peligro",
+      "warning": "Eliminar tu cuenta purgará permanentemente todos tus registros encriptados.",
+      "deleteAccount": "Eliminar mi cuenta"
+    },
+    "loading": "Cargando configuración..."
   }
 }
-

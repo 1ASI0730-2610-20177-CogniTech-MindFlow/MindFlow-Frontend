@@ -8,41 +8,41 @@
               <div class="avatar">{{ store.profile.initial }}</div>
               <div>
                 <p class="username">{{ store.profile.name }}</p>
-                <button class="btn btn-outline btn-sm">Cambiar Avatar</button>
+                <button class="btn btn-outline btn-sm">{{ $t('settings.profile.changeAvatar') }}</button>
               </div>
             </div>
 
             <div class="form-grid">
               <div class="field">
-                <label>Nombre Completo</label>
+                <label>{{ $t('settings.profile.fullName') }}</label>
                 <input type="text" v-model="store.profile.name" />
               </div>
               <div class="field">
-                <label>Correo Electrónico</label>
+                <label>{{ $t('settings.profile.email') }}</label>
                 <input type="email" v-model="store.profile.email" />
               </div>
               <div class="field">
-                <label>Ocupación</label>
+                <label>{{ $t('settings.profile.occupation') }}</label>
                 <input type="text" v-model="store.profile.occupation" />
               </div>
               <div class="field">
-                <label>Zona Horaria</label>
+                <label>{{ $t('settings.profile.timezone') }}</label>
                 <input type="text" value="GMT-5 (Lima, Perú)" disabled />
               </div>
             </div>
 
             <button class="btn btn-primary save-btn" @click="store.updateProfile()">
-              Guardar Cambios
+              {{ $t('settings.profile.saveChanges') }}
             </button>
           </section>
 
           <section class="card">
-            <h3 class="card-title">Privacidad y Experiencia</h3>
+            <h3 class="card-title">{{ $t('settings.privacy.title') }}</h3>
             <div class="toggle-list">
               <div class="toggle-row">
                 <div>
-                  <p class="toggle-label">Bloqueo por PIN (AES-256)</p>
-                  <p class="toggle-desc">Solicitar código de 4 dígitos al abrir la app.</p>
+                  <p class="toggle-label">{{ $t('settings.privacy.pinLock') }}</p>
+                  <p class="toggle-desc">{{ $t('settings.privacy.pinLockDesc') }}</p>
                 </div>
                 <label class="switch">
                   <input type="checkbox" checked />
@@ -51,8 +51,8 @@
               </div>
               <div class="toggle-row">
                 <div>
-                  <p class="toggle-label">Modo Oscuro</p>
-                  <p class="toggle-desc">Ideal para registrar emociones en la noche.</p>
+                  <p class="toggle-label">{{ $t('settings.privacy.darkMode') }}</p>
+                  <p class="toggle-desc">{{ $t('settings.privacy.darkModeDesc') }}</p>
                 </div>
                 <label class="switch">
                   <input type="checkbox" />
@@ -61,8 +61,8 @@
               </div>
               <div class="toggle-row">
                 <div>
-                  <p class="toggle-label">Recordatorios de Hábitos</p>
-                  <p class="toggle-desc">Notificaciones push para hidratación y pausas.</p>
+                  <p class="toggle-label">{{ $t('settings.privacy.habitReminders') }}</p>
+                  <p class="toggle-desc">{{ $t('settings.privacy.habitRemindersDesc') }}</p>
                 </div>
                 <label class="switch">
                   <input type="checkbox" checked />
@@ -75,44 +75,44 @@
 
         <div class="col">
           <section class="card card-dark">
-            <h3 class="card-title accent">Suscripción</h3>
-            <p class="plan-text">Plan Actual: <span>{{ store.profile.planName }}</span></p>
+            <h3 class="card-title accent">{{ $t('settings.subscription.title') }}</h3>
+            <p class="plan-text">{{ $t('settings.subscription.currentPlan') }}: <span>{{ store.profile.planName }}</span></p>
             <ul class="plan-features">
-              <li class="ok">✓ IA Mood Journal</li>
-              <li class="ok">✓ Gestor de Hábitos</li>
+              <li class="ok">✓ {{ $t('settings.subscription.features.journal') }}</li>
+              <li class="ok">✓ {{ $t('settings.subscription.features.habits') }}</li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'">
-                {{ store.profile.isPremium ? '✓' : '✗' }} Exportación a PDF
+                {{ store.profile.isPremium ? '✓' : '✗' }} {{ $t('settings.subscription.features.pdf') }}
               </li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'">
-                {{ store.profile.isPremium ? '✓' : '✗' }} Reportes Clínicos
+                {{ store.profile.isPremium ? '✓' : '✗' }} {{ $t('settings.subscription.features.clinical') }}
               </li>
             </ul>
             <button class="btn btn-primary full" v-if="!store.profile.isPremium">
-              Mejorar a Premium
+              {{ $t('settings.subscription.upgrade') }}
             </button>
           </section>
 
           <section class="card">
-            <h3 class="card-title">Soporte Técnico</h3>
+            <h3 class="card-title">{{ $t('settings.support.title') }}</h3>
             <div class="stack">
-              <button class="btn btn-outline full">Generar Ticket de Ayuda</button>
-              <button class="btn btn-outline full">Centro de Preguntas (FAQ)</button>
+              <button class="btn btn-outline full">{{ $t('settings.support.ticket') }}</button>
+              <button class="btn btn-outline full">{{ $t('settings.support.faq') }}</button>
             </div>
           </section>
 
           <section class="card danger">
-            <h3 class="card-title danger-title">Zona de Peligro</h3>
+            <h3 class="card-title danger-title">{{ $t('settings.dangerZone.title') }}</h3>
             <p class="danger-desc">
-              Eliminar tu cuenta purgará permanentemente todos tus registros encriptados.
+              {{ $t('settings.dangerZone.warning') }}
             </p>
-            <button class="btn btn-danger full">Eliminar mi cuenta</button>
+            <button class="btn btn-danger full">{{ $t('settings.dangerZone.deleteAccount') }}</button>
           </section>
         </div>
       </div>
     </main>
 
     <div v-else class="loading-state">
-      <p>Cargando configuración...</p>
+      <p>{{ $t('settings.loading') }}</p>
     </div>
   </Layout>
 </template>
