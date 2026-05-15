@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint'
+import apiClient from '@/shared/infrastructure/base-api'
 
 export class SubscriptionApiService extends BaseEndpoint {
     constructor() {
@@ -7,7 +7,16 @@ export class SubscriptionApiService extends BaseEndpoint {
     }
 
     async getByUserId(userId) {
-        const response = await axios.get(`http://localhost:3000/subscriptions?user_id=${userId}`)
-        return response.data
+        try {
+            const response = await apiClient.get(`/${this.resource}`)
+            const allSubscriptions = response.data
+
+            const userSubscription = allSubscriptions.filter(sub => sub.user_id === userId)
+            
+            return userSubscription
+        } catch (error) {
+             console.error(`Error fetching subscriptions for user ${userId}:`, error)
+             throw error
+        }
     }
 }
