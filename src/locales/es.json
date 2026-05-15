@@ -107,5 +107,115 @@
       "deleteAccount": "Eliminar mi cuenta"
     },
     "loading": "Cargando configuración..."
+  },
+  "journal": {
+    "title": "Tu Historial Emocional",
+    "filters": {
+      "searchPlaceholder": "Buscar en tus pensamientos...",
+      "tabs": {
+        "all": "Todos",
+        "work": "Trabajo",
+        "studies": "Estudios",
+        "family": "Familia"
+      },
+      "states": {
+        "all": "Todos",
+        "positive": "Positivo",
+        "neutral": "Neutral",
+        "negative": "Negativo"
+      }
+    },
+    "calendar": {
+      "previousMonth": "Ver Mes Anterior",
+      "weekdays": ["L", "M", "X", "J", "V", "S", "D"],
+      "months": [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ],
+      "legend": {
+        "positive": "Positivo",
+        "neutral": "Neutral",
+        "negative": "Negativo"
+      }
+    }
+  },
+  "habits": {
+    "title": "Hábitos",
+    "placeholder": {
+      "title": "Sugerencias de IA",
+      "desc": "Próximamente: hábitos recomendados según tu estado emocional y rutinas actuales."
+    },
+    "tabs": {
+      "routines": "Mis Rutinas",
+      "suggestions": "Sugerencias de IA",
+      "history": "Historial"
+    },
+    "alerts": {
+      "stressTitle": "MindFlow AI",
+      "stressMessage": " detecta niveles de estrés por encima del promedio. Hemos pausado tus tareas de alta exigencia cognitiva automáticamente. Prioriza hoy tu bienestar y descanso."
+    },
+    "addForm": {
+      "title": "Añadir Nuevo Hábito",
+      "placeholder": "Ej. Leer 10 páginas antes de dormir...",
+      "category": "Categoría",
+      "frequency": {
+        "daily": "Diario",
+        "weekly": "Semanal",
+        "monthly": "Mensual"
+      },
+      "create": "Crear"
+    },
+    "filters": {
+      "searchPlaceholder": "Filtrar tus hábitos...",
+      "status": {
+        "all": "Estado: Todos",
+        "completed": "Completados",
+        "pending": "Pendientes",
+        "paused_by_ai": "Pausados por IA"
+      }
+    },
+    "history": {
+      "empty": "Aún no hay registros de semanas anteriores.",
+      "daysCompleted": "días cumplidos",
+      "streak": "Racha:",
+      "days": "días"
+    }
+  },
+  "analytics": {
+    "title": "Tu Panorama Emocional",
+    "telemetry": "SINC. BIOMÉTRICA ACTIVA // V.3.1.0",
+    "loading": "Cifrando y analizando datos biométricos...",
+    "components": {
+      "wordCloud": {
+        "title": "nube de palabras frecuentes",
+        "words": {
+          "calm": "Calma",
+          "anxious": "> ansioso.log",
+          "productive": "Productivo",
+          "grateful": "Agradecido",
+          "family": "[FAMILIA]",
+          "tired": "Cansado"
+        }
+      },
+      "export": {
+        "title": "Exportar Reportes Clínicos",
+        "desc": "Descarga tu historial estructurado con gráficas para compartirlo formalmente con tu psicólogo."
+      },
+      "weeklySummary": {
+        "stabilityIndex": "Índice de Estabilidad",
+        "active": "ACTIVO"
+      },
+      "fluctuationChart": {
+        "title": "Nivel de Actividad en Sesiones",
+        "yLabel": "Cantidad de tareas / Fase"
+      },
+      "trendChart": {
+        "title": "Tendencia de Ánimo",
+        "legend": {
+          "wellbeing": "Nivel de Bienestar",
+          "stress": "Carga de Estrés"
+        }
+      }
+    }
   }
 }

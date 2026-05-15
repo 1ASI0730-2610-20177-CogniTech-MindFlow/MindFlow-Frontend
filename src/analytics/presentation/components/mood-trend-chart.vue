@@ -1,10 +1,10 @@
 <template>
   <div class="transparent-chart-container large-chart">
     <div class="card-header">
-      <h3 class="card-title">Tendencia de Animo</h3>
+      <h3 class="card-title">{{ $t('analytics.components.trendChart.title') }}</h3>
       <div class="chart-legend">
-        <span class="legend-item"><span class="box bg-light"></span> Nivel de Bienestar</span>
-        <span class="legend-item"><span class="box bg-blue"></span> Carga de Estrés</span>
+        <span class="legend-item"><span class="box bg-light"></span> {{ $t('analytics.components.trendChart.legend.wellbeing') }}</span>
+        <span class="legend-item"><span class="box bg-blue"></span> {{ $t('analytics.components.trendChart.legend.stress') }}</span>
       </div>
     </div>
     <div class="chart-wrapper">

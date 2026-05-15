@@ -1,7 +1,7 @@
 <template>
   <div class="habit-tabs">
     <button
-        v-for="tab in tabs"
+        v-for="tab in localizedTabs"
         :key="tab.id"
         type="button"
         class="tab"
@@ -14,17 +14,22 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 defineProps({
   modelValue: { type: String, required: true }
 })
 
 defineEmits(['update:modelValue'])
 
-const tabs = [
-  { id: 'routines', label: 'Mis Rutinas' },
-  { id: 'suggestions', label: 'Sugerencias de IA' },
-  { id: 'history', label: 'Historial' }
-]
+const localizedTabs = computed(() => [
+  { id: 'routines', label: t('habits.tabs.routines') },
+  { id: 'suggestions', label: t('habits.tabs.suggestions') },
+  { id: 'history', label: t('habits.tabs.history') }
+])
 </script>
 
 <style scoped>

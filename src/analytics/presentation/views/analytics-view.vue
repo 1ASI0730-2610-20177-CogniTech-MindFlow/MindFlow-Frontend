@@ -5,11 +5,11 @@
 
       <header class="hero-header hero-reveal">
         <div class="header-content">
-          <h1 class="gradient-title">Tu Panorama Emocional</h1>
+          <h1 class="gradient-title">{{ $t('analytics.title') }}</h1>
 
           <div class="iot-telemetry-badge">
             <span class="telemetry-led"></span>
-            <span class="typewriter-text">SINC. BIOMÉTRICA ACTIVA // V.3.1.0</span>
+            <span class="typewriter-text">{{ $t('analytics.telemetry') }}</span>
           </div>
         </div>
       </header>
@@ -20,7 +20,7 @@
             <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="2"></circle>
           </svg>
         </div>
-        <span class="loading-narrative">Cifrando y analizando datos biométricos...</span>
+        <span class="loading-narrative">{{ $t('analytics.loading') }}</span>
       </div>
 
       <template v-else>

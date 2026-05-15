@@ -1,17 +1,17 @@
 <template>
   <div class="premium-card word-cloud-container">
     <div class="card-header">
-      <h3 class="card-title">nube de palabras frecuentes</h3>
+      <h3 class="card-title">{{ $t('analytics.components.wordCloud.title') }}</h3>
       <span class="mono-subtitle">NLP_ANALYSIS</span>
     </div>
 
     <div class="mock-word-cloud">
-      <span style="font-size: 28px; color: var(--global-green); font-weight: 600; top: 30%; left: 20%;">Calma</span>
-      <span style="font-size: 12px; color: #ef4444; font-weight: 600; top: 60%; left: 25%;">> ansioso.log</span>
-      <span style="font-size: 14px; color: var(--text-muted); top: 40%; left: 50%;">Productivo</span>
-      <span style="font-size: 32px; color: var(--global-blue); font-weight: 700; top: 50%; left: 45%;">Agradecido</span>
-      <span style="font-size: 14px; color: var(--text-dark); font-weight: 700; top: 35%; left: 75%;">[FAMILIA]</span>
-      <span style="font-size: 18px; color: #f59e0b; font-weight: 600; top: 55%; left: 75%;">Cansado</span>
+      <span style="font-size: 28px; color: var(--global-green); font-weight: 600; top: 30%; left: 20%;">{{ $t('analytics.components.wordCloud.words.calm') }}</span>
+      <span style="font-size: 12px; color: #ef4444; font-weight: 600; top: 60%; left: 25%;">{{ $t('analytics.components.wordCloud.words.anxious') }}</span>
+      <span style="font-size: 14px; color: var(--text-muted); top: 40%; left: 50%;">{{ $t('analytics.components.wordCloud.words.productive') }}</span>
+      <span style="font-size: 32px; color: var(--global-blue); font-weight: 700; top: 50%; left: 45%;">{{ $t('analytics.components.wordCloud.words.grateful') }}</span>
+      <span style="font-size: 14px; color: var(--text-dark); font-weight: 700; top: 35%; left: 75%;">{{ $t('analytics.components.wordCloud.words.family') }}</span>
+      <span style="font-size: 18px; color: #f59e0b; font-weight: 600; top: 55%; left: 75%;">{{ $t('analytics.components.wordCloud.words.tired') }}</span>
     </div>
   </div>
 </template>

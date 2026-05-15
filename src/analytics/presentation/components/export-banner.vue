@@ -1,8 +1,8 @@
 <template>
   <div class="premium-card export-banner">
     <div class="export-info">
-      <h3>Exportar Reportes Clínicos</h3>
-      <p>Descarga tu historial estructurado con gráficas para compartirlo formalmente con tu psicólogo.</p>
+      <h3>{{ $t('analytics.components.export.title') }}</h3>
+      <p>{{ $t('analytics.components.export.desc') }}</p>
     </div>
     <div class="export-actions">
       <button class="btn-outline">

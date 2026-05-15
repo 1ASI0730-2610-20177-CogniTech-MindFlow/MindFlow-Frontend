@@ -5,7 +5,7 @@
       <input
           :value="searchQuery"
           type="text"
-          placeholder="Filtrar tus hábitos..."
+          :placeholder="$t('habits.filters.searchPlaceholder')"
           @input="$emit('update:searchQuery', $event.target.value)"
       />
     </div>
@@ -13,10 +13,10 @@
         :value="statusFilter"
         @change="$emit('update:statusFilter', $event.target.value)"
     >
-      <option value="all">Estado: Todos</option>
-      <option value="completed">Completados</option>
-      <option value="pending">Pendientes</option>
-      <option value="paused_by_ai">Pausados por IA</option>
+      <option value="all">{{ $t('habits.filters.status.all') }}</option>
+      <option value="completed">{{ $t('habits.filters.status.completed') }}</option>
+      <option value="pending">{{ $t('habits.filters.status.pending') }}</option>
+      <option value="paused_by_ai">{{ $t('habits.filters.status.paused_by_ai') }}</option>
     </select>
   </div>
 </template>

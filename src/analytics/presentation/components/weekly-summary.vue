@@ -5,7 +5,7 @@
       <div class="score-display">
         <h2 class="huge-score">{{ data.score }}%</h2>
         <div class="score-details">
-          <h4>Índice de Estabilidad</h4>
+          <h4>{{ $t('analytics.components.weeklySummary.stabilityIndex') }}</h4>
           <span class="trend-pill">
             <i class="pi pi-arrow-up"></i> {{ data.trendPercentage }} (7D)
           </span>

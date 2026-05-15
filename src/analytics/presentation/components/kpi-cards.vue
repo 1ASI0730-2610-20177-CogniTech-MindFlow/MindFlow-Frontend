@@ -4,7 +4,7 @@
       <div class="kpi-header">
         <span class="kpi-label">{{ kpi.label }}</span>
         <div class="active-badge">
-          <span :class="['status-dot', kpi.colorClass.replace('border', 'bg')]"></span> ACTIVE
+          <span :class="['status-dot', kpi.colorClass.replace('border', 'bg')]"></span> {{ $t('analytics.components.weeklySummary.active') }}
         </div>
       </div>
       <h2 class="kpi-value">{{ kpi.value }}</h2>

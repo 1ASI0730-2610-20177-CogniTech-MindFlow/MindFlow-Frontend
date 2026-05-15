@@ -2,9 +2,7 @@
   <div class="ai-alert" role="status">
     <span class="alert-icon"><i class="pi pi-exclamation-triangle"></i></span>
     <p>
-      <strong>MindFlow AI</strong> detecta niveles de estrés por encima del promedio.
-      Hemos pausado tus tareas de alta exigencia cognitiva automáticamente.
-      Prioriza hoy tu bienestar y descanso.
+      <strong>{{ $t('habits.alerts.stressTitle') }}</strong>{{ $t('habits.alerts.stressMessage') }}
     </p>
   </div>
 </template>

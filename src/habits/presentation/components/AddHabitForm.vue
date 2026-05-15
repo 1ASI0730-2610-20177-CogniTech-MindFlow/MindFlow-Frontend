@@ -1,25 +1,25 @@
 <template>
   <section class="add-habit-card">
-    <h3>Añadir Nuevo Hábito</h3>
+    <h3>{{ $t('habits.addForm.title') }}</h3>
     <form class="add-form" @submit.prevent="submit">
       <input
           v-model="name"
           type="text"
-          placeholder="Ej. Leer 10 páginas antes de dormir..."
+          :placeholder="$t('habits.addForm.placeholder')"
       />
       <select v-model="category" required>
-        <option disabled value="">Categoría</option>
+        <option disabled value="">{{ $t('habits.addForm.category') }}</option>
         <option v-for="cat in categories" :key="cat" :value="cat">
           {{ cat }}
         </option>
       </select>
       <select v-model="frequency">
-        <option value="diario">Diario</option>
-        <option value="semanal">Semanal</option>
-        <option value="mensual">Mensual</option>
+        <option value="diario">{{ $t('habits.addForm.frequency.daily') }}</option>
+        <option value="semanal">{{ $t('habits.addForm.frequency.weekly') }}</option>
+        <option value="mensual">{{ $t('habits.addForm.frequency.monthly') }}</option>
       </select>
       <button type="submit" class="create-btn" :disabled="!canSubmit">
-        <i class="pi pi-plus"></i> Crear
+        <i class="pi pi-plus"></i> {{ $t('habits.addForm.create') }}
       </button>
     </form>
   </section>

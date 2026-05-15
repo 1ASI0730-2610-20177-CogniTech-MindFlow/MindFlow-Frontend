@@ -2,7 +2,7 @@
   <div class="transparent-chart-container">
     <div class="card-header">
       <div class="title-group">
-        <h3 class="card-title">Nivel de Actividad en Sesiones</h3>
+        <h3 class="card-title">{{ $t('analytics.components.fluctuationChart.title') }}</h3>
         <span class="mono-subtitle">FREQ_DISTRIBUTION</span>
       </div>
       <div class="chart-status">
@@ -11,7 +11,7 @@
     </div>
 
     <div class="chart-content">
-      <div class="chart-y-label">Task count / Phase</div>
+      <div class="chart-y-label">{{ $t('analytics.components.fluctuationChart.yLabel') }}</div>
       <div class="chart-wrapper">
         <Chart v-if="chartData" type="bar" :data="chartData" :options="chartOptions" class="h-full w-full" />
       </div>

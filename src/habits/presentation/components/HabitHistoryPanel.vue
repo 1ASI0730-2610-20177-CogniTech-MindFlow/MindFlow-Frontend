@@ -1,13 +1,13 @@
 <template>
   <div class="history-panel">
-    <p v-if="weeks.length === 0" class="empty">Aún no hay registros de semanas anteriores.</p>
+    <p v-if="weeks.length === 0" class="empty">{{ $t('habits.history.empty') }}</p>
 
     <article v-for="week in weeks" :key="week.weekLabel" class="week-card">
       <header class="week-header">
         <div>
           <h3>{{ week.weekLabel }}</h3>
           <span class="week-meta">
-            {{ week.totalCompleted }}/{{ week.totalTracked }} días cumplidos
+            {{ week.totalCompleted }}/{{ week.totalTracked }} {{ $t('habits.history.daysCompleted') }}
           </span>
         </div>
         <span class="week-percent">{{ week.overallPercent }}%</span>
@@ -24,9 +24,9 @@
             <span class="habit-category">{{ habit.category }}</span>
           </div>
           <div class="habit-metrics">
-            <span class="compliance">{{ habit.completedDays }}/{{ habit.trackedDays }} días</span>
+            <span class="compliance">{{ habit.completedDays }}/{{ habit.trackedDays }} {{ $t('habits.history.days') }}</span>
             <span class="streak">
-              <i class="pi pi-bolt"></i> Racha: {{ habit.weekStreak }} días
+              <i class="pi pi-bolt"></i> {{ $t('habits.history.streak') }} {{ habit.weekStreak }} {{ $t('habits.history.days') }}
             </span>
           </div>
         </li>

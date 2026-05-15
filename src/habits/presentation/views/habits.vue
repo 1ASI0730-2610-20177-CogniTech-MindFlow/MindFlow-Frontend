@@ -2,7 +2,7 @@
   <Layout>
     <div class="habits-page">
       <header class="page-header">
-        <h1>Hábitos</h1>
+        <h1>{{ $t('habits.title') }}</h1>
       </header>
 
       <HabitTabs
@@ -27,8 +27,8 @@
       </template>
 
       <section v-else-if="store.activeTab === 'suggestions'" class="placeholder-panel">
-        <h3>Sugerencias de IA</h3>
-        <p>Próximamente: hábitos recomendados según tu estado emocional y rutinas actuales.</p>
+        <h3>{{ $t('habits.placeholder.title') }}</h3>
+        <p>{{ $t('habits.placeholder.desc') }}</p>
       </section>
 
       <HabitHistoryPanel

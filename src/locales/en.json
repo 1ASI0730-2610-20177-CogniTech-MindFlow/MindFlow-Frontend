@@ -107,5 +107,115 @@
       "deleteAccount": "Delete my account"
     },
     "loading": "Loading settings..."
+  },
+  "journal": {
+    "title": "Your Emotional History",
+    "filters": {
+      "searchPlaceholder": "Search in your thoughts...",
+      "tabs": {
+        "all": "All",
+        "work": "Work",
+        "studies": "Studies",
+        "family": "Family"
+      },
+      "states": {
+        "all": "All",
+        "positive": "Positive",
+        "neutral": "Neutral",
+        "negative": "Negative"
+      }
+    },
+    "calendar": {
+      "previousMonth": "View Previous Month",
+      "weekdays": ["M", "T", "W", "T", "F", "S", "S"],
+      "months": [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ],
+      "legend": {
+        "positive": "Positive",
+        "neutral": "Neutral",
+        "negative": "Negative"
+      }
+    }
+  },
+  "habits": {
+    "title": "Habits",
+    "placeholder": {
+      "title": "AI Suggestions",
+      "desc": "Coming soon: Recommended habits based on your emotional state and current routines."
+    },
+    "tabs": {
+      "routines": "My Routines",
+      "suggestions": "AI Suggestions",
+      "history": "History"
+    },
+    "alerts": {
+      "stressTitle": "MindFlow AI",
+      "stressMessage": " detects higher than average stress levels. We have automatically paused your highly demanding cognitive tasks. Prioritize your well-being and rest today."
+    },
+    "addForm": {
+      "title": "Add New Habit",
+      "placeholder": "E.g. Read 10 pages before sleep...",
+      "category": "Category",
+      "frequency": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+      },
+      "create": "Create"
+    },
+    "filters": {
+      "searchPlaceholder": "Filter your habits...",
+      "status": {
+        "all": "Status: All",
+        "completed": "Completed",
+        "pending": "Pending",
+        "paused_by_ai": "Paused by AI"
+      }
+    },
+    "history": {
+      "empty": "No records from previous weeks yet.",
+      "daysCompleted": "days completed",
+      "streak": "Streak:",
+      "days": "days"
+    }
+  },
+  "analytics": {
+    "title": "Your Emotional Landscape",
+    "telemetry": "BIOMETRIC SYNC ACTIVE // V.3.1.0",
+    "loading": "Encrypting and analyzing biometric data...",
+    "components": {
+      "wordCloud": {
+        "title": "frequent word cloud",
+        "words": {
+          "calm": "Calm",
+          "anxious": "> anxious.log",
+          "productive": "Productive",
+          "grateful": "Grateful",
+          "family": "[FAMILY]",
+          "tired": "Tired"
+        }
+      },
+      "export": {
+        "title": "Export Clinical Reports",
+        "desc": "Download your structured history with charts to formally share with your therapist."
+      },
+      "weeklySummary": {
+        "stabilityIndex": "Stability Index",
+        "active": "ACTIVE"
+      },
+      "fluctuationChart": {
+        "title": "Activity Level in Sessions",
+        "yLabel": "Task count / Phase"
+      },
+      "trendChart": {
+        "title": "Mood Trend",
+        "legend": {
+          "wellbeing": "Wellbeing Level",
+          "stress": "Stress Load"
+        }
+      }
+    }
   }
 }

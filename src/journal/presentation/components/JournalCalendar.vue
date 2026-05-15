@@ -2,7 +2,6 @@
 
   <div class="calendar">
 
-
     <div class="calendar-header">
 
       <h3>
@@ -10,20 +9,18 @@
       </h3>
 
       <span @click="previousMonth">
-        Ver Mes Anterior
+        {{ $t('journal.calendar.previousMonth') }}
       </span>
 
     </div>
 
-
     <div class="weekdays">
 
-      <div v-for="day in weekdays" :key="day">
+      <div v-for="(day, index) in localizedWeekdays" :key="index">
         {{ day }}
       </div>
 
     </div>
-
 
     <div class="days-grid">
 
@@ -42,22 +39,21 @@
 
     </div>
 
-
     <div class="legend">
 
       <div class="legend-item">
         <span class="dot positive"></span>
-        Positivo
+        {{ $t('journal.calendar.legend.positive') }}
       </div>
 
       <div class="legend-item">
         <span class="dot neutral"></span>
-        Neutral
+        {{ $t('journal.calendar.legend.neutral') }}
       </div>
 
       <div class="legend-item">
         <span class="dot negative"></span>
-        Negativo
+        {{ $t('journal.calendar.legend.negative') }}
       </div>
 
     </div>
@@ -69,30 +65,27 @@
 <script setup>
 
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-const weekdays = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
-
-const months = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Mayo',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Noviembre',
-  'Diciembre'
-]
+const { t, tm } = useI18n()
 
 const currentMonth = ref(3)
 const currentYear = ref(2026)
 
 const selectedDay = ref(26)
 
+const localizedWeekdays = computed(() => {
+  const wd = tm('journal.calendar.weekdays')
+  // tm returns the array proxy if defined in locales.
+  return Array.isArray(wd) ? wd : ['L', 'M', 'X', 'J', 'V', 'S', 'D']
+})
+
 const currentMonthName = computed(() => {
+  const m = tm('journal.calendar.months')
+  const months = Array.isArray(m) ? m : [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ]
   return months[currentMonth.value]
 })
 
