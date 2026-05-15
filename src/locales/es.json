@@ -16,6 +16,56 @@
     "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
     "viewPlans": "Ver Planes"
   },
+  "plansPage": {
+    "hero": {
+      "title": "Invierte en tu bienestar emocional",
+      "subtitle": "Elige el plan que mejor se adapte a tu ritmo. Demócrata e inteligente, MindFlow te acompaña en cada paso hacia tu calma mental."
+    },
+    "badges": {
+      "current": "TU PLAN ACTUAL",
+      "recommended": "RECOMENDADO"
+    },
+    "pricing": {
+      "perMonth": " / mes"
+    },
+    "buttons": {
+      "activePlan": "Plan Activo",
+      "downgrade": "Bajar de Plan",
+      "upgrade": "Actualizar a Premium"
+    },
+    "freemium": {
+      "title": "Freemium",
+      "desc": "Todo lo necesario para empezar a construir autoconocimiento.",
+      "features": {
+        "f1Bold": "AI Mood Journal:",
+        "f1Text": " Diario interactivo con NLP",
+        "f2Bold": "Dynamic Habit Tracker:",
+        "f2Text": " Ajuste basado en estrés",
+        "f3Bold": "Smart Interventions:",
+        "f3Text": " Guías de respiración",
+        "f4Bold": "Analíticas Básicas:",
+        "f4Text": " Calendario y Word Cloud",
+        "f5": "Exportación de Reportes PDF",
+        "f6": "Exportación de Datos CSV"
+      }
+    },
+    "premium": {
+      "title": "MindFlow Premium",
+      "desc": "Para quienes buscan un análisis profundo y acompañamiento profesional.",
+      "features": {
+        "f1": "Todo lo incluido en Freemium",
+        "f2Bold": "Exportación PDF:",
+        "f2Text": " Descarga historiales clínicos.",
+        "f3Bold": "Exportación CSV:",
+        "f3Text": " Accede a tus datos en bruto.",
+        "f4Bold": "Analíticas Avanzadas:",
+        "f4Text": " Gráficos detallados.",
+        "f5Bold": "Soporte Prioritario:",
+        "f5Text": " Resolución de dudas técnicas."
+      }
+    },
+    "footer": "🔒 Pagos encriptados y procesados de forma segura a través de Stripe.",
+    "loading": "Cargando información de planes..."
   "settings": {
     "profile": {
       "changeAvatar": "Cambiar Avatar",
