@@ -66,6 +66,7 @@
     },
     "footer": "🔒 Payments encrypted and processed securely via Stripe.",
     "loading": "Loading plan information..."
+  },
   "settings": {
     "profile": {
       "changeAvatar": "Change Avatar",
