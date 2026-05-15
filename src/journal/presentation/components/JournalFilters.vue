@@ -2,34 +2,34 @@
   <div class="filters">
     <input
         v-model="search"
-        class="search-input"
+        class="search-input theme-transition"
         :placeholder="$t('journal.filters.searchPlaceholder')"
     />
 
     <div class="tabs">
       <button
-          class="tab"
+          class="tab theme-transition"
           :class="{ active: selectedTab === 'Todos' }"
           @click="selectedTab = 'Todos'"
       >
         {{ $t('journal.filters.tabs.all') }}
       </button>
       <button
-          class="tab"
+          class="tab theme-transition"
           :class="{ active: selectedTab === 'Trabajo' }"
           @click="selectedTab = 'Trabajo'"
       >
         {{ $t('journal.filters.tabs.work') }}
       </button>
       <button
-          class="tab"
+          class="tab theme-transition"
           :class="{ active: selectedTab === 'Estudios' }"
           @click="selectedTab = 'Estudios'"
       >
         {{ $t('journal.filters.tabs.studies') }}
       </button>
       <button
-          class="tab"
+          class="tab theme-transition"
           :class="{ active: selectedTab === 'Familia' }"
           @click="selectedTab = 'Familia'"
       >
@@ -38,7 +38,7 @@
     </div>
 
     <div class="bottom-filters">
-      <select v-model="selectedState" class="select">
+      <select v-model="selectedState" class="select theme-transition">
         <option value="Todos">{{ $t('journal.filters.states.all') }}</option>
         <option value="Positivo">{{ $t('journal.filters.states.positive') }}</option>
         <option value="Neutral">{{ $t('journal.filters.states.neutral') }}</option>
@@ -48,7 +48,7 @@
       <input
           v-model="selectedDate"
           type="date"
-          class="date-input"
+          class="date-input theme-transition"
       />
     </div>
   </div>
@@ -85,10 +85,14 @@ watch(selectedState, (value) => {
   height: 44px;
   padding: 0 16px;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: white;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-primary);
   font-size: 14px;
   outline: none;
+}
+.search-input:focus {
+  border-color: var(--accent-primary);
 }
 
 .tabs {
@@ -101,22 +105,21 @@ watch(selectedState, (value) => {
   height: 36px;
   padding: 0 16px;
   border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: white;
-  color: #4b5563;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: .2s ease;
 }
 
 .tab:hover {
-  background: #f3f4f6;
+  background: var(--bg-surface-secondary);
 }
 
 .tab.active {
-  background: #5b8def;
-  border-color: #5b8def;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
   color: white;
 }
 
@@ -129,12 +132,15 @@ watch(selectedState, (value) => {
 .select,
 .date-input {
   height: 42px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 0 14px;
   font-size: 14px;
-  color: #6b7280;
-  background: white;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
   outline: none;
+}
+.select:focus, .date-input:focus {
+  border-color: var(--accent-primary);
 }
 </style>

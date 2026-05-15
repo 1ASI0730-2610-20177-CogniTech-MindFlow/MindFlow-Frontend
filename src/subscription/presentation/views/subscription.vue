@@ -2,66 +2,66 @@
   <Layout>
     <transition name="fade" mode="out-in">
       <main class="container" v-if="!store.isLoading && store.subscriptionData">
-        <header class="hero">
-          <h1>{{ $t('plansPage.hero.title') }}</h1>
-          <p>
+        <header class="hero theme-transition">
+          <h1 class="theme-transition">{{ $t('plansPage.hero.title') }}</h1>
+          <p class="theme-transition">
             {{ $t('plansPage.hero.subtitle') }}
           </p>
         </header>
 
         <section class="plans">
-          <article class="plan" :class="{ 'plan-featured': !store.isPremium }">
+          <article class="plan theme-transition" :class="{ 'plan-featured': !store.isPremium }">
             <div class="badge" v-if="!store.isPremium">{{ $t('plansPage.badges.current') }}</div>
 
-            <h2 class="plan-title" :class="{ 'accent': !store.isPremium }">{{ $t('plansPage.freemium.title') }}</h2>
+            <h2 class="plan-title theme-transition" :class="{ 'accent': !store.isPremium }">{{ $t('plansPage.freemium.title') }}</h2>
             <div class="price">
-              <span class="amount">$0</span>
-              <span class="period">{{ $t('plansPage.pricing.perMonth') }}</span>
+              <span class="amount theme-transition">$0</span>
+              <span class="period theme-transition">{{ $t('plansPage.pricing.perMonth') }}</span>
             </div>
-            <p class="plan-desc">
+            <p class="plan-desc theme-transition">
               {{ $t('plansPage.freemium.desc') }}
             </p>
 
             <ul class="features">
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f1Bold') }}</b>{{ $t('plansPage.freemium.features.f1Text') }}</span></li>
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f2Bold') }}</b>{{ $t('plansPage.freemium.features.f2Text') }}</span></li>
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f3Bold') }}</b>{{ $t('plansPage.freemium.features.f3Text') }}</span></li>
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f4Bold') }}</b>{{ $t('plansPage.freemium.features.f4Text') }}</span></li>
-              <li class="ko"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f5') }}</span></li>
-              <li class="ko"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f6') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f1Bold') }}</b>{{ $t('plansPage.freemium.features.f1Text') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f2Bold') }}</b>{{ $t('plansPage.freemium.features.f2Text') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f3Bold') }}</b>{{ $t('plansPage.freemium.features.f3Text') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f4Bold') }}</b>{{ $t('plansPage.freemium.features.f4Text') }}</span></li>
+              <li class="ko theme-transition"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f5') }}</span></li>
+              <li class="ko theme-transition"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f6') }}</span></li>
             </ul>
 
-            <button class="btn btn-outline" disabled v-if="!store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
-            <button class="btn btn-outline" v-else>{{ $t('plansPage.buttons.downgrade') }}</button>
+            <button class="btn btn-outline theme-transition" disabled v-if="!store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
+            <button class="btn btn-outline theme-transition" v-else>{{ $t('plansPage.buttons.downgrade') }}</button>
           </article>
 
-          <article class="plan" :class="{ 'plan-featured': store.isPremium }">
+          <article class="plan theme-transition" :class="{ 'plan-featured': store.isPremium }">
             <div class="badge" v-if="store.isPremium">{{ $t('plansPage.badges.current') }}</div>
             <div class="badge" v-else>{{ $t('plansPage.badges.recommended') }}</div>
 
-            <h2 class="plan-title" :class="{ 'accent': store.isPremium }">{{ $t('plansPage.premium.title') }}</h2>
+            <h2 class="plan-title theme-transition" :class="{ 'accent': store.isPremium }">{{ $t('plansPage.premium.title') }}</h2>
             <div class="price">
-              <span class="amount">$4.99</span>
-              <span class="period">{{ $t('plansPage.pricing.perMonth') }}</span>
+              <span class="amount theme-transition">$4.99</span>
+              <span class="period theme-transition">{{ $t('plansPage.pricing.perMonth') }}</span>
             </div>
-            <p class="plan-desc">
+            <p class="plan-desc theme-transition">
               {{ $t('plansPage.premium.desc') }}
             </p>
 
             <ul class="features">
-              <li class="ok"><span class="icon">✓</span><span>{{ $t('plansPage.premium.features.f1') }}</span></li>
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f2Bold') }}</b>{{ $t('plansPage.premium.features.f2Text') }}</span></li>
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f3Bold') }}</b>{{ $t('plansPage.premium.features.f3Text') }}</span></li>
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f4Bold') }}</b>{{ $t('plansPage.premium.features.f4Text') }}</span></li>
-              <li class="ok"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f5Bold') }}</b>{{ $t('plansPage.premium.features.f5Text') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span>{{ $t('plansPage.premium.features.f1') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f2Bold') }}</b>{{ $t('plansPage.premium.features.f2Text') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f3Bold') }}</b>{{ $t('plansPage.premium.features.f3Text') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f4Bold') }}</b>{{ $t('plansPage.premium.features.f4Text') }}</span></li>
+              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f5Bold') }}</b>{{ $t('plansPage.premium.features.f5Text') }}</span></li>
             </ul>
 
-            <button class="btn btn-gradient" disabled v-if="store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
-            <button class="btn btn-gradient" v-else>{{ $t('plansPage.buttons.upgrade') }}</button>
+            <button class="btn btn-gradient theme-transition" disabled v-if="store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
+            <button class="btn btn-gradient theme-transition" v-else>{{ $t('plansPage.buttons.upgrade') }}</button>
           </article>
         </section>
 
-        <footer class="footer">
+        <footer class="footer theme-transition">
           {{ $t('plansPage.footer') }}
         </footer>
       </main>
@@ -101,14 +101,14 @@ onMounted(() => {
 .hero h1 {
   font-size: 28px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-primary);
   margin-bottom: 12px;
 }
 
 .hero p {
   max-width: 600px;
   margin: 0 auto;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -126,12 +126,12 @@ onMounted(() => {
 
 .plan {
   position: relative;
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
   border: 2px solid transparent;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   animation: slideUp 0.6s ease-out backwards;
 }
 
@@ -145,11 +145,11 @@ onMounted(() => {
 
 .plan:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
 }
 
 .plan-featured {
-  border: 2px solid #818cf8;
+  border: 2px solid var(--accent-primary);
 }
 
 .badge {
@@ -157,8 +157,8 @@ onMounted(() => {
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: #e0e7ff;
-  color: #6366f1;
+  background: var(--accent-primary);
+  color: #fff;
   padding: 4px 14px;
   border-radius: 999px;
   font-size: 11px;
@@ -171,11 +171,11 @@ onMounted(() => {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 16px;
-  color: #111827;
+  color: var(--text-primary);
 }
 
 .plan-title.accent {
-  color: #6366f1;
+  color: var(--accent-primary);
 }
 
 .price {
@@ -185,16 +185,16 @@ onMounted(() => {
 .amount {
   font-size: 40px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-primary);
 }
 
 .period {
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
 .plan-desc {
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 14px;
   margin-bottom: 24px;
 }
@@ -218,17 +218,17 @@ onMounted(() => {
   line-height: 1.4;
 }
 
-.features .ok { color: #374151; }
-.features .ok .icon { color: #10b981; }
+.features .ok { color: var(--text-primary); }
+.features .ok .icon { color: var(--accent-success); }
 
 .features .ko {
-  color: #9ca3af;
+  color: var(--text-muted);
   text-decoration: line-through;
 }
-.features .ko .icon { color: #9ca3af; }
+.features .ko .icon { color: var(--text-muted); }
 
 .features b {
-  color: #111827;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
@@ -249,20 +249,19 @@ onMounted(() => {
 }
 
 .btn-outline {
-  background: #f9fafb;
-  color: #374151;
-  border-color: #e5e7eb;
+  background: var(--bg-surface-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
 }
 
 .btn-outline:disabled {
   cursor: default;
   opacity: 0.85;
-  background: #e5e7eb;
+  background: var(--bg-surface-secondary);
 }
 
 .btn-outline:hover:not(:disabled) {
-  background: #f3f4f6;
-  border-color: #d1d5db;
+  background: var(--border-color);
 }
 
 .btn-gradient {
@@ -275,8 +274,8 @@ onMounted(() => {
 
 .btn-gradient:disabled {
   cursor: default;
-  background: #9ca3af;
-  color: #f3f4f6;
+  background: var(--text-muted);
+  color: var(--bg-surface-secondary);
 }
 
 .btn-gradient:hover:not(:disabled) {
@@ -288,7 +287,7 @@ onMounted(() => {
 .footer {
   text-align: center;
   margin-top: 40px;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 13px;
   animation: fadeIn 1s ease-in 0.5s backwards;
 }
@@ -299,7 +298,7 @@ onMounted(() => {
   align-items: center;
   height: 100%;
   font-size: 18px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 @keyframes slideDown {

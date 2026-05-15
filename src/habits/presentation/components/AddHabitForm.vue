@@ -1,19 +1,20 @@
 <template>
-  <section class="add-habit-card">
-    <h3>{{ $t('habits.addForm.title') }}</h3>
+  <section class="add-habit-card theme-transition">
+    <h3 class="theme-transition">{{ $t('habits.addForm.title') }}</h3>
     <form class="add-form" @submit.prevent="submit">
       <input
           v-model="name"
           type="text"
           :placeholder="$t('habits.addForm.placeholder')"
+          class="theme-transition"
       />
-      <select v-model="category" required>
+      <select v-model="category" required class="theme-transition">
         <option disabled value="">{{ $t('habits.addForm.category') }}</option>
         <option v-for="cat in categories" :key="cat" :value="cat">
           {{ cat }}
         </option>
       </select>
-      <select v-model="frequency">
+      <select v-model="frequency" class="theme-transition">
         <option value="diario">{{ $t('habits.addForm.frequency.daily') }}</option>
         <option value="semanal">{{ $t('habits.addForm.frequency.weekly') }}</option>
         <option value="mensual">{{ $t('habits.addForm.frequency.monthly') }}</option>
@@ -53,8 +54,8 @@ const submit = () => {
 
 <style scoped>
 .add-habit-card {
-  background: #fff;
-  border: 1px solid #edf0f5;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
   border-radius: 14px;
   padding: 18px 20px;
   margin-bottom: 20px;
@@ -64,7 +65,7 @@ const submit = () => {
   margin: 0 0 14px;
   font-size: 15px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .add-form {
@@ -76,19 +77,19 @@ const submit = () => {
 .add-form input,
 .add-form select {
   height: 42px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 0 14px;
   font: inherit;
   font-size: 14px;
-  color: #334155;
-  background: #fff;
+  color: var(--text-primary);
+  background: var(--bg-surface);
   outline: none;
 }
 
 .add-form input:focus,
 .add-form select:focus {
-  border-color: #a5b4fc;
+  border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 
@@ -100,17 +101,18 @@ const submit = () => {
   padding: 0 18px;
   border: none;
   border-radius: 10px;
-  background: #22c55e;
+  background: var(--accent-success);
   color: #fff;
   font: inherit;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
 .create-btn:hover:not(:disabled) {
-  background: #16a34a;
+  opacity: 0.9;
 }
 
 .create-btn:disabled {

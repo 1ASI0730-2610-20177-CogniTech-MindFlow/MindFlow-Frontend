@@ -1,5 +1,5 @@
 <template>
-  <header class="topbar">
+  <header class="topbar theme-transition">
     <div>
       <h2 class="greeting">{{ currentTitle }}</h2>
       <p class="subtitle">{{ formattedDate }} · Tu IA está lista para escucharte.</p>
@@ -8,7 +8,7 @@
     <div class="topbar-actions">
       <div class="search">
         <span class="search-icon"><i class="pi pi-search"></i></span>
-        <input type="text" placeholder="Buscar..." />
+        <input type="text" placeholder="Buscar..." class="theme-transition" />
       </div>
 
       <LanguageSwitcher />
@@ -38,8 +38,8 @@ const formattedDate = computed(() => {
 <style scoped>
 .topbar {
   height: 80px;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
   padding: 0 32px;
   display: flex;
   align-items: center;
@@ -47,14 +47,14 @@ const formattedDate = computed(() => {
 }
 
 .greeting {
-  color: #0f172a;
+  color: var(--text-primary);
   font-size: 20px;
   font-weight: 600;
   margin: 0 0 4px 0;
 }
 
 .subtitle {
-  color: #64748b;
+  color: var(--text-secondary);
   font-size: 13px;
   margin: 0;
 }
@@ -71,22 +71,23 @@ const formattedDate = computed(() => {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 13px;
 }
 .search input {
   width: 256px;
   padding: 8px 12px 8px 36px;
   border-radius: 8px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   outline: none;
   font: inherit;
   transition: border-color 0.15s, background 0.15s;
 }
 .search input:focus {
-  border-color: #a5b4fc;
-  background: #fff;
+  border-color: var(--accent-primary);
+  background: var(--bg-surface);
 }
 .avatar {
   width: 40px;

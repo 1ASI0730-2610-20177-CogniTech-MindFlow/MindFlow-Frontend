@@ -1,31 +1,31 @@
 <template>
   <div class="history-panel">
-    <p v-if="weeks.length === 0" class="empty">{{ $t('habits.history.empty') }}</p>
+    <p v-if="weeks.length === 0" class="empty theme-transition">{{ $t('habits.history.empty') }}</p>
 
-    <article v-for="week in weeks" :key="week.weekLabel" class="week-card">
+    <article v-for="week in weeks" :key="week.weekLabel" class="week-card theme-transition">
       <header class="week-header">
         <div>
-          <h3>{{ week.weekLabel }}</h3>
-          <span class="week-meta">
+          <h3 class="theme-transition">{{ week.weekLabel }}</h3>
+          <span class="week-meta theme-transition">
             {{ week.totalCompleted }}/{{ week.totalTracked }} {{ $t('habits.history.daysCompleted') }}
           </span>
         </div>
-        <span class="week-percent">{{ week.overallPercent }}%</span>
+        <span class="week-percent theme-transition">{{ week.overallPercent }}%</span>
       </header>
 
-      <div class="week-bar">
-        <div class="week-bar-fill" :style="{ width: `${week.overallPercent}%` }" />
+      <div class="week-bar theme-transition">
+        <div class="week-bar-fill theme-transition" :style="{ width: `${week.overallPercent}%` }" />
       </div>
 
       <ul class="habit-stats">
-        <li v-for="habit in week.habits" :key="`${week.weekLabel}-${habit.habitId}`">
+        <li v-for="habit in week.habits" :key="`${week.weekLabel}-${habit.habitId}`" class="theme-transition">
           <div class="habit-info">
-            <span class="habit-name">{{ habit.habitName }}</span>
-            <span class="habit-category">{{ habit.category }}</span>
+            <span class="habit-name theme-transition">{{ habit.habitName }}</span>
+            <span class="habit-category theme-transition">{{ habit.category }}</span>
           </div>
           <div class="habit-metrics">
-            <span class="compliance">{{ habit.completedDays }}/{{ habit.trackedDays }} {{ $t('habits.history.days') }}</span>
-            <span class="streak">
+            <span class="compliance theme-transition">{{ habit.completedDays }}/{{ habit.trackedDays }} {{ $t('habits.history.days') }}</span>
+            <span class="streak theme-transition">
               <i class="pi pi-bolt"></i> {{ $t('habits.history.streak') }} {{ habit.weekStreak }} {{ $t('habits.history.days') }}
             </span>
           </div>
@@ -50,19 +50,19 @@ defineProps({
 
 .empty {
   text-align: center;
-  color: #64748b;
+  color: var(--text-secondary);
   padding: 32px;
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 14px;
-  border: 1px solid #edf0f5;
+  border: 1px solid var(--border-light);
 }
 
 .week-card {
-  background: #fff;
-  border: 1px solid #edf0f5;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
   border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .week-header {
@@ -76,23 +76,23 @@ defineProps({
   margin: 0 0 4px;
   font-size: 16px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .week-meta {
   font-size: 13px;
-  color: #64748b;
+  color: var(--text-secondary);
 }
 
 .week-percent {
   font-size: 20px;
   font-weight: 700;
-  color: #16a34a;
+  color: var(--accent-success);
 }
 
 .week-bar {
   height: 8px;
-  background: #ecfdf5;
+  background: var(--bg-surface-secondary);
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 16px;
@@ -100,7 +100,7 @@ defineProps({
 
 .week-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #22c55e, #16a34a);
+  background: linear-gradient(90deg, var(--accent-success), #16a34a);
   border-radius: 999px;
 }
 
@@ -119,7 +119,7 @@ defineProps({
   align-items: center;
   gap: 16px;
   padding: 10px 12px;
-  background: #f8fafc;
+  background: var(--bg-surface-secondary);
   border-radius: 10px;
 }
 
@@ -132,12 +132,12 @@ defineProps({
 .habit-name {
   font-size: 14px;
   font-weight: 500;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .habit-category {
   font-size: 12px;
-  color: #64748b;
+  color: var(--text-secondary);
 }
 
 .habit-metrics {
@@ -149,12 +149,12 @@ defineProps({
 }
 
 .compliance {
-  color: #475569;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .streak {
-  color: #d97706;
+  color: var(--accent-warning);
   display: inline-flex;
   align-items: center;
   gap: 4px;

@@ -1,15 +1,15 @@
 <template>
   <Layout>
-    <div class="high-end-analytics-page">
-      <div class="optical-grid-bg"></div>
+    <div class="high-end-analytics-page theme-transition">
+      <div class="optical-grid-bg theme-transition"></div>
 
-      <header class="hero-header hero-reveal">
+      <header class="hero-header hero-reveal theme-transition">
         <div class="header-content">
-          <h1 class="gradient-title">{{ $t('analytics.title') }}</h1>
+          <h1 class="gradient-title theme-transition">{{ $t('analytics.title') }}</h1>
 
-          <div class="iot-telemetry-badge">
+          <div class="iot-telemetry-badge theme-transition">
             <span class="telemetry-led"></span>
-            <span class="typewriter-text">{{ $t('analytics.telemetry') }}</span>
+            <span class="typewriter-text theme-transition">{{ $t('analytics.telemetry') }}</span>
           </div>
         </div>
       </header>
@@ -20,21 +20,21 @@
             <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="2"></circle>
           </svg>
         </div>
-        <span class="loading-narrative">{{ $t('analytics.loading') }}</span>
+        <span class="loading-narrative theme-transition">{{ $t('analytics.loading') }}</span>
       </div>
 
       <template v-else>
         <div class="asymmetric-content-wrapper">
           <div class="panel-reveal delay-1 w-summary-offset">
-            <WeeklySummary :data="analyticsStore.summary" />
+            <WeeklySummary :data="analyticsStore.summary" class="theme-transition" />
           </div>
 
           <div class="panel-reveal delay-2">
-            <KpiCards :kpis="analyticsStore.kpis" />
+            <KpiCards :kpis="analyticsStore.kpis" class="theme-transition" />
           </div>
 
           <div class="asymmetric-grid">
-            <div class="panel-reveal delay-3 grid-main deep-shadow-panel">
+            <div class="panel-reveal delay-3 grid-main deep-shadow-panel theme-transition">
               <MoodFluctuationChart
                   :chartData="analyticsStore.fluctuationData"
                   :chartOptions="analyticsStore.fluctuationOptions"
@@ -42,11 +42,11 @@
             </div>
 
             <div class="panel-reveal delay-4 grid-sidebar floating-sidebar">
-              <WordCloud />
+              <WordCloud class="theme-transition" />
             </div>
           </div>
 
-          <div class="panel-reveal delay-5 deep-shadow-panel">
+          <div class="panel-reveal delay-5 deep-shadow-panel theme-transition">
             <MoodTrendChart
                 :chartData="analyticsStore.trendData"
                 :chartOptions="analyticsStore.trendOptions"
@@ -54,7 +54,7 @@
           </div>
 
           <div class="panel-reveal delay-6 cta-offset">
-            <ExportBanner />
+            <ExportBanner class="theme-transition" />
           </div>
         </div>
       </template>
@@ -83,14 +83,12 @@ onMounted(() => {
 
 <style scoped>
 .high-end-analytics-page {
-  --bg-color: #f8fafc;
-  --text-dark: #0f172a;
-  --text-muted: #64748b;
-  --global-blue: #3b82f6;
-  --global-green: #34d399;
+  /* Retain specific color vars for this page but link them to the global theme */
+  --global-blue: var(--accent-primary, #3b82f6);
+  --global-green: var(--accent-success, #34d399);
 
-  background-color: var(--bg-color);
-  color: var(--text-dark);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -105,7 +103,7 @@ onMounted(() => {
   top: 0; left: 0; width: 100vw; height: 100vh;
   pointer-events: none;
   z-index: -1;
-  background-image: radial-gradient(circle at center, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(circle at center, var(--border-color) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.8;
 }
@@ -116,16 +114,16 @@ onMounted(() => {
 
 .gradient-title {
   font-size: 52px; font-weight: 700; letter-spacing: -0.02em; margin: 0;
-  background: linear-gradient(120deg, var(--text-dark) 40%, var(--global-blue) 70%, var(--text-dark) 100%);
+  background: linear-gradient(120deg, var(--text-primary) 40%, var(--global-blue) 70%, var(--text-primary) 100%);
   background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text;
   animation: shine 6s linear infinite;
 }
 @keyframes shine { to { background-position: 200% center; } }
 
 .iot-telemetry-badge {
-  display: inline-flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px); border: 1px solid rgba(15, 23, 42, 0.05); border-radius: 50px;
-  padding: 8px 16px; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02); align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 12px; background: var(--bg-surface);
+  backdrop-filter: blur(8px); border: 1px solid var(--border-color); border-radius: 50px;
+  padding: 8px 16px; box-shadow: var(--shadow-sm); align-self: flex-start;
 }
 .telemetry-led {
   width: 8px; height: 8px; border-radius: 50%; background-color: var(--global-green);
@@ -142,13 +140,13 @@ onMounted(() => {
 .asymmetric-grid { display: grid; grid-template-columns: minmax(auto, 65%) 1fr; gap: 48px; align-items: center; }
 
 .deep-shadow-panel {
-  background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 24px; box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.02) inset;
+  background: var(--bg-surface); backdrop-filter: blur(20px); border: 1px solid var(--border-light);
+  border-radius: 24px; box-shadow: var(--shadow-md);
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .deep-shadow-panel:hover {
   transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.03) inset;
+  box-shadow: var(--shadow-lg);
 }
 .floating-sidebar { position: relative; top: -24px; }
 

@@ -1,9 +1,9 @@
 <template>
-  <div class="app">
+  <div class="app theme-transition">
     <Sidebar />
     <div class="main">
       <Topbar />
-      <main class="content">
+      <main class="content theme-transition">
         <slot />
       </main>
     </div>
@@ -18,20 +18,22 @@ import Topbar from './topbar.vue'
 <style scoped>
 .app {
   display: flex;
-  height: 100vh; /* Cambiamos min-height por height estricto */
-  overflow: hidden; /* Evita scroll a nivel global */
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-primary);
 }
 
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100vh; /* El área principal no debe superar la ventana */
+  height: 100vh;
 }
 
 .content {
   flex: 1;
   padding: 32px;
   overflow-y: auto;
+  background-color: var(--bg-primary);
 }
 </style>

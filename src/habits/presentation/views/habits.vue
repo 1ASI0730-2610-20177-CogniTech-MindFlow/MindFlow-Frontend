@@ -1,8 +1,8 @@
 <template>
   <Layout>
-    <div class="habits-page">
+    <div class="habits-page theme-transition">
       <header class="page-header animate-fade-in-down">
-        <h1>{{ $t('habits.title') }}</h1>
+        <h1 class="theme-transition">{{ $t('habits.title') }}</h1>
       </header>
 
       <div class="animate-fade-in delay-1">
@@ -42,10 +42,10 @@
             </div>
           </template>
 
-          <section v-else-if="store.activeTab === 'suggestions'" class="placeholder-panel animate-fade-in-up">
+          <section v-else-if="store.activeTab === 'suggestions'" class="placeholder-panel animate-fade-in-up theme-transition">
             <div class="pulse-icon"><i class="pi pi-sparkles"></i></div>
-            <h3>{{ $t('habits.placeholder.title') }}</h3>
-            <p>{{ $t('habits.placeholder.desc') }}</p>
+            <h3 class="theme-transition">{{ $t('habits.placeholder.title') }}</h3>
+            <p class="theme-transition">{{ $t('habits.placeholder.desc') }}</p>
           </section>
 
           <HabitHistoryPanel
@@ -102,7 +102,7 @@ onMounted(() => {
 
 @keyframes floatPulse {
   0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
-  50% { transform: translateY(-5px) scale(1.1); opacity: 1; color: #6366f1; }
+  50% { transform: translateY(-5px) scale(1.1); opacity: 1; color: var(--accent-primary); }
 }
 
 /* Animation Classes */
@@ -146,7 +146,7 @@ onMounted(() => {
 
 /* Interactive States */
 .hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 .hover-lift:hover {
   transform: translateY(-2px);
@@ -166,12 +166,12 @@ onMounted(() => {
   margin: 0;
   font-size: 22px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 .placeholder-panel {
-  background: #fff;
-  border: 1px solid #edf0f5;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 48px 32px;
   text-align: center;
@@ -182,7 +182,7 @@ onMounted(() => {
 
 .pulse-icon {
   font-size: 32px;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 16px;
   animation: floatPulse 3s ease-in-out infinite;
 }
@@ -190,12 +190,12 @@ onMounted(() => {
 .placeholder-panel h3 {
   margin: 0 0 8px;
   font-size: 18px;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .placeholder-panel p {
   margin: 0;
-  color: #64748b;
+  color: var(--text-secondary);
   font-size: 14px;
   max-width: 400px;
 }

@@ -1,12 +1,12 @@
 <template>
-  <section class="habit-list-card">
+  <section class="habit-list-card theme-transition">
     <table class="habit-table">
       <thead>
         <tr>
-          <th>Estado</th>
-          <th>Hábito</th>
-          <th>Categoría</th>
-          <th>Racha Actual</th>
+          <th class="theme-transition">Estado</th>
+          <th class="theme-transition">Hábito</th>
+          <th class="theme-transition">Categoría</th>
+          <th class="theme-transition">Racha Actual</th>
         </tr>
       </thead>
       <TransitionGroup name="list" tag="tbody">
@@ -51,11 +51,11 @@ defineEmits(['toggle'])
 }
 
 .habit-list-card {
-  background: #fff;
-  border: 1px solid #edf0f5;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .habit-table {
@@ -68,17 +68,17 @@ defineEmits(['toggle'])
   padding: 14px 12px;
   font-size: 12px;
   font-weight: 600;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border-bottom: 1px solid #f1f5f9;
-  background: #fafbfc;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-surface-secondary);
 }
 
 .empty {
   text-align: center;
   padding: 28px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 14px;
 }
 </style>

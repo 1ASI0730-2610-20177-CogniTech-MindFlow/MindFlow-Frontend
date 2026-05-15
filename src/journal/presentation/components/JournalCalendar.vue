@@ -1,20 +1,20 @@
 <template>
 
-  <div class="calendar">
+  <div class="calendar theme-transition">
 
     <div class="calendar-header">
 
-      <h3>
+      <h3 class="theme-transition">
         {{ currentMonthName }} {{ currentYear }}
       </h3>
 
-      <span @click="previousMonth">
+      <span @click="previousMonth" class="theme-transition">
         {{ $t('journal.calendar.previousMonth') }}
       </span>
 
     </div>
 
-    <div class="weekdays">
+    <div class="weekdays theme-transition">
 
       <div v-for="(day, index) in localizedWeekdays" :key="index">
         {{ day }}
@@ -27,7 +27,7 @@
       <div
           v-for="day in days"
           :key="day.number"
-          class="day"
+          class="day theme-transition"
           :class="[
           day.mood,
           { selected: selectedDay === day.number }
@@ -39,7 +39,7 @@
 
     </div>
 
-    <div class="legend">
+    <div class="legend theme-transition">
 
       <div class="legend-item">
         <span class="dot positive"></span>
@@ -171,12 +171,12 @@ const days = ref(
 .calendar-header h3 {
   font-size: 18px;
   font-weight: 700;
-  color: #2b2b2b;
+  color: var(--text-primary);
 }
 
 .calendar-header span {
   font-size: 13px;
-  color: #5b8def;
+  color: var(--accent-primary);
   font-weight: 500;
   cursor: pointer;
 }
@@ -191,7 +191,7 @@ const days = ref(
 
   font-size: 12px;
 
-  color: #9ca3af;
+  color: var(--text-muted);
 
   font-weight: 600;
 }
@@ -227,18 +227,21 @@ const days = ref(
 }
 
 .day {
-  background: #ffffff;
+  background: var(--bg-surface);
+  color: var(--text-primary);
 
-  border: 1px solid #edf0f5;
+  border: 1px solid var(--border-light);
 }
 .day.positive {
   background: #6fcf97;
   border-color: #6fcf97;
+  color: #fff;
 }
 
 .day.neutral {
   background: #f2c94c;
   border-color: #f2c94c;
+  color: #111827;
 }
 
 .day.negative {
@@ -260,11 +263,11 @@ const days = ref(
   background: #f58c8c;
 }
 .day:not(.positive):not(.neutral):not(.negative):hover {
-  background: #f9fafb;
+  background: var(--bg-surface-secondary);
 }
 
 .selected {
-  border: 2px solid #111827;
+  border: 2px solid var(--text-primary);
 }
 
 /* LEGEND */
@@ -282,7 +285,7 @@ const days = ref(
   gap: 6px;
 
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .dot {

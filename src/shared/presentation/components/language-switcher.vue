@@ -1,5 +1,5 @@
 <template>
-  <button class="lang-btn" @click="toggleLanguage">
+  <button class="lang-btn theme-transition" @click="toggleLanguage">
     <span>🌐</span>
     <span>{{ currentLang.toUpperCase() }}</span>
   </button>
@@ -25,18 +25,23 @@ const toggleLanguage = () => {
   height: 40px;
   padding: 0 12px;
   border-radius: 9999px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #475569;
+  color: var(--text-secondary);
   cursor: pointer;
   font: inherit;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
 
 .lang-btn:hover {
-  background: #f1f5f9;
+  background: var(--border-color);
+}
+
+/* Specific styling to ensure text is visible in dark mode since it's in the topbar */
+:global(.dark-mode) .lang-btn {
+  color: var(--text-primary);
 }
 </style>

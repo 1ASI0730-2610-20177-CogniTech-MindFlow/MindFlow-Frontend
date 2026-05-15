@@ -7,7 +7,8 @@ const api = new SettingsApiService()
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
         profile: null,
-        isLoading: false
+        isLoading: false,
+        darkMode: false
     }),
     actions: {
         async fetchProfile(userId) {
@@ -43,6 +44,29 @@ export const useSettingsStore = defineStore('settings', {
                 alert('Cambios guardados con éxito')
             } catch (error) {
                 console.error('Error al guardar:', error)
+            }
+        },
+        toggleDarkMode() {
+            if (this.darkMode) {
+                document.documentElement.classList.add('dark-mode')
+                localStorage.setItem('mindflow-theme', 'dark')
+            } else {
+                document.documentElement.classList.remove('dark-mode')
+                localStorage.setItem('mindflow-theme', 'light')
+            }
+        },
+        initDarkMode() {
+            // Check local storage first
+            const savedTheme = localStorage.getItem('mindflow-theme')
+            
+            if (savedTheme === 'dark') {
+                this.darkMode = true
+                document.documentElement.classList.add('dark-mode')
+            } else {
+                // If light or not set, default to light mode
+                this.darkMode = false
+                document.documentElement.classList.remove('dark-mode')
+                localStorage.setItem('mindflow-theme', 'light') // Ensure it's set to light initially
             }
         }
     }

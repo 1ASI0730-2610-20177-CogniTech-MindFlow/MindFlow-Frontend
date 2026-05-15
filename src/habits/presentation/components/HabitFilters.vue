@@ -7,11 +7,13 @@
           type="text"
           :placeholder="$t('habits.filters.searchPlaceholder')"
           @input="$emit('update:searchQuery', $event.target.value)"
+          class="theme-transition"
       />
     </div>
     <select
         :value="statusFilter"
         @change="$emit('update:statusFilter', $event.target.value)"
+        class="theme-transition"
     >
       <option value="all">{{ $t('habits.filters.status.all') }}</option>
       <option value="completed">{{ $t('habits.filters.status.completed') }}</option>
@@ -47,7 +49,7 @@ defineEmits(['update:searchQuery', 'update:statusFilter'])
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 14px;
 }
 
@@ -55,12 +57,12 @@ defineEmits(['update:searchQuery', 'update:statusFilter'])
 .habit-filters select {
   width: 100%;
   height: 42px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   font: inherit;
   font-size: 14px;
-  color: #334155;
-  background: #fff;
+  color: var(--text-primary);
+  background: var(--bg-surface);
   outline: none;
 }
 
@@ -74,7 +76,7 @@ defineEmits(['update:searchQuery', 'update:statusFilter'])
 
 .search-wrap input:focus,
 .habit-filters select:focus {
-  border-color: #a5b4fc;
+  border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 </style>

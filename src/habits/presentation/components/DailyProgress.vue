@@ -1,11 +1,11 @@
 <template>
-  <section class="progress-card">
+  <section class="progress-card theme-transition">
     <div class="progress-header">
-      <h3>Progreso Diario</h3>
-      <span class="progress-label">{{ progress.percent }}% Completado ({{ progress.completed }}/{{ progress.total }})</span>
+      <h3 class="theme-transition">Progreso Diario</h3>
+      <span class="progress-label theme-transition">{{ progress.percent }}% Completado ({{ progress.completed }}/{{ progress.total }})</span>
     </div>
-    <div class="progress-track">
-      <div class="progress-fill" :style="{ width: `${progress.percent}%` }" />
+    <div class="progress-track theme-transition">
+      <div class="progress-fill theme-transition" :style="{ width: `${progress.percent}%` }" />
     </div>
   </section>
 </template>
@@ -21,12 +21,12 @@ defineProps({
 
 <style scoped>
 .progress-card {
-  background: #fff;
-  border: 1px solid #edf0f5;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
   border-radius: 14px;
   padding: 18px 20px;
   margin-bottom: 20px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .progress-header {
@@ -40,24 +40,24 @@ defineProps({
   margin: 0;
   font-size: 15px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .progress-label {
   font-size: 13px;
-  color: #64748b;
+  color: var(--text-secondary);
 }
 
 .progress-track {
   height: 10px;
-  background: #ecfdf5;
+  background: var(--bg-surface-secondary);
   border-radius: 999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #22c55e, #16a34a);
+  background: linear-gradient(90deg, var(--accent-success), #16a34a);
   border-radius: 999px;
   transition: width 0.25s ease;
 }

@@ -1,5 +1,5 @@
 <template>
-  <tr class="habit-row hover-lift" :class="{ paused: habit.isPaused() }">
+  <tr class="habit-row hover-lift theme-transition" :class="{ paused: habit.isPaused() }">
     <td class="status-cell">
       <button
           type="button"
@@ -13,7 +13,7 @@
         <span v-else class="pending-ring"></span>
       </button>
     </td>
-    <td class="name-cell" :class="{ done: habit.isCompleted() }">
+    <td class="name-cell theme-transition" :class="{ done: habit.isCompleted() }">
       {{ habit.name }}
     </td>
     <td>
@@ -26,11 +26,11 @@
         <span class="paused-label">Pausado por IA</span>
       </template>
       <template v-else>
-        <span v-if="habit.currentStreak > 0" class="streak">
+        <span v-if="habit.currentStreak > 0" class="streak theme-transition">
           <i class="pi pi-bolt streak-icon animate-bounce-subtle"></i>
           {{ habit.currentStreak }} días
         </span>
-        <span v-else class="streak muted">0 días</span>
+        <span v-else class="streak muted theme-transition">0 días</span>
       </template>
     </td>
   </tr>
@@ -87,11 +87,11 @@ const categoryStyle = computed(() => {
 
 /* Interactions */
 .hover-lift {
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .hover-lift:hover {
   transform: translateX(4px); /* Slight nudge instead of vertical lift for table rows */
-  background-color: #f8fafc;
+  background-color: var(--bg-surface-secondary);
 }
 
 .hover-scale {
@@ -103,12 +103,12 @@ const categoryStyle = computed(() => {
 
 .habit-row td {
   padding: 14px 12px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border-light);
   vertical-align: middle;
 }
 
 .habit-row.paused td {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .status-btn {
@@ -128,37 +128,37 @@ const categoryStyle = computed(() => {
 }
 
 .done-icon {
-  color: #22c55e;
+  color: var(--accent-success);
   font-size: 22px;
 }
 
 .paused-icon {
-  color: #f59e0b;
+  color: var(--accent-warning);
   font-size: 22px;
 }
 
 .pending-ring {
   width: 20px;
   height: 20px;
-  border: 2px solid #cbd5e1;
+  border: 2px solid var(--text-secondary);
   border-radius: 50%;
   display: inline-block;
   transition: border-color 0.2s ease;
 }
 .status-btn:hover:not(:disabled) .pending-ring {
-  border-color: #94a3b8; /* Darken slightly on hover */
+  border-color: var(--text-muted); /* Darken slightly on hover */
 }
 
 .name-cell {
   font-size: 14px;
   font-weight: 500;
-  color: #1e293b;
+  color: var(--text-primary);
   transition: color 0.3s ease; /* Smooth transition for strike-through */
 }
 
 .name-cell.done {
   text-decoration: line-through;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .category-tag {
@@ -174,7 +174,7 @@ const categoryStyle = computed(() => {
   align-items: center;
   gap: 4px;
   font-size: 13px;
-  color: #475569;
+  color: var(--text-secondary);
 }
 
 .streak-icon {
@@ -183,12 +183,12 @@ const categoryStyle = computed(() => {
 }
 
 .streak.muted {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .paused-label {
   font-size: 13px;
   font-weight: 600;
-  color: #d97706;
+  color: var(--accent-warning);
 }
 </style>

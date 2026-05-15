@@ -1,13 +1,13 @@
 <template>
   <Layout>
-    <div class="journal-page">
+    <div class="journal-page theme-transition">
       <div class="page-header animate-fade-in-down">
-        <h1>{{ $t('journal.title') }}</h1>
+        <h1 class="theme-transition">{{ $t('journal.title') }}</h1>
       </div>
 
       <div class="journal-grid">
         <div class="left-panel animate-fade-in-left delay-1">
-          <div class="card hover-lift">
+          <div class="card hover-lift theme-transition">
             <JournalFilters
                 @change-state="handleMoodChange"
             />
@@ -74,7 +74,7 @@ const entries = [
 ]
 </script>
 
-<style>
+<style scoped>
 /* Animations */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -110,7 +110,7 @@ const entries = [
 
 /* Interactions */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 .hover-lift:hover {
   transform: translateY(-4px);
@@ -119,7 +119,7 @@ const entries = [
 
 .journal-page {
   min-height: 100vh;
-  background: #f5f7fb;
+  background: var(--bg-primary);
   padding: 28px;
   font-family: Inter, sans-serif;
 }
@@ -134,7 +134,7 @@ const entries = [
 .page-header h1 {
   font-size: 20px;
   font-weight: 700;
-  color: #2b2b2b;
+  color: var(--text-primary);
 }
 
 .search-box input {
@@ -142,15 +142,16 @@ const entries = [
   height: 44px;
   padding: 0 18px;
   border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: white;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-primary);
   font-size: 14px;
   outline: none;
   transition: .2s ease;
 }
 
 .search-box input:focus {
-  border-color: #5b8def;
+  border-color: var(--accent-primary);
   box-shadow:
       0 0 0 4px rgba(91,141,239,.12);
 }
@@ -163,13 +164,13 @@ const entries = [
 }
 
 .card {
-  background: white;
+  background: var(--bg-surface);
   border-radius: 18px;
   padding: 24px;
-  border: 1px solid #edf0f5;
+  border: 1px solid var(--border-light);
   box-shadow:
-      0 1px 2px rgba(0,0,0,0.02),
-      0 8px 24px rgba(0,0,0,0.03);
+      0 1px 2px var(--shadow-sm),
+      0 8px 24px var(--shadow-lg);
 }
 
 .right-panel {

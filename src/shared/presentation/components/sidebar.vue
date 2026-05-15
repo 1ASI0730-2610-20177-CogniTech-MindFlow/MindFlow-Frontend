@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar">
+  <aside class="sidebar theme-transition">
     <div class="logo">
       <img src="/assets/mindflow-logo.png" alt="MindFlow Logo" class="logo-img" />
       <span class="logo-text">MindFlow</span>
@@ -10,7 +10,7 @@
           v-for="item in menuItems"
           :key="item.path"
           :to="item.path"
-          class="nav-item"
+          class="nav-item theme-transition"
           active-class="active"
       >
         <span class="nav-icon"><i :class="['pi', item.icon]"></i></span>
@@ -37,8 +37,8 @@ const menuItems = [
 <style scoped>
 .sidebar {
   width: 256px;
-  background: #ffffff;
-  border-right: 1px solid #e2e8f0;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -59,7 +59,7 @@ const menuItems = [
 }
 
 .logo-text {
-  color: #4f46e5;
+  color: var(--accent-primary);
   font-weight: 600;
   font-size: 18px;
 }
@@ -79,20 +79,19 @@ const menuItems = [
   padding: 8px 12px;
   border-radius: 8px;
   background: transparent;
-  color: #475569;
+  color: var(--text-secondary);
   text-decoration: none;
   font: inherit;
-  transition: background 0.15s;
 }
 
 .nav-item:hover {
-  background: #f8fafc;
+  background: var(--bg-surface-secondary);
 }
 
 .nav-item.active {
-  background: #eef2ff;
-  color: #4f46e5;
-  border: 1px solid #e0e7ff;
+  background: var(--accent-primary);
+  color: #fff;
+  border: 1px solid var(--accent-primary);
 }
 
 .nav-icon {
