@@ -1,7 +1,7 @@
 <template>
   <header class="topbar">
     <div>
-      <h2 class="greeting">Hola, Usuario</h2>
+      <h2 class="greeting">{{ currentTitle }}</h2>
       <p class="subtitle">{{ formattedDate }} · Tu IA está lista para escucharte.</p>
     </div>
 
@@ -20,7 +20,14 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import LanguageSwitcher from './language-switcher.vue'
+
+const route = useRoute()
+
+const currentTitle = computed(() => {
+  return route.meta?.title || 'Hola, Usuario'
+})
 
 const formattedDate = computed(() => {
   const options = { weekday: 'long', day: 'numeric', month: 'long' }
@@ -41,7 +48,8 @@ const formattedDate = computed(() => {
 
 .greeting {
   color: #0f172a;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 600;
   margin: 0 0 4px 0;
 }
 
@@ -57,10 +65,7 @@ const formattedDate = computed(() => {
   gap: 16px;
 }
 
-.search {
-  position: relative;
-}
-
+.search { position: relative; }
 .search-icon {
   position: absolute;
   left: 12px;
@@ -69,7 +74,6 @@ const formattedDate = computed(() => {
   color: #94a3b8;
   font-size: 13px;
 }
-
 .search input {
   width: 256px;
   padding: 8px 12px 8px 36px;
@@ -80,17 +84,15 @@ const formattedDate = computed(() => {
   font: inherit;
   transition: border-color 0.15s, background 0.15s;
 }
-
 .search input:focus {
   border-color: #a5b4fc;
   background: #fff;
 }
-
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 9999px;
-  background: linear-gradient(135deg, #22d3ee, #14b8a6);
+  background: linear-gradient(135deg, #2dd4bf, #14b8a6);
   color: #fff;
   display: flex;
   align-items: center;
