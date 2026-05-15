@@ -1,0 +1,419 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Carlos Mendoza",
+      "email": "carlos.mendoza@email.com",
+      "password": "$2b$10$hashed_password_1",
+      "occupation": "Software Engineer",
+      "is_premium": true,
+      "created_at": "2024-01-15T08:30:00Z"
+    },
+    {
+      "id": "u2",
+      "name": "Ana García",
+      "email": "ana.garcia@email.com",
+      "password": "$2b$10$hashed_password_2",
+      "occupation": "Diseñadora UX",
+      "is_premium": false,
+      "created_at": "2024-02-10T10:00:00Z"
+    },
+    {
+      "id": "u3",
+      "name": "Luis Herrera",
+      "email": "luis.herrera@email.com",
+      "password": "$2b$10$hashed_password_3",
+      "occupation": "Psicólogo",
+      "is_premium": true,
+      "created_at": "2024-03-05T09:15:00Z"
+    },
+    {
+      "id": "u4",
+      "name": "Sofía Torres",
+      "email": "sofia.torres@email.com",
+      "password": "$2b$10$hashed_password_4",
+      "occupation": "Estudiante",
+      "is_premium": false,
+      "created_at": "2024-04-20T14:45:00Z"
+    },
+    {
+      "id": "u5",
+      "name": "Javier Ramos",
+      "email": "javier.ramos@email.com",
+      "password": "$2b$10$hashed_password_5",
+      "occupation": "Médico",
+      "is_premium": true,
+      "created_at": "2024-05-01T07:00:00Z"
+    }
+  ],
+  "habits": [
+    {
+      "id": "h1",
+      "user_id": "u1",
+      "name": "Meditación matutina",
+      "frequency": "daily",
+      "streak": 14,
+      "created_at": "2024-01-20T07:00:00Z"
+    },
+    {
+      "id": "h2",
+      "user_id": "u1",
+      "name": "Ejercicio 30 min",
+      "frequency": "daily",
+      "streak": 7,
+      "created_at": "2024-01-22T07:00:00Z"
+    },
+    {
+      "id": "h3",
+      "user_id": "u2",
+      "name": "Leer 20 páginas",
+      "frequency": "daily",
+      "streak": 21,
+      "created_at": "2024-02-15T08:00:00Z"
+    },
+    {
+      "id": "h4",
+      "user_id": "u3",
+      "name": "Journaling nocturno",
+      "frequency": "daily",
+      "streak": 30,
+      "created_at": "2024-03-10T20:00:00Z"
+    },
+    {
+      "id": "h5",
+      "user_id": "u4",
+      "name": "Yoga",
+      "frequency": "weekly",
+      "streak": 5,
+      "created_at": "2024-04-25T06:00:00Z"
+    },
+    {
+      "id": "h6",
+      "user_id": "u5",
+      "name": "Sin redes sociales antes de dormir",
+      "frequency": "daily",
+      "streak": 10,
+      "created_at": "2024-05-05T21:00:00Z"
+    },
+    {
+      "id": "h7",
+      "user_id": "u2",
+      "name": "Beber 2L de agua",
+      "frequency": "daily",
+      "streak": 12,
+      "created_at": "2024-02-20T08:00:00Z"
+    }
+  ],
+  "habitLogs": [
+    {
+      "id": "hl1",
+      "habit_id": "h1",
+      "completed_at": "2024-05-10T07:05:00Z"
+    },
+    {
+      "id": "hl2",
+      "habit_id": "h1",
+      "completed_at": "2024-05-11T07:10:00Z"
+    },
+    {
+      "id": "hl3",
+      "habit_id": "h2",
+      "completed_at": "2024-05-10T08:00:00Z"
+    },
+    {
+      "id": "hl4",
+      "habit_id": "h3",
+      "completed_at": "2024-05-09T22:00:00Z"
+    },
+    {
+      "id": "hl5",
+      "habit_id": "h3",
+      "completed_at": "2024-05-10T22:15:00Z"
+    },
+    {
+      "id": "hl6",
+      "habit_id": "h4",
+      "completed_at": "2024-05-10T23:00:00Z"
+    },
+    {
+      "id": "hl7",
+      "habit_id": "h5",
+      "completed_at": "2024-05-08T06:30:00Z"
+    },
+    {
+      "id": "hl8",
+      "habit_id": "h6",
+      "completed_at": "2024-05-10T22:00:00Z"
+    },
+    {
+      "id": "hl9",
+      "habit_id": "h7",
+      "completed_at": "2024-05-11T18:00:00Z"
+    },
+    {
+      "id": "hl10",
+      "habit_id": "h2",
+      "completed_at": "2024-05-11T08:30:00Z"
+    }
+  ],
+  "journalEntries": [
+    {
+      "id": "je1",
+      "user_id": "u1",
+      "content": "Hoy fue un día muy productivo. Logré terminar el sprint y medité por 20 minutos. Me siento en paz.",
+      "sentiment": "positive",
+      "created_at": "2024-05-10T22:00:00Z"
+    },
+    {
+      "id": "je2",
+      "user_id": "u1",
+      "content": "Tuve una reunión difícil con el equipo. Siento que no me escucharon bien. Debo trabajar en mi comunicación.",
+      "sentiment": "negative",
+      "created_at": "2024-05-08T21:30:00Z"
+    },
+    {
+      "id": "je3",
+      "user_id": "u2",
+      "content": "Terminé el libro que llevaba meses leyendo. Fue una historia hermosa. Ahora sé qué quiero en mi próximo proyecto.",
+      "sentiment": "positive",
+      "created_at": "2024-05-09T20:00:00Z"
+    },
+    {
+      "id": "je4",
+      "user_id": "u3",
+      "content": "Sesión de terapia muy reveladora. Empiezo a entender patrones de comportamiento que me frenan.",
+      "sentiment": "neutral",
+      "created_at": "2024-05-07T19:00:00Z"
+    },
+    {
+      "id": "je5",
+      "user_id": "u4",
+      "content": "Los exámenes finales están pesando. Me siento agotada pero también orgullosa del esfuerzo que estoy haciendo.",
+      "sentiment": "neutral",
+      "created_at": "2024-05-11T23:00:00Z"
+    },
+    {
+      "id": "je6",
+      "user_id": "u5",
+      "content": "Primer día sin revisar el teléfono antes de dormir. Dormí muchísimo mejor. Vale la pena el esfuerzo.",
+      "sentiment": "positive",
+      "created_at": "2024-05-10T22:45:00Z"
+    },
+    {
+      "id": "je7",
+      "user_id": "u2",
+      "content": "Me frustré con un cliente hoy. Tuve que respirar profundo varias veces. Al final todo salió bien.",
+      "sentiment": "negative",
+      "created_at": "2024-05-06T18:00:00Z"
+    },
+    {
+      "id": "je8",
+      "user_id": "u3",
+      "content": "Hoy ayudé a un paciente a superar un bloqueo que llevaba semanas. Es por esto que amo mi trabajo.",
+      "sentiment": "positive",
+      "created_at": "2024-05-11T20:00:00Z"
+    }
+  ],
+  "tags": [
+    {
+      "id": "t1",
+      "name": "trabajo"
+    },
+    {
+      "id": "t2",
+      "name": "salud"
+    },
+    {
+      "id": "t3",
+      "name": "familia"
+    },
+    {
+      "id": "t4",
+      "name": "crecimiento personal"
+    },
+    {
+      "id": "t5",
+      "name": "emociones"
+    },
+    {
+      "id": "t6",
+      "name": "gratitud"
+    },
+    {
+      "id": "t7",
+      "name": "metas"
+    },
+    {
+      "id": "t8",
+      "name": "mindfulness"
+    }
+  ],
+  "journalEntryTags": [
+    {
+      "id": "jet1",
+      "entry_id": "je1",
+      "tag_id": "t8"
+    },
+    {
+      "id": "jet2",
+      "entry_id": "je1",
+      "tag_id": "t6"
+    },
+    {
+      "id": "jet3",
+      "entry_id": "je2",
+      "tag_id": "t1"
+    },
+    {
+      "id": "jet4",
+      "entry_id": "je2",
+      "tag_id": "t5"
+    },
+    {
+      "id": "jet5",
+      "entry_id": "je3",
+      "tag_id": "t4"
+    },
+    {
+      "id": "jet6",
+      "entry_id": "je4",
+      "tag_id": "t4"
+    },
+    {
+      "id": "jet7",
+      "entry_id": "je4",
+      "tag_id": "t5"
+    },
+    {
+      "id": "jet8",
+      "entry_id": "je5",
+      "tag_id": "t7"
+    },
+    {
+      "id": "jet9",
+      "entry_id": "je6",
+      "tag_id": "t2"
+    },
+    {
+      "id": "jet10",
+      "entry_id": "je7",
+      "tag_id": "t1"
+    },
+    {
+      "id": "jet11",
+      "entry_id": "je8",
+      "tag_id": "t6"
+    },
+    {
+      "id": "jet12",
+      "entry_id": "je8",
+      "tag_id": "t3"
+    }
+  ],
+  "media": [
+    {
+      "id": "m1",
+      "entry_id": "je1",
+      "url": "https://storage.example.com/media/u1/photo_20240510.jpg",
+      "type": "image"
+    },
+    {
+      "id": "m2",
+      "entry_id": "je3",
+      "url": "https://storage.example.com/media/u2/voice_note_20240509.mp3",
+      "type": "audio"
+    },
+    {
+      "id": "m3",
+      "entry_id": "je5",
+      "url": "https://storage.example.com/media/u4/study_photo.jpg",
+      "type": "image"
+    },
+    {
+      "id": "m4",
+      "entry_id": "je6",
+      "url": "https://storage.example.com/media/u5/sleep_stats.pdf",
+      "type": "document"
+    },
+    {
+      "id": "m5",
+      "entry_id": "je8",
+      "url": "https://storage.example.com/media/u3/session_notes.pdf",
+      "type": "document"
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "s1",
+      "user_id": "u1",
+      "type": "premium_annual",
+      "status": "active",
+      "start_date": "2024-01-15T00:00:00Z",
+      "end_date": "2025-01-15T00:00:00Z"
+    },
+    {
+      "id": "s2",
+      "user_id": "u3",
+      "type": "premium_monthly",
+      "status": "active",
+      "start_date": "2024-05-01T00:00:00Z",
+      "end_date": "2024-06-01T00:00:00Z"
+    },
+    {
+      "id": "s3",
+      "user_id": "u5",
+      "type": "premium_annual",
+      "status": "active",
+      "start_date": "2024-05-01T00:00:00Z",
+      "end_date": "2025-05-01T00:00:00Z"
+    },
+    {
+      "id": "s4",
+      "user_id": "u2",
+      "type": "free_trial",
+      "status": "expired",
+      "start_date": "2024-02-10T00:00:00Z",
+      "end_date": "2024-03-10T00:00:00Z"
+    },
+    {
+      "id": "s5",
+      "user_id": "u4",
+      "type": "free_trial",
+      "status": "active",
+      "start_date": "2024-04-20T00:00:00Z",
+      "end_date": "2024-05-20T00:00:00Z"
+    }
+  ],
+  "analyticsCache": [
+    {
+      "id": "ac1",
+      "user_id": "u1",
+      "generated_at": "2024-05-11T00:00:00Z",
+      "data": "{\"totalEntries\":2,\"avgSentiment\":0.5,\"habitsCompleted\":4,\"streakMax\":14,\"mostUsedTag\":\"mindfulness\"}"
+    },
+    {
+      "id": "ac2",
+      "user_id": "u2",
+      "generated_at": "2024-05-11T00:00:00Z",
+      "data": "{\"totalEntries\":2,\"avgSentiment\":0.3,\"habitsCompleted\":3,\"streakMax\":21,\"mostUsedTag\":\"trabajo\"}"
+    },
+    {
+      "id": "ac3",
+      "user_id": "u3",
+      "generated_at": "2024-05-11T00:00:00Z",
+      "data": "{\"totalEntries\":2,\"avgSentiment\":0.7,\"habitsCompleted\":2,\"streakMax\":30,\"mostUsedTag\":\"crecimiento personal\"}"
+    },
+    {
+      "id": "ac4",
+      "user_id": "u4",
+      "generated_at": "2024-05-11T00:00:00Z",
+      "data": "{\"totalEntries\":1,\"avgSentiment\":0.5,\"habitsCompleted\":1,\"streakMax\":5,\"mostUsedTag\":\"metas\"}"
+    },
+    {
+      "id": "ac5",
+      "user_id": "u5",
+      "generated_at": "2024-05-11T00:00:00Z",
+      "data": "{\"totalEntries\":1,\"avgSentiment\":0.8,\"habitsCompleted\":2,\"streakMax\":10,\"mostUsedTag\":\"salud\"}"
+    }
+  ]
+}
