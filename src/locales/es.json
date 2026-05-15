@@ -15,6 +15,207 @@
   "premium": {
     "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
     "viewPlans": "Ver Planes"
+  },
+  "plansPage": {
+    "hero": {
+      "title": "Invierte en tu bienestar emocional",
+      "subtitle": "Elige el plan que mejor se adapte a tu ritmo. Demócrata e inteligente, MindFlow te acompaña en cada paso hacia tu calma mental."
+    },
+    "badges": {
+      "current": "TU PLAN ACTUAL",
+      "recommended": "RECOMENDADO"
+    },
+    "pricing": {
+      "perMonth": " / mes"
+    },
+    "buttons": {
+      "activePlan": "Plan Activo",
+      "downgrade": "Bajar de Plan",
+      "upgrade": "Actualizar a Premium"
+    },
+    "freemium": {
+      "title": "Freemium",
+      "desc": "Todo lo necesario para empezar a construir autoconocimiento.",
+      "features": {
+        "f1Bold": "AI Mood Journal:",
+        "f1Text": " Diario interactivo con NLP",
+        "f2Bold": "Dynamic Habit Tracker:",
+        "f2Text": " Ajuste basado en estrés",
+        "f3Bold": "Smart Interventions:",
+        "f3Text": " Guías de respiración",
+        "f4Bold": "Analíticas Básicas:",
+        "f4Text": " Calendario y Word Cloud",
+        "f5": "Exportación de Reportes PDF",
+        "f6": "Exportación de Datos CSV"
+      }
+    },
+    "premium": {
+      "title": "MindFlow Premium",
+      "desc": "Para quienes buscan un análisis profundo y acompañamiento profesional.",
+      "features": {
+        "f1": "Todo lo incluido en Freemium",
+        "f2Bold": "Exportación PDF:",
+        "f2Text": " Descarga historiales clínicos.",
+        "f3Bold": "Exportación CSV:",
+        "f3Text": " Accede a tus datos en bruto.",
+        "f4Bold": "Analíticas Avanzadas:",
+        "f4Text": " Gráficos detallados.",
+        "f5Bold": "Soporte Prioritario:",
+        "f5Text": " Resolución de dudas técnicas."
+      }
+    },
+    "footer": "🔒 Pagos encriptados y procesados de forma segura a través de Stripe.",
+    "loading": "Cargando información de planes..."
+  },
+  "settings": {
+    "profile": {
+      "changeAvatar": "Cambiar Avatar",
+      "fullName": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "occupation": "Ocupación",
+      "timezone": "Zona Horaria",
+      "saveChanges": "Guardar Cambios"
+    },
+    "privacy": {
+      "title": "Privacidad y Experiencia",
+      "pinLock": "Bloqueo por PIN (AES-256)",
+      "pinLockDesc": "Solicitar código de 4 dígitos al abrir la app.",
+      "darkMode": "Modo Oscuro",
+      "darkModeDesc": "Ideal para registrar emociones en la noche.",
+      "habitReminders": "Recordatorios de Hábitos",
+      "habitRemindersDesc": "Notificaciones push para hidratación y pausas."
+    },
+    "subscription": {
+      "title": "Suscripción",
+      "currentPlan": "Plan Actual",
+      "features": {
+        "journal": "IA Mood Journal",
+        "habits": "Gestor de Hábitos",
+        "pdf": "Exportación a PDF",
+        "clinical": "Reportes Clínicos"
+      },
+      "upgrade": "Mejorar a Premium"
+    },
+    "support": {
+      "title": "Soporte Técnico",
+      "ticket": "Generar Ticket de Ayuda",
+      "faq": "Centro de Preguntas (FAQ)"
+    },
+    "dangerZone": {
+      "title": "Zona de Peligro",
+      "warning": "Eliminar tu cuenta purgará permanentemente todos tus registros encriptados.",
+      "deleteAccount": "Eliminar mi cuenta"
+    },
+    "loading": "Cargando configuración..."
+  },
+  "journal": {
+    "title": "Tu Historial Emocional",
+    "filters": {
+      "searchPlaceholder": "Buscar en tus pensamientos...",
+      "tabs": {
+        "all": "Todos",
+        "work": "Trabajo",
+        "studies": "Estudios",
+        "family": "Familia"
+      },
+      "states": {
+        "all": "Todos",
+        "positive": "Positivo",
+        "neutral": "Neutral",
+        "negative": "Negativo"
+      }
+    },
+    "calendar": {
+      "previousMonth": "Ver Mes Anterior",
+      "weekdays": ["L", "M", "X", "J", "V", "S", "D"],
+      "months": [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ],
+      "legend": {
+        "positive": "Positivo",
+        "neutral": "Neutral",
+        "negative": "Negativo"
+      }
+    }
+  },
+  "habits": {
+    "title": "Hábitos",
+    "placeholder": {
+      "title": "Sugerencias de IA",
+      "desc": "Próximamente: hábitos recomendados según tu estado emocional y rutinas actuales."
+    },
+    "tabs": {
+      "routines": "Mis Rutinas",
+      "suggestions": "Sugerencias de IA",
+      "history": "Historial"
+    },
+    "alerts": {
+      "stressTitle": "MindFlow AI",
+      "stressMessage": " detecta niveles de estrés por encima del promedio. Hemos pausado tus tareas de alta exigencia cognitiva automáticamente. Prioriza hoy tu bienestar y descanso."
+    },
+    "addForm": {
+      "title": "Añadir Nuevo Hábito",
+      "placeholder": "Ej. Leer 10 páginas antes de dormir...",
+      "category": "Categoría",
+      "frequency": {
+        "daily": "Diario",
+        "weekly": "Semanal",
+        "monthly": "Mensual"
+      },
+      "create": "Crear"
+    },
+    "filters": {
+      "searchPlaceholder": "Filtrar tus hábitos...",
+      "status": {
+        "all": "Estado: Todos",
+        "completed": "Completados",
+        "pending": "Pendientes",
+        "paused_by_ai": "Pausados por IA"
+      }
+    },
+    "history": {
+      "empty": "Aún no hay registros de semanas anteriores.",
+      "daysCompleted": "días cumplidos",
+      "streak": "Racha:",
+      "days": "días"
+    }
+  },
+  "analytics": {
+    "title": "Tu Panorama Emocional",
+    "telemetry": "SINC. BIOMÉTRICA ACTIVA // V.3.1.0",
+    "loading": "Cifrando y analizando datos biométricos...",
+    "components": {
+      "wordCloud": {
+        "title": "nube de palabras frecuentes",
+        "words": {
+          "calm": "Calma",
+          "anxious": "> ansioso.log",
+          "productive": "Productivo",
+          "grateful": "Agradecido",
+          "family": "[FAMILIA]",
+          "tired": "Cansado"
+        }
+      },
+      "export": {
+        "title": "Exportar Reportes Clínicos",
+        "desc": "Descarga tu historial estructurado con gráficas para compartirlo formalmente con tu psicólogo."
+      },
+      "weeklySummary": {
+        "stabilityIndex": "Índice de Estabilidad",
+        "active": "ACTIVO"
+      },
+      "fluctuationChart": {
+        "title": "Nivel de Actividad en Sesiones",
+        "yLabel": "Cantidad de tareas / Fase"
+      },
+      "trendChart": {
+        "title": "Tendencia de Ánimo",
+        "legend": {
+          "wellbeing": "Nivel de Bienestar",
+          "stress": "Carga de Estrés"
+        }
+      }
+    }
   }
 }
-
