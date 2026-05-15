@@ -9,14 +9,11 @@ const routes = [
     component: Home,
     meta: { title: 'Inicio - MindFlow' }
   },
-  // Comentamos el dashboard temporalmente hasta que crees el archivo
-  /*
   {
     path: '/dashboard',
     component: () => import('./dashboard/presentation/views/dashboard.vue'),
     meta: { title: 'Dashboard' }
   },
-  */
   {
     path: '/:pathMatch(.*)*',
     component: PageNotFound,
