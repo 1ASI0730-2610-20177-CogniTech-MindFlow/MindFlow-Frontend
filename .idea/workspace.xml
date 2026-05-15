@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/locales/es.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/es.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pinia.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pinia.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/base-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/base-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/base-endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/base-endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/language-switcher.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/language-switcher.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/layout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/premium-banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/premium-banner.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/sidebar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/topbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/topbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/presentation/views/page-not-found.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/views/page-not-found.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="56" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "JFranco556"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/1ASI0730-2610-20177-CogniTech-MindFlow/MindFlow-Frontend.git",
+    "accountId": "4833b7bf-ed95-48c3-8441-19ba3d1e736b"
+  }
+}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3Dm0j85yDRUcYXcDmSzWAEToIzb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="" />
+      <created>1778872069069</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778872069069</updated>
+      <workItem from="1778872070076" duration="1642000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
