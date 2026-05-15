@@ -5,7 +5,13 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
+import { useSettingsStore } from '@/settings/application/settings.store'
 
+onMounted(() => {
+  const settingsStore = useSettingsStore()
+  settingsStore.initDarkMode()
+})
 </script>
 
 <style scoped>
@@ -15,4 +21,3 @@
   overflow: hidden;
 }
 </style>
-

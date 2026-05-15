@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="content-placeholder">
+    <div class="content-placeholder theme-transition">
       Área de contenido
     </div>
   </Layout>
@@ -14,13 +14,13 @@ import Layout from '../components/layout.vue'
 .content-placeholder {
   height: 100%;
   min-height: 400px;
-  border: 2px dashed #e2e8f0;
+  border: 2px dashed var(--border-color);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 16px;
 }
 </style>

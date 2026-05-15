@@ -15,6 +15,207 @@
   "premium": {
     "description": "Unlock PDF and CSV report export for your therapist.",
     "viewPlans": "View Plans"
+  },
+  "plansPage": {
+    "hero": {
+      "title": "Invest in your emotional well-being",
+      "subtitle": "Choose the plan that best fits your pace. Democratic and smart, MindFlow accompanies you every step towards mental calm."
+    },
+    "badges": {
+      "current": "YOUR CURRENT PLAN",
+      "recommended": "RECOMMENDED"
+    },
+    "pricing": {
+      "perMonth": " / month"
+    },
+    "buttons": {
+      "activePlan": "Active Plan",
+      "downgrade": "Downgrade Plan",
+      "upgrade": "Upgrade to Premium"
+    },
+    "freemium": {
+      "title": "Freemium",
+      "desc": "Everything you need to start building self-awareness.",
+      "features": {
+        "f1Bold": "AI Mood Journal:",
+        "f1Text": " Interactive diary with NLP",
+        "f2Bold": "Dynamic Habit Tracker:",
+        "f2Text": " Stress-based adjustment",
+        "f3Bold": "Smart Interventions:",
+        "f3Text": " Breathing guides",
+        "f4Bold": "Basic Analytics:",
+        "f4Text": " Calendar and Word Cloud",
+        "f5": "PDF Report Export",
+        "f6": "CSV Data Export"
+      }
+    },
+    "premium": {
+      "title": "MindFlow Premium",
+      "desc": "For those seeking deep analysis and professional support.",
+      "features": {
+        "f1": "Everything included in Freemium",
+        "f2Bold": "PDF Export:",
+        "f2Text": " Download clinical records.",
+        "f3Bold": "CSV Export:",
+        "f3Text": " Access your raw data.",
+        "f4Bold": "Advanced Analytics:",
+        "f4Text": " Detailed charts.",
+        "f5Bold": "Priority Support:",
+        "f5Text": " Technical issue resolution."
+      }
+    },
+    "footer": "🔒 Payments encrypted and processed securely via Stripe.",
+    "loading": "Loading plan information..."
+  },
+  "settings": {
+    "profile": {
+      "changeAvatar": "Change Avatar",
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "occupation": "Occupation",
+      "timezone": "Time Zone",
+      "saveChanges": "Save Changes"
+    },
+    "privacy": {
+      "title": "Privacy & Experience",
+      "pinLock": "PIN Lock (AES-256)",
+      "pinLockDesc": "Require a 4-digit code when opening the app.",
+      "darkMode": "Dark Mode",
+      "darkModeDesc": "Ideal for logging emotions at night.",
+      "habitReminders": "Habit Reminders",
+      "habitRemindersDesc": "Push notifications for hydration and breaks."
+    },
+    "subscription": {
+      "title": "Subscription",
+      "currentPlan": "Current Plan",
+      "features": {
+        "journal": "AI Mood Journal",
+        "habits": "Habit Tracker",
+        "pdf": "PDF Export",
+        "clinical": "Clinical Reports"
+      },
+      "upgrade": "Upgrade to Premium"
+    },
+    "support": {
+      "title": "Technical Support",
+      "ticket": "Create Support Ticket",
+      "faq": "Help Center (FAQ)"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "warning": "Deleting your account will permanently purge all your encrypted records.",
+      "deleteAccount": "Delete my account"
+    },
+    "loading": "Loading settings..."
+  },
+  "journal": {
+    "title": "Your Emotional History",
+    "filters": {
+      "searchPlaceholder": "Search in your thoughts...",
+      "tabs": {
+        "all": "All",
+        "work": "Work",
+        "studies": "Studies",
+        "family": "Family"
+      },
+      "states": {
+        "all": "All",
+        "positive": "Positive",
+        "neutral": "Neutral",
+        "negative": "Negative"
+      }
+    },
+    "calendar": {
+      "previousMonth": "View Previous Month",
+      "weekdays": ["M", "T", "W", "T", "F", "S", "S"],
+      "months": [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ],
+      "legend": {
+        "positive": "Positive",
+        "neutral": "Neutral",
+        "negative": "Negative"
+      }
+    }
+  },
+  "habits": {
+    "title": "Habits",
+    "placeholder": {
+      "title": "AI Suggestions",
+      "desc": "Coming soon: Recommended habits based on your emotional state and current routines."
+    },
+    "tabs": {
+      "routines": "My Routines",
+      "suggestions": "AI Suggestions",
+      "history": "History"
+    },
+    "alerts": {
+      "stressTitle": "MindFlow AI",
+      "stressMessage": " detects higher than average stress levels. We have automatically paused your highly demanding cognitive tasks. Prioritize your well-being and rest today."
+    },
+    "addForm": {
+      "title": "Add New Habit",
+      "placeholder": "E.g. Read 10 pages before sleep...",
+      "category": "Category",
+      "frequency": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+      },
+      "create": "Create"
+    },
+    "filters": {
+      "searchPlaceholder": "Filter your habits...",
+      "status": {
+        "all": "Status: All",
+        "completed": "Completed",
+        "pending": "Pending",
+        "paused_by_ai": "Paused by AI"
+      }
+    },
+    "history": {
+      "empty": "No records from previous weeks yet.",
+      "daysCompleted": "days completed",
+      "streak": "Streak:",
+      "days": "days"
+    }
+  },
+  "analytics": {
+    "title": "Your Emotional Landscape",
+    "telemetry": "BIOMETRIC SYNC ACTIVE // V.3.1.0",
+    "loading": "Encrypting and analyzing biometric data...",
+    "components": {
+      "wordCloud": {
+        "title": "frequent word cloud",
+        "words": {
+          "calm": "Calm",
+          "anxious": "> anxious.log",
+          "productive": "Productive",
+          "grateful": "Grateful",
+          "family": "[FAMILY]",
+          "tired": "Tired"
+        }
+      },
+      "export": {
+        "title": "Export Clinical Reports",
+        "desc": "Download your structured history with charts to formally share with your therapist."
+      },
+      "weeklySummary": {
+        "stabilityIndex": "Stability Index",
+        "active": "ACTIVE"
+      },
+      "fluctuationChart": {
+        "title": "Activity Level in Sessions",
+        "yLabel": "Task count / Phase"
+      },
+      "trendChart": {
+        "title": "Mood Trend",
+        "legend": {
+          "wellbeing": "Wellbeing Level",
+          "stress": "Stress Load"
+        }
+      }
+    }
   }
 }
-
