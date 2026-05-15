@@ -9,17 +9,17 @@
           <th>Racha Actual</th>
         </tr>
       </thead>
-      <tbody>
+      <TransitionGroup name="list" tag="tbody">
         <HabitRow
             v-for="habit in habits"
             :key="habit.id"
             :habit="habit"
             @toggle="$emit('toggle', $event)"
         />
-        <tr v-if="habits.length === 0">
+        <tr v-if="habits.length === 0" key="empty-row">
           <td colspan="4" class="empty">No hay hábitos que coincidan con el filtro.</td>
         </tr>
-      </tbody>
+      </TransitionGroup>
     </table>
   </section>
 </template>
@@ -35,6 +35,21 @@ defineEmits(['toggle'])
 </script>
 
 <style scoped>
+/* List Transitions for Vue TransitionGroup */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.4s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+/* Ensure smooth moving when items are deleted */
+.list-leave-active {
+  position: absolute;
+}
+
 .habit-list-card {
   background: #fff;
   border: 1px solid #edf0f5;

@@ -1,13 +1,13 @@
 <template>
   <Layout>
     <div class="journal-page">
-      <div class="page-header">
+      <div class="page-header animate-fade-in-down">
         <h1>{{ $t('journal.title') }}</h1>
       </div>
 
       <div class="journal-grid">
-        <div class="left-panel">
-          <div class="card">
+        <div class="left-panel animate-fade-in-left delay-1">
+          <div class="card hover-lift">
             <JournalFilters
                 @change-state="handleMoodChange"
             />
@@ -19,9 +19,11 @@
 
         <div class="right-panel">
           <JournalEntryCard
-              v-for="entry in entries"
+              v-for="(entry, index) in entries"
               :key="entry.id"
               :entry="entry"
+              class="animate-fade-in-up"
+              :style="{ animationDelay: `${0.2 + (index * 0.1)}s` }"
           />
         </div>
       </div>
@@ -73,6 +75,48 @@ const entries = [
 </script>
 
 <style>
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.15s; }
+
+/* Interactions */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08), 0 4px 8px -4px rgba(0,0,0,0.04);
+}
+
 .journal-page {
   min-height: 100vh;
   background: #f5f7fb;
