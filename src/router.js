@@ -10,6 +10,12 @@ const routes = [
     component: Home,
     meta: { title: 'Inicio - MindFlow' }
   },
+  
+ {
+    path: '/dashboard',
+    component: () => import('./dashboard/presentation/views/dashboard.vue'),
+    meta: { title: 'Dashboard - MindFlow' }
+  },
   {
     path: '/analytics',
     component: AnalyticsView,
@@ -35,6 +41,7 @@ const routes = [
     component: () => import('@/settings/presentation/views/settings.vue'),
     meta: { title: 'Configuración - MindFlow' }
   },
+
   {
     path: '/:pathMatch(.*)*',
     component: PageNotFound,
