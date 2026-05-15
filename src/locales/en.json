@@ -66,5 +66,45 @@
     },
     "footer": "🔒 Payments encrypted and processed securely via Stripe.",
     "loading": "Loading plan information..."
+  "settings": {
+    "profile": {
+      "changeAvatar": "Change Avatar",
+      "fullName": "Full Name",
+      "email": "Email Address",
+      "occupation": "Occupation",
+      "timezone": "Time Zone",
+      "saveChanges": "Save Changes"
+    },
+    "privacy": {
+      "title": "Privacy & Experience",
+      "pinLock": "PIN Lock (AES-256)",
+      "pinLockDesc": "Require a 4-digit code when opening the app.",
+      "darkMode": "Dark Mode",
+      "darkModeDesc": "Ideal for logging emotions at night.",
+      "habitReminders": "Habit Reminders",
+      "habitRemindersDesc": "Push notifications for hydration and breaks."
+    },
+    "subscription": {
+      "title": "Subscription",
+      "currentPlan": "Current Plan",
+      "features": {
+        "journal": "AI Mood Journal",
+        "habits": "Habit Tracker",
+        "pdf": "PDF Export",
+        "clinical": "Clinical Reports"
+      },
+      "upgrade": "Upgrade to Premium"
+    },
+    "support": {
+      "title": "Technical Support",
+      "ticket": "Create Support Ticket",
+      "faq": "Help Center (FAQ)"
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "warning": "Deleting your account will permanently purge all your encrypted records.",
+      "deleteAccount": "Delete my account"
+    },
+    "loading": "Loading settings..."
   }
 }

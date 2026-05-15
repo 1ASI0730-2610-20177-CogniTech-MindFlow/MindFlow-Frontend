@@ -1,0 +1,65 @@
+<template>
+  <div class="habit-tabs">
+    <button
+        v-for="tab in tabs"
+        :key="tab.id"
+        type="button"
+        class="tab"
+        :class="{ active: modelValue === tab.id }"
+        @click="$emit('update:modelValue', tab.id)"
+    >
+      {{ tab.label }}
+    </button>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  modelValue: { type: String, required: true }
+})
+
+defineEmits(['update:modelValue'])
+
+const tabs = [
+  { id: 'routines', label: 'Mis Rutinas' },
+  { id: 'suggestions', label: 'Sugerencias de IA' },
+  { id: 'history', label: 'Historial' }
+]
+</script>
+
+<style scoped>
+.habit-tabs {
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid #e8ecf3;
+  margin-bottom: 22px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 0 0 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #94a3b8;
+  cursor: pointer;
+  position: relative;
+}
+
+.tab.active {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: #4f46e5;
+  border-radius: 2px 2px 0 0;
+}
+</style>
