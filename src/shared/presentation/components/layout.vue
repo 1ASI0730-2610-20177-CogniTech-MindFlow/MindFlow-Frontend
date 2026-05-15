@@ -18,13 +18,15 @@ import Topbar from './topbar.vue'
 <style scoped>
 .app {
   display: flex;
-  min-height: 100vh;
+  height: 100vh; /* Cambiamos min-height por height estricto */
+  overflow: hidden; /* Evita scroll a nivel global */
 }
 
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100vh; /* El área principal no debe superar la ventana */
 }
 
 .content {
