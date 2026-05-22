@@ -46,7 +46,7 @@
       </select>
 
       <input
-          v-model="selectedDate"
+          v-model="selectedDateModel"
           type="date"
           class="date-input theme-transition"
       />
@@ -55,21 +55,31 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useJournalStore } from '@/journal/application/journal.store'
 
-const emit = defineEmits([
-  'change-state'
-])
+const journalStore = useJournalStore()
 
 const selectedTab = ref('Todos')
-const selectedState = ref('Positivo')
-const selectedDate = ref('')
+const selectedState = ref('Todos')
 const search = ref('')
-
-watch(selectedState, (value) => {
-  emit('change-state', value)
+const selectedDateModel = computed({
+  get: () => journalStore.selectedDate,
+  set: (value) => journalStore.setSelectedDate(value)
 })
 
+watch(selectedTab, (value) => {
+  journalStore.setSelectedCategory(value)
+})
+
+watch(selectedState, (value) => {
+  journalStore.setSelectedSentiment(value)
+})
+
+
+watch(search, (value) => {
+  journalStore.setSearchQuery(value)
+})
 </script>
 
 <style scoped>
@@ -139,6 +149,7 @@ watch(selectedState, (value) => {
   color: var(--text-secondary);
   background: var(--bg-surface);
   outline: none;
+  transition: border-color 0.2s ease;
 }
 .select:focus, .date-input:focus {
   border-color: var(--accent-primary);

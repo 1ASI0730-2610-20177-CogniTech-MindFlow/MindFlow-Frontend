@@ -3,7 +3,7 @@
     <div class="entry-header">
       <div class="entry-meta">
         <span class="icon">🗓</span>
-        <span class="date">{{ entry.date }}</span>
+        <span class="date">{{ entry.formattedDate }}</span>
       </div>
       <span class="badge theme-transition">{{ entry.category }}</span>
     </div>

@@ -8,9 +8,14 @@
         {{ currentMonthName }} {{ currentYear }}
       </h3>
 
-      <span @click="previousMonth" class="theme-transition">
-        {{ $t('journal.calendar.previousMonth') }}
-      </span>
+      <div class="month-actions">
+        <button type="button" @click="previousMonth" class="month-action theme-transition">
+          {{ $t('journal.calendar.previousMonth') }}
+        </button>
+        <button type="button" @click="nextMonth" class="month-action theme-transition">
+          {{ $t('journal.calendar.nextMonth') }}
+        </button>
+      </div>
 
     </div>
 
@@ -25,14 +30,15 @@
     <div class="days-grid">
 
       <div
-          v-for="day in days"
-          :key="day.number"
+          v-for="(day, index) in days"
+          :key="index"
           class="day theme-transition"
           :class="[
           day.mood,
-          { selected: selectedDay === day.number }
+          { empty: !day.number }
         ]"
-          @click="updateDayMood(day)"
+          :style="getDayStyle(day)"
+          @click="selectDay(day)"
       >
         {{ day.number }}
       </div>
@@ -63,20 +69,22 @@
 </template>
 
 <script setup>
-
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useJournalStore } from '@/journal/application/journal.store'
 
-const { t, tm } = useI18n()
+const { tm } = useI18n()
+const journalStore = useJournalStore()
 
-const currentMonth = ref(3)
-const currentYear = ref(2026)
-
-const selectedDay = ref(26)
+const currentMonth = ref(4) // Mayo (0-11)
+const currentYear = ref(2024)
+const selectedDate = computed({
+  get: () => journalStore.selectedDate,
+  set: (value) => journalStore.setSelectedDate(value)
+})
 
 const localizedWeekdays = computed(() => {
   const wd = tm('journal.calendar.weekdays')
-  // tm returns the array proxy if defined in locales.
   return Array.isArray(wd) ? wd : ['L', 'M', 'X', 'J', 'V', 'S', 'D']
 })
 
@@ -90,65 +98,92 @@ const currentMonthName = computed(() => {
 })
 
 const previousMonth = () => {
-
   currentMonth.value--
-
   if (currentMonth.value < 0) {
     currentMonth.value = 11
     currentYear.value--
   }
 }
 
-const updateDayMood = (day) => {
-
-  if (props.selectedMood === 'Positivo') {
-    day.mood = 'positive'
+const nextMonth = () => {
+  currentMonth.value++
+  if (currentMonth.value > 11) {
+    currentMonth.value = 0
+    currentYear.value++
   }
-
-  if (props.selectedMood === 'Neutral') {
-    day.mood = 'neutral'
-  }
-
-  if (props.selectedMood === 'Negativo') {
-    day.mood = 'negative'
-  }
-
-  selectedDay.value = day.number
 }
 
-const moods = [
-  'positive',
-  'neutral',
-  'negative'
-]
-
-const props = defineProps({
-  selectedMood: String
+const calendarData = computed(() => {
+  return journalStore.getCalendarData(currentYear.value, currentMonth.value + 1)
 })
 
+const sentimentMap = {
+  'positive': 'positive',
+  'neutral': 'neutral',
+  'negative': 'negative'
+}
 
+const days = computed(() => {
+  const firstDay = new Date(currentYear.value, currentMonth.value, 1)
+  const lastDay = new Date(currentYear.value, currentMonth.value + 1, 0)
+  const daysInMonth = lastDay.getDate()
+  const startingDayOfWeek = firstDay.getDay()
 
-const days = ref(
+  const daysArray = []
 
-    Array.from({ length: 30 }, (_, i) => {
+  for (let i = 0; i < startingDayOfWeek; i++) {
+    daysArray.push({ number: null, mood: '' })
+  }
 
-      const dayNumber = i + 1
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = String(day).padStart(2, '0')
+    const sentiment = calendarData.value[dateStr] || ''
+    const moodClass = sentimentMap[sentiment] || ''
+    const date = `${currentYear.value}-${String(currentMonth.value + 1).padStart(2, '0')}-${dateStr}`
 
-      return {
-
-        number: dayNumber,
-
-
-        mood:
-            dayNumber <= 26
-                ? moods[Math.floor(Math.random() * moods.length)]
-                : ''
-
-      }
-
+    daysArray.push({
+      number: day,
+      mood: moodClass,
+      sentiment: sentiment,
+      date
     })
+  }
 
-)
+  while (daysArray.length % 7 !== 0) {
+    daysArray.push({ number: null, mood: '' })
+  }
+
+  return daysArray
+})
+
+const selectDay = (day) => {
+  if (!day.number) return
+
+  if (selectedDate.value === day.date) {
+    selectedDate.value = ''
+    return
+  }
+
+  selectedDate.value = day.date
+}
+
+const getDayStyle = (day) => {
+  if (!day.number) {
+    return {
+      cursor: 'default',
+      pointerEvents: 'none'
+    }
+  }
+
+  if (selectedDate.value === day.date) {
+    return {
+      border: '2px solid var(--text-primary)'
+    }
+  }
+
+  return {}
+}
+
 
 </script>
 
@@ -168,24 +203,42 @@ const days = ref(
   align-items: center;
 }
 
+.month-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .calendar-header h3 {
   font-size: 18px;
   font-weight: 700;
   color: var(--text-primary);
 }
 
-.calendar-header span {
-  font-size: 13px;
+.month-action {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 12px;
   color: var(--accent-primary);
   font-weight: 500;
   cursor: pointer;
+  opacity: 0.9;
+}
+
+.month-action:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 
 
 .weekdays {
   display: grid;
-  grid-template-columns: repeat(7,1fr);
+  grid-template-columns: repeat(7, 40px);
+  gap: 8px;
+  justify-content: center;
 
   text-align: center;
 
@@ -196,12 +249,10 @@ const days = ref(
   font-weight: 600;
 }
 
-/* GRID */
-
 .days-grid {
   display: grid;
-
-  grid-template-columns: repeat(7,1fr);
+  grid-template-columns: repeat(7, 40px);
+  justify-content: center;
 
   gap: 8px;
 }
@@ -266,11 +317,7 @@ const days = ref(
   background: var(--bg-surface-secondary);
 }
 
-.selected {
-  border: 2px solid var(--text-primary);
-}
 
-/* LEGEND */
 
 .legend {
   display: flex;

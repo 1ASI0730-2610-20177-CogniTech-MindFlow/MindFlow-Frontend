@@ -8,23 +8,22 @@
       <div class="journal-grid">
         <div class="left-panel animate-fade-in-left delay-1">
           <div class="card hover-lift theme-transition">
-            <JournalFilters
-                @change-state="handleMoodChange"
-            />
-            <JournalCalendar
-                :selectedMood="selectedMood"
-            />
+            <JournalFilters />
+            <JournalCalendar />
           </div>
         </div>
 
         <div class="right-panel">
           <JournalEntryCard
-              v-for="(entry, index) in entries"
+              v-for="(entry, index) in filteredEntries"
               :key="entry.id"
               :entry="entry"
               class="animate-fade-in-up"
               :style="{ animationDelay: `${0.2 + (index * 0.1)}s` }"
           />
+          <div v-if="filteredEntries.length === 0" class="no-entries">
+            {{ $t('journal.noEntries') }}
+          </div>
         </div>
       </div>
     </div>
@@ -36,46 +35,19 @@ import Layout from '../../../shared/presentation/components/layout.vue'
 import JournalCalendar from '../components/JournalCalendar.vue'
 import JournalFilters from '../components/JournalFilters.vue'
 import JournalEntryCard from '../components/JournalEntryCard.vue'
-import { ref } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useJournalStore } from '@/journal/application/journal.store'
 
-const selectedMood = ref('Positivo')
-const handleMoodChange = (mood) => {
-  selectedMood.value = mood
-}
+const journalStore = useJournalStore()
 
-const entries = [
-  {
-    id: 1,
-    date: 'Domingo, 26 de Abril, 3:09 AM',
-    category: 'Reflexión Personal',
-    title: 'Insomnio y nuevos comienzos',
-    content:
-        'No he podido dormir, sigo pensando en la estructuración del nuevo proyecto. Aunque me siento un poco cansado físicamente, mentalmente estoy muy emocionado por lo que estamos construyendo con MindFlow. Mañana intentaré descansar mejor.',
-    hasPreview: false
-  },
-  {
-    id: 2,
-    date: 'Jueves, 23 de Abril, 6:30 PM',
-    category: 'Trabajo',
-    title: 'Presentación del MVP',
-    content:
-        'Hoy tuvimos la presentación del proyecto. Me sentí muy abrumado al principio, la ansiedad estaba a tope, pero la guía de respiración de 4-7-8 que me sugirió la app me ayudó a centrarme justo antes de hablar.',
-    hasPreview: false
-  },
-  {
-    id: 3,
-    date: 'Lunes, 20 de Abril, 9:00 PM',
-    category: 'Estudios',
-    title: 'Bloqueo mental total',
-    content:
-        'No logré concentrarme nada hoy. Siento que la procrastinación me está ganando y me frustra no haber avanzado en los diagramas de arquitectura.',
-    hasPreview: false
-  }
-]
+const filteredEntries = computed(() => journalStore.getFilteredEntries)
+
+onMounted(async () => {
+  await journalStore.fetchEntries()
+})
 </script>
 
 <style scoped>
-/* Animations */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -108,7 +80,6 @@ const entries = [
 
 .delay-1 { animation-delay: 0.15s; }
 
-/* Interactions */
 .hover-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -177,5 +148,12 @@ const entries = [
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.no-entries {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
 </style>
