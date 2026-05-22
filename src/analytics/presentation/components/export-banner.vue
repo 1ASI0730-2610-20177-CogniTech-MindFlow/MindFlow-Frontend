@@ -28,7 +28,6 @@
 .btn-outline:hover { background: var(--text-dark); color: #ffffff; border-color: var(--text-dark); }
 .mono-text { font-size: 12px; letter-spacing: 0.05em; font-weight: 700; }
 
-/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .premium-card { flex-direction: column; padding: 24px; text-align: center; gap: 24px; }
   .export-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }

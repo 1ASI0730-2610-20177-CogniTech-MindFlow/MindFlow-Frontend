@@ -46,7 +46,6 @@ defineProps({ data: Object })
 .ai-dot { width: 6px; height: 6px; background: var(--global-blue); box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); }
 .ai-text { font-size: 18px; color: var(--text-muted); line-height: 1.7; font-style: italic; margin: 0; }
 
-/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .summary-card { flex-direction: column; gap: 24px; padding: 24px; }
   .summary-left { border-right: none; border-bottom: 1px dashed var(--border-color); padding-right: 0; padding-bottom: 24px; align-items: center; text-align: center; }

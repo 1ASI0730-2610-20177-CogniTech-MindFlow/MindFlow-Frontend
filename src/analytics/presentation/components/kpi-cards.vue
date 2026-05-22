@@ -43,7 +43,6 @@ defineProps({ kpis: Array })
 
 .kpi-value { font-size: 32px; color: var(--text-primary); margin: 0; font-weight: 600; letter-spacing: -0.05em; }
 
-/* === RESPONSIVE === */
 @media (max-width: 1024px) {
   .kpi-grid { gap: 16px; }
   .premium-card { padding: 20px; }

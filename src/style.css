@@ -1,11 +1,10 @@
-/* CSS Variables for Theming */
 :root {
-  /* Light Theme (Default) */
   --bg-primary: #f8fafc;
   --bg-surface: #ffffff;
   --bg-surface-secondary: #f1f5f9;
 
   --text-primary: #0f172a;
+  --text-dark: #0f172a;
   --text-secondary: #64748b;
   --text-muted: #94a3b8;
 
@@ -25,13 +24,14 @@
   --chart-grid: #e5e7eb;
 }
 
-/* Dark Theme Overrides */
 html.dark-mode {
   --bg-primary: #0f172a;
   --bg-surface: #1e293b;
   --bg-surface-secondary: #334155;
 
   --text-primary: #f8fafc;
+  /* texto oscuro en modo oscuro: por defecto usar el color de texto primario claro */
+  --text-dark: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
 
@@ -66,7 +66,47 @@ body, html {
   min-height: 100vh;
 }
 
-/* Utility classes for theme transitions */
 .theme-transition {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
+
+html.dark-mode .settings-page .card-subscription {
+  background: #0f1724;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 34px rgba(2,6,23,0.8);
+}
+
+html.dark-mode .settings-page .card-subscription {
+  border-color: rgba(52,211,153,0.12);
+}
+
+html.dark-mode .settings-page .card-subscription .card-title {
+  color: #34d399;
+  font-weight: 700;
+}
+
+html.dark-mode .settings-page .card-subscription .plan-text {
+  color: rgba(255,255,255,0.9);
+}
+
+.settings-page .card-subscription .card-title {
+  color: #34d399;
+  font-weight: 700;
+}
+
+html.dark-mode .settings-page .danger {
+  border: 1px solid rgba(248,113,113,0.18);
+  background: rgba(248,113,113,0.02);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+}
+
+html.dark-mode .settings-page .danger .danger-title {
+  color: #fb7185;
+}
+
+html.dark-mode .settings-page .btn-danger {
+  background: transparent;
+  color: #fb7185;
+  border-color: rgba(248,113,113,0.18);
+}
+

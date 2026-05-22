@@ -83,7 +83,6 @@ onMounted(() => {
 
 <style scoped>
 .high-end-analytics-page {
-  /* Retain specific color vars for this page but link them to the global theme */
   --global-blue: var(--accent-primary, #3b82f6);
   --global-green: var(--accent-success, #34d399);
 
@@ -164,7 +163,6 @@ onMounted(() => {
 .panel-reveal { opacity: 0; animation: fluidAscent 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .delay-1 { animation-delay: 150ms; } .delay-2 { animation-delay: 300ms; } .delay-3 { animation-delay: 450ms; } .delay-4 { animation-delay: 600ms; } .delay-5 { animation-delay: 750ms; } .delay-6 { animation-delay: 900ms; }
 
-/* === RESPONSIVE MEDIA QUERIES === */
 @media (max-width: 1024px) {
   .high-end-analytics-page { padding: 40px 24px; }
   .asymmetric-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -178,6 +176,6 @@ onMounted(() => {
   .hero-header { padding-left: 16px; margin-bottom: 32px; }
   .gradient-title { font-size: 32px; }
   .asymmetric-content-wrapper { gap: 32px; }
-  .deep-shadow-panel:hover { transform: none; } /* Desactivar hover en mobile */
+  .deep-shadow-panel:hover { transform: none; }
 }
 </style>

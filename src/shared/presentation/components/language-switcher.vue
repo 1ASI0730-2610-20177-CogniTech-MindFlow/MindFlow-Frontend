@@ -40,7 +40,6 @@ const toggleLanguage = () => {
   background: var(--border-color);
 }
 
-/* Specific styling to ensure text is visible in dark mode since it's in the topbar */
 :global(.dark-mode) .lang-btn {
   color: var(--text-primary);
 }

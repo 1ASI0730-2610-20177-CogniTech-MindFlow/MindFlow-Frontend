@@ -45,7 +45,6 @@ export const useAnalyticsStore = defineStore('analytics', {
                     }]
                 }
 
-                // Dynamic options to update colors via CSS variables when rendering charts
                 this.fluctuationOptions = {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -73,7 +72,7 @@ export const useAnalyticsStore = defineStore('analytics', {
                         },
                         y: {
                             display: true,
-                            grid: { color: 'var(--chart-grid)', drawBorder: false }, // Updated for dark mode
+                            grid: { color: 'var(--chart-grid)', drawBorder: false },
                             border: { display: false },
                             ticks: { stepSize: 5, font: { size: 10 }, color: '#94a3b8' },
                             min: 0,
@@ -91,7 +90,7 @@ export const useAnalyticsStore = defineStore('analytics', {
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
                         tension: 0.4,
-                        pointBackgroundColor: 'var(--bg-surface)', // Updated for dark mode 
+                        pointBackgroundColor: 'var(--bg-surface)',
                         pointBorderColor: '#3b82f6',
                         pointBorderWidth: 2,
                         pointRadius: 4
@@ -109,7 +108,7 @@ export const useAnalyticsStore = defineStore('analytics', {
                             ticks: { font: { size: 10 }, color: '#94a3b8' }
                         },
                         y: {
-                            grid: { color: 'var(--chart-grid)' }, // Updated for dark mode
+                            grid: { color: 'var(--chart-grid)' },
                             border: { display: false },
                             min: 0,
                             max: 10,
