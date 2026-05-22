@@ -48,7 +48,7 @@
 
 .view-all {
   font-size: 12px;
-  color: #3b82f6;
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
 }
@@ -78,12 +78,12 @@
 .color-yellow { background: #fcd34d; }
 .color-red { background: #f87171; }
 .color-green { background: #6ee7b7; }
-.color-light { background: #f1f5f9; }
+.color-light { background: var(--bg-surface-secondary); }
 .color-none { background: transparent; }
 
 .day-label {
   font-size: 10px;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-top: 12px;
 }
 </style>

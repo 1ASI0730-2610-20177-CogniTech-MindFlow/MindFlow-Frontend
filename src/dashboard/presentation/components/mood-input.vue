@@ -71,8 +71,8 @@ const saveEntry = async () => {
   gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  color: #3b82f6;
-  background: #eff6ff;
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.02);
   padding: 4px 12px;
   border-radius: 99px;
 }
@@ -87,13 +87,13 @@ const saveEntry = async () => {
 .journal-textarea {
   width: 100%;
   height: 120px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 16px;
   font-family: inherit;
   font-size: 14px;
-  color: #334155;
+  color: var(--text-primary);
   resize: none;
   outline: none;
   transition: border-color 0.2s;
@@ -101,11 +101,11 @@ const saveEntry = async () => {
 }
 
 .journal-textarea:focus {
-  border-color: #94a3b8;
+  border-color: var(--border-light);
 }
 
 .journal-textarea::placeholder {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .input-actions {
@@ -115,9 +115,9 @@ const saveEntry = async () => {
 }
 
 .tag-select {
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #475569;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   padding: 8px 16px;
   border-radius: 6px;
   font-size: 13px;
@@ -147,14 +147,14 @@ const saveEntry = async () => {
 
 .ai-feedback-box {
   margin-top: 24px;
-  background: #f0fdf4;
+  background: var(--bg-surface);
   border-left: 4px solid #34d399;
   border-radius: 4px 8px 8px 4px;
   padding: 16px 20px;
 }
 
 .ai-feedback-header {
-  color: #3b82f6;
+  color: var(--text-secondary);
   font-size: 13px;
   margin-bottom: 8px;
   display: flex;
@@ -164,7 +164,7 @@ const saveEntry = async () => {
 
 .ai-feedback-text {
   margin: 0;
-  color: #334155;
+  color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.5;
 }

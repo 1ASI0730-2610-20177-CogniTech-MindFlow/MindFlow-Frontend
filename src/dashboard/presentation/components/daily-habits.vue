@@ -55,7 +55,7 @@ const dashboardStore = useDashboardStore()
 .custom-checkbox {
   width: 20px;
   height: 20px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border-color);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -70,17 +70,17 @@ const dashboardStore = useDashboardStore()
 
 .habit-title {
   font-size: 14px;
-  color: #334155;
+  color: var(--text-primary);
   transition: color 0.2s;
 }
 
 .text-strikethrough {
   text-decoration: line-through;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .streak-badge {
-  background: #fffbeb;
+  background: rgba(217,119,6,0.08);
   color: #d97706;
   font-size: 11px;
   font-weight: 600;

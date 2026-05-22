@@ -32,7 +32,7 @@ const dashboardStore = useDashboardStore()
 
 .view-all {
   font-size: 12px;
-  color: #3b82f6;
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
 }
@@ -52,7 +52,7 @@ const dashboardStore = useDashboardStore()
   flex-direction: column;
   gap: 8px;
   padding-bottom: 24px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .entry-item:last-child {
@@ -68,11 +68,11 @@ const dashboardStore = useDashboardStore()
 
 .entry-time {
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .entry-tag {
-  background: #eff6ff;
+  background: rgba(59,130,246,0.08);
   color: #3b82f6;
   font-size: 11px;
   font-weight: 600;
@@ -83,7 +83,7 @@ const dashboardStore = useDashboardStore()
 .entry-text {
   margin: 0;
   font-size: 14px;
-  color: #475569;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 </style>

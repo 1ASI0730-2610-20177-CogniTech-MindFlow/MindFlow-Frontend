@@ -7,7 +7,6 @@ export const useDashboardStore = defineStore('dashboard', {
         isLoading: false,
         isAnalyzing: false,
         aiFeedback: null,
-        // Usamos el modelo para instanciar los datos iniciales
         recentEntries: [
             new JournalEntry({ id: 1, time: 'Hace 3 horas', text: 'Siento que no avancé nada hoy. La procrastinación me está ganando...', tag: 'Estudios' }),
             new JournalEntry({ id: 2, time: 'Ayer, 9:00 PM', text: 'Hoy tuvimos la presentación del proyecto. Me sentí muy abrumado al principio...', tag: 'Trabajo' }),
@@ -26,14 +25,11 @@ export const useDashboardStore = defineStore('dashboard', {
             this.aiFeedback = null
 
             try {
-                // 1. Llamamos a la infraestructura (API)
                 const response = await dashboardApi.processJournalEntry(text, tag)
 
-                // 2. Guardamos la nueva entrada en la UI usando el Modelo
                 const newEntry = new JournalEntry({ text, tag })
                 this.recentEntries.unshift(newEntry)
 
-                // 3. Mostramos el feedback de la IA
                 this.aiFeedback = response.aiFeedback
 
             } catch (error) {
@@ -48,11 +44,8 @@ export const useDashboardStore = defineStore('dashboard', {
             const habit = this.habits.find(h => h.id === id)
             if (habit) {
                 habit.completed = !habit.completed
-                // Si se completa, aumentamos la racha visualmente (opcional)
                 if (habit.completed) habit.streak++
                 else habit.streak--
-
-                // Aquí podrías llamar a un endpoint: dashboardApi.updateHabit(id, habit.completed)
             }
         }
     }

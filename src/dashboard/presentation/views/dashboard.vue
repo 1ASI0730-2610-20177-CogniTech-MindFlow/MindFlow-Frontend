@@ -35,7 +35,6 @@ import DailyHabits from '../components/daily-habits.vue'
   z-index: 1;
 }
 
-/* Patrón de fondo consistente con el módulo de analíticas */
 .optical-grid-bg {
   position: fixed;
   top: 0;
@@ -49,7 +48,6 @@ import DailyHabits from '../components/daily-habits.vue'
   opacity: 0.8;
 }
 
-/* Distribución asimétrica de columnas basada en tu prototipo */
 .dashboard-grid {
   display: grid;
   grid-template-columns: minmax(auto, 65%) 1fr;
@@ -67,15 +65,14 @@ import DailyHabits from '../components/daily-habits.vue'
   gap: 32px;
 }
 
-/* Estilo unificado para todas las tarjetas del dashboard mediante selectores profundos */
 :deep(.dashboard-card) {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
   border-radius: 24px;
-  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.02) inset;
+  box-shadow: var(--shadow-md);
   padding: 32px;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :deep(.dashboard-card:hover) {
@@ -85,12 +82,11 @@ import DailyHabits from '../components/daily-habits.vue'
 
 :deep(.card-title) {
   font-size: 18px;
-  color: #0f172a;
+  color: var(--text-primary);
   margin: 0;
   font-weight: 700;
 }
 
-/* === DISEÑO RESPONSIVO (MOBILE FIRST) === */
 @media (max-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: 1fr;

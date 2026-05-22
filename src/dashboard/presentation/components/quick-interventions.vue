@@ -12,15 +12,16 @@
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  margin-top: 16px;
 }
 
 .btn-outline {
   width: 100%;
-  background: white;
-  border: 1px solid #bfdbfe;
-  color: #3b82f6;
-  padding: 12px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 14px 16px;
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
@@ -28,7 +29,7 @@
 }
 
 .btn-outline:hover {
-  background: #eff6ff;
-  border-color: #93c5fd;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border-light);
 }
 </style>

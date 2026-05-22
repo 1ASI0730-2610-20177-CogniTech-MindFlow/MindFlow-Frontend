@@ -5,13 +5,7 @@ export class DashboardEndpoint extends BaseEndpoint {
         super('dashboard')
     }
 
-    // Método específico para la Inteligencia Artificial
     async processJournalEntry(text, tag) {
-        // En producción, esto llamaría a tu API real que se conecta con Gemini:
-        // const response = await this.create({ text, tag, type: 'ai_analysis' })
-        // return response
-
-        // Simulación del backend para desarrollo:
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
@@ -21,8 +15,6 @@ export class DashboardEndpoint extends BaseEndpoint {
             }, 1500)
         })
     }
-
-    // Aquí puedes agregar más métodos como getHabits(), etc.
 }
 
 export const dashboardApi = new DashboardEndpoint()
