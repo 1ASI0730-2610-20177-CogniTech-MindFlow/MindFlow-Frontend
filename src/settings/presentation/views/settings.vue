@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <main class="container" v-if="store.profile">
+    <main class="container settings-page" v-if="store.profile">
       <div class="grid">
         <div class="col">
           <section class="card animate-fade-in-up theme-transition">
@@ -27,7 +27,34 @@
               </div>
               <div class="field">
                 <label class="theme-transition">{{ $t('settings.profile.timezone') }}</label>
-                <input type="text" value="GMT-5 (Lima, Perú)" disabled class="input-transition theme-transition" />
+                <select v-model="store.profile.timezone" class="input-transition theme-transition" @change="store.setTimezone(store.profile.timezone)">
+                  <option value="GMT-12">GMT-12 (Línea de cambio de fecha)</option>
+                  <option value="GMT-11">GMT-11 (Islas Samoa)</option>
+                  <option value="GMT-10">GMT-10 (Hawái)</option>
+                  <option value="GMT-9">GMT-9 (Alaska)</option>
+                  <option value="GMT-8">GMT-8 (Hora de la costa del Pacífico)</option>
+                  <option value="GMT-7">GMT-7 (Hora de montaña)</option>
+                  <option value="GMT-6">GMT-6 (América Central)</option>
+                  <option value="GMT-5">GMT-5 (Lima, Perú)</option>
+                  <option value="GMT-4">GMT-4 (Caracas, La Paz)</option>
+                  <option value="GMT-3">GMT-3 (São Paulo, Buenos Aires)</option>
+                  <option value="GMT-2">GMT-2 (Atlántico Medio)</option>
+                  <option value="GMT-1">GMT-1 (Azores)</option>
+                  <option value="GMT">GMT (Londres, Dublín)</option>
+                  <option value="GMT+1">GMT+1 (París, Madrid, Berlín)</option>
+                  <option value="GMT+2">GMT+2 (Estambul, El Cairo)</option>
+                  <option value="GMT+3">GMT+3 (Moscú, Nairobi)</option>
+                  <option value="GMT+4">GMT+4 (Dubai)</option>
+                  <option value="GMT+5">GMT+5 (Pakistán, Tashkent)</option>
+                  <option value="GMT+5:30">GMT+5:30 (India)</option>
+                  <option value="GMT+6">GMT+6 (Bangladés)</option>
+                  <option value="GMT+7">GMT+7 (Tailandia, Bangkok)</option>
+                  <option value="GMT+8">GMT+8 (China, Hong Kong, Singapur)</option>
+                  <option value="GMT+9">GMT+9 (Japón, Seúl)</option>
+                  <option value="GMT+10">GMT+10 (Sídney)</option>
+                  <option value="GMT+11">GMT+11 (Islas Salomón)</option>
+                  <option value="GMT+12">GMT+12 (Nueva Zelanda, Fiji)</option>
+                </select>
               </div>
             </div>
 
@@ -45,7 +72,11 @@
                   <p class="toggle-desc theme-transition">{{ $t('settings.privacy.pinLockDesc') }}</p>
                 </div>
                 <label class="switch hover-scale">
-                  <input type="checkbox" checked />
+                  <input
+                    v-if="store.userSettings"
+                    type="checkbox"
+                    v-model="pinLockModel"
+                  />
                   <span class="slider theme-transition"></span>
                 </label>
               </div>
@@ -55,7 +86,10 @@
                   <p class="toggle-desc theme-transition">{{ $t('settings.privacy.darkModeDesc') }}</p>
                 </div>
                 <label class="switch hover-scale">
-                  <input type="checkbox" v-model="store.darkMode" @change="store.toggleDarkMode" />
+                  <input
+                    type="checkbox"
+                    v-model="darkModeModel"
+                  />
                   <span class="slider theme-transition"></span>
                 </label>
               </div>
@@ -65,9 +99,26 @@
                   <p class="toggle-desc theme-transition">{{ $t('settings.privacy.habitRemindersDesc') }}</p>
                 </div>
                 <label class="switch hover-scale">
-                  <input type="checkbox" checked />
+                  <input
+                    v-if="store.userSettings"
+                    type="checkbox"
+                    v-model="habitRemindersModel"
+                  />
                   <span class="slider theme-transition"></span>
                 </label>
+              </div>
+
+              <div v-if="store.userSettings && store.userSettings.habitRemindersEnabled" class="reminder-time-row">
+                <div>
+                  <p class="toggle-label theme-transition">{{ $t('settings.privacy.reminderTime') || 'Hora de recordatorios' }}</p>
+                  <p class="toggle-desc theme-transition">{{ $t('settings.privacy.reminderTimeDesc') || 'Establece la hora para recibir recordatorios de hábitos' }}</p>
+                </div>
+                <input
+                  type="time"
+                  v-model="store.userSettings.reminderTime"
+                  @change="store.setReminderTime(store.userSettings.reminderTime)"
+                  class="time-input input-transition theme-transition"
+                />
               </div>
             </div>
           </section>
@@ -119,15 +170,29 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useSettingsStore } from '../../application/settings.store'
 import Layout from '@/shared/presentation/components/layout.vue'
 
 const store = useSettingsStore()
 
-onMounted(() => {
-  store.fetchProfile('u1')
-  store.initDarkMode()
+const pinLockModel = computed({
+  get: () => !!store.userSettings?.pinLockEnabled,
+  set: (value) => store.setPinLockEnabled(value)
+})
+
+const darkModeModel = computed({
+  get: () => !!store.darkMode,
+  set: (value) => store.setDarkMode(value)
+})
+
+const habitRemindersModel = computed({
+  get: () => !!store.userSettings?.habitRemindersEnabled,
+  set: (value) => store.setHabitRemindersEnabled(value)
+})
+
+onMounted(async () => {
+  await store.fetchProfile('u1')
 })
 </script>
 
@@ -186,19 +251,17 @@ onMounted(() => {
 
 .card:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
 
-/* The premium subscription card should remain visually distinct.
-   In light mode it's dark navy. In dark mode, it matches the requested rgb(52, 211, 153) color. */
 .card-subscription {
   background: #111827;
   color: #fff;
   border: 1px solid #111827;
 }
 
-/* Modificamos el color al rgb(52, 211, 153) solicitado */
 :global(.dark-mode) .card-subscription {
-  background: rgb(52, 211, 153);
-  color: #111827; /* Dark text for contrast against mint green */
-  border: 1px solid rgb(52, 211, 153);
+  background: #0f1724;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.75);
+  border-radius: 12px;
 }
 
 .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
@@ -206,7 +269,7 @@ onMounted(() => {
 .card-subscription .card-title { color: #fff; }
 
 .accent { color: #34d399; margin-bottom: 4px; }
-:global(.dark-mode) .card-subscription .accent { color: #047857; } /* Darker accent for contrast in dark mode mint card */
+:global(.dark-mode) .card-subscription .accent { color: #047857; }
 
 
 .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
@@ -235,13 +298,47 @@ onMounted(() => {
 .field input:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
 .field input:disabled { background: var(--bg-surface-secondary); color: var(--text-muted); cursor: not-allowed; }
 
+.field select {
+  width: 100%; padding: 8px 12px; border: 1px solid var(--border-color);
+  border-radius: 8px; font-size: 14px; background: var(--bg-surface);
+  color: var(--text-primary);
+}
+.field select:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+.field select:disabled { background: var(--bg-surface-secondary); color: var(--text-muted); cursor: not-allowed; }
+
+.reminder-time-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-light);
+  margin-top: 12px;
+}
+
+.time-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+
 .save-btn { margin-top: 24px; }
 .btn { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease; }
 .btn-sm { padding: 4px 12px; font-size: 13px; }
 .btn-primary { background: #6366f1; color: #fff; }
 .btn-primary:hover { background: #4f46e5; }
 :global(.dark-mode) .card-subscription .btn-primary {
-  background: #111827; /* Dark button on mint background */
+  background: #111827;
   color: #fff;
 }
 :global(.dark-mode) .card-subscription .btn-primary:hover {
@@ -271,24 +368,39 @@ onMounted(() => {
 .switch input:checked + .slider { background: #34d399; }
 .switch input:checked + .slider::before { transform: translateX(18px); }
 
-/* Subscription Card specific text colors */
 .plan-text { color: #d1d5db; font-size: 14px; margin-bottom: 16px; }
-:global(.dark-mode) .card-subscription .plan-text { color: #064e3b; } /* Darker text for mint bg */
+:global(.dark-mode) .card-subscription .plan-text { color: #064e3b; }
 .plan-text span { color: #fff; font-weight: 500; }
 :global(.dark-mode) .card-subscription .plan-text span { color: #111827; }
 
 .plan-features { list-style: none; margin-bottom: 20px; }
 .plan-features li { font-size: 14px; padding: 4px 0; color: #e5e7eb; transition: transform 0.2s ease, color 0.3s ease; }
-:global(.dark-mode) .card-subscription .plan-features li { color: #064e3b; } /* Dark text for mint bg */
+:global(.dark-mode) .card-subscription .plan-features li { color: #064e3b; }
 .plan-features li:hover { transform: translateX(4px); }
 .plan-features .ko { color: #f87171; }
-:global(.dark-mode) .card-subscription .plan-features .ko { color: #b91c1c; } /* Dark red for mint bg */
+:global(.dark-mode) .card-subscription .plan-features .ko { color: #b91c1c; }
 .plan-features .ok { color: #e5e7eb; }
 :global(.dark-mode) .card-subscription .plan-features .ok { color: #064e3b; }
 
 .danger { border: 2px solid #fca5a5; }
 .danger-title { color: #ef4444; margin-bottom: 8px; }
 .danger-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; transition: color 0.3s ease; }
+
+:global(.dark-mode) .danger {
+  border: 1px solid rgba(248,113,113,0.18);
+  background: rgba(248,113,113,0.02);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+}
+
+:global(.dark-mode) .danger-title {
+  color: #fb7185;
+}
+
+:global(.dark-mode) .btn-danger {
+  background: transparent;
+  color: #fb7185;
+  border-color: rgba(248,113,113,0.18);
+}
 .loading-state { display: flex; justify-content: center; align-items: center; height: 60vh; font-size: 18px; color: var(--text-secondary); }
 
 </style>
