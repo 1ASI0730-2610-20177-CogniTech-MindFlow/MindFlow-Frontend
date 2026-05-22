@@ -79,7 +79,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Core Animations */
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-15px); }
   to { opacity: 1; transform: translateY(0); }
@@ -105,7 +104,6 @@ onMounted(() => {
   50% { transform: translateY(-5px) scale(1.1); opacity: 1; color: var(--accent-primary); }
 }
 
-/* Animation Classes */
 .animate-fade-in-down {
   animation: fadeInDown 0.5s ease-out forwards;
 }
@@ -123,34 +121,31 @@ onMounted(() => {
   animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Staggering Delays */
 .delay-1 { animation-delay: 0.1s; }
 .stagger-1 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.1s; }
 .stagger-2 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.2s; }
 .stagger-3 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.3s; }
 .stagger-4 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.4s; }
 
-/* Vue Transition Component (Tab switching) */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
+:global(.fade-slide-enter-active),
+:global(.fade-slide-leave-active) {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.fade-slide-enter-from {
+:global(.fade-slide-enter-from) {
   opacity: 0;
   transform: translateX(10px);
 }
-.fade-slide-leave-to {
+:global(.fade-slide-leave-to) {
   opacity: 0;
   transform: translateX(-10px);
 }
 
-/* Interactive States */
 .hover-lift {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  box-shadow: var(--shadow-md);
 }
 
 .habits-page {

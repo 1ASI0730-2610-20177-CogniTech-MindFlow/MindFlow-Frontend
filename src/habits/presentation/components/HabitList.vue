@@ -35,7 +35,6 @@ defineEmits(['toggle'])
 </script>
 
 <style scoped>
-/* List Transitions for Vue TransitionGroup */
 .list-enter-active,
 .list-leave-active {
   transition: all 0.4s ease;
@@ -45,7 +44,6 @@ defineEmits(['toggle'])
   opacity: 0;
   transform: translateX(30px);
 }
-/* Ensure smooth moving when items are deleted */
 .list-leave-active {
   position: absolute;
 }

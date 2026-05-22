@@ -77,6 +77,6 @@ defineEmits(['update:searchQuery', 'update:statusFilter'])
 .search-wrap input:focus,
 .habit-filters select:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
 }
 </style>

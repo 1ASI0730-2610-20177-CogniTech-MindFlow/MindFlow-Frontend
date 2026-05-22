@@ -56,7 +56,6 @@ const categoryStyle = computed(() => {
 </script>
 
 <style scoped>
-/* Animations */
 @keyframes popIn {
   0% { transform: scale(0.5); opacity: 0; }
   50% { transform: scale(1.2); }
@@ -85,12 +84,11 @@ const categoryStyle = computed(() => {
   animation: bounceSubtle 2s ease-in-out infinite;
 }
 
-/* Interactions */
 .hover-lift {
   transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .hover-lift:hover {
-  transform: translateX(4px); /* Slight nudge instead of vertical lift for table rows */
+  transform: translateX(4px);
   background-color: var(--bg-surface-secondary);
 }
 
@@ -146,14 +144,14 @@ const categoryStyle = computed(() => {
   transition: border-color 0.2s ease;
 }
 .status-btn:hover:not(:disabled) .pending-ring {
-  border-color: var(--text-muted); /* Darken slightly on hover */
+  border-color: var(--text-muted);
 }
 
 .name-cell {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
-  transition: color 0.3s ease; /* Smooth transition for strike-through */
+  transition: color 0.3s ease;
 }
 
 .name-cell.done {
@@ -178,7 +176,7 @@ const categoryStyle = computed(() => {
 }
 
 .streak-icon {
-  color: #f97316;
+  color: var(--accent-warning);
   font-size: 12px;
 }
 
