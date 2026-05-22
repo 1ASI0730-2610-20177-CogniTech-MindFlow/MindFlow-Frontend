@@ -1,5 +1,5 @@
 import axios from 'axios'
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://6a077491fa9b27c848fa1a98.mockapi.io/api/v1'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://6a077491fa9b27c848fa1a98.mockapi.io/api/v1'
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
