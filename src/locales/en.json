@@ -127,6 +127,7 @@
     },
     "calendar": {
       "previousMonth": "View Previous Month",
+      "nextMonth": "View Next Month",
       "weekdays": ["M", "T", "W", "T", "F", "S", "S"],
       "months": [
         "January", "February", "March", "April", "May", "June",

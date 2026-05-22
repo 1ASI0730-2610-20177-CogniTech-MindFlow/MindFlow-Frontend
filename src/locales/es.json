@@ -108,37 +108,44 @@
     },
     "loading": "Cargando configuración..."
   },
-  "journal": {
-    "title": "Tu Historial Emocional",
-    "filters": {
-      "searchPlaceholder": "Buscar en tus pensamientos...",
-      "tabs": {
-        "all": "Todos",
-        "work": "Trabajo",
-        "studies": "Estudios",
-        "family": "Familia"
-      },
-      "states": {
-        "all": "Todos",
-        "positive": "Positivo",
-        "neutral": "Neutral",
-        "negative": "Negativo"
-      }
-    },
-    "calendar": {
-      "previousMonth": "Ver Mes Anterior",
-      "weekdays": ["L", "M", "X", "J", "V", "S", "D"],
-      "months": [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-      ],
-      "legend": {
-        "positive": "Positivo",
-        "neutral": "Neutral",
-        "negative": "Negativo"
-      }
-    }
-  },
+   "journal": {
+     "title": "Tu Historial Emocional",
+     "noEntries": "No se encontraron entradas con los filtros seleccionados",
+     "filters": {
+       "stats": "Estadísticas",
+       "searchPlaceholder": "Buscar en tus pensamientos...",
+       "tabs": {
+         "all": "Todos",
+         "work": "Trabajo",
+         "studies": "Estudios",
+         "family": "Familia"
+       },
+       "states": {
+         "all": "Todos",
+         "positive": "Positivo",
+         "neutral": "Neutral",
+         "negative": "Negativo"
+       },
+       "sort": "Ordenar por",
+       "sortRecent": "Más recientes",
+       "sortOldest": "Más antiguos",
+       "clear": "Limpiar filtros"
+     },
+     "calendar": {
+       "previousMonth": "Ver Mes Anterior",
+        "nextMonth": "Ver Mes Siguiente",
+       "weekdays": ["L", "M", "X", "J", "V", "S", "D"],
+       "months": [
+         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+       ],
+       "legend": {
+         "positive": "Positivo",
+         "neutral": "Neutral",
+         "negative": "Negativo"
+       }
+     }
+   },
   "habits": {
     "title": "Hábitos",
     "placeholder": {
