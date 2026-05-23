@@ -17,8 +17,7 @@ export const useJournalStore = defineStore('journal', {
         async fetchEntries() {
             this.loading = true
             try {
-                const entries = await JournalAPI.getAll()
-                this.entries = entries
+                this.entries = await JournalAPI.getAll()
                 this.error = null
             } catch (error) {
                 this.error = error.message
@@ -117,9 +116,10 @@ export const useJournalStore = defineStore('journal', {
             if (state.searchQuery) {
                 const query = state.searchQuery.toLowerCase()
                 filtered = filtered.filter(e =>
-                    e.title.toLowerCase().includes(query) ||
-                    e.content.toLowerCase().includes(query) ||
-                    e.category.toLowerCase().includes(query)
+                    (e.title || '').toLowerCase().includes(query) ||
+                    (e.content || '').toLowerCase().includes(query) ||
+                    (e.category || '').toLowerCase().includes(query) ||
+                    (e.tags || []).some(tag => (tag.name || '').toLowerCase().includes(query))
                 )
             }
 

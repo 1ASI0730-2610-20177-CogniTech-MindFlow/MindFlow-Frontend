@@ -7,7 +7,12 @@ export class JournalEntry {
         content,
         sentiment,
         category,
-        hasPreview
+        hasPreview,
+        createdAt,
+        updatedAt,
+        deletedAt,
+        tags = [],
+        media = []
     }) {
         this.id = id
         this.userId = userId
@@ -17,6 +22,11 @@ export class JournalEntry {
         this.sentiment = sentiment
         this.category = category
         this.hasPreview = hasPreview || false
+        this.createdAt = createdAt || null
+        this.updatedAt = updatedAt || null
+        this.deletedAt = deletedAt || null
+        this.tags = Array.isArray(tags) ? tags : []
+        this.media = Array.isArray(media) ? media : []
     }
 
     get formattedDate() {
@@ -42,7 +52,12 @@ export class JournalEntry {
             content: data.content,
             sentiment: data.sentiment || 'neutral',
             category: data.category || 'Sin categoría',
-            hasPreview: data.hasPreview || false
+            hasPreview: data.hasPreview || false,
+            createdAt: data.created_at || data.createdAt || null,
+            updatedAt: data.updated_at || data.updatedAt || null,
+            deletedAt: data.deleted_at || data.deletedAt || null,
+            tags: data.tags || [],
+            media: data.media || []
         })
     }
 
