@@ -123,6 +123,16 @@ export const useJournalStore = defineStore('journal', {
                 )
             }
 
+            filtered.sort((a, b) => {
+                const dateA = (a.date || '').toString()
+                const dateB = (b.date || '').toString()
+                if (dateA === dateB) {
+                    if (a.id == null || b.id == null) return 0
+                    return a.id.toString().localeCompare(b.id.toString())
+                }
+                return dateB.localeCompare(dateA)
+            })
+
             return filtered
         },
 
