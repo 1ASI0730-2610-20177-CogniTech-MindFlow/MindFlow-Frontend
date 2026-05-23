@@ -83,7 +83,9 @@
       "darkMode": "Modo Oscuro",
       "darkModeDesc": "Ideal para registrar emociones en la noche.",
       "habitReminders": "Recordatorios de Hábitos",
-      "habitRemindersDesc": "Notificaciones push para hidratación y pausas."
+      "habitRemindersDesc": "Notificaciones push para hidratación y pausas.",
+      "reminderTime": "Hora de recordatorios",
+      "reminderTimeDesc": "Establece la hora para recibir recordatorios de hábitos."
     },
     "subscription": {
       "title": "Suscripción",

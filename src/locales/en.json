@@ -83,7 +83,9 @@
       "darkMode": "Dark Mode",
       "darkModeDesc": "Ideal for logging emotions at night.",
       "habitReminders": "Habit Reminders",
-      "habitRemindersDesc": "Push notifications for hydration and breaks."
+      "habitRemindersDesc": "Push notifications for hydration and breaks.",
+      "reminderTime": "Reminder Time",
+      "reminderTimeDesc": "Set the time to receive habit reminders."
     },
     "subscription": {
       "title": "Subscription",
