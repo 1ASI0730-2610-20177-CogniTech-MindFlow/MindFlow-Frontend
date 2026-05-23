@@ -1,55 +1,69 @@
-const HISTORY_KEY = 'mindflow_habits_history'
+import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+import { HabitCompletionLog } from '../domain/model/habit-history.entity.js'
 
-function dateStr(offsetDays = 0) {
-    const d = new Date()
-    d.setDate(d.getDate() + offsetDays)
-    return d.toISOString().slice(0, 10)
-}
+const HABIT_LOGS_URL = 'https://6a11a0473e35d0f37ee3782b.mockapi.io/habitLogs'
 
-function buildSeedHistory() {
-    const logs = []
-    const habits = [
-        { id: 1, name: 'Beber 2L de agua', category: 'Salud Física' },
-        { id: 2, name: 'Pausa activa de 5 min', category: 'Bienestar' },
-        { id: 4, name: 'Meditar 10 minutos', category: 'Salud Mental' }
-    ]
+const habitLogsEndpoint = new BaseEndpoint(HABIT_LOGS_URL)
 
-    const weeks = [
-        { start: -21, pattern: [true, true, true, true, true, false, true] },
-        { start: -14, pattern: [true, true, false, true, true, true, true] },
-        { start: -7, pattern: [true, false, true, true, true, true, false] }
-    ]
+const mapHabitLog = (data) => HabitCompletionLog.fromJSON(data)
 
-    for (const week of weeks) {
-        for (const habit of habits) {
-            week.pattern.forEach((completed, dayIndex) => {
-                logs.push({
-                    habitId: habit.id,
-                    habitName: habit.name,
-                    category: habit.category,
-                    date: dateStr(week.start + dayIndex),
-                    completed
-                })
-            })
-        }
+const toHabitLogJSON = (log) => {
+    const payload = log instanceof HabitCompletionLog ? log.toJSON() : HabitCompletionLog.fromJSON(log).toJSON()
+
+    if (payload.id == null) {
+        delete payload.id
     }
 
-    return logs
+    return payload
 }
 
 export const HabitsHistoryAPI = {
-    getAll() {
-        const stored = localStorage.getItem(HISTORY_KEY)
-        if (!stored) {
-            const seed = buildSeedHistory()
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(seed))
-            return seed
+    async getAll() {
+        try {
+            const data = await habitLogsEndpoint.getAll()
+            return data.map(mapHabitLog)
+        } catch (error) {
+            console.error('Error fetching habit logs:', error)
+            return []
         }
-        return JSON.parse(stored)
     },
 
-    saveAll(logs) {
-        localStorage.setItem(HISTORY_KEY, JSON.stringify(logs))
-        return logs
+    async getByHabitId(habitId) {
+        try {
+            const data = await habitLogsEndpoint.search({ habit_id: habitId })
+            return data.map(mapHabitLog)
+        } catch (error) {
+            console.error(`Error fetching habit logs for habit ${habitId}:`, error)
+            return []
+        }
+    },
+
+    async create(log) {
+        try {
+            const response = await habitLogsEndpoint.create(toHabitLogJSON(log))
+            return mapHabitLog(response)
+        } catch (error) {
+            console.error('Error creating habit log:', error)
+            throw error
+        }
+    },
+
+    async update(id, log) {
+        try {
+            const response = await habitLogsEndpoint.update(id, toHabitLogJSON(log))
+            return mapHabitLog(response)
+        } catch (error) {
+            console.error(`Error updating habit log ${id}:`, error)
+            throw error
+        }
+    },
+
+    async delete(id) {
+        try {
+            return await habitLogsEndpoint.delete(id)
+        } catch (error) {
+            console.error(`Error deleting habit log ${id}:`, error)
+            throw error
+        }
     }
 }

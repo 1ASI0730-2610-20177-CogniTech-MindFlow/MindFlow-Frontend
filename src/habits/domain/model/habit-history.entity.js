@@ -1,24 +1,50 @@
 export class HabitCompletionLog {
-    constructor({ habitId, habitName, category, date, completed }) {
+    constructor({
+        id = null,
+        habitId,
+        habitName,
+        category,
+        date,
+        completed,
+        completedAt = null,
+        createdAt = null
+    }) {
+        this.id = id
         this.habitId = habitId
         this.habitName = habitName
         this.category = category
         this.date = date
         this.completed = completed
+        this.completedAt = completedAt
+        this.createdAt = createdAt
     }
 
     toJSON() {
         return {
+            id: this.id,
+            habit_id: this.habitId,
+            habit_name: this.habitName,
             habitId: this.habitId,
             habitName: this.habitName,
             category: this.category,
             date: this.date,
-            completed: this.completed
+            completed: this.completed,
+            completed_at: this.completedAt,
+            created_at: this.createdAt
         }
     }
 
     static fromJSON(data) {
-        return new HabitCompletionLog(data)
+        return new HabitCompletionLog({
+            id: data.id,
+            habitId: data.habit_id ?? data.habitId,
+            habitName: data.habit_name ?? data.habitName,
+            category: data.category,
+            date: data.date,
+            completed: data.completed,
+            completedAt: data.completed_at ?? data.completedAt ?? null,
+            createdAt: data.created_at ?? data.createdAt ?? null
+        })
     }
 }
 
