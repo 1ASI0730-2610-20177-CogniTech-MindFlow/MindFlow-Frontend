@@ -110,6 +110,38 @@
   },
   "journal": {
     "title": "Your Emotional History",
+    "subtitle": "Add a new entry whenever you want to revisit an important moment.",
+    "newEntry": "New entry",
+    "composer": {
+      "eyebrow": "New reflection",
+      "title": "Add another journal entry",
+      "close": "Close form",
+      "save": "Save entry",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "fields": {
+        "title": "Title",
+        "category": "Category",
+        "date": "Date",
+        "sentiment": "Emotional state",
+        "content": "Content"
+      },
+      "placeholders": {
+        "title": "Write a short title",
+        "content": "Tell me what happened today..."
+      },
+      "categories": {
+        "reflection": "Personal Reflection",
+        "work": "Work",
+        "studies": "Studies",
+        "family": "Family"
+      },
+      "sentiments": {
+        "positive": "Positive",
+        "neutral": "Neutral",
+        "negative": "Negative"
+      }
+    },
     "filters": {
       "searchPlaceholder": "Search in your thoughts...",
       "tabs": {
@@ -186,9 +218,30 @@
     "title": "Your Emotional Landscape",
     "telemetry": "BIOMETRIC SYNC ACTIVE // V.3.1.0",
     "loading": "Encrypting and analyzing biometric data...",
+    "insights": {
+      "u1": "You showed strong resilience this week. Work-related stress dropped significantly after Wednesday.",
+      "u2": "Your workload was higher this week; it may help to pause a little and prioritize rest.",
+      "u3": "Your emotional recovery pace has been very solid; working with patients seems to energize you positively.",
+      "u4": "Although the week brought academic pressure, you kept a steady and consistent progression.",
+      "u5": "Your digital rest is improving your sleep quality and night routine consistency."
+    },
+    "kpis": {
+      "entriesMonth": "ENTRIES THIS MONTH",
+      "moodAverage": "AVERAGE MOOD",
+      "maxHabitStreak": "LONGEST HABIT STREAK"
+    },
+    "moods": {
+      "positive": "Positive",
+      "neutral": "Neutral",
+      "negative": "Negative"
+    },
+    "units": {
+      "days": "days"
+    },
     "components": {
       "wordCloud": {
         "title": "frequent word cloud",
+        "subtitle": "NLP_ANALYSIS",
         "words": {
           "calm": "Calm",
           "anxious": "> anxious.log",
@@ -203,15 +256,42 @@
         "desc": "Download your structured history with charts to formally share with your therapist."
       },
       "weeklySummary": {
+        "logDateRange": "LOG_DATE: {start} - {end}",
+        "trendRange": "{trend} (7D)",
         "stabilityIndex": "Stability Index",
+        "aiAnalysis": "NEXUS_AI_ANALYSIS",
         "active": "ACTIVE"
       },
       "fluctuationChart": {
         "title": "Activity Level in Sessions",
-        "yLabel": "Task count / Phase"
+        "subtitle": "FREQ_DISTRIBUTION",
+        "live": "LIVE",
+        "yLabel": "Task count / Phase",
+        "dataset": {
+          "interactions": "Interactions"
+        },
+        "labels": {
+          "assessment": "Assessment",
+          "growth": "Growth",
+          "reflection": "Reflection",
+          "action": "Action",
+          "integration": "Integration"
+        }
       },
       "trendChart": {
         "title": "Mood Trend",
+        "dataset": {
+          "wellbeing": "Wellbeing Level"
+        },
+        "labels": {
+          "mon": "Mon",
+          "tue": "Tue",
+          "wed": "Wed",
+          "thu": "Thu",
+          "fri": "Fri",
+          "sat": "Sat",
+          "sun": "Sun"
+        },
         "legend": {
           "wellbeing": "Wellbeing Level",
           "stress": "Stress Load"

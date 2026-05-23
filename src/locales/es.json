@@ -110,7 +110,39 @@
   },
    "journal": {
      "title": "Tu Historial Emocional",
+      "subtitle": "Registra una nueva entrada cuando quieras volver sobre un momento importante.",
+      "newEntry": "Nueva entrada",
      "noEntries": "No se encontraron entradas con los filtros seleccionados",
+      "composer": {
+        "eyebrow": "Nueva reflexión",
+        "title": "Agregar otra entrada al journal",
+        "close": "Cerrar formulario",
+        "save": "Guardar entrada",
+        "saving": "Guardando...",
+        "cancel": "Cancelar",
+        "fields": {
+          "title": "Título",
+          "category": "Categoría",
+          "date": "Fecha",
+          "sentiment": "Estado emocional",
+          "content": "Contenido"
+        },
+        "placeholders": {
+          "title": "Escribe un título breve",
+          "content": "Cuéntame qué pasó hoy..."
+        },
+        "categories": {
+          "reflection": "Reflexión Personal",
+          "work": "Trabajo",
+          "studies": "Estudios",
+          "family": "Familia"
+        },
+        "sentiments": {
+          "positive": "Positivo",
+          "neutral": "Neutral",
+          "negative": "Negativo"
+        }
+      },
      "filters": {
        "stats": "Estadísticas",
        "searchPlaceholder": "Buscar en tus pensamientos...",
@@ -192,9 +224,30 @@
     "title": "Tu Panorama Emocional",
     "telemetry": "SINC. BIOMÉTRICA ACTIVA // V.3.1.0",
     "loading": "Cifrando y analizando datos biométricos...",
+    "insights": {
+      "u1": "Has mostrado una gran resiliencia esta semana. El estrés relacionado con el trabajo disminuyó significativamente después del miércoles.",
+      "u2": "Tu carga de trabajo estuvo más alta esta semana; conviene pausar un poco y priorizar descanso.",
+      "u3": "Tu ritmo de recuperación emocional ha sido muy sólido; el trabajo con pacientes parece darte energía positiva.",
+      "u4": "Aunque la semana tuvo presión académica, sostuviste un progreso estable y consistente.",
+      "u5": "Tu descanso digital está mejorando tu calidad de sueño y la constancia de hábitos nocturnos."
+    },
+    "kpis": {
+      "entriesMonth": "ENTRADAS ESTE MES",
+      "moodAverage": "ÁNIMO PROMEDIO",
+      "maxHabitStreak": "MAYOR RACHA HÁBITOS"
+    },
+    "moods": {
+      "positive": "Positivo",
+      "neutral": "Neutral",
+      "negative": "Negativo"
+    },
+    "units": {
+      "days": "días"
+    },
     "components": {
       "wordCloud": {
         "title": "nube de palabras frecuentes",
+        "subtitle": "ANÁLISIS_NLP",
         "words": {
           "calm": "Calma",
           "anxious": "> ansioso.log",
@@ -209,15 +262,42 @@
         "desc": "Descarga tu historial estructurado con gráficas para compartirlo formalmente con tu psicólogo."
       },
       "weeklySummary": {
+        "logDateRange": "FECHA_LOG: {start} - {end}",
+        "trendRange": "{trend} (7D)",
         "stabilityIndex": "Índice de Estabilidad",
+        "aiAnalysis": "ANÁLISIS_IA_NEXUS",
         "active": "ACTIVO"
       },
       "fluctuationChart": {
         "title": "Nivel de Actividad en Sesiones",
-        "yLabel": "Cantidad de tareas / Fase"
+        "subtitle": "DISTRIBUCIÓN_DE_FRECUENCIA",
+        "live": "EN VIVO",
+        "yLabel": "Cantidad de tareas / Fase",
+        "dataset": {
+          "interactions": "Interacciones"
+        },
+        "labels": {
+          "assessment": "Evaluación",
+          "growth": "Crecimiento",
+          "reflection": "Reflexión",
+          "action": "Acción",
+          "integration": "Integración"
+        }
       },
       "trendChart": {
         "title": "Tendencia de Ánimo",
+        "dataset": {
+          "wellbeing": "Nivel de Bienestar"
+        },
+        "labels": {
+          "mon": "Lun",
+          "tue": "Mar",
+          "wed": "Mié",
+          "thu": "Jue",
+          "fri": "Vie",
+          "sat": "Sáb",
+          "sun": "Dom"
+        },
         "legend": {
           "wellbeing": "Nivel de Bienestar",
           "stress": "Carga de Estrés"
