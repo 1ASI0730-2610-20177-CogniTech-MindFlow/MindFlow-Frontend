@@ -1,10 +1,11 @@
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint'
 
+const USERS_URL = 'https://6a077491fa9b27c848fa1a98.mockapi.io/api/v1/users'
 const USER_SETTINGS_URL = 'https://6a10fe963e35d0f37ee2f083.mockapi.io/userSettings'
 
 export class SettingsApiService extends BaseEndpoint {
     constructor() {
-        super('users')
+        super(USERS_URL)
         this.userSettingsEndpoint = new BaseEndpoint(USER_SETTINGS_URL)
     }
 
