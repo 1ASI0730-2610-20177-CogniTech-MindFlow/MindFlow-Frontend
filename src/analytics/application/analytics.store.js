@@ -149,16 +149,22 @@ function mapWordCloudWords(wordCloudRecord, legacyData) {
             { top: '15%', left: '15%' },
         ];
 
-        const negativeWords = ['ansiedad', 'estrés', 'cansado', 'triste', 'frustración', 'miedo'];
+        const negativeWords = ['ansiedad', 'estres', 'cansado', 'triste', 'frustracion', 'miedo'];
 
         const getColor = (word) => {
-            const normalizedTag = word.tag.toLowerCase();
+            const normalizedTag = String(word.tag || '')
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+
             if (negativeWords.includes(normalizedTag)) {
-                return word.score > 0.7 ? '#ef4444' : '#f59e0b';
+                return word.score > 0.7 ? 'var(--accent-danger)' : 'var(--accent-warning)';
             }
-            if (word.score >= 0.8) return 'var(--global-green)';
-            if (word.score >= 0.6) return 'var(--global-blue)';
-            return 'var(--text-muted)';
+
+            if (word.score >= 0.85) return 'var(--accent-success)';
+            if (word.score >= 0.7) return 'var(--accent-primary)';
+            if (word.score >= 0.55) return 'var(--text-primary)';
+            return 'var(--text-secondary)';
         };
 
         return words.map((word, index) => {
