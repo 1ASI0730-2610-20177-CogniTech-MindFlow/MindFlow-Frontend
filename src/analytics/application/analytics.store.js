@@ -1,10 +1,199 @@
 import { defineStore } from 'pinia'
 import { AnalyticsSummary, KpiData } from '../domain/model/analytics.model'
+import { analyticsApi } from '@/analytics/infrastructure/analytics.endpoint'
+import { useSettingsStore } from '@/settings/application/settings.store'
+
+function resolveCssVar(varName, fallback) {
+    if (typeof window === 'undefined') return fallback
+
+    const value = getComputedStyle(document.documentElement)
+        .getPropertyValue(varName)
+        .trim()
+
+    return value || fallback
+}
+
+function resolveColorToken(value, fallback) {
+    if (typeof value !== 'string') return value ?? fallback
+
+    const match = value.match(/^var\((--[^,\)\s]+)(?:,\s*([^\)]+))?\)$/)
+    if (!match) return value
+
+    const [, varName, innerFallback] = match
+    return resolveCssVar(varName, (innerFallback || fallback || '').trim())
+}
+
+function withResolvedChartColors(chartData) {
+    if (!chartData) return null
+
+    return {
+        ...chartData,
+        datasets: (chartData.datasets || []).map((dataset) => ({
+            ...dataset,
+            backgroundColor: resolveColorToken(dataset.backgroundColor, dataset.backgroundColor),
+            hoverBackgroundColor: resolveColorToken(dataset.hoverBackgroundColor, dataset.hoverBackgroundColor),
+            borderColor: resolveColorToken(dataset.borderColor, dataset.borderColor),
+            pointBackgroundColor: resolveColorToken(dataset.pointBackgroundColor, '#ffffff'),
+            pointBorderColor: resolveColorToken(dataset.pointBorderColor, dataset.pointBorderColor)
+        }))
+    }
+}
+
+function parseLegacyData(payload) {
+    if (!payload?.data) return null
+
+    if (typeof payload.data === 'object') return payload.data
+
+    try {
+        return JSON.parse(payload.data)
+    } catch {
+        return null
+    }
+}
+
+function mapKpis(kpis = []) {
+    return kpis.map((kpi) => new KpiData({
+        labelKey: kpi.labelKey || kpi.label_key || null,
+        label: kpi.label || '',
+        valueKey: kpi.valueKey || kpi.value_key || null,
+        value: kpi.value ?? '',
+        unitKey: kpi.unitKey || kpi.unit_key || null,
+        unit: kpi.unit || '',
+        colorClass: kpi.colorClass || 'border-blue'
+    }))
+}
+
+function mapChartDataset(dataset = {}, fallbackLabel = '') {
+    return {
+        labelKey: dataset.labelKey || dataset.label_key || null,
+        label: dataset.label || fallbackLabel || '',
+        data: dataset.data || [],
+        backgroundColor: dataset.backgroundColor,
+        hoverBackgroundColor: dataset.hoverBackgroundColor,
+        borderRadius: dataset.borderRadius,
+        borderSkipped: dataset.borderSkipped,
+        barPercentage: dataset.barPercentage,
+        categoryPercentage: dataset.categoryPercentage,
+        fill: dataset.fill,
+        borderColor: dataset.borderColor,
+        tension: dataset.tension,
+        pointBackgroundColor: dataset.pointBackgroundColor,
+        pointBorderColor: dataset.pointBorderColor,
+        pointBorderWidth: dataset.pointBorderWidth,
+        pointRadius: dataset.pointRadius
+    }
+}
+
+function mapSummary(record, legacyData) {
+    return new AnalyticsSummary({
+        score: record.score ?? legacyData?.score ?? 0,
+        trendPercentage: record.trend_percentage ?? legacyData?.trend_percentage ?? '+0%',
+        startDate: record.start_date ?? legacyData?.startDate ?? '',
+        endDate: record.end_date ?? legacyData?.endDate ?? '',
+        aiInsightLocalized: record.ai_insight_localized || record.aiInsightLocalized || null,
+        aiInsight: record.ai_insight || record.aiInsight || legacyData?.aiInsight || ''
+    })
+}
+
+function mapFluctuationData(record) {
+    const data = record.fluctuation_data || {}
+    return {
+        labelsKeys: data.labels_keys || data.labelsKeys || [],
+        labels: data.labels || [],
+        datasets: (data.datasets || []).map((dataset) => mapChartDataset(dataset, data.dataset_label || ''))
+    }
+}
+
+function mapTrendData(record) {
+    const data = record.trend_data || {}
+    return {
+        labelsKeys: data.labels_keys || data.labelsKeys || [],
+        labels: data.labels || [],
+        datasets: (data.datasets || []).map((dataset) => mapChartDataset(dataset, data.dataset_label || ''))
+    }
+}
+
+function mapWordCloudWords(record, legacyData) {
+    if (Array.isArray(record?.word_cloud) && record.word_cloud.length > 0) {
+        const words = [...record.word_cloud].sort((a, b) => b.score - a.score);
+
+        // A structured grid of positions to prevent any overlap.
+        const positions = [
+            { top: '45%', left: '50%' },
+            { top: '25%', left: '35%' },
+            { top: '65%', left: '65%' },
+            { top: '30%', left: '70%' },
+            { top: '60%', left: '25%' },
+            { top: '80%', left: '45%' },
+            { top: '15%', left: '60%' },
+            { top: '50%', left: '85%' },
+            { top: '85%', left: '15%' },
+            { top: '15%', left: '15%' },
+        ];
+
+        const negativeWords = ['ansiedad', 'estrés', 'cansado', 'triste', 'frustración', 'miedo'];
+
+        const getColor = (word) => {
+            const normalizedTag = word.tag.toLowerCase();
+            if (negativeWords.includes(normalizedTag)) {
+                return word.score > 0.7 ? '#ef4444' : '#f59e0b';
+            }
+            // Assign positive/neutral colors based on score.
+            if (word.score >= 0.8) return 'var(--global-green)';
+            if (word.score >= 0.6) return 'var(--global-blue)';
+            return 'var(--text-muted)';
+        };
+
+        return words.map((word, index) => {
+            const position = positions[index % positions.length];
+            return {
+                text: word.tag,
+                size: Math.max(14, 10 + (word.score * 25)),
+                color: getColor(word),
+                weight: word.score > 0.7 ? 700 : 500,
+                ...position
+            };
+        });
+    }
+
+    if (Array.isArray(legacyData?.wordCloud) && legacyData.wordCloud.length > 0) {
+        return legacyData.wordCloud
+    }
+
+    if (legacyData?.mostUsedTag) {
+        return [
+            {
+                text: legacyData.mostUsedTag,
+                size: 32,
+                color: 'var(--global-blue)',
+                weight: 700,
+                top: '50%',
+                left: '45%'
+            }
+        ]
+    }
+
+    return []
+}
+
+async function loadAnalyticsRecord() {
+    const settingsStore = useSettingsStore()
+    const currentUserId = settingsStore.currentUserId
+
+    if (currentUserId) {
+        const byUser = await analyticsApi.getByUserId(currentUserId)
+        if (byUser.length > 0) return byUser[0]
+    }
+
+    const all = await analyticsApi.getAll()
+    return all[0] || null
+}
 
 export const useAnalyticsStore = defineStore('analytics', {
     state: () => ({
         summary: null,
         kpis: [],
+        wordCloudWords: [],
         fluctuationData: null,
         fluctuationOptions: null,
         trendData: null,
@@ -16,33 +205,19 @@ export const useAnalyticsStore = defineStore('analytics', {
         async fetchDashboardData() {
             this.isLoading = true
 
-            setTimeout(() => {
-                this.summary = new AnalyticsSummary({
-                    score: 78,
-                    trendPercentage: '+12%',
-                    startDate: '12 oct',
-                    endDate: '18 oct',
-                    aiInsight: 'Has mostrado una gran resiliencia esta semana. El estrés relacionado con el trabajo disminuyó significativamente después del miércoles.'
-                })
+            try {
+                const record = await loadAnalyticsRecord()
+                const legacyData = parseLegacyData(record)
 
-                this.kpis = [
-                    new KpiData({ label: 'ENTRADAS ESTE MES', value: '24', colorClass: 'border-blue' }),
-                    new KpiData({ label: 'ÁNIMO PROMEDIO', value: 'Positivo', colorClass: 'border-green' }),
-                    new KpiData({ label: 'MAYOR RACHA HÁBITOS', value: '12 días', colorClass: 'border-orange' })
-                ]
+                const tickColor = resolveCssVar('--text-secondary', '#64748b')
+                const chartGridColor = resolveCssVar('--chart-grid', '#e5e7eb')
 
-                this.fluctuationData = {
-                    labels: ['Assessment', 'Growth', 'Reflection', 'Action', 'Integration'],
-                    datasets: [{
-                        label: 'Interacciones',
-                        data: [4, 2, 6, 5, 3],
-                        backgroundColor: 'rgba(165, 180, 252, 0.7)',
-                        hoverBackgroundColor: 'rgba(99, 102, 241, 0.9)',
-                        borderRadius: { topLeft: 4, topRight: 4 },
-                        borderSkipped: false,
-                        barPercentage: 0.35,
-                        categoryPercentage: 0.8
-                    }]
+                if (record) {
+                    this.summary = mapSummary(record, legacyData)
+                    this.kpis = mapKpis(record.kpis || legacyData?.kpis || [])
+                    this.wordCloudWords = mapWordCloudWords(record, legacyData)
+                    this.fluctuationData = withResolvedChartColors(mapFluctuationData(record))
+                    this.trendData = withResolvedChartColors(mapTrendData(record))
                 }
 
                 this.fluctuationOptions = {
@@ -65,36 +240,20 @@ export const useAnalyticsStore = defineStore('analytics', {
                             border: { display: false },
                             ticks: {
                                 font: { size: 10 },
-                                color: '#94a3b8',
+                                color: tickColor,
                                 maxRotation: 45,
                                 minRotation: 45
                             }
                         },
                         y: {
                             display: true,
-                            grid: { color: 'var(--chart-grid)', drawBorder: false },
+                            grid: { color: chartGridColor, drawBorder: false },
                             border: { display: false },
-                            ticks: { stepSize: 5, font: { size: 10 }, color: '#94a3b8' },
+                            ticks: { stepSize: 5, font: { size: 10 }, color: tickColor },
                             min: 0,
                             max: 10
                         }
                     }
-                }
-
-                this.trendData = {
-                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
-                    datasets: [{
-                        label: 'Nivel de Bienestar',
-                        data: [6, 4, 7, 8, 5, 9, 8],
-                        fill: true,
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        pointBackgroundColor: 'var(--bg-surface)',
-                        pointBorderColor: '#3b82f6',
-                        pointBorderWidth: 2,
-                        pointRadius: 4
-                    }]
                 }
 
                 this.trendOptions = {
@@ -105,20 +264,22 @@ export const useAnalyticsStore = defineStore('analytics', {
                         x: {
                             grid: { display: false },
                             border: { display: false },
-                            ticks: { font: { size: 10 }, color: '#94a3b8' }
+                            ticks: { font: { size: 10 }, color: tickColor }
                         },
                         y: {
-                            grid: { color: 'var(--chart-grid)' },
+                            grid: { color: chartGridColor },
                             border: { display: false },
                             min: 0,
                             max: 10,
-                            ticks: { stepSize: 2, font: { size: 10 }, color: '#94a3b8' }
+                            ticks: { stepSize: 2, font: { size: 10 }, color: tickColor }
                         }
                     }
                 }
-
+            } catch (error) {
+                console.error('Error loading analytics dashboard data:', error)
+            } finally {
                 this.isLoading = false
-            }, 800)
+            }
         }
     }
 })

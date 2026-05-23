@@ -2,12 +2,11 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 
 export class AnalyticsEndpoint extends BaseEndpoint {
     constructor() {
-        super('analytics')
+        super('analyticsCache')
     }
 
-    async getMoodTrends(days = 30) {
-        const response = await this.getAll({ days, type: 'mood' })
-        return response
+    async getByUserId(userId) {
+        return await this.search({ user_id: userId })
     }
 }
 

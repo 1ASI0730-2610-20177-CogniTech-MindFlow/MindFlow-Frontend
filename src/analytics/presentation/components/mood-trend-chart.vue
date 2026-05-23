@@ -1,21 +1,50 @@
 <template>
   <div class="transparent-chart-container large-chart">
     <div class="card-header">
-      <h3 class="card-title">{{ $t('analytics.components.trendChart.title') }}</h3>
+      <h3 class="card-title">{{ t('analytics.components.trendChart.title') }}</h3>
       <div class="chart-legend">
-        <span class="legend-item"><span class="box bg-light"></span> {{ $t('analytics.components.trendChart.legend.wellbeing') }}</span>
-        <span class="legend-item"><span class="box bg-blue"></span> {{ $t('analytics.components.trendChart.legend.stress') }}</span>
+        <span class="legend-item"><span class="box bg-light"></span> {{ t('analytics.components.trendChart.legend.wellbeing') }}</span>
+        <span class="legend-item"><span class="box bg-blue"></span> {{ t('analytics.components.trendChart.legend.stress') }}</span>
       </div>
     </div>
     <div class="chart-wrapper">
-      <Chart v-if="chartData" type="line" :data="chartData" :options="chartOptions" class="h-full w-full" />
+      <Chart v-if="translatedChartData" type="line" :data="translatedChartData" :options="chartOptions" style="height: 100%; width: 100%;" />
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Chart from 'primevue/chart'
-defineProps({ chartData: Object, chartOptions: Object })
+
+const props = defineProps({ chartData: Object, chartOptions: Object })
+const { t } = useI18n()
+
+const translateIfNeeded = (key, fallback = '') => {
+  if (!key) return fallback
+  const translated = t(key)
+  return translated === key ? fallback || key : translated
+}
+
+const translatedChartData = computed(() => {
+  if (!props.chartData) return null
+
+  return {
+    ...props.chartData,
+    labels: (props.chartData.labelsKeys || props.chartData.labels || []).map((item, index) => {
+      if (typeof item === 'string') {
+        return translateIfNeeded(item, props.chartData.labels?.[index] || item)
+      }
+
+      return translateIfNeeded(item?.key, item?.fallback || '')
+    }),
+    datasets: (props.chartData.datasets || []).map((dataset) => ({
+      ...dataset,
+      label: translateIfNeeded(dataset.labelKey, dataset.label)
+    }))
+  }
+})
 </script>
 
 <style scoped>

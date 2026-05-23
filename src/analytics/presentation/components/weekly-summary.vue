@@ -1,27 +1,42 @@
 <template>
   <div class="premium-card summary-card theme-transition" v-if="data">
     <div class="summary-left">
-      <div class="tech-pill theme-transition">LOG_DATE: {{ data.startDate }} - {{ data.endDate }}</div>
+      <div class="tech-pill theme-transition">{{ t('analytics.components.weeklySummary.logDateRange', { start: data.startDate, end: data.endDate }) }}</div>
       <div class="score-display">
         <h2 class="huge-score theme-transition">{{ data.score }}%</h2>
         <div class="score-details">
-          <h4 class="theme-transition">{{ $t('analytics.components.weeklySummary.stabilityIndex') }}</h4>
+          <h4 class="theme-transition">{{ t('analytics.components.weeklySummary.stabilityIndex') }}</h4>
           <span class="trend-pill theme-transition">
-            <i class="pi pi-arrow-up"></i> {{ data.trendPercentage }} (7D)
+            <i class="pi pi-arrow-up"></i> {{ t('analytics.components.weeklySummary.trendRange', { trend: data.trendPercentage }) }}
           </span>
         </div>
       </div>
     </div>
 
     <div class="summary-right">
-      <div class="ai-tag theme-transition"><span class="ai-dot"></span> NEXUS_AI_ANALYSIS</div>
-      <p class="ai-text theme-transition">{{ data.aiInsight }}</p>
+      <div class="ai-tag theme-transition"><span class="ai-dot"></span> {{ t('analytics.components.weeklySummary.aiAnalysis') }}</div>
+      <p class="ai-text theme-transition">{{ translatedInsight }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({ data: Object })
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const props = defineProps({ data: Object })
+const { t, locale } = useI18n()
+
+const translatedInsight = computed(() => {
+  if (!props.data) return ''
+
+  const localized = props.data.aiInsightLocalized
+  if (localized && typeof localized === 'object') {
+    return localized[locale.value] || localized.es || localized.en || props.data.aiInsight || ''
+  }
+
+  return props.data.aiInsight || ''
+})
 </script>
 
 <style scoped>

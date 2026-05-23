@@ -3,25 +3,54 @@
     <div class="card-header">
       <div class="title-group">
         <h3 class="card-title">{{ $t('analytics.components.fluctuationChart.title') }}</h3>
-        <span class="mono-subtitle">FREQ_DISTRIBUTION</span>
+        <span class="mono-subtitle">{{ $t('analytics.components.fluctuationChart.subtitle') }}</span>
       </div>
       <div class="chart-status">
-        <span class="live-dot"></span> LIVE
+        <span class="live-dot"></span> {{ $t('analytics.components.fluctuationChart.live') }}
       </div>
     </div>
 
     <div class="chart-content">
-      <div class="chart-y-label">{{ $t('analytics.components.fluctuationChart.yLabel') }}</div>
+      <div class="chart-y-label">{{ t('analytics.components.fluctuationChart.yLabel') }}</div>
       <div class="chart-wrapper">
-        <Chart v-if="chartData" type="bar" :data="chartData" :options="chartOptions" class="h-full w-full" />
+        <Chart v-if="translatedChartData" type="bar" :data="translatedChartData" :options="chartOptions" style="height: 100%; width: 100%;" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Chart from 'primevue/chart'
-defineProps({ chartData: Object, chartOptions: Object })
+
+const props = defineProps({ chartData: Object, chartOptions: Object })
+const { t } = useI18n()
+
+const translateIfNeeded = (key, fallback = '') => {
+  if (!key) return fallback
+  const translated = t(key)
+  return translated === key ? fallback || key : translated
+}
+
+const translatedChartData = computed(() => {
+  if (!props.chartData) return null
+
+  return {
+    ...props.chartData,
+    labels: (props.chartData.labelsKeys || props.chartData.labels || []).map((item, index) => {
+      if (typeof item === 'string') {
+        return translateIfNeeded(item, props.chartData.labels?.[index] || item)
+      }
+
+      return translateIfNeeded(item?.key, item?.fallback || '')
+    }),
+    datasets: (props.chartData.datasets || []).map((dataset) => ({
+      ...dataset,
+      label: translateIfNeeded(dataset.labelKey, dataset.label)
+    }))
+  }
+})
 </script>
 
 <style scoped>
@@ -42,7 +71,7 @@ defineProps({ chartData: Object, chartOptions: Object })
 .chart-content { flex: 1; display: flex; position: relative; }
 
 .chart-y-label {
-  writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; font-weight: 600;
+  writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; font-weight: 600;
   color: var(--text-muted); letter-spacing: 0.1em; text-align: center; margin-right: 16px; padding-bottom: 24px;
 }
 

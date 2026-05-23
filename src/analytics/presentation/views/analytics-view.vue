@@ -1,8 +1,6 @@
 <template>
   <Layout>
     <div class="high-end-analytics-page theme-transition">
-      <div class="optical-grid-bg theme-transition"></div>
-
       <header class="hero-header hero-reveal theme-transition">
         <div class="header-content">
           <h1 class="gradient-title theme-transition">{{ $t('analytics.title') }}</h1>
@@ -42,7 +40,7 @@
             </div>
 
             <div class="panel-reveal delay-4 grid-sidebar floating-sidebar">
-              <WordCloud class="theme-transition" />
+              <WordCloud :words="analyticsStore.wordCloudWords" class="theme-transition" />
             </div>
           </div>
 
@@ -87,6 +85,9 @@ onMounted(() => {
   --global-green: var(--accent-success, #34d399);
 
   background-color: var(--bg-primary);
+  background-image: radial-gradient(circle at center, var(--border-color) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: 16px 16px;
   color: var(--text-primary);
   position: relative;
   display: flex;
@@ -95,16 +96,6 @@ onMounted(() => {
   min-height: 100vh;
   overflow-x: hidden;
   z-index: 1;
-}
-
-.optical-grid-bg {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: -1;
-  background-image: radial-gradient(circle at center, var(--border-color) 1px, transparent 1px);
-  background-size: 32px 32px;
-  opacity: 0.8;
 }
 
 .hero-header { margin-bottom: 56px; display: flex; justify-content: space-between; align-items: flex-end; position: relative; padding-left: 24px; }
