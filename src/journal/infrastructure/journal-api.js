@@ -33,7 +33,7 @@ const mapJournalMedia = (data) => ({
 const toJournalEntryTagJSON = (relation) => ({
     id: relation.id,
     entry_id: relation.entryId ?? relation.entry_id,
-    tag_id: relation.tagId ?? relation.tag_id
+    tagId: relation.tagId ?? relation.tag_id
 })
 
 const loadJournalRelations = async () => {
@@ -121,6 +121,16 @@ export const JournalAPI = {
             return await enrichEntries(data)
         } catch (error) {
             console.error(`Error fetching journal entries for user ${userId}:`, error)
+            return []
+        }
+    },
+
+    async search(filters) {
+        try {
+            const data = await journalEntriesEndpoint.search(filters)
+            return await enrichEntries(data)
+        } catch (error) {
+            console.error('Error searching journal entries:', error)
             return []
         }
     },
@@ -243,4 +253,3 @@ export const JournalMediaAPI = {
         }
     }
 }
-

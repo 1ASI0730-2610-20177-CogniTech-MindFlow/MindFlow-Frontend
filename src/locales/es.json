@@ -222,6 +222,41 @@
       "days": "días"
     }
   },
+  "dashboard": {
+    "weeklySummary": {
+      "title": "Resumen Semanal de Ánimo",
+      "viewAll": "Ver Reporte Completo",
+      "loading": "Cargando resumen semanal...",
+      "empty": "No hay datos suficientes para mostrar el resumen."
+    },
+    "recentEntries": {
+      "title": "Conversaciones Recientes",
+      "viewAll": "Ver historial completo de conversaciones"
+    },
+    "dailyHabits": {
+      "title": "Hábitos Diarios",
+      "days": "días"
+    },
+    "quickInterventions": {
+      "title": "Intervenciones Rápidas",
+      "breathing": "Respiración 4-7-8",
+      "microMeditation": "Micro-meditación (3 min)"
+    },
+    "moodInput": {
+      "title": "¿Cómo te sientes en este momento?",
+      "aiActive": "MindFlow AI Activa",
+      "placeholder": "Escribe aquí tus pensamientos. Este es un espacio seguro y encriptado...",
+      "save": "Guardar Registro",
+      "analyzing": "Analizando...",
+      "processing": "Procesando tus emociones y buscando los mejores consejos para ti...",
+      "tags": {
+        "studies": "Estudios",
+        "work": "Trabajo",
+        "family": "Familia",
+        "personal": "Personal"
+      }
+    }
+  },
   "analytics": {
     "title": "Tu Panorama Emocional",
     "telemetry": "SINC. BIOMÉTRICA ACTIVA // V.3.1.0",
