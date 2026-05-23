@@ -2,7 +2,7 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 
 export class AnalyticsEndpoint extends BaseEndpoint {
     constructor() {
-        super('analyticsCache')
+        super('https://mindflow.free.beeceptor.com/api/analyticsCache')
     }
 
     async getByUserId(userId) {

@@ -2,7 +2,7 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 
 export class WordCloudEndpoint extends BaseEndpoint {
     constructor() {
-        super('wordCloud')
+        super('https://mindflow.free.beeceptor.com/api/wordCloud')
     }
 
     async getByUserId(userId) {
