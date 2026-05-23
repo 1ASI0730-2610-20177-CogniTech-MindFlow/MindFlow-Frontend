@@ -22,6 +22,17 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
   --chart-grid: #e5e7eb;
+
+  --habit-cat-salud-fisica-bg: #dbeafe;
+  --habit-cat-salud-fisica-color: #1d4ed8;
+  --habit-cat-bienestar-bg: #fef3c7;
+  --habit-cat-bienestar-color: #b45309;
+  --habit-cat-sueno-bg: #e0e7ff;
+  --habit-cat-sueno-color: #4338ca;
+  --habit-cat-salud-mental-bg: #fce7f3;
+  --habit-cat-salud-mental-color: #be185d;
+  --habit-cat-estudios-bg: #ede9fe;
+  --habit-cat-estudios-color: #6d28d9;
 }
 
 html.dark-mode {
@@ -43,6 +54,17 @@ html.dark-mode {
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
 
   --chart-grid: #334155;
+
+  --habit-cat-salud-fisica-bg: rgba(59, 130, 246, 0.14);
+  --habit-cat-salud-fisica-color: #93c5fd;
+  --habit-cat-bienestar-bg: rgba(245, 158, 11, 0.14);
+  --habit-cat-bienestar-color: #fbbf24;
+  --habit-cat-sueno-bg: rgba(99, 102, 241, 0.16);
+  --habit-cat-sueno-color: #a5b4fc;
+  --habit-cat-salud-mental-bg: rgba(236, 72, 153, 0.16);
+  --habit-cat-salud-mental-color: #f9a8d4;
+  --habit-cat-estudios-bg: rgba(168, 85, 247, 0.16);
+  --habit-cat-estudios-color: #d8b4fe;
 }
 
 * {
