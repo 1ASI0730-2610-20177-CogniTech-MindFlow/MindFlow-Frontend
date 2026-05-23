@@ -7,7 +7,7 @@
       "is_premium": true,
       "timezone": "GMT-7",
       "dark_mode_enabled": true,
-      "updated_at": "2026-05-23T13:33:01.054Z",
+      "updated_at": "2026-05-23T15:09:33.807Z",
       "id": "u1"
     },
     {
@@ -778,34 +778,7 @@
           }
         ]
       },
-      "data": "{\"totalEntries\":2,\"avgSentiment\":0.5,\"habitsCompleted\":4,\"streakMax\":14,\"mostUsedTag\":\"mindfulness\"}",
-      "word_cloud": [
-        {
-          "tag": "Ansiedad",
-          "weight": 8,
-          "score": 0.8
-        },
-        {
-          "tag": "Estrés",
-          "weight": 9,
-          "score": 0.9
-        },
-        {
-          "tag": "Felicidad",
-          "weight": 7,
-          "score": 0.7
-        },
-        {
-          "tag": "Trabajo",
-          "weight": 6,
-          "score": 0.6
-        },
-        {
-          "tag": "Familia",
-          "weight": 5,
-          "score": 0.5
-        }
-      ]
+      "data": "{\"totalEntries\":2,\"avgSentiment\":0.5,\"habitsCompleted\":4,\"streakMax\":14,\"mostUsedTag\":\"mindfulness\"}"
     },
     {
       "id": "ac2",
@@ -1190,6 +1163,39 @@
         ]
       },
       "data": "{\"totalEntries\":1,\"avgSentiment\":0.8,\"habitsCompleted\":2,\"streakMax\":10,\"mostUsedTag\":\"salud\"}"
+    }
+  ],
+  "wordCloud": [
+    {
+      "id": "wc1",
+      "user_id": "u1",
+      "words": [
+        {
+          "tag": "Ansiedad",
+          "weight": 8,
+          "score": 0.8
+        },
+        {
+          "tag": "Estrés",
+          "weight": 9,
+          "score": 0.9
+        },
+        {
+          "tag": "Felicidad",
+          "weight": 7,
+          "score": 0.7
+        },
+        {
+          "tag": "Trabajo",
+          "weight": 6,
+          "score": 0.6
+        },
+        {
+          "tag": "Familia",
+          "weight": 5,
+          "score": 0.5
+        }
+      ]
     }
   ],
   "notifications": [

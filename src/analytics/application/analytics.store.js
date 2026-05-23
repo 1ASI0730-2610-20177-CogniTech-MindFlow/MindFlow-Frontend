@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { AnalyticsSummary, KpiData } from '../domain/model/analytics.model'
 import { analyticsApi } from '@/analytics/infrastructure/analytics.endpoint'
+import { wordCloudApi } from '@/analytics/infrastructure/word-cloud.endpoint'
 import { useSettingsStore } from '@/settings/application/settings.store'
 
 function resolveCssVar(varName, fallback) {
@@ -113,11 +114,28 @@ function mapTrendData(record) {
     }
 }
 
-function mapWordCloudWords(record, legacyData) {
-    if (Array.isArray(record?.word_cloud) && record.word_cloud.length > 0) {
-        const words = [...record.word_cloud].sort((a, b) => b.score - a.score);
+function mapWordCloudWords(wordCloudRecord, legacyData) {
+    let wordsToMap = [];
+    
+    if (Array.isArray(wordCloudRecord) && wordCloudRecord.length > 0) {
+       if (wordCloudRecord[0] && Array.isArray(wordCloudRecord[0].words)) {
+           wordsToMap = wordCloudRecord[0].words;
+       } else {
+           wordsToMap = wordCloudRecord;
+       }
+    } 
+    // Check if it's an object with a 'words' property
+    else if (wordCloudRecord && Array.isArray(wordCloudRecord.words)) {
+        wordsToMap = wordCloudRecord.words;
+    }
+    // Fallback to legacy
+    else if (legacyData && Array.isArray(legacyData.wordCloud)) {
+        wordsToMap = legacyData.wordCloud;
+    }
 
-        // A structured grid of positions to prevent any overlap.
+    if (wordsToMap.length > 0) {
+        const words = [...wordsToMap].sort((a, b) => b.score - a.score);
+
         const positions = [
             { top: '45%', left: '50%' },
             { top: '25%', left: '35%' },
@@ -138,7 +156,6 @@ function mapWordCloudWords(record, legacyData) {
             if (negativeWords.includes(normalizedTag)) {
                 return word.score > 0.7 ? '#ef4444' : '#f59e0b';
             }
-            // Assign positive/neutral colors based on score.
             if (word.score >= 0.8) return 'var(--global-green)';
             if (word.score >= 0.6) return 'var(--global-blue)';
             return 'var(--text-muted)';
@@ -155,11 +172,7 @@ function mapWordCloudWords(record, legacyData) {
             };
         });
     }
-
-    if (Array.isArray(legacyData?.wordCloud) && legacyData.wordCloud.length > 0) {
-        return legacyData.wordCloud
-    }
-
+    
     if (legacyData?.mostUsedTag) {
         return [
             {
@@ -189,6 +202,17 @@ async function loadAnalyticsRecord() {
     return all[0] || null
 }
 
+async function loadWordCloudRecord() {
+    const settingsStore = useSettingsStore()
+    const currentUserId = settingsStore.currentUserId
+    if (currentUserId) {
+        return await wordCloudApi.getByUserId(currentUserId)
+    }
+
+    const all = await wordCloudApi.getAll();
+    return all.length > 0 ? all[0] : null;
+}
+
 export const useAnalyticsStore = defineStore('analytics', {
     state: () => ({
         summary: null,
@@ -206,7 +230,11 @@ export const useAnalyticsStore = defineStore('analytics', {
             this.isLoading = true
 
             try {
-                const record = await loadAnalyticsRecord()
+                const [record, wordCloudRecord] = await Promise.all([
+                    loadAnalyticsRecord(),
+                    loadWordCloudRecord()
+                ]);
+
                 const legacyData = parseLegacyData(record)
 
                 const tickColor = resolveCssVar('--text-secondary', '#64748b')
@@ -215,10 +243,11 @@ export const useAnalyticsStore = defineStore('analytics', {
                 if (record) {
                     this.summary = mapSummary(record, legacyData)
                     this.kpis = mapKpis(record.kpis || legacyData?.kpis || [])
-                    this.wordCloudWords = mapWordCloudWords(record, legacyData)
                     this.fluctuationData = withResolvedChartColors(mapFluctuationData(record))
                     this.trendData = withResolvedChartColors(mapTrendData(record))
                 }
+
+                this.wordCloudWords = mapWordCloudWords(wordCloudRecord, legacyData)
 
                 this.fluctuationOptions = {
                     responsive: true,
