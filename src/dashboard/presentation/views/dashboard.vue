@@ -5,14 +5,27 @@
 
       <div class="dashboard-grid">
         <div class="main-column">
-          <MoodInput />
-          <RecentEntries />
-          <WeeklySummaryWidget />
+          <div class="widget animate-fade-in-up" style="animation-delay: 0s">
+            <MoodInput />
+          </div>
+
+          <div class="widget animate-fade-in-up" style="animation-delay: 0.12s">
+            <RecentEntries />
+          </div>
+
+          <div class="widget animate-fade-in-up" style="animation-delay: 0.24s">
+            <WeeklySummaryWidget />
+          </div>
         </div>
 
         <div class="side-column">
-          <QuickInterventions />
-          <DailyHabits />
+          <div class="widget animate-fade-in-up" style="animation-delay: 0.08s">
+            <QuickInterventions />
+          </div>
+
+          <div class="widget animate-fade-in-up" style="animation-delay: 0.2s">
+            <DailyHabits />
+          </div>
         </div>
       </div>
     </div>
@@ -56,6 +69,26 @@ import DailyHabits from '../components/daily-habits.vue'
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+}
+
+/* Animaciones de entrada */
+@keyframes dfadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: dfadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 0;
+}
+
+.widget {
+  will-change: transform, opacity;
+}
+
+.optical-grid-bg {
+  transition: opacity 0.6s ease, transform 0.8s ease;
+  transform: translateZ(0);
 }
 
 .main-column,
