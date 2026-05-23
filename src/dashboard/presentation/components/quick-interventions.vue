@@ -1,12 +1,18 @@
 <template>
   <div class="dashboard-card">
-    <h3 class="card-title">Intervenciones Rápidas</h3>
+    <h3 class="card-title">{{ t('dashboard.quickInterventions.title') }}</h3>
     <div class="action-buttons">
-      <button class="btn-outline">Respiración 4-7-8</button>
-      <button class="btn-outline">Micro-meditación (3 min)</button>
+      <button class="btn-outline">{{ t('dashboard.quickInterventions.breathing') }}</button>
+      <button class="btn-outline">{{ t('dashboard.quickInterventions.microMeditation') }}</button>
     </div>
   </div>
 </template>
+
+<script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 
 <style scoped>
 .action-buttons {

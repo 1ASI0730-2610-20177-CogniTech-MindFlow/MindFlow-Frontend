@@ -1,42 +1,71 @@
 <template>
   <div class="dashboard-card">
     <div class="header-row">
-      <h3 class="card-title">Resumen Semanal de Ánimo</h3>
-      <router-link to="/analytics" class="view-all">Ver Reporte Completo</router-link>
+      <h3 class="card-title">{{ t('dashboard.weeklySummary.title') }}</h3>
+      <router-link to="/analytics" class="view-all">{{ t('dashboard.weeklySummary.viewAll') }}</router-link>
     </div>
 
-    <div class="mock-bar-chart">
-      <div class="bar-group">
-        <div class="bar color-yellow" style="height: 35%;"></div>
-        <span class="day-label">L</span>
+    <div v-if="hasData" class="mock-bar-chart">
+      <div class="bar-group" v-for="(item, index) in chartData" :key="index">
+        <div class="bar" :class="getBarColor(item)" :style="{ height: `${Math.max(0, Math.min(100, item * 10))}%` }"></div>
+        <span class="day-label">{{ getDayLabel(index) }}</span>
       </div>
-      <div class="bar-group">
-        <div class="bar color-red" style="height: 15%;"></div>
-        <span class="day-label">M</span>
-      </div>
-      <div class="bar-group">
-        <div class="bar color-green" style="height: 60%;"></div>
-        <span class="day-label">X</span>
-      </div>
-      <div class="bar-group">
-        <div class="bar color-green" style="height: 45%;"></div>
-        <span class="day-label">J</span>
-      </div>
-      <div class="bar-group">
-        <div class="bar color-light" style="height: 20%;"></div>
-        <span class="day-label">V</span>
-      </div>
-      <div class="bar-group">
-        <div class="bar color-none" style="height: 0%;"></div>
-        <span class="day-label">S</span>
-      </div>
-      <div class="bar-group">
-        <div class="bar color-none" style="height: 0%;"></div>
-        <span class="day-label">D</span>
-      </div>
+    </div>
+
+    <div v-else class="empty-state">
+      <p v-if="dashboardStore.isLoading">{{ t('dashboard.weeklySummary.loading') }}</p>
+      <p v-else>{{ t('dashboard.weeklySummary.empty') }}</p>
     </div>
   </div>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useDashboardStore } from '@/dashboard/application/dashboard.store'
+
+const dashboardStore = useDashboardStore()
+const { t } = useI18n()
+
+const defaultLabels = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
+const dayLabelMap = {
+  mon: 'L',
+  tue: 'M',
+  wed: 'X',
+  thu: 'J',
+  fri: 'V',
+  sat: 'S',
+  sun: 'D'
+}
+
+const hasData = computed(() => {
+  const weekly = dashboardStore.weeklySummary
+  return !!(weekly && weekly.datasets && weekly.datasets[0] && Array.isArray(weekly.datasets[0].data) && weekly.datasets[0].data.length)
+})
+
+const chartData = computed(() => (hasData.value ? dashboardStore.weeklySummary.datasets[0].data : []))
+
+const getBarColor = (value) => {
+  if (value > 7) return 'color-green'
+  if (value > 4) return 'color-yellow'
+  if (value > 0) return 'color-red'
+  return 'color-light'
+}
+
+const getDayLabel = (index) => {
+  const key = dashboardStore.weeklySummary?.labels_keys?.[index] || ''
+  if (!key) return defaultLabels[index] || ''
+
+  const translated = t(key)
+  if (translated && translated !== key) {
+    return translated.slice(0, 1).toUpperCase()
+  }
+
+  const suffix = key.split('.').pop()?.toLowerCase()
+  if (!suffix) return defaultLabels[index] || ''
+  return dayLabelMap[suffix] || suffix.slice(0, 1).toUpperCase()
+}
+</script>
 
 <style scoped>
 .header-row {
@@ -79,7 +108,15 @@
 .color-red { background: #f87171; }
 .color-green { background: #6ee7b7; }
 .color-light { background: var(--bg-surface-secondary); }
-.color-none { background: transparent; }
+
+.empty-state {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
 
 .day-label {
   font-size: 10px;

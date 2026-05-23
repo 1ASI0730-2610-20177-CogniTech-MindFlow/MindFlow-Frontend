@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-card">
     <div class="header-row">
-      <h3 class="card-title">Conversaciones Recientes</h3>
-      <a href="#" class="view-all">Ver historial completo de conversaciones</a>
+      <h3 class="card-title">{{ t('dashboard.recentEntries.title') }}</h3>
+      <a href="#" class="view-all">{{ t('dashboard.recentEntries.viewAll') }}</a>
     </div>
 
     <div class="entries-list">
@@ -18,7 +18,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { useDashboardStore } from '@/dashboard/application/dashboard.store'
+
+const { t } = useI18n()
 const dashboardStore = useDashboardStore()
 </script>
 

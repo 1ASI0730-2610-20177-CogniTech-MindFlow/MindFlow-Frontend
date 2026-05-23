@@ -33,12 +33,20 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import Layout from '@/shared/presentation/components/layout.vue'
 import MoodInput from '../components/mood-input.vue'
 import RecentEntries from '../components/recent-entries.vue'
 import WeeklySummaryWidget from '../components/weekly-summary-widget.vue'
 import QuickInterventions from '../components/quick-interventions.vue'
 import DailyHabits from '../components/daily-habits.vue'
+import { useDashboardStore } from '@/dashboard/application/dashboard.store'
+
+const dashboardStore = useDashboardStore()
+
+onMounted(() => {
+  dashboardStore.fetchDashboardData()
+})
 </script>
 
 <style scoped>

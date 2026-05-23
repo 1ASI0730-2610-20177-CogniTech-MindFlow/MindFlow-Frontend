@@ -1,24 +1,24 @@
 <template>
   <div class="dashboard-card">
     <div class="input-header">
-      <h3 class="card-title">¿Cómo te sientes en este momento?</h3>
+      <h3 class="card-title">{{ t('dashboard.moodInput.title') }}</h3>
       <div class="ai-status">
-        <span class="status-dot"></span> MindFlow AI Activa
+        <span class="status-dot"></span> {{ t('dashboard.moodInput.aiActive') }}
       </div>
     </div>
 
     <textarea
         v-model="journalText"
-        placeholder="Escribe aquí tus pensamientos. Este es un espacio seguro y encriptado..."
+        :placeholder="t('dashboard.moodInput.placeholder')"
         class="journal-textarea"
     ></textarea>
 
     <div class="input-actions">
       <select v-model="selectedTag" class="tag-select">
-        <option value="Estudios">Estudios</option>
-        <option value="Trabajo">Trabajo</option>
-        <option value="Familia">Familia</option>
-        <option value="Personal">Personal</option>
+        <option value="Estudios">{{ t('dashboard.moodInput.tags.studies') }}</option>
+        <option value="Trabajo">{{ t('dashboard.moodInput.tags.work') }}</option>
+        <option value="Familia">{{ t('dashboard.moodInput.tags.family') }}</option>
+        <option value="Personal">{{ t('dashboard.moodInput.tags.personal') }}</option>
       </select>
 
       <button
@@ -26,7 +26,7 @@
           @click="saveEntry"
           :disabled="!journalText.trim() || dashboardStore.isAnalyzing"
       >
-        {{ dashboardStore.isAnalyzing ? 'Analizando...' : 'Guardar Registro' }}
+        {{ dashboardStore.isAnalyzing ? t('dashboard.moodInput.analyzing') : t('dashboard.moodInput.save') }}
       </button>
     </div>
 
@@ -35,7 +35,7 @@
         <span class="sparkle">✨</span> <strong>MindFlow AI</strong>
       </div>
       <p class="ai-feedback-text">
-        <span v-if="dashboardStore.isAnalyzing">Procesando tus emociones y buscando los mejores consejos para ti...</span>
+        <span v-if="dashboardStore.isAnalyzing">{{ t('dashboard.moodInput.processing') }}</span>
         <span v-else>{{ dashboardStore.aiFeedback }}</span>
       </p>
     </div>
@@ -44,8 +44,10 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useDashboardStore } from '@/dashboard/application/dashboard.store'
 
+const { t } = useI18n()
 const dashboardStore = useDashboardStore()
 const journalText = ref('')
 const selectedTag = ref('Estudios')

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-card">
-    <h3 class="card-title">Hábitos Diarios</h3>
+    <h3 class="card-title">{{ t('dashboard.dailyHabits.title') }}</h3>
 
     <div class="habits-list">
       <div
@@ -19,7 +19,7 @@
         </div>
 
         <div v-if="habit.streak > 0" class="streak-badge">
-          🔥 {{ habit.streak }} días
+          🔥 {{ habit.streak }} {{ t('dashboard.dailyHabits.days') }}
         </div>
       </div>
     </div>
@@ -27,7 +27,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { useDashboardStore } from '@/dashboard/application/dashboard.store'
+
+const { t } = useI18n()
 const dashboardStore = useDashboardStore()
 </script>
 
