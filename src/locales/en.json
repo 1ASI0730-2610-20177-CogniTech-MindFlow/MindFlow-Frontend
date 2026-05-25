@@ -12,6 +12,12 @@
     "analytics": "Analytics",
     "settings": "Settings"
   },
+  "topbar": {
+    "subtitle": "Your AI is ready to listen.",
+    "search": "Search...",
+    "sections": "Sections",
+    "noResults": "No results found"
+  },
   "premium": {
     "description": "Unlock PDF and CSV report export for your therapist.",
     "viewPlans": "View Plans"

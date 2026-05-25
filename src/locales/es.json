@@ -7,10 +7,16 @@
   },
   "menu": {
     "dashboard": "Dashboard",
-    "journal": "Diario (Journal)",
+    "journal": "Diario",
     "habits": "Hábitos",
     "analytics": "Analíticas",
     "settings": "Configuración"
+  },
+  "topbar": {
+    "subtitle": "Tu IA está lista para escucharte.",
+    "search": "Buscar...",
+    "sections": "Secciones",
+    "noResults": "No se encontraron resultados"
   },
   "premium": {
     "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
@@ -271,7 +277,7 @@
     "kpis": {
       "entriesMonth": "ENTRADAS ESTE MES",
       "moodAverage": "ÁNIMO PROMEDIO",
-      "maxHabitStreak": "MAYOR RACHA HÁBITOS"
+      "mayoRachaHabitos": "MAYOR RACHA HÁBITOS"
     },
     "moods": {
       "positive": "Positivo",

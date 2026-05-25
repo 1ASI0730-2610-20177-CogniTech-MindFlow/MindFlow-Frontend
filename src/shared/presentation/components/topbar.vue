@@ -2,13 +2,39 @@
   <header class="topbar theme-transition">
     <div>
       <h2 class="greeting">{{ currentTitle }}</h2>
-      <p class="subtitle">{{ formattedDate }} · Tu IA está lista para escucharte.</p>
+      <p class="subtitle">{{ formattedDate }} · {{ $t('topbar.subtitle') }}</p>
     </div>
 
     <div class="topbar-actions">
-      <div class="search">
+      <div class="search" ref="searchContainer">
         <span class="search-icon"><i class="pi pi-search"></i></span>
-        <input type="text" placeholder="Buscar..." class="theme-transition" />
+        <input
+          type="text"
+          :placeholder="$t('topbar.search')"
+          class="theme-transition"
+          v-model="searchQuery"
+          @focus="isSearchOpen = true"
+        />
+
+        <!-- Search Results Dropdown -->
+        <div v-if="isSearchOpen && searchQuery.trim()" class="search-results theme-transition">
+          <div v-if="filteredSections.length > 0" class="search-section">
+            <h4 class="search-section-title">{{ $t('topbar.sections') }}</h4>
+            <div
+              v-for="section in filteredSections"
+              :key="section.path"
+              class="search-item theme-transition"
+              @click="navigateToSection(section.path)"
+            >
+              <i :class="['pi', section.icon, 'search-item-icon']"></i>
+              <span>{{ $t(section.label) }}</span>
+            </div>
+          </div>
+          <div v-else class="no-results">
+            <i class="pi pi-inbox"></i>
+            <p>{{ $t('topbar.noResults') }}</p>
+          </div>
+        </div>
       </div>
 
       <LanguageSwitcher />
@@ -19,22 +45,73 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import LanguageSwitcher from './language-switcher.vue'
 import { useSettingsStore } from '@/settings/application/settings.store.js'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
+const router = useRouter()
 const store = useSettingsStore()
+const { t } = useI18n()
 
 const currentTitle = computed(() => {
-  return route.meta?.title || 'Hola, Usuario'
+  // Use the route name to translate the title dynamically, fallback to greeting
+  if (route.name) {
+     return t(`menu.${route.name.toLowerCase()}`)
+  }
+  return route.meta?.title || t('greeting.hello')
 })
 
 const formattedDate = computed(() => {
   const options = { weekday: 'long', day: 'numeric', month: 'long' }
+  // You might want to pass the current locale dynamically, e.g., using i18n.locale.value
   return new Date().toLocaleDateString('es-ES', options)
 })
+
+// Search Functionality
+const searchQuery = ref('')
+const isSearchOpen = ref(false)
+const searchContainer = ref(null)
+
+const sections = [
+  { path: '/dashboard', label: 'menu.dashboard', icon: 'pi-objects-column' },
+  { path: '/journal', label: 'menu.journal', icon: 'pi-book' },
+  { path: '/habits', label: 'menu.habits', icon: 'pi-check-circle' },
+  { path: '/analytics', label: 'menu.analytics', icon: 'pi-chart-bar' },
+  { path: '/settings', label: 'menu.settings', icon: 'pi-cog' }
+]
+
+const filteredSections = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim()
+  if (!query) return []
+  return sections.filter(section =>
+    t(section.label).toLowerCase().includes(query)
+  )
+})
+
+const navigateToSection = (path) => {
+  router.push(path)
+  isSearchOpen.value = false
+  searchQuery.value = ''
+}
+
+// Click outside to close search
+const handleClickOutside = (event) => {
+  if (searchContainer.value && !searchContainer.value.contains(event.target)) {
+    isSearchOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
+
 </script>
 
 <style scoped>
@@ -48,6 +125,8 @@ const formattedDate = computed(() => {
   justify-content: space-between;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  position: relative; /* Ensure dropdown context */
+  z-index: 10;
 }
 
 .greeting {
@@ -125,6 +204,90 @@ const formattedDate = computed(() => {
 
 .search input:focus::placeholder {
   color: var(--text-secondary);
+}
+
+/* Search Results Styles */
+.search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 100;
+  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-section {
+  padding: 8px 0;
+}
+
+.search-section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  margin: 0;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.search-item:hover {
+  background: var(--bg-primary);
+  color: var(--accent-primary);
+}
+
+.search-item-icon {
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.search-item:hover .search-item-icon {
+  color: var(--accent-primary);
+}
+
+.no-results {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.no-results i {
+  font-size: 24px;
+  color: var(--text-secondary);
+}
+
+.no-results p {
+  margin: 0;
+  font-size: 14px;
 }
 
 .avatar {

@@ -14,7 +14,7 @@
           active-class="active"
       >
         <span class="nav-icon"><i :class="['pi', item.icon]"></i></span>
-        {{ item.label }}
+        {{ $t(item.label) }}
       </router-link>
     </nav>
 
@@ -26,11 +26,11 @@
 import PremiumBanner from './premium-banner.vue'
 
 const menuItems = [
-  { path: '/dashboard', label: 'Dashboard', icon: 'pi-objects-column' },
-  { path: '/journal', label: 'Diario (Journal)', icon: 'pi-book' },
-  { path: '/habits', label: 'Hábitos', icon: 'pi-check-circle' },
-  { path: '/analytics', label: 'Analíticas', icon: 'pi-chart-bar' },
-  { path: '/settings', label: 'Configuración', icon: 'pi-cog' }
+  { path: '/dashboard', label: 'menu.dashboard', icon: 'pi-objects-column' },
+  { path: '/journal', label: 'menu.journal', icon: 'pi-book' },
+  { path: '/habits', label: 'menu.habits', icon: 'pi-check-circle' },
+  { path: '/analytics', label: 'menu.analytics', icon: 'pi-chart-bar' },
+  { path: '/settings', label: 'menu.settings', icon: 'pi-cog' }
 ]
 </script>
 
