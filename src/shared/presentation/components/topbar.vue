@@ -13,7 +13,7 @@
 
       <LanguageSwitcher />
 
-      <div class="avatar">A</div>
+      <div class="avatar" v-if="store.profile">{{ store.profile.initial }}</div>
     </div>
   </header>
 </template>
@@ -22,8 +22,10 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import LanguageSwitcher from './language-switcher.vue'
+import { useSettingsStore } from '@/settings/application/settings.store.js'
 
 const route = useRoute()
+const store = useSettingsStore()
 
 const currentTitle = computed(() => {
   return route.meta?.title || 'Hola, Usuario'
