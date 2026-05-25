@@ -35,9 +35,9 @@ defineEmits(['update:searchQuery', 'update:statusFilter'])
 <style scoped>
 .habit-filters {
   display: grid;
-  grid-template-columns: 1fr 200px;
-  gap: 12px;
-  margin-bottom: 16px;
+  grid-template-columns: 1fr 210px;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 .search-wrap {
@@ -50,20 +50,28 @@ defineEmits(['update:searchQuery', 'update:statusFilter'])
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 15px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.search-wrap:focus-within i {
+  color: var(--accent-primary);
+  transform: translateY(-50%) scale(1.1);
 }
 
 .search-wrap input,
 .habit-filters select {
   width: 100%;
-  height: 42px;
+  height: 44px;
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 12px;
   font: inherit;
   font-size: 14px;
   color: var(--text-primary);
-  background: var(--bg-surface);
+  background: var(--bg-surface-secondary);
   outline: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .search-wrap input {
@@ -72,11 +80,34 @@ defineEmits(['update:searchQuery', 'update:statusFilter'])
 
 .habit-filters select {
   padding: 0 12px;
+  cursor: pointer;
+}
+
+.search-wrap input:hover,
+.habit-filters select:hover {
+  border-color: rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .search-wrap input:focus,
 .habit-filters select:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-2px);
+}
+
+.search-wrap input::placeholder {
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.search-wrap input:focus::placeholder {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .habit-filters {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

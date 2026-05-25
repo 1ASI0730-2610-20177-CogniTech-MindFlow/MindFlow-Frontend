@@ -35,26 +35,33 @@ const localizedTabs = computed(() => [
 <style scoped>
 .habit-tabs {
   display: flex;
-  gap: 28px;
+  gap: 32px;
   border-bottom: 1px solid var(--border-light);
-  margin-bottom: 22px;
+  margin-bottom: 28px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .tab {
   background: none;
   border: none;
-  padding: 0 0 12px;
+  padding: 0 0 14px;
   font: inherit;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
   position: relative;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  letter-spacing: 0.3px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  transform: translateY(-2px);
 }
 
 .tab.active {
   color: var(--accent-primary);
-  font-weight: 600;
 }
 
 .tab.active::after {
@@ -63,8 +70,37 @@ const localizedTabs = computed(() => [
   left: 0;
   right: 0;
   bottom: -1px;
-  height: 2px;
-  background: var(--accent-primary);
-  border-radius: 2px 2px 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-hover));
+  border-radius: 3px 3px 0 0;
+  animation: expandWidth 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes expandWidth {
+  from {
+    width: 0;
+    left: 50%;
+  }
+  to {
+    width: 100%;
+    left: 0;
+  }
+}
+
+.tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: transparent;
+  border-radius: 3px 3px 0 0;
+  transition: background 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tab:hover::before {
+  background: rgba(99, 102, 241, 0.1);
 }
 </style>

@@ -37,7 +37,7 @@ defineEmits(['toggle'])
 <style scoped>
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .list-enter-from,
 .list-leave-to {
@@ -51,9 +51,15 @@ defineEmits(['toggle'])
 .habit-list-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.habit-list-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  border-color: rgba(99, 102, 241, 0.15);
 }
 
 .habit-table {
@@ -63,20 +69,32 @@ defineEmits(['toggle'])
 
 .habit-table thead th {
   text-align: left;
-  padding: 14px 12px;
+  padding: 16px 14px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-surface-secondary);
 }
 
 .empty {
   text-align: center;
-  padding: 28px;
+  padding: 40px 28px;
   color: var(--text-muted);
   font-size: 14px;
+  animation: fadeInEmpty 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fadeInEmpty {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

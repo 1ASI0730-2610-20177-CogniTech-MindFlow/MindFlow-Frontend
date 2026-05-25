@@ -262,27 +262,22 @@ const getDayStyle = (day) => {
 .day {
   width: 40px;
   height: 40px;
-
   border-radius: 10px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 14px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition: .2s ease;
 }
 
 .day {
   background: var(--bg-surface);
   color: var(--text-primary);
-
   border: 1px solid var(--border-light);
 }
+
 .day.positive {
   background: #6fcf97;
   border-color: #6fcf97;
@@ -301,7 +296,6 @@ const getDayStyle = (day) => {
   color: white;
 }
 
-
 .dot.positive {
   background: #6fcf97;
 }
@@ -313,8 +307,9 @@ const getDayStyle = (day) => {
 .dot.negative {
   background: #f58c8c;
 }
+
 .day:not(.positive):not(.neutral):not(.negative):hover {
-  background: var(--bg-surface-secondary);
+  background: var(--bg-surface);
 }
 
 

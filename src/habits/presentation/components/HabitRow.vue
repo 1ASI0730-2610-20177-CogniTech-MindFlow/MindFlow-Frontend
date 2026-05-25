@@ -69,11 +69,11 @@ const categoryStyle = computed(() => {
 
 @keyframes bounceSubtle {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
+  50% { transform: translateY(-3px); }
 }
 
 .animate-pop-in {
-  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .animate-pulse-slow {
@@ -85,40 +85,50 @@ const categoryStyle = computed(() => {
 }
 
 .hover-lift {
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
 .hover-lift:hover {
-  transform: translateX(4px);
-  background-color: var(--bg-surface-secondary);
+  background-color: rgba(99, 102, 241, 0.05);
 }
 
 .hover-scale {
-  transition: transform 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
 .hover-scale:hover:not(:disabled) {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .habit-row td {
   padding: 14px 12px;
   border-bottom: 1px solid var(--border-light);
   vertical-align: middle;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .habit-row.paused td {
   color: var(--text-muted);
+  opacity: 0.7;
 }
 
 .status-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border: none;
   background: transparent;
   cursor: pointer;
   padding: 0;
+  border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.status-btn:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.1);
 }
 
 .status-btn:disabled {
@@ -126,32 +136,53 @@ const categoryStyle = computed(() => {
 }
 
 .done-icon {
-  color: var(--accent-success);
-  font-size: 22px;
+  color: #fff;
+  font-size: 14px;
+  filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
+  background: var(--accent-success);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
 }
 
 .paused-icon {
-  color: var(--accent-warning);
-  font-size: 22px;
+  color: #fff;
+  font-size: 14px;
+  filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));
+  background: var(--accent-warning);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
 }
 
 .pending-ring {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--text-secondary);
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid var(--text-secondary);
   border-radius: 50%;
   display: inline-block;
-  transition: border-color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
 .status-btn:hover:not(:disabled) .pending-ring {
-  border-color: var(--text-muted);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  transform: scale(1.1);
 }
 
 .name-cell {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
-  transition: color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .name-cell.done {
@@ -161,25 +192,34 @@ const categoryStyle = computed(() => {
 
 .category-tag {
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
+  padding: 6px 12px;
+  border-radius: 8px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   border: 1px solid transparent;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.02em;
+}
+
+.category-tag:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .streak {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-size: 13px;
   color: var(--text-secondary);
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .streak-icon {
   color: var(--accent-warning);
-  font-size: 12px;
+  font-size: 14px;
+  filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));
 }
 
 .streak.muted {
@@ -188,7 +228,8 @@ const categoryStyle = computed(() => {
 
 .paused-label {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent-warning);
+  letter-spacing: 0.02em;
 }
 </style>
