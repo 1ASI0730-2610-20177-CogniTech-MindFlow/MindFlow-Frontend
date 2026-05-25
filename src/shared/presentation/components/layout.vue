@@ -39,6 +39,12 @@ import Topbar from './topbar.vue'
     radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.03) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.02) 0%, transparent 50%);
   animation: contentFade 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes contentFade {
@@ -50,24 +56,6 @@ import Topbar from './topbar.vue'
   }
 }
 
-/* Barra de desplazamiento personalizada */
-.content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.content::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.3);
-  border-radius: 4px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.content::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.6);
-}
 
 /* Scroll padding para Scroll suave */
 html {
