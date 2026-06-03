@@ -6,8 +6,10 @@
     </div>
 
     <div class="topbar-actions">
-      <div class="search" ref="searchContainer">
-        <span class="search-icon"><i class="pi pi-search"></i></span>
+      <div class="search" ref="searchContainer" :class="{ active: isSearchOpen || searchQuery }">
+        <span class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
         <input
           type="text"
           :placeholder="$t('topbar.search')"
@@ -15,6 +17,9 @@
           v-model="searchQuery"
           @focus="isSearchOpen = true"
         />
+        <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''; isSearchOpen = false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
 
         <!-- Search Results Dropdown -->
         <div v-if="isSearchOpen && searchQuery.trim()" class="search-results theme-transition">
@@ -174,13 +179,18 @@ onUnmounted(() => {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.search.active {
+  transform: scale(1.02);
+}
+
 .search-icon {
   position: absolute;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
-  font-size: 14px;
+  display: flex;
+  align-items: center;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: none;
 }
@@ -191,33 +201,35 @@ onUnmounted(() => {
 }
 
 .search input {
-  width: 260px;
-  padding: 10px 14px 10px 40px;
-  border-radius: 12px;
-  background: var(--bg-primary);
+  width: 220px;
+  padding: 10px 36px 10px 40px;
+  border-radius: 50px;
+  background: var(--bg-surface-secondary);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   outline: none;
   font: inherit;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: inset 0 0 0 2px transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .search input:hover {
-  border-color: rgba(99, 102, 241, 0.3);
-  background: var(--bg-surface-secondary);
+  border-color: rgba(99, 102, 241, 0.2);
+  background: var(--bg-surface);
 }
 
 .search input:focus {
+  width: 280px;
   border-color: var(--accent-primary);
   background: var(--bg-surface);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), inset 0 0 0 1px rgba(99, 102, 241, 0.2);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08), 0 4px 12px rgba(99, 102, 241, 0.1);
 }
 
 .search input::placeholder {
   color: var(--text-muted);
+  font-weight: 400;
   transition: color 0.3s ease;
 }
 
@@ -225,43 +237,76 @@ onUnmounted(() => {
   color: var(--text-secondary);
 }
 
+.search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-surface-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.search:focus-within .search-clear,
+.search input:not(:placeholder-shown) ~ .search-clear {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(-50%) scale(1);
+}
+
+.search-clear:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
 /* Search Results Styles */
 .search-results {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 12px);
   left: 0;
   width: 100%;
+  min-width: 280px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.02);
   overflow: hidden;
   z-index: 100;
-  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: searchDropdown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes slideDown {
+@keyframes searchDropdown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .search-section {
-  padding: 8px 0;
+  padding: 6px 0;
 }
 
 .search-section-title {
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
   color: var(--text-muted);
-  padding: 8px 16px;
+  padding: 8px 16px 6px;
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
   font-weight: 600;
 }
 
@@ -273,16 +318,21 @@ onUnmounted(() => {
   cursor: pointer;
   color: var(--text-primary);
   font-size: 14px;
+  transition: background 0.15s;
+  margin: 0 6px;
+  border-radius: 8px;
 }
 
 .search-item:hover {
   background: var(--bg-primary);
-  color: var(--accent-primary);
 }
 
 .search-item-icon {
   color: var(--text-secondary);
-  font-size: 16px;
+  font-size: 14px;
+  width: 20px;
+  text-align: center;
+  transition: color 0.15s;
 }
 
 .search-item:hover .search-item-icon {
@@ -290,7 +340,7 @@ onUnmounted(() => {
 }
 
 .no-results {
-  padding: 24px;
+  padding: 32px 24px;
   text-align: center;
   color: var(--text-muted);
   display: flex;
@@ -300,8 +350,9 @@ onUnmounted(() => {
 }
 
 .no-results i {
-  font-size: 24px;
+  font-size: 28px;
   color: var(--text-secondary);
+  opacity: 0.5;
 }
 
 .no-results p {
