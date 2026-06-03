@@ -252,7 +252,10 @@
       "title": "Resumen Semanal de Ánimo",
       "viewAll": "Ver Reporte Completo",
       "loading": "Cargando resumen semanal...",
-      "empty": "No hay datos suficientes para mostrar el resumen."
+      "empty": "No hay datos suficientes para mostrar el resumen.",
+      "average": "Promedio",
+      "peak": "Pico",
+      "low": "Mínimo"
     },
     "recentEntries": {
       "title": "Conversaciones Recientes",
@@ -264,8 +267,13 @@
     },
     "quickInterventions": {
       "title": "Intervenciones Rápidas",
+      "live": "EN VIVO",
       "breathing": "Respiración 4-7-8",
-      "microMeditation": "Micro-meditación (3 min)"
+      "breathingDesc": "Técnica de respiración para reducir la ansiedad",
+      "microMeditation": "Micro-meditación",
+      "microMeditationDesc": "Meditación guiada de 3 minutos",
+      "grounding": "Conexión 5-4-3-2-1",
+      "groundingDesc": "Ejercicio de conexión con el presente"
     },
     "moodInput": {
       "title": "¿Cómo te sientes en este momento?",
