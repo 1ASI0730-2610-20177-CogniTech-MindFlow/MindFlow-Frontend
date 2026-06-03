@@ -149,20 +149,32 @@ onMounted(async () => {
   font-size: 20px;
   font-weight: 700;
   color: var(--text-primary);
+  padding-left: 14px;
+  position: relative;
+}
+.page-header h1::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  background: var(--accent-primary);
+  border-radius: 3px;
 }
 
 .subtitle {
-  margin: 6px 0 0;
+  margin: 6px 0 0 14px;
   color: var(--text-secondary);
   font-size: 14px;
 }
 
 .new-entry-btn {
   appearance: none;
-  border: 1px solid transparent;
+  border: none;
   border-radius: 999px;
-  padding: 12px 18px;
-  background: linear-gradient(135deg, var(--accent-primary), #4f46e5);
+  padding: 12px 22px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -170,13 +182,13 @@ onMounted(async () => {
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  box-shadow: 0 14px 26px rgba(91, 141, 239, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .new-entry-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 30px rgba(91, 141, 239, 0.22);
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.3);
 }
 
 .new-entry-btn:active {
@@ -214,9 +226,7 @@ onMounted(async () => {
   border-radius: 18px;
   padding: 24px;
   border: 1px solid var(--border-light);
-  box-shadow:
-      0 1px 2px var(--shadow-sm),
-      0 8px 24px var(--shadow-lg);
+  box-shadow: var(--shadow-sm), var(--shadow-lg);
 }
 
 .right-panel {

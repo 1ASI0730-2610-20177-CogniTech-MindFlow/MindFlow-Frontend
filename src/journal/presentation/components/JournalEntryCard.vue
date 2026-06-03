@@ -2,8 +2,9 @@
   <article class="entry-card hover-lift theme-transition">
     <div class="entry-header">
       <div class="entry-meta">
-        <span class="icon">🗓</span>
+        <i class="pi pi-calendar icon"></i>
         <span class="date">{{ entry.formattedDate }}</span>
+        <span v-if="entry.sentiment" class="sentiment-dot" :class="entry.sentiment"></span>
       </div>
       <span class="badge theme-transition">{{ entry.category }}</span>
     </div>
@@ -69,14 +70,14 @@ const mediaIcon = (type) => {
   border-radius: 18px;
   padding: 24px;
   border: 1px solid var(--border-light);
-  box-shadow: 0 1px 2px var(--shadow-sm), 0 8px 24px var(--shadow-lg);
+  box-shadow: var(--shadow-sm), var(--shadow-lg);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease;
   will-change: transform, box-shadow;
 }
 
 .hover-lift:hover {
   transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 16px 32px var(--shadow-lg);
+  box-shadow: var(--shadow-lg), 0 16px 32px rgba(0,0,0,0.06);
 }
 
 .entry-header {
@@ -84,6 +85,7 @@ const mediaIcon = (type) => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 18px;
+  gap: 12px;
 }
 
 .entry-meta {
@@ -94,6 +96,7 @@ const mediaIcon = (type) => {
 
 .icon {
   font-size: 13px;
+  color: var(--text-muted);
 }
 
 .date {
@@ -102,13 +105,30 @@ const mediaIcon = (type) => {
   font-weight: 500;
 }
 
+.sentiment-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.sentiment-dot.positive {
+  background: var(--accent-success);
+}
+.sentiment-dot.neutral {
+  background: var(--accent-warning);
+}
+.sentiment-dot.negative {
+  background: var(--accent-danger);
+}
+
 .badge {
   background: rgba(99, 102, 241, 0.1);
   color: var(--accent-primary);
-  padding: 6px 12px;
+  padding: 5px 12px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
+  white-space: nowrap;
   transition: background-color 0.2s ease;
 }
 .entry-card:hover .badge {
@@ -119,7 +139,7 @@ const mediaIcon = (type) => {
   font-size: 18px;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   line-height: 1.3;
 }
 
@@ -137,12 +157,12 @@ const mediaIcon = (type) => {
 }
 
 .tag-chip {
-  padding: 6px 10px;
-  border-radius: 999px;
+  padding: 5px 10px;
+  border-radius: 8px;
   background: var(--bg-surface-secondary);
-  color: var(--text-primary);
+  color: var(--text-secondary);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   border: 1px solid var(--border-light);
 }
 
@@ -172,11 +192,12 @@ const mediaIcon = (type) => {
   border: 1px solid var(--border-light);
   background: var(--bg-surface-secondary);
   min-height: 90px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .media-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px var(--shadow-lg);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 .media-image {
@@ -193,7 +214,7 @@ const mediaIcon = (type) => {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   padding: 14px;
 }
 

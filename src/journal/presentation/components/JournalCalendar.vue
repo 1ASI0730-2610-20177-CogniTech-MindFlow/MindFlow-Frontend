@@ -9,11 +9,11 @@
       </h3>
 
       <div class="month-actions">
-        <button type="button" @click="previousMonth" class="month-action theme-transition">
-          {{ $t('journal.calendar.previousMonth') }}
+        <button type="button" @click="previousMonth" class="month-action theme-transition" :aria-label="$t('journal.calendar.previousMonth')">
+          <span class="nav-char">‹</span>
         </button>
-        <button type="button" @click="nextMonth" class="month-action theme-transition">
-          {{ $t('journal.calendar.nextMonth') }}
+        <button type="button" @click="nextMonth" class="month-action theme-transition" :aria-label="$t('journal.calendar.nextMonth')">
+          <span class="nav-char">›</span>
         </button>
       </div>
 
@@ -188,14 +188,11 @@ const getDayStyle = (day) => {
 </script>
 
 <style scoped>
-
 .calendar {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
-
-
 
 .calendar-header {
   display: flex;
@@ -206,7 +203,7 @@ const getDayStyle = (day) => {
 .month-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .calendar-header h3 {
@@ -216,52 +213,54 @@ const getDayStyle = (day) => {
 }
 
 .month-action {
-  appearance: none;
-  background: transparent;
-  border: none;
-  padding: 0;
-  font-size: 12px;
-  color: var(--accent-primary);
-  font-weight: 500;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
   cursor: pointer;
-  opacity: 0.9;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-
 .month-action:hover {
-  opacity: 1;
-  text-decoration: underline;
+  background: var(--accent-primary);
+  color: #fff;
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+.month-action:active {
+  transform: scale(0.92);
 }
 
-
+.nav-char {
+  font-size: 18px;
+  line-height: 1;
+}
 
 .weekdays {
   display: grid;
-  grid-template-columns: repeat(7, 40px);
-  gap: 8px;
+  grid-template-columns: repeat(7, 38px);
+  gap: 6px;
   justify-content: center;
-
   text-align: center;
-
   font-size: 12px;
-
   color: var(--text-muted);
-
   font-weight: 600;
 }
 
 .days-grid {
   display: grid;
-  grid-template-columns: repeat(7, 40px);
+  grid-template-columns: repeat(7, 38px);
   justify-content: center;
-
-  gap: 8px;
+  gap: 6px;
 }
 
-
-
 .day {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -269,65 +268,60 @@ const getDayStyle = (day) => {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: .2s ease;
-}
-
-.day {
   background: var(--bg-surface);
   color: var(--text-primary);
   border: 1px solid var(--border-light);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+}
+.day:not(.empty):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
 .day.positive {
-  background: #6fcf97;
-  border-color: #6fcf97;
+  background: var(--mood-positive);
+  border-color: var(--mood-positive);
+  color: #fff;
+}
+.day.neutral {
+  background: var(--mood-neutral);
+  border-color: var(--mood-neutral);
+  color: #111827;
+}
+.day.negative {
+  background: var(--mood-negative);
+  border-color: var(--mood-negative);
   color: #fff;
 }
 
-.day.neutral {
-  background: #f2c94c;
-  border-color: #f2c94c;
-  color: #111827;
-}
-
-.day.negative {
-  background: #f58c8c;
-  border-color: #f58c8c;
-  color: white;
-}
-
 .dot.positive {
-  background: #6fcf97;
+  background: var(--mood-positive);
 }
-
 .dot.neutral {
-  background: #f2c94c;
+  background: var(--mood-neutral);
 }
-
 .dot.negative {
-  background: #f58c8c;
+  background: var(--mood-negative);
 }
 
-.day:not(.positive):not(.neutral):not(.negative):hover {
-  background: var(--bg-surface);
+.day.empty {
+  visibility: hidden;
+  pointer-events: none;
 }
-
-
 
 .legend {
   display: flex;
   justify-content: center;
-  gap: 18px;
-  margin-top: 8px;
+  gap: 16px;
+  margin-top: 4px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   gap: 6px;
-
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .dot {
@@ -335,5 +329,4 @@ const getDayStyle = (day) => {
   height: 8px;
   border-radius: 999px;
 }
-
 </style>

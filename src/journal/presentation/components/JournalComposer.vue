@@ -8,7 +8,7 @@
         </div>
 
         <button type="button" class="close-btn" @click="$emit('close')" :aria-label="$t('journal.composer.close')">
-          <i class="pi pi-times"></i>
+          <span class="close-symbol">×</span>
         </button>
       </header>
 
@@ -136,8 +136,13 @@ const submit = () => {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(15, 23, 42, 0.42);
-  backdrop-filter: blur(10px);
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(8px);
+  animation: backdropIn 0.2s ease;
+}
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .composer-card {
@@ -145,8 +150,8 @@ const submit = () => {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: 24px;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2);
-  padding: 24px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+  padding: 28px;
 }
 
 .composer-header {
@@ -154,7 +159,7 @@ const submit = () => {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .eyebrow {
@@ -179,14 +184,28 @@ const submit = () => {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   background: var(--bg-surface-secondary);
-  color: var(--text-secondary);
+  color: var(--text-muted);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.close-btn:active {
+  transform: scale(0.92);
+}
+.close-btn:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 .composer-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .composer-form label {
@@ -207,18 +226,21 @@ const submit = () => {
   width: 100%;
   border: 1px solid var(--border-color);
   border-radius: 14px;
-  background: var(--bg-surface);
+  background: var(--bg-surface-secondary);
   color: var(--text-primary);
   font: inherit;
+  font-size: 14px;
   padding: 14px 16px;
   outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .composer-form input:focus,
 .composer-form select:focus,
 .composer-form textarea:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 4px rgba(91, 141, 239, 0.12);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  background: var(--bg-surface);
 }
 
 .composer-form textarea {
@@ -243,30 +265,39 @@ const submit = () => {
 .primary-btn {
   height: 44px;
   border-radius: 12px;
-  padding: 0 18px;
+  padding: 0 20px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .secondary-btn {
   border: 1px solid var(--border-color);
   background: transparent;
+  color: var(--text-secondary);
+}
+.secondary-btn:hover {
+  background: var(--bg-surface-secondary);
   color: var(--text-primary);
 }
 
 .primary-btn {
   border: none;
-  background: linear-gradient(135deg, var(--accent-primary), #4f46e5);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
   color: white;
-  box-shadow: 0 14px 24px rgba(91, 141, 239, 0.22);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+}
+.primary-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.3);
 }
 
 .primary-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 

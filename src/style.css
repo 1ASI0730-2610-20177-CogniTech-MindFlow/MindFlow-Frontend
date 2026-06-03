@@ -23,6 +23,10 @@
 
   --chart-grid: #e5e7eb;
 
+  --mood-positive: #6fcf97;
+  --mood-neutral: #f2c94c;
+  --mood-negative: #f58c8c;
+
   --habit-cat-salud-fisica-bg: #dbeafe;
   --habit-cat-salud-fisica-color: #1d4ed8;
   --habit-cat-bienestar-bg: #fef3c7;
@@ -54,6 +58,10 @@ html.dark-mode {
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
 
   --chart-grid: #334155;
+
+  --mood-positive: #4ade80;
+  --mood-neutral: #facc15;
+  --mood-negative: #f87171;
 
   --habit-cat-salud-fisica-bg: rgba(59, 130, 246, 0.14);
   --habit-cat-salud-fisica-color: #93c5fd;
