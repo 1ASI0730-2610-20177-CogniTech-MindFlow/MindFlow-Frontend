@@ -158,13 +158,13 @@ function mapWordCloudWords(wordCloudRecord, legacyData) {
                 .replace(/[\u0300-\u036f]/g, '')
 
             if (negativeWords.includes(normalizedTag)) {
-                return word.score > 0.7 ? 'var(--accent-danger)' : 'var(--accent-warning)';
+                return word.score > 0.7 ? 'var(--accent-danger)' : 'var(--text-muted)';
             }
 
-            if (word.score >= 0.85) return 'var(--accent-success)';
-            if (word.score >= 0.7) return 'var(--accent-primary)';
-            if (word.score >= 0.55) return 'var(--text-primary)';
-            return 'var(--text-secondary)';
+            if (word.score >= 0.85) return 'var(--accent-primary)';
+            if (word.score >= 0.7) return 'var(--accent-success)';
+            if (word.score >= 0.55) return 'var(--accent-warning)';
+            return 'var(--text-muted)';
         };
 
         return words.map((word, index) => {
@@ -255,18 +255,32 @@ export const useAnalyticsStore = defineStore('analytics', {
 
                 this.wordCloudWords = mapWordCloudWords(wordCloudRecord, legacyData)
 
+                const tooltipBase = {
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleFont: { size: 11, weight: '600' },
+                    bodyFont: { size: 13, weight: '500' },
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: true,
+                    borderColor: 'rgba(255,255,255,0.08)',
+                    borderWidth: 1
+                }
+
                 this.fluctuationOptions = {
                     responsive: true,
                     maintainAspectRatio: false,
+                    animation: { duration: 600, easing: 'easeOutQuart' },
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                            titleFont: { size: 11 },
-                            bodyFont: { size: 14 },
-                            padding: 12,
-                            cornerRadius: 8,
-                            displayColors: false
+                            ...tooltipBase,
+                            callbacks: {
+                                label: (ctx) => {
+                                    const val = ctx.parsed.y
+                                    const label = val >= 7 ? 'Alto' : val >= 4 ? 'Moderado' : 'Bajo'
+                                    return ` ${val} — ${label}`
+                                }
+                            }
                         }
                     },
                     scales: {
@@ -276,8 +290,8 @@ export const useAnalyticsStore = defineStore('analytics', {
                             ticks: {
                                 font: { size: 10 },
                                 color: tickColor,
-                                maxRotation: 45,
-                                minRotation: 45
+                                maxRotation: 40,
+                                minRotation: 40
                             }
                         },
                         y: {
@@ -294,7 +308,25 @@ export const useAnalyticsStore = defineStore('analytics', {
                 this.trendOptions = {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    animation: { duration: 800, easing: 'easeOutQuart' },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            ...tooltipBase,
+                            callbacks: {
+                                title: (items) => items[0]?.label || '',
+                                label: (ctx) => {
+                                    const label = ctx.dataset.label || ''
+                                    const val = ctx.parsed.y
+                                    return ` ${label}: ${val}`
+                                }
+                            }
+                        }
+                    },
                     scales: {
                         x: {
                             grid: { display: false },
@@ -307,6 +339,15 @@ export const useAnalyticsStore = defineStore('analytics', {
                             min: 0,
                             max: 10,
                             ticks: { stepSize: 2, font: { size: 10 }, color: tickColor }
+                        }
+                    },
+                    elements: {
+                        point: {
+                            hoverRadius: 6,
+                            hoverBorderWidth: 2
+                        },
+                        line: {
+                            tension: 0.35
                         }
                     }
                 }

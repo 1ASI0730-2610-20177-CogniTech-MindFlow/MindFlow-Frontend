@@ -10,20 +10,24 @@
           v-for="(word, index) in styledWords"
           :key="`${word.text || word.i18nKey || 'word'}-${index}`"
           class="cloud-word"
-          :class="word.weight >= 700 ? 'is-strong' : 'is-soft'"
+          :class="[word.weight >= 700 ? 'is-strong' : 'is-soft', { hovered: word.hovered }]"
           :style="wordStyle(word)"
+          @mouseenter="hoveredWord = index"
+          @mouseleave="hoveredWord = null"
       >
         {{ resolveWordText(word) }}
+        <span v-if="hoveredWord === index && word.score" class="word-badge">{{ Math.round(word.score * 100) }}%</span>
       </span>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+const hoveredWord = ref(null)
 
 const props = defineProps({
   words: {
@@ -33,24 +37,25 @@ const props = defineProps({
 })
 
 const fallbackWords = computed(() => ([
-  { i18nKey: 'analytics.components.wordCloud.words.calm', size: 28, color: 'var(--accent-success)', weight: 600, top: '30%', left: '20%' },
-  { i18nKey: 'analytics.components.wordCloud.words.anxious', size: 12, color: 'var(--accent-danger)', weight: 600, top: '60%', left: '25%' },
-  { i18nKey: 'analytics.components.wordCloud.words.productive', size: 14, color: 'var(--text-secondary)', weight: 500, top: '40%', left: '50%' },
-  { i18nKey: 'analytics.components.wordCloud.words.grateful', size: 32, color: 'var(--accent-primary)', weight: 700, top: '50%', left: '45%' },
-  { i18nKey: 'analytics.components.wordCloud.words.family', size: 14, color: 'var(--text-primary)', weight: 700, top: '35%', left: '75%' },
-  { i18nKey: 'analytics.components.wordCloud.words.tired', size: 18, color: 'var(--accent-warning)', weight: 600, top: '55%', left: '75%' }
+  { i18nKey: 'analytics.components.wordCloud.words.calm', size: 28, color: 'var(--accent-primary)', weight: 600, score: 0.85, top: '30%', left: '20%' },
+  { i18nKey: 'analytics.components.wordCloud.words.anxious', size: 12, color: 'var(--text-muted)', weight: 500, score: 0.45, top: '60%', left: '25%' },
+  { i18nKey: 'analytics.components.wordCloud.words.productive', size: 14, color: 'var(--accent-warning)', weight: 500, score: 0.55, top: '40%', left: '50%' },
+  { i18nKey: 'analytics.components.wordCloud.words.grateful', size: 32, color: 'var(--accent-primary)', weight: 700, score: 0.92, top: '50%', left: '45%' },
+  { i18nKey: 'analytics.components.wordCloud.words.family', size: 14, color: 'var(--accent-success)', weight: 700, score: 0.62, top: '35%', left: '75%' },
+  { i18nKey: 'analytics.components.wordCloud.words.tired', size: 18, color: 'var(--text-muted)', weight: 500, score: 0.58, top: '55%', left: '75%' }
 ]))
 
 const renderedWords = computed(() => (props.words?.length ? props.words : fallbackWords.value))
 
 const styledWords = computed(() => {
-  const tilts = ['-8deg', '4deg', '-3deg', '9deg', '-6deg', '2deg']
+  const tilts = ['-7deg', '3deg', '-2deg', '8deg', '-5deg', '2deg', '-4deg', '6deg']
 
   return renderedWords.value.map((word, index) => ({
     ...word,
     tilt: word.tilt || tilts[index % tilts.length],
-    delay: `${index * 70}ms`,
-    duration: `${3.8 + (index % 4) * 0.35}s`
+    delay: `${index * 60}ms`,
+    duration: `${4 + (index % 3) * 0.5}s`,
+    hovered: hoveredWord.value === index
   }))
 })
 
@@ -63,16 +68,21 @@ const resolveWordText = (word) => {
   return word?.text || ''
 }
 
-const wordStyle = (word) => ({
-  fontSize: `${word.size ?? 14}px`,
-  color: word.color || 'var(--text-primary)',
-  fontWeight: word.weight ?? 600,
-  top: word.top || '50%',
-  left: word.left || '50%',
-  transform: `translate(-50%, -50%) rotate(${word.tilt || '0deg'})`,
-  animationDelay: word.delay,
-  animationDuration: word.duration
-})
+const wordStyle = (word) => {
+  const baseTransform = `translate(-50%, -50%) rotate(${word.tilt || '0deg'})`
+
+  return {
+    fontSize: `${word.size ?? 14}px`,
+    color: word.color || 'var(--text-primary)',
+    fontWeight: word.weight ?? 600,
+    top: word.top || '50%',
+    left: word.left || '50%',
+    transform: word.hovered ? `${baseTransform} scale(1.12)` : baseTransform,
+    animationDelay: word.delay,
+    animationDuration: word.duration,
+    zIndex: word.hovered ? 10 : 1
+  }
+}
 </script>
 
 <style scoped>
@@ -124,7 +134,11 @@ const wordStyle = (word) => ({
   animation-fill-mode: forwards, both;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-in-out;
   animation-duration: 420ms, 4.2s;
-  transition: transform 0.24s ease, filter 0.24s ease, opacity 0.24s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease, opacity 0.24s ease;
+  cursor: default;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: -4px -8px;
 }
 
 .cloud-word.is-strong {
@@ -136,29 +150,40 @@ const wordStyle = (word) => ({
 }
 
 .cloud-word:hover {
-  filter: brightness(1.07) drop-shadow(0 8px 16px color-mix(in srgb, var(--text-primary) 18%, transparent));
-  transform: translate(-50%, -50%) scale(1.06);
+  filter: brightness(1.05) drop-shadow(0 6px 20px color-mix(in srgb, var(--text-primary) 15%, transparent));
+  background: color-mix(in srgb, var(--bg-surface) 70%, transparent);
+}
+
+.word-badge {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  pointer-events: none;
+  animation: badgePop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgePop {
+  from { transform: translateX(-50%) scale(0.7); opacity: 0; }
+  to { transform: translateX(-50%) scale(1); opacity: 1; }
 }
 
 @keyframes cloudIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.86);
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.86); }
+  to { opacity: 1; }
 }
 
 @keyframes cloudFloat {
-  0%,
-  100% {
-    margin-top: 0;
-  }
-
-  50% {
-    margin-top: -3px;
-  }
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -3px; }
 }
 </style>

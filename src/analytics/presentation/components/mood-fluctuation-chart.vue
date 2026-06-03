@@ -57,7 +57,8 @@ const translatedChartData = computed(() => {
 .transparent-chart-container { padding: 36px; display: flex; flex-direction: column; height: 380px; }
 
 .card-header { margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
-.card-title { font-size: 18px; color: var(--text-dark); margin: 0 0 4px 0; font-weight: 700; }
+.title-group { display: flex; flex-direction: column; gap: 4px; }
+.card-title { font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700; }
 .mono-subtitle { font-size: 9px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
 .chart-status {
@@ -71,8 +72,9 @@ const translatedChartData = computed(() => {
 .chart-content { flex: 1; display: flex; position: relative; }
 
 .chart-y-label {
-  writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; font-weight: 600;
-  color: var(--text-muted); letter-spacing: 0.1em; text-align: center; margin-right: 16px; padding-bottom: 24px;
+  writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.12em; text-align: center; margin-right: 12px; padding-bottom: 20px;
+  opacity: 0.7;
 }
 
 .chart-wrapper { flex: 1; position: relative; }

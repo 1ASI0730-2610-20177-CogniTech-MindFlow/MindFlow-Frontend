@@ -51,12 +51,12 @@ const translatedChartData = computed(() => {
 .transparent-chart-container { padding: 36px; display: flex; flex-direction: column; }
 .large-chart { height: 420px; }
 
-.card-header { margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px; }
+.card-header { margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; }
 .card-title { font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700; }
 
-.chart-legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
-.legend-item { display: flex; align-items: center; gap: 6px; }
-.box { width: 12px; height: 12px; border-radius: 2px; }
+.chart-legend { display: flex; gap: 20px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.box { width: 10px; height: 10px; border-radius: 3px; }
 .bg-light { background: #e2e8f0; }
 .bg-blue { background: var(--global-blue); }
 
