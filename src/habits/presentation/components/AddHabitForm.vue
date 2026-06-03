@@ -92,9 +92,17 @@ const submit = () => {
   font: inherit;
   font-size: 14px;
   color: var(--text-primary);
-  background: linear-gradient(135deg, var(--bg-surface-secondary), var(--bg-primary));
   outline: none;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.add-form input {
+  background: linear-gradient(135deg, var(--bg-surface-secondary), var(--bg-primary));
+}
+
+.add-form select {
+  background: var(--bg-surface-secondary);
+  cursor: pointer;
 }
 
 .add-form input:hover,
