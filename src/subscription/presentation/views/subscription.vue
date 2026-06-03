@@ -64,6 +64,8 @@
         <footer class="footer theme-transition">
           {{ $t('plansPage.footer') }}
         </footer>
+
+        <PaymentHistory :payments="store.paymentHistory" />
       </main>
 
       <div v-else class="loading-state">
@@ -77,11 +79,13 @@
 import { onMounted } from 'vue'
 import { useSubscriptionStore } from '../../application/subscription.store'
 import Layout from '@/shared/presentation/components/layout.vue'
+import PaymentHistory from '../components/payment-history.vue'
 
 const store = useSubscriptionStore()
 
 onMounted(() => {
   store.fetchSubscription('u1')
+  store.fetchPaymentHistory('u1')
 })
 </script>
 

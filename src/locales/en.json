@@ -71,7 +71,26 @@
       }
     },
     "footer": "🔒 Payments encrypted and processed securely via Stripe.",
-    "loading": "Loading plan information..."
+    "loading": "Loading plan information...",
+    "paymentHistory": {
+      "title": "Payment History",
+      "empty": "No payments recorded yet.",
+      "date": "Date",
+      "amount": "Amount",
+      "method": "Method",
+      "status": "Status",
+      "methods": {
+        "creditCard": "Credit Card",
+        "paypal": "PayPal",
+        "freeTrial": "Free Trial"
+      },
+      "statuses": {
+        "completed": "Completed",
+        "pending": "Pending",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      }
+    }
   },
   "settings": {
     "profile": {

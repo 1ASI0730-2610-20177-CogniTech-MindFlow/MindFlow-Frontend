@@ -71,7 +71,26 @@
       }
     },
     "footer": "🔒 Pagos encriptados y procesados de forma segura a través de Stripe.",
-    "loading": "Cargando información de planes..."
+    "loading": "Cargando información de planes...",
+    "paymentHistory": {
+      "title": "Historial de Pagos",
+      "empty": "Aún no hay pagos registrados.",
+      "date": "Fecha",
+      "amount": "Monto",
+      "method": "Método",
+      "status": "Estado",
+      "methods": {
+        "creditCard": "Tarjeta de crédito",
+        "paypal": "PayPal",
+        "freeTrial": "Prueba gratuita"
+      },
+      "statuses": {
+        "completed": "Completado",
+        "pending": "Pendiente",
+        "failed": "Fallido",
+        "refunded": "Reembolsado"
+      }
+    }
   },
   "settings": {
     "profile": {
