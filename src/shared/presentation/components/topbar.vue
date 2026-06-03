@@ -47,7 +47,7 @@
         @dismiss="notifStore.dismissNotification"
       />
 
-      <div class="avatar" v-if="store.profile">{{ store.profile.initial }}</div>
+      <div class="avatar theme-transition" :class="{ loading: !store.profile }">{{ avatarInitial }}</div>
     </div>
   </header>
 </template>
@@ -66,6 +66,12 @@ const router = useRouter()
 const store = useSettingsStore()
 const notifStore = useNotificationsStore()
 const { t } = useI18n()
+
+const avatarInitial = computed(() => {
+  if (store.profile?.initial) return store.profile.initial
+  const name = store.profile?.name || 'U'
+  return name.charAt(0).toUpperCase()
+})
 
 const currentTitle = computed(() => {
   // Use the route name to translate the title dynamically, fallback to greeting
@@ -319,6 +325,18 @@ onUnmounted(() => {
   box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
   position: relative;
   overflow: hidden;
+}
+
+.avatar.loading {
+  background: var(--bg-surface-secondary);
+  color: var(--text-muted);
+  box-shadow: none;
+  animation: avatarPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes avatarPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 .avatar::before {
