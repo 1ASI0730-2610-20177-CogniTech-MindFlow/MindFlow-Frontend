@@ -1,5 +1,5 @@
 <template>
-  <div class="filters">
+  <div class="filters theme-transition">
     <input
         v-model="search"
         class="search-input theme-transition"

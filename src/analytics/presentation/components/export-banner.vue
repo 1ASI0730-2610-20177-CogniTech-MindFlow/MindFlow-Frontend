@@ -1,5 +1,5 @@
 <template>
-  <div class="premium-card export-banner">
+  <div class="premium-card export-banner theme-transition">
     <div class="export-info">
       <h3>{{ $t('analytics.components.export.title') }}</h3>
       <p>{{ $t('analytics.components.export.desc') }}</p>

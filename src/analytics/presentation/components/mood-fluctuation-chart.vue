@@ -1,5 +1,5 @@
 <template>
-  <div class="transparent-chart-container">
+  <div class="transparent-chart-container theme-transition">
     <div class="card-header">
       <div class="title-group">
         <h3 class="card-title">{{ $t('analytics.components.fluctuationChart.title') }}</h3>

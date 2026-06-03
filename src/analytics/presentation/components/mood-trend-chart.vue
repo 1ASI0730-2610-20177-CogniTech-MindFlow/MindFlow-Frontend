@@ -1,5 +1,5 @@
 <template>
-  <div class="transparent-chart-container large-chart">
+  <div class="transparent-chart-container large-chart theme-transition">
     <div class="card-header">
       <h3 class="card-title">{{ t('analytics.components.trendChart.title') }}</h3>
       <div class="chart-legend">

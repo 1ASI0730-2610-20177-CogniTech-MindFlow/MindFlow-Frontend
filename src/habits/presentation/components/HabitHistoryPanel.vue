@@ -1,5 +1,5 @@
 <template>
-  <div class="history-panel">
+  <div class="history-panel theme-transition">
     <p v-if="weeks.length === 0" class="empty theme-transition">{{ $t('habits.history.empty') }}</p>
 
     <article v-for="week in weeks" :key="week.weekLabel" class="week-card theme-transition">

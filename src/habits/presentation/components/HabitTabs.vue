@@ -1,5 +1,5 @@
 <template>
-  <div class="habit-tabs">
+  <div class="habit-tabs theme-transition">
     <button
         v-for="tab in localizedTabs"
         :key="tab.id"

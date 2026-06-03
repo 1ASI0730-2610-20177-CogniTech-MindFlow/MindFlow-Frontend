@@ -1,5 +1,5 @@
 <template>
-  <div class="habit-filters">
+  <div class="habit-filters theme-transition">
     <div class="search-wrap">
       <i class="pi pi-search"></i>
       <input

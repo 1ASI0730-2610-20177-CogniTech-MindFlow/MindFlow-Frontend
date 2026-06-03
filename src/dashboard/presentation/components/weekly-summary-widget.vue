@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-card">
+  <div class="dashboard-card theme-transition">
     <div class="header-row">
       <div class="header-left">
         <h3 class="card-title">{{ t('dashboard.weeklySummary.title') }}</h3>

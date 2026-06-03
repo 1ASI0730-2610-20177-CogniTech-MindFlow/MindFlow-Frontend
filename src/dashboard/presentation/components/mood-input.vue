@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-card">
+  <div class="dashboard-card theme-transition">
     <div class="input-header">
       <h3 class="card-title">{{ t('dashboard.moodInput.title') }}</h3>
       <div class="ai-status">

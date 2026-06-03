@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-card">
+  <div class="dashboard-card theme-transition">
     <h3 class="card-title">{{ t('dashboard.dailyHabits.title') }}</h3>
 
     <div class="habits-list">

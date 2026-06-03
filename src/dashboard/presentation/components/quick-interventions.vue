@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-card">
+  <div class="dashboard-card theme-transition">
     <div class="header-row">
       <h3 class="card-title">{{ t('dashboard.quickInterventions.title') }}</h3>
       <span class="live-badge">● {{ t('dashboard.quickInterventions.live') }}</span>

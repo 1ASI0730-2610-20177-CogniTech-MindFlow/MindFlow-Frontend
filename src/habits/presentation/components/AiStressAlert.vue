@@ -1,5 +1,5 @@
 <template>
-  <div class="ai-alert" role="status">
+  <div class="ai-alert theme-transition" role="status">
     <span class="alert-icon"><i class="pi pi-exclamation-triangle"></i></span>
     <p>
       <strong>{{ $t('habits.alerts.stressTitle') }}</strong>{{ $t('habits.alerts.stressMessage') }}

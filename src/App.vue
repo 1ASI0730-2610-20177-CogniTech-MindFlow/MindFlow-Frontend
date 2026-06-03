@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="theme-transition">
     <router-view />
   </div>
 </template>
@@ -16,8 +16,6 @@ onMounted(() => {
 
 <style scoped>
 #app {
-  width: 100%;
-  height: 100vh;
   overflow: hidden;
 }
 </style>

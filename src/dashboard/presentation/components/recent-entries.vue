@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-card">
+  <div class="dashboard-card theme-transition">
     <div class="header-row">
       <h3 class="card-title">{{ t('dashboard.recentEntries.title') }}</h3>
       <a href="#" class="view-all">{{ t('dashboard.recentEntries.viewAll') }}</a>
