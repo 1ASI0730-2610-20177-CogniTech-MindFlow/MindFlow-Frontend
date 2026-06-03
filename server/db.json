@@ -1253,6 +1253,39 @@
       "sent_at": "2024-05-21T21:00:00Z",
       "read_at": null,
       "created_at": "2024-05-21T21:00:00Z"
+    },
+    {
+      "id": "n6",
+      "user_id": "u1",
+      "habit_id": null,
+      "type": "ai_alert",
+      "title": "Alerta de IA: Estrés detectado",
+      "message": "MindFlow AI ha detectado un aumento en tu nivel de estrés. Quizás quieras tomarte un descanso.",
+      "sent_at": "2026-05-22T14:00:00Z",
+      "read_at": null,
+      "created_at": "2026-05-22T14:00:00Z"
+    },
+    {
+      "id": "n7",
+      "user_id": "u1",
+      "habit_id": null,
+      "type": "ai_alert",
+      "title": "MindFlow AI: Insight semanal",
+      "message": "Has completado 4 de 5 hábitos esta semana. ¡Sigue así! Revisa tu reporte de analíticas.",
+      "sent_at": "2026-05-23T10:00:00Z",
+      "read_at": null,
+      "created_at": "2026-05-23T10:00:00Z"
+    },
+    {
+      "id": "n8",
+      "user_id": "u1",
+      "habit_id": "h1",
+      "type": "reminder",
+      "title": "Recordatorio: Meditación matutina",
+      "message": "Buenos días, es momento de tu meditación. Dedica 10 minutos a tu bienestar mental.",
+      "sent_at": "2026-05-23T07:00:00Z",
+      "read_at": null,
+      "created_at": "2026-05-23T07:00:00Z"
     }
   ],
   "payments": [
