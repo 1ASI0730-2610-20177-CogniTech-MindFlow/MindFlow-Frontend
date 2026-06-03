@@ -39,6 +39,14 @@
 
       <LanguageSwitcher />
 
+      <NotificationBell
+        :notifications="notifStore.notifications"
+        :unreadCount="notifStore.unreadCount"
+        @markRead="notifStore.markAsRead"
+        @markAllRead="notifStore.markAllAsRead"
+        @dismiss="notifStore.dismissNotification"
+      />
+
       <div class="avatar" v-if="store.profile">{{ store.profile.initial }}</div>
     </div>
   </header>
@@ -48,12 +56,15 @@
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LanguageSwitcher from './language-switcher.vue'
+import NotificationBell from '@/notifications/presentation/components/notification-bell.vue'
 import { useSettingsStore } from '@/settings/application/settings.store.js'
+import { useNotificationsStore } from '@/notifications/application/notifications.store'
 import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const store = useSettingsStore()
+const notifStore = useNotificationsStore()
 const { t } = useI18n()
 
 const currentTitle = computed(() => {
@@ -106,6 +117,8 @@ const handleClickOutside = (event) => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  const userId = store.currentUserId || 'u1'
+  notifStore.fetchNotifications(userId)
 })
 
 onUnmounted(() => {

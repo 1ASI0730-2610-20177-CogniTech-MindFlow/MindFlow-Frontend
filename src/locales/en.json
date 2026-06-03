@@ -360,5 +360,14 @@
         }
       }
     }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No new notifications",
+    "markAllRead": "Mark all as read",
+    "types": {
+      "reminder": "Reminder",
+      "aiAlert": "AI Alert"
+    }
   }
 }

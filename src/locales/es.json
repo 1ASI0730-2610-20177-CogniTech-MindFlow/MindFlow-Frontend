@@ -366,5 +366,14 @@
         }
       }
     }
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "empty": "No tienes notificaciones nuevas",
+    "markAllRead": "Marcar todo como leído",
+    "types": {
+      "reminder": "Recordatorio",
+      "aiAlert": "Alerta de IA"
+    }
   }
 }
