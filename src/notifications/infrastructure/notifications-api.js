@@ -1,6 +1,6 @@
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint'
 
-const NOTIFICATIONS_URL = 'http://localhost:3000/notifications'
+const NOTIFICATIONS_URL = 'notifications'
 
 export class NotificationsApiService extends BaseEndpoint {
     constructor() {
@@ -10,7 +10,8 @@ export class NotificationsApiService extends BaseEndpoint {
     async getByUserId(userId) {
         try {
             const notifications = await this.search({ user_id: userId })
-            return Array.isArray(notifications) ? notifications : []
+            if (!Array.isArray(notifications)) return []
+            return notifications.filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
         } catch (error) {
             console.error(`Error fetching notifications for user ${userId}:`, error)
             throw error
@@ -20,7 +21,8 @@ export class NotificationsApiService extends BaseEndpoint {
     async getUnreadByUserId(userId) {
         try {
             const notifications = await this.search({ user_id: userId, read_at: null })
-            return Array.isArray(notifications) ? notifications : []
+            if (!Array.isArray(notifications)) return []
+            return notifications.filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
         } catch (error) {
             console.error(`Error fetching unread notifications for user ${userId}:`, error)
             throw error

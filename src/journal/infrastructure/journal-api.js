@@ -1,10 +1,10 @@
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint'
 import { JournalEntry } from '@/journal/domain/model/journal-entry.entity'
 
-const JOURNAL_ENTRIES_URL = 'https://6a10f54a3e35d0f37ee2eb36.mockapi.io/journalEntries'
-const JOURNAL_ENTRY_TAGS_URL = 'https://6a10f54a3e35d0f37ee2eb36.mockapi.io/journalEntryTags'
-const JOURNAL_TAGS_URL = 'https://6a10f61b3e35d0f37ee2ebf7.mockapi.io/tags'
-const JOURNAL_MEDIA_URL = 'https://6a10f61b3e35d0f37ee2ebf7.mockapi.io/media'
+const JOURNAL_ENTRIES_URL = 'journalEntries'
+const JOURNAL_ENTRY_TAGS_URL = 'journalEntryTags'
+const JOURNAL_TAGS_URL = 'tags'
+const JOURNAL_MEDIA_URL = 'media'
 
 const journalEntriesEndpoint = new BaseEndpoint(JOURNAL_ENTRIES_URL)
 const journalEntryTagsEndpoint = new BaseEndpoint(JOURNAL_ENTRY_TAGS_URL)
@@ -36,6 +36,8 @@ const toJournalEntryTagJSON = (relation) => ({
     tagId: relation.tagId ?? relation.tag_id
 })
 
+const toArray = (value) => Array.isArray(value) ? value : []
+
 const loadJournalRelations = async () => {
     const [entryTagsResult, tagsResult, mediaResult] = await Promise.allSettled([
         journalEntryTagsEndpoint.getAll(),
@@ -44,21 +46,22 @@ const loadJournalRelations = async () => {
     ])
 
     const entryTags = entryTagsResult.status === 'fulfilled'
-        ? entryTagsResult.value.map(mapJournalEntryTag)
+        ? toArray(entryTagsResult.value).map(mapJournalEntryTag)
         : []
 
     const tags = tagsResult.status === 'fulfilled'
-        ? tagsResult.value.map(mapJournalTag)
+        ? toArray(tagsResult.value).map(mapJournalTag)
         : []
 
     const media = mediaResult.status === 'fulfilled'
-        ? mediaResult.value.map(mapJournalMedia)
+        ? toArray(mediaResult.value).map(mapJournalMedia)
         : []
 
     return { entryTags, tags, media }
 }
 
 const enrichEntries = async (entries) => {
+    if (!Array.isArray(entries)) return []
     const { entryTags, tags, media } = await loadJournalRelations()
     const tagsById = new Map(tags.map(tag => [tag.id, tag]))
     const mediaByEntryId = new Map()
@@ -118,7 +121,10 @@ export const JournalAPI = {
     async getByUserId(userId) {
         try {
             const data = await journalEntriesEndpoint.search({ user_id: userId })
-            return await enrichEntries(data)
+            const filtered = Array.isArray(data)
+                ? data.filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
+                : []
+            return await enrichEntries(filtered)
         } catch (error) {
             console.error(`Error fetching journal entries for user ${userId}:`, error)
             return []
@@ -171,7 +177,7 @@ export const JournalEntryTagsAPI = {
     async getAll() {
         try {
             const data = await journalEntryTagsEndpoint.getAll()
-            return data.map(mapJournalEntryTag)
+            return Array.isArray(data) ? data.map(mapJournalEntryTag) : []
         } catch (error) {
             console.error('Error fetching journal entry tags:', error)
             return []
@@ -181,7 +187,7 @@ export const JournalEntryTagsAPI = {
     async getByEntryId(entryId) {
         try {
             const data = await journalEntryTagsEndpoint.search({ entry_id: entryId })
-            return data.map(mapJournalEntryTag)
+            return Array.isArray(data) ? data.map(mapJournalEntryTag) : []
         } catch (error) {
             console.error(`Error fetching tags for journal entry ${entryId}:`, error)
             return []
@@ -224,7 +230,7 @@ export const JournalTagsAPI = {
     async getAll() {
         try {
             const data = await journalTagsEndpoint.getAll()
-            return data.map(mapJournalTag)
+            return Array.isArray(data) ? data.map(mapJournalTag) : []
         } catch (error) {
             console.error('Error fetching journal tags:', error)
             return []
@@ -236,7 +242,7 @@ export const JournalMediaAPI = {
     async getAll() {
         try {
             const data = await journalMediaEndpoint.getAll()
-            return data.map(mapJournalMedia)
+            return Array.isArray(data) ? data.map(mapJournalMedia) : []
         } catch (error) {
             console.error('Error fetching journal media:', error)
             return []
@@ -246,7 +252,7 @@ export const JournalMediaAPI = {
     async getByEntryId(entryId) {
         try {
             const data = await journalMediaEndpoint.search({ entry_id: entryId })
-            return data.map(mapJournalMedia)
+            return Array.isArray(data) ? data.map(mapJournalMedia) : []
         } catch (error) {
             console.error(`Error fetching media for journal entry ${entryId}:`, error)
             return []

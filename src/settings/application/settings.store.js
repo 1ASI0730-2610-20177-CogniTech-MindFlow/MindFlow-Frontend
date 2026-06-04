@@ -38,7 +38,7 @@ export const useSettingsStore = defineStore('settings', {
             this.currentUserId = userId
 
             try {
-                const userData = await api.getById(userId)
+                const userData = await api.getByUserId(userId)
                 console.log('User data loaded:', userData)
                 
                 if (userData) {

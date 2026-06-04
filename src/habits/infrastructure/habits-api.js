@@ -1,7 +1,7 @@
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 import { Habit } from '../domain/model/habit.entity.js'
 
-const HABITS_URL = 'https://6a11a0473e35d0f37ee3782b.mockapi.io/habits'
+const HABITS_URL = 'habits'
 
 const habitsEndpoint = new BaseEndpoint(HABITS_URL)
 
@@ -13,7 +13,7 @@ export const HabitsAPI = {
     async getAll() {
         try {
             const data = await habitsEndpoint.getAll()
-            return data.map(mapHabit)
+            return Array.isArray(data) ? data.map(mapHabit) : []
         } catch (error) {
             console.error('Error fetching habits:', error)
             return []
@@ -23,7 +23,10 @@ export const HabitsAPI = {
     async getByUserId(userId) {
         try {
             const data = await habitsEndpoint.search({ user_id: userId })
-            return data.map(mapHabit)
+            if (!Array.isArray(data)) return []
+            return data
+                .filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
+                .map(mapHabit)
         } catch (error) {
             console.error(`Error fetching habits for user ${userId}:`, error)
             return []

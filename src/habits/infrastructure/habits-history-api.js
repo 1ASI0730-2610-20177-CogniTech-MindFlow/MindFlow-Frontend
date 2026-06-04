@@ -1,7 +1,7 @@
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 import { HabitCompletionLog } from '../domain/model/habit-history.entity.js'
 
-const HABIT_LOGS_URL = 'https://6a11a0473e35d0f37ee3782b.mockapi.io/habitLogs'
+const HABIT_LOGS_URL = 'habitLogs'
 
 const habitLogsEndpoint = new BaseEndpoint(HABIT_LOGS_URL)
 
@@ -21,7 +21,7 @@ export const HabitsHistoryAPI = {
     async getAll() {
         try {
             const data = await habitLogsEndpoint.getAll()
-            return data.map(mapHabitLog)
+            return Array.isArray(data) ? data.map(mapHabitLog) : []
         } catch (error) {
             console.error('Error fetching habit logs:', error)
             return []
@@ -31,7 +31,7 @@ export const HabitsHistoryAPI = {
     async getByHabitId(habitId) {
         try {
             const data = await habitLogsEndpoint.search({ habit_id: habitId })
-            return data.map(mapHabitLog)
+            return Array.isArray(data) ? data.map(mapHabitLog) : []
         } catch (error) {
             console.error(`Error fetching habit logs for habit ${habitId}:`, error)
             return []
