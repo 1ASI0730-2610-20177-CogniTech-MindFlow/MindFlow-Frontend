@@ -1,22 +1,35 @@
 <template>
-  <button class="lang-btn theme-transition" @click="toggleLanguage">
-    <span>🌐</span>
-    <span>{{ currentLang.toUpperCase() }}</span>
+  <button class="lang-btn" :class="{ switching }" @click="toggleLanguage">
+    <span class="globe-icon" :class="{ spin }">🌐</span>
+    <span class="lang-text" :key="currentLang">{{ currentLang.toUpperCase() }}</span>
   </button>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
 const currentLang = ref(locale.value)
-
+const spin = ref(false)
+const switching = ref(false)
 const toggleLanguage = () => {
   const newLang = currentLang.value === 'es' ? 'en' : 'es'
   locale.value = newLang
   currentLang.value = newLang
   localStorage.setItem('mindflow-lang', newLang)
+
+  spin.value = false
+  switching.value = false
+  nextTick(() => {
+    spin.value = true
+    switching.value = true
+  })
+
+  setTimeout(() => {
+    spin.value = false
+    switching.value = false
+  }, 600)
 }
 </script>
 
@@ -39,6 +52,8 @@ const toggleLanguage = () => {
   position: relative;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .lang-btn::before {
@@ -57,25 +72,63 @@ const toggleLanguage = () => {
   border-color: rgba(99, 102, 241, 0.2);
   color: var(--text-primary);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .lang-btn:hover::before {
   left: 100%;
 }
 
-.lang-btn span:first-child {
-  font-size: 16px;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: inline-block;
+.lang-btn:active {
+  transform: translateY(0px) scale(0.97);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.lang-btn:hover span:first-child {
+.globe-icon {
+  font-size: 16px;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lang-btn:hover .globe-icon {
   transform: rotate(20deg) scale(1.1);
 }
 
-.lang-btn:active {
-  transform: translateY(0px);
+.globe-icon.spin {
+  animation: globeSpin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes globeSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(120deg) scale(1.15); }
+  50% { transform: rotate(240deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.lang-text {
+  display: inline-block;
+  animation: textSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes textSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lang-btn.switching {
+  animation: btnPulse 0.6s ease;
+}
+
+@keyframes btnPulse {
+  0% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
+  50% { box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); }
+  100% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
 }
 
 :global(.dark-mode) .lang-btn {
