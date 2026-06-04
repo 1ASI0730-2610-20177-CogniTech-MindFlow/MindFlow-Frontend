@@ -52,6 +52,7 @@
               v-else
               :weeks="store.weeklyHistory"
               class="animate-fade-in-up"
+              @view-habit="store.setActiveTab('routines')"
           />
         </div>
       </Transition>

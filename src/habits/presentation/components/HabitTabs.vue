@@ -71,10 +71,9 @@ const localizedTabs = computed(() => [
   right: 0;
   bottom: -1px;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-hover));
+  background: var(--accent-primary);
   border-radius: 3px 3px 0 0;
   animation: expandWidth 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
 
 @keyframes expandWidth {

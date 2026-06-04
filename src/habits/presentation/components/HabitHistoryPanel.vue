@@ -18,7 +18,12 @@
       </div>
 
       <ul class="habit-stats">
-        <li v-for="habit in week.habits" :key="`${week.weekLabel}-${habit.habitId}`" class="theme-transition">
+        <li
+          v-for="habit in week.habits"
+          :key="`${week.weekLabel}-${habit.habitId}`"
+          class="habit-stat-row theme-transition"
+          @click="$emit('view-habit', habit.habitId)"
+        >
           <div class="habit-info">
             <span class="habit-name theme-transition">{{ habit.habitName }}</span>
             <span class="habit-category theme-transition">{{ habit.category }}</span>
@@ -39,6 +44,8 @@
 defineProps({
   weeks: { type: Array, default: () => [] }
 })
+
+defineEmits(['view-habit'])
 </script>
 
 <style scoped>
@@ -100,7 +107,7 @@ defineProps({
 
 .week-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent-success), #16a34a);
+  background: var(--accent-success);
   border-radius: 999px;
 }
 
@@ -121,6 +128,13 @@ defineProps({
   padding: 10px 12px;
   background: var(--bg-surface-secondary);
   border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.habit-stats li:hover {
+  background: rgba(99, 102, 241, 0.04);
+  transform: translateX(3px);
 }
 
 .habit-info {
