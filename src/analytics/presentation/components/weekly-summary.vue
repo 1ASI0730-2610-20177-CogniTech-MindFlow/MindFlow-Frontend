@@ -143,20 +143,20 @@ const translatedInsight = computed(() => {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.06));
-  color: #3b82f6;
+  background: var(--bg-surface-secondary);
+  color: var(--accent-primary);
   font-size: 11px;
   font-weight: 700;
   padding: 6px 12px;
   border-radius: 8px;
   letter-spacing: 0.05em;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border: 1px solid var(--border-color);
 }
 
 .trend-pill:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
-  border-color: rgba(59, 130, 246, 0.3);
+  background: var(--bg-primary);
+  border-color: var(--border-color);
 }
 
 .trend-pill i {
@@ -181,7 +181,7 @@ const translatedInsight = computed(() => {
   gap: 8px;
   font-size: 10px;
   font-weight: 700;
-  color: #3b82f6;
+  color: var(--accent-primary);
   margin-bottom: 20px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -191,9 +191,9 @@ const translatedInsight = computed(() => {
 .ai-dot {
   width: 8px;
   height: 8px;
-  background: #3b82f6;
+  background: var(--accent-primary);
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
   animation: dotPulseBlue 2s ease-in-out infinite;
 }
 

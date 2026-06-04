@@ -131,7 +131,7 @@ const submit = () => {
   padding: 0 20px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent-success), #10b981);
+  background: var(--accent-success);
   color: #fff;
   font: inherit;
   font-size: 14px;

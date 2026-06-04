@@ -74,25 +74,25 @@ const saveEntry = async () => {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
-  background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(52, 211, 153, 0.05));
+  background: var(--bg-surface-secondary);
   padding: 6px 14px;
   border-radius: 50px;
-  border: 1px solid rgba(52, 211, 153, 0.2);
+  border: 1px solid var(--border-color);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .ai-status:hover {
-  background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(52, 211, 153, 0.1));
-  border-color: rgba(52, 211, 153, 0.3);
+  background: var(--bg-primary);
+  border-color: var(--border-color);
 }
 
 .status-dot {
   width: 8px;
   height: 8px;
-  background-color: #34d399;
+  background-color: var(--accent-primary);
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(52, 211, 153, 0.6);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
 @keyframes pulse {
@@ -163,7 +163,7 @@ const saveEntry = async () => {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #34d399, #10b981);
+  background: var(--accent-primary);
   color: white;
   border: none;
   padding: 10px 24px;
@@ -174,7 +174,7 @@ const saveEntry = async () => {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(52, 211, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 .btn-primary::before {
@@ -197,7 +197,7 @@ const saveEntry = async () => {
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(52, 211, 153, 0.4);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -207,18 +207,17 @@ const saveEntry = async () => {
 .btn-primary:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  box-shadow: 0 2px 6px rgba(52, 211, 153, 0.1);
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.1);
 }
 
 .ai-feedback-box {
   margin-top: 20px;
-  background: linear-gradient(135deg, rgba(52, 211, 153, 0.05), rgba(52, 211, 153, 0.02));
-  border-left: 4px solid #34d399;
+  background: var(--bg-surface-secondary);
+  border-left: 4px solid var(--accent-primary);
   border-radius: 0 12px 12px 0;
   padding: 16px 20px;
   animation: slideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 12px rgba(52, 211, 153, 0.1);
-  border: 1px solid rgba(52, 211, 153, 0.15);
+  border: 1px solid var(--border-color);
 }
 
 @keyframes slideInLeft {
