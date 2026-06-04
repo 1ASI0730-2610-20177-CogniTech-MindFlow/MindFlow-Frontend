@@ -1,22 +1,28 @@
 <template>
-  <aside class="sidebar theme-transition">
+  <aside class="sidebar">
     <div class="logo">
-      <img src="/assets/mindflow-logo.png" alt="MindFlow Logo" class="logo-img" />
+      <div class="logo-icon">
+        <img src="/assets/mindflow-logo.png" alt="MindFlow Logo" class="logo-img" />
+      </div>
       <span class="logo-text">MindFlow</span>
     </div>
 
-    <nav class="nav">
-      <router-link
-          v-for="item in menuItems"
-          :key="item.path"
-          :to="item.path"
-          class="nav-item theme-transition"
-          active-class="active"
-      >
-        <span class="nav-icon"><i :class="['pi', item.icon]"></i></span>
-        {{ $t(item.label) }}
-      </router-link>
-    </nav>
+    <div class="nav-wrapper">
+      <nav class="nav">
+        <router-link
+            v-for="(item, index) in menuItems"
+            :key="item.path"
+            :to="item.path"
+            class="nav-item"
+            :style="{ '--index': index }"
+            active-class="active"
+        >
+          <span class="nav-indicator"></span>
+          <span class="nav-icon"><i :class="['pi', item.icon]"></i></span>
+          <span class="nav-label">{{ $t(item.label) }}</span>
+        </router-link>
+      </nav>
+    </div>
 
     <PremiumBanner />
   </aside>
@@ -42,15 +48,33 @@ const menuItems = [
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 24px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+.logo:hover .logo-icon {
+  transform: scale(1.06) rotate(-4deg);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
 }
 
 .logo-img {
@@ -58,103 +82,131 @@ const menuItems = [
   height: 40px;
   object-fit: contain;
   border-radius: 10px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
-}
-
-.logo-img:hover {
-  transform: scale(1.05) rotate(4deg);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
 }
 
 .logo-text {
-  color: var(--accent-primary);
-  font-weight: 700;
-  font-size: 18px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-weight: 800;
+  font-size: 19px;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+
+.nav-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav {
-  flex: 1;
-  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: transparent;
+  padding: 10px 12px;
+  border-radius: 10px;
   color: var(--text-secondary);
   text-decoration: none;
   font: inherit;
   font-weight: 500;
   font-size: 14px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   overflow: hidden;
-}
-
-.nav-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 3px;
-  height: 100%;
-  background: var(--accent-primary);
-  opacity: 0;
-  transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .nav-item:hover {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.04));
+  background: rgba(99, 102, 241, 0.06);
   color: var(--text-primary);
-  transform: translateX(4px);
-  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.1);
+  transform: translateX(3px);
+}
+
+.nav-item:active {
+  transform: translateX(0) scale(0.98);
+  background: rgba(99, 102, 241, 0.1);
 }
 
 .nav-item.active {
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
   color: #fff;
-  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
-  transform: translateX(2px);
-  border: none;
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+  transform: translateX(0);
 }
 
-.nav-item.active::before {
+.nav-item.active:active {
+  transform: scale(0.98);
+}
+
+.nav-indicator {
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  width: 4px;
+  height: 0;
+  border-radius: 0 4px 4px 0;
+  background: #fff;
+  transform: translateY(-50%);
+  transition: height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+  opacity: 0;
+}
+
+.nav-item.active .nav-indicator {
+  height: 20px;
   opacity: 1;
 }
 
 .nav-icon {
-  width: 18px;
+  width: 20px;
   display: inline-flex;
   justify-content: center;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 15px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
 }
 
 .nav-item:hover .nav-icon {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .nav-item.active .nav-icon {
-  animation: iconBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: iconPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes iconBounce {
-  0%, 100% {
-    transform: scale(1);
+@keyframes iconPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.nav-label {
+  transition: transform 0.25s ease;
+}
+
+.nav-item:hover .nav-label {
+  transform: translateX(2px);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
   }
-  50% {
-    transform: scale(1.2);
+
+  .logo {
+    padding: 20px 16px 16px;
+  }
+
+  .logo-text {
+    font-size: 17px;
   }
 }
 </style>

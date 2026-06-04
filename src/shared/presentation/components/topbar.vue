@@ -1,7 +1,7 @@
 <template>
-  <header class="topbar theme-transition">
-    <div>
-      <h2 class="greeting">{{ currentTitle }}</h2>
+  <header class="topbar" :class="{ scrolled: isScrolled }">
+    <div class="topbar-left">
+      <h2 class="greeting" :key="currentTitle">{{ currentTitle }}</h2>
       <p class="subtitle">{{ formattedDate }} · {{ $t('topbar.subtitle') }}</p>
     </div>
 
@@ -13,7 +13,6 @@
         <input
           type="text"
           :placeholder="$t('topbar.search')"
-          class="theme-transition"
           v-model="searchQuery"
           @focus="isSearchOpen = true"
         />
@@ -22,13 +21,14 @@
         </button>
 
         <!-- Search Results Dropdown -->
-        <div v-if="isSearchOpen && searchQuery.trim()" class="search-results theme-transition">
+        <div v-if="isSearchOpen && searchQuery.trim()" class="search-results">
           <div v-if="filteredSections.length > 0" class="search-section">
             <h4 class="search-section-title">{{ $t('topbar.sections') }}</h4>
             <div
-              v-for="section in filteredSections"
+              v-for="(section, index) in filteredSections"
               :key="section.path"
-              class="search-item theme-transition"
+              class="search-item"
+              :style="{ '--stagger': index }"
               @click="navigateToSection(section.path)"
             >
               <i :class="['pi', section.icon, 'search-item-icon']"></i>
@@ -52,7 +52,10 @@
         @dismiss="notifStore.dismissNotification"
       />
 
-      <div class="avatar theme-transition" :class="{ loading: !store.profile }">{{ avatarInitial }}</div>
+      <div class="avatar" :class="{ loading: !store.profile }">
+        <span class="avatar-ring"></span>
+        <span class="avatar-letter">{{ avatarInitial }}</span>
+      </div>
     </div>
   </header>
 </template>
@@ -119,6 +122,12 @@ const navigateToSection = (path) => {
   searchQuery.value = ''
 }
 
+// Scroll shadow
+const isScrolled = ref(false)
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 8
+}
+
 // Click outside to close search
 const handleClickOutside = (event) => {
   if (searchContainer.value && !searchContainer.value.contains(event.target)) {
@@ -127,12 +136,15 @@ const handleClickOutside = (event) => {
 }
 
 onMounted(() => {
+  handleScroll()
+  document.addEventListener('scroll', handleScroll, { passive: true })
   document.addEventListener('click', handleClickOutside)
   const userId = store.currentUserId || 'u1'
   notifStore.fetchNotifications(userId)
 })
 
 onUnmounted(() => {
+  document.removeEventListener('scroll', handleScroll)
   document.removeEventListener('click', handleClickOutside)
 })
 
@@ -141,42 +153,63 @@ onUnmounted(() => {
 <style scoped>
 .topbar {
   height: 80px;
-  background: var(--bg-surface);
-  border-bottom: 1px solid var(--border-color);
   padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  position: relative; /* Ensure dropdown context */
+  position: sticky;
+  top: 0;
   z-index: 10;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-surface);
+}
+
+.topbar.scrolled {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  border-bottom-color: transparent;
+}
+
+.topbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .greeting {
   color: var(--text-primary);
   font-size: 20px;
   font-weight: 700;
-  margin: 0 0 4px 0;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin: 0;
+  animation: titleEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes titleEnter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .subtitle {
   color: var(--text-secondary);
   font-size: 13px;
   margin: 0;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 
 .search {
   position: relative;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .search.active {
@@ -211,8 +244,9 @@ onUnmounted(() => {
   font: inherit;
   font-size: 13px;
   font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  caret-color: var(--accent-primary);
 }
 
 .search input:hover {
@@ -221,10 +255,10 @@ onUnmounted(() => {
 }
 
 .search input:focus {
-  width: 280px;
+  width: 300px;
   border-color: var(--accent-primary);
   background: var(--bg-surface);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08), 0 4px 12px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08), 0 4px 16px rgba(99, 102, 241, 0.12);
 }
 
 .search input::placeholder {
@@ -234,7 +268,7 @@ onUnmounted(() => {
 }
 
 .search input:focus::placeholder {
-  color: var(--text-secondary);
+  color: transparent;
 }
 
 .search-clear {
@@ -275,20 +309,20 @@ onUnmounted(() => {
   top: calc(100% + 12px);
   left: 0;
   width: 100%;
-  min-width: 280px;
+  min-width: 300px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.02);
   overflow: hidden;
   z-index: 100;
-  animation: searchDropdown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: searchDropdown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes searchDropdown {
   from {
     opacity: 0;
-    transform: translateY(-8px) scale(0.98);
+    transform: translateY(-8px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -318,7 +352,6 @@ onUnmounted(() => {
   cursor: pointer;
   color: var(--text-primary);
   font-size: 14px;
-  transition: background 0.15s;
   margin: 0 6px;
   border-radius: 8px;
 }
@@ -371,11 +404,11 @@ onUnmounted(() => {
   justify-content: center;
   font-weight: 700;
   font-size: 16px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
   position: relative;
-  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
+  flex-shrink: 0;
 }
 
 .avatar.loading {
@@ -390,30 +423,53 @@ onUnmounted(() => {
   50% { opacity: 1; }
 }
 
-.avatar::before {
-  content: '';
+.avatar-letter {
+  position: relative;
+  z-index: 1;
+}
+
+.avatar-ring {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: conic-gradient(var(--accent-primary), #2dd4bf, #14b8a6, var(--accent-primary)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
 }
 
 .avatar:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(45, 212, 191, 0.4);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.4);
 }
 
-.avatar:hover::before {
+.avatar:hover .avatar-ring {
   opacity: 1;
 }
 
+.avatar:active {
+  transform: translateY(-1px) scale(1);
+}
+
 @media (max-width: 768px) {
+  .topbar {
+    padding: 0 16px;
+  }
+
   .search input {
+    width: 160px;
+  }
+
+  .search input:focus {
     width: 200px;
+  }
+
+  .topbar-actions {
+    gap: 10px;
   }
 }
 </style>
