@@ -32,7 +32,7 @@
 
     <div v-if="dashboardStore.isAnalyzing || dashboardStore.aiFeedback" class="ai-feedback-box">
       <div class="ai-feedback-header">
-        <span class="sparkle">✨</span> <strong>MindFlow AI</strong>
+        <i class="pi pi-sparkles sparkle"></i> <strong>MindFlow AI</strong>
       </div>
       <p class="ai-feedback-text">
         <span v-if="dashboardStore.isAnalyzing">{{ t('dashboard.moodInput.processing') }}</span>

@@ -1,7 +1,7 @@
 <template>
   <button class="lang-btn" :class="{ switching }" @click="toggleLanguage">
     <span class="globe-wrapper" :class="{ spin }">
-      <span class="globe-icon">🌐</span>
+      <i class="pi pi-globe globe-icon"></i>
     </span>
     <span class="lang-text-wrapper">
       <span

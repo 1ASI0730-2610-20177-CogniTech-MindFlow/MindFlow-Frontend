@@ -23,12 +23,12 @@
             </p>
 
             <ul class="features">
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f1Bold') }}</b>{{ $t('plansPage.freemium.features.f1Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f2Bold') }}</b>{{ $t('plansPage.freemium.features.f2Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f3Bold') }}</b>{{ $t('plansPage.freemium.features.f3Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f4Bold') }}</b>{{ $t('plansPage.freemium.features.f4Text') }}</span></li>
-              <li class="ko theme-transition"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f5') }}</span></li>
-              <li class="ko theme-transition"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f6') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f1Bold') }}</b>{{ $t('plansPage.freemium.features.f1Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f2Bold') }}</b>{{ $t('plansPage.freemium.features.f2Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f3Bold') }}</b>{{ $t('plansPage.freemium.features.f3Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f4Bold') }}</b>{{ $t('plansPage.freemium.features.f4Text') }}</span></li>
+              <li class="ko theme-transition"><i class="pi pi-times icon"></i><span>{{ $t('plansPage.freemium.features.f5') }}</span></li>
+              <li class="ko theme-transition"><i class="pi pi-times icon"></i><span>{{ $t('plansPage.freemium.features.f6') }}</span></li>
             </ul>
 
             <button class="btn btn-outline theme-transition" disabled v-if="!store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
@@ -49,11 +49,11 @@
             </p>
 
             <ul class="features">
-              <li class="ok theme-transition"><span class="icon">✓</span><span>{{ $t('plansPage.premium.features.f1') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f2Bold') }}</b>{{ $t('plansPage.premium.features.f2Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f3Bold') }}</b>{{ $t('plansPage.premium.features.f3Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f4Bold') }}</b>{{ $t('plansPage.premium.features.f4Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f5Bold') }}</b>{{ $t('plansPage.premium.features.f5Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span>{{ $t('plansPage.premium.features.f1') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f2Bold') }}</b>{{ $t('plansPage.premium.features.f2Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f3Bold') }}</b>{{ $t('plansPage.premium.features.f3Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f4Bold') }}</b>{{ $t('plansPage.premium.features.f4Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f5Bold') }}</b>{{ $t('plansPage.premium.features.f5Text') }}</span></li>
             </ul>
 
             <button class="btn btn-gradient theme-transition" disabled v-if="store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
@@ -217,8 +217,7 @@ onMounted(() => {
 
 .features .icon {
   flex-shrink: 0;
-  width: 18px;
-  font-weight: 700;
+  font-size: 14px;
   line-height: 1.4;
 }
 

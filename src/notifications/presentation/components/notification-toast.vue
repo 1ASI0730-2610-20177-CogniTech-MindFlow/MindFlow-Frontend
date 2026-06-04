@@ -2,15 +2,15 @@
   <transition name="toast-slide">
     <div v-if="visible" class="toast theme-transition" :class="[type, { entering: isEntering }]">
       <div class="toast-icon">
-        <span v-if="type === 'ai_alert'">🧠</span>
-        <span v-else>⏰</span>
+        <i v-if="type === 'ai_alert'" class="pi pi-cog"></i>
+        <i v-else class="pi pi-clock"></i>
       </div>
       <div class="toast-body">
         <p class="toast-title">{{ notification.title }}</p>
         <p class="toast-message">{{ notification.message }}</p>
       </div>
       <div class="toast-actions">
-        <button class="toast-close" @click="$emit('dismiss', notification.id)">✕</button>
+        <button class="toast-close" @click="$emit('dismiss', notification.id)"><i class="pi pi-times"></i></button>
       </div>
     </div>
   </transition>
@@ -73,8 +73,10 @@ onBeforeUnmount(() => {
 
 .toast-icon {
   flex-shrink: 0;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1;
+  width: 24px;
+  text-align: center;
 }
 
 .toast-body {

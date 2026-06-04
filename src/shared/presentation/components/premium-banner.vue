@@ -1,6 +1,6 @@
 <template>
   <div class="premium-card theme-transition">
-    <div class="premium-title">✦ MindFlow Premium</div>
+    <div class="premium-title"><i class="pi pi-star-fill"></i> MindFlow Premium</div>
     <p class="premium-text">
       Desbloquea exportación de reportes PDF y CSV para tu terapeuta.
     </p>

@@ -40,7 +40,7 @@
               :alt="`Adjunto ${item.id}`"
           />
           <div v-else class="media-fallback">
-            <span class="media-icon">{{ mediaIcon(item.type) }}</span>
+            <i :class="mediaIcon(item.type)"></i>
             <span class="media-type">{{ item.type }}</span>
           </div>
         </a>
@@ -57,10 +57,10 @@ defineProps({
 })
 
 const mediaIcon = (type) => {
-  if (type === 'audio') return '🎧'
-  if (type === 'document') return '📄'
-  if (type === 'video') return '🎬'
-  return '📎'
+  if (type === 'audio') return 'pi pi-headphones'
+  if (type === 'document') return 'pi pi-file'
+  if (type === 'video') return 'pi pi-video'
+  return 'pi pi-paperclip'
 }
 </script>
 

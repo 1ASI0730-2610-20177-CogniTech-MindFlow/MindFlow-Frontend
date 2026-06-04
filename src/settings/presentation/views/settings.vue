@@ -129,13 +129,13 @@
             <h3 class="card-title accent">{{ $t('settings.subscription.title') }}</h3>
             <p class="plan-text theme-transition">{{ $t('settings.subscription.currentPlan') }}: <span class="theme-transition">{{ store.profile.planName }}</span></p>
             <ul class="plan-features">
-              <li class="ok theme-transition">✓ {{ $t('settings.subscription.features.journal') }}</li>
-              <li class="ok theme-transition">✓ {{ $t('settings.subscription.features.habits') }}</li>
+              <li class="ok theme-transition"><i class="pi pi-check"></i> {{ $t('settings.subscription.features.journal') }}</li>
+              <li class="ok theme-transition"><i class="pi pi-check"></i> {{ $t('settings.subscription.features.habits') }}</li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'" class="theme-transition">
-                {{ store.profile.isPremium ? '✓' : '✗' }} {{ $t('settings.subscription.features.pdf') }}
+                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'"></i> {{ $t('settings.subscription.features.pdf') }}
               </li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'" class="theme-transition">
-                {{ store.profile.isPremium ? '✓' : '✗' }} {{ $t('settings.subscription.features.clinical') }}
+                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'"></i> {{ $t('settings.subscription.features.clinical') }}
               </li>
             </ul>
             <button class="btn btn-primary full hover-lift theme-transition" v-if="!store.profile.isPremium">
@@ -371,7 +371,7 @@ onMounted(async () => {
 .plan-text span { color: var(--text-primary); font-weight: 600; }
 
 .plan-features { list-style: none; margin-bottom: 20px; }
-.plan-features li { font-size: 14px; padding: 5px 0; color: var(--text-secondary); transition: transform 0.2s ease; }
+.plan-features li { font-size: 14px; padding: 5px 0; color: var(--text-secondary); transition: transform 0.2s ease; display: flex; align-items: center; gap: 6px; }
 .plan-features li:hover { transform: translateX(4px); }
 .plan-features .ok { color: var(--accent-primary); }
 .plan-features .ko { color: #ef4444; }

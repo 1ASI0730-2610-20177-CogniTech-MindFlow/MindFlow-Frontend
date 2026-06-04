@@ -35,15 +35,15 @@
             @click="handleClick(notification)"
           >
             <div class="item-icon">
-              <span v-if="notification.isAiAlert">🧠</span>
-              <span v-else>⏰</span>
+              <i v-if="notification.isAiAlert" class="pi pi-cog"></i>
+              <i v-else class="pi pi-clock"></i>
             </div>
             <div class="item-body">
               <p class="item-title">{{ notification.title }}</p>
               <p class="item-message">{{ notification.message }}</p>
               <span class="item-time">{{ timeAgo(notification.sentAt) }}</span>
             </div>
-            <button class="item-dismiss" @click.stop="$emit('dismiss', notification.id)">✕</button>
+            <button class="item-dismiss" @click.stop="$emit('dismiss', notification.id)"><i class="pi pi-times"></i></button>
           </div>
         </div>
       </div>
@@ -252,9 +252,11 @@ onUnmounted(() => {
 
 .item-icon {
   flex-shrink: 0;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
   margin-top: 1px;
+  width: 20px;
+  text-align: center;
 }
 
 .item-body {
