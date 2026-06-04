@@ -275,9 +275,9 @@ onMounted(async () => {
 
 .avatar {
   width: 64px; height: 64px; border-radius: 50%;
-  background: linear-gradient(135deg, #2dd4bf, #14b8a6); color: #fff;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover)); color: #fff;
   display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 600; box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.4);
+  font-size: 24px; font-weight: 600; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
 }
 
 .username { font-weight: 500; margin-bottom: 8px; color: var(--text-primary); }

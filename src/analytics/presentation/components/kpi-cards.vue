@@ -65,7 +65,7 @@ const dotStyle = (colorClass = '') => {
 }
 
 .premium-card {
-  background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-secondary));
+  background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -121,8 +121,8 @@ const dotStyle = (colorClass = '') => {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, var(--bg-surface-secondary), var(--bg-primary));
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
   padding: 6px 10px;
   border-radius: 50px;
   font-size: 10px;
@@ -133,8 +133,8 @@ const dotStyle = (colorClass = '') => {
 }
 
 .premium-card:hover .active-badge {
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-surface-secondary));
-  border-color: rgba(34, 197, 94, 0.3);
+  background: var(--bg-primary);
+  border-color: var(--border-color);
 }
 
 .status-dot {

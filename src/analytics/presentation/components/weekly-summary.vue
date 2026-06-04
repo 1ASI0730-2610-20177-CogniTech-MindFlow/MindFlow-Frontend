@@ -41,7 +41,7 @@ const translatedInsight = computed(() => {
 
 <style scoped>
 .premium-card {
-  background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-secondary));
+  background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -91,8 +91,8 @@ const translatedInsight = computed(() => {
 }
 
 .tech-pill {
-  background: linear-gradient(135deg, var(--bg-surface-secondary), var(--bg-primary));
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 50px;
   font-size: 10px;
   color: var(--text-muted);
@@ -104,8 +104,8 @@ const translatedInsight = computed(() => {
 }
 
 .tech-pill:hover {
-  border-color: rgba(99, 102, 241, 0.3);
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-surface-secondary));
+  border-color: var(--border-color);
+  background: var(--bg-primary);
 }
 
 .score-display {

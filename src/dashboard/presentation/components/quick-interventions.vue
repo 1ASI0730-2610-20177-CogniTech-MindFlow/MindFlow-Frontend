@@ -153,7 +153,7 @@ function startGrounding() {
 }
 
 .intervention-card:nth-child(1):hover {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), var(--bg-surface-secondary));
+  background: rgba(16, 185, 129, 0.04);
 }
 
 .intervention-card:nth-child(1)::before {
@@ -161,7 +161,7 @@ function startGrounding() {
 }
 
 .intervention-card:nth-child(2):hover {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.06), var(--bg-surface-secondary));
+  background: rgba(99, 102, 241, 0.04);
 }
 
 .intervention-card:nth-child(2)::before {
@@ -169,7 +169,7 @@ function startGrounding() {
 }
 
 .intervention-card:nth-child(3):hover {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), var(--bg-surface-secondary));
+  background: rgba(245, 158, 11, 0.04);
 }
 
 .intervention-card:nth-child(3)::before {

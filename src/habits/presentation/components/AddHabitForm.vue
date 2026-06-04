@@ -54,7 +54,7 @@ const submit = () => {
 
 <style scoped>
 .add-habit-card {
-  background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-secondary));
+  background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: 16px;
   padding: 20px 22px;
@@ -97,7 +97,7 @@ const submit = () => {
 }
 
 .add-form input {
-  background: linear-gradient(135deg, var(--bg-surface-secondary), var(--bg-primary));
+  background: var(--bg-surface-secondary);
 }
 
 .add-form select {

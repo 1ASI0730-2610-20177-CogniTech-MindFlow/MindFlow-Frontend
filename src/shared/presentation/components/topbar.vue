@@ -397,7 +397,7 @@ onUnmounted(() => {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
   color: #fff;
   display: flex;
   align-items: center;
@@ -407,7 +407,7 @@ onUnmounted(() => {
   cursor: pointer;
   position: relative;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
-  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
   flex-shrink: 0;
 }
 
@@ -433,7 +433,7 @@ onUnmounted(() => {
   inset: -2px;
   border-radius: 50%;
   border: 2px solid transparent;
-  background: conic-gradient(var(--accent-primary), #2dd4bf, #14b8a6, var(--accent-primary)) border-box;
+  background: conic-gradient(var(--accent-primary), var(--accent-hover), var(--accent-primary)) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -444,7 +444,7 @@ onUnmounted(() => {
 
 .avatar:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.4);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
 }
 
 .avatar:hover .avatar-ring {

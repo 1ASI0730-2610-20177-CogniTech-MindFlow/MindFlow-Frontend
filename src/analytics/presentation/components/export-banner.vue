@@ -17,7 +17,7 @@
 
 <style scoped>
 .premium-card {
-  background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-secondary));
+  background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);

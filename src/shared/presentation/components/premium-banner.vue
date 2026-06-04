@@ -22,7 +22,7 @@ const goToSubscription = () => {
 .premium-card {
   margin: 16px;
   padding: 18px;
-  background: linear-gradient(135deg, var(--bg-surface-secondary), var(--bg-surface));
+  background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);

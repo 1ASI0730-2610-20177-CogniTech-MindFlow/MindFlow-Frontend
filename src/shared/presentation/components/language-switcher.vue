@@ -68,7 +68,7 @@ const toggleLanguage = () => {
 }
 
 .lang-btn:hover {
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-surface-secondary));
+  background: var(--bg-primary);
   border-color: rgba(99, 102, 241, 0.2);
   color: var(--text-primary);
   transform: translateY(-2px);
