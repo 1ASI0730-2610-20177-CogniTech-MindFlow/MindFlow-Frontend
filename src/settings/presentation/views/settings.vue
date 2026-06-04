@@ -252,24 +252,23 @@ onMounted(async () => {
 .card:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
 
 .card-subscription {
-  background: #111827;
-  color: #fff;
-  border: 1px solid #111827;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.06);
 }
 
 :global(.dark-mode) .card-subscription {
   background: #0f1724;
+  color: #fff;
   border: 1px solid rgba(255,255,255,0.12);
   box-shadow: 0 10px 30px rgba(2,6,23,0.75);
-  border-radius: 12px;
 }
 
 .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
-:global(.dark-mode) .card-subscription .card-title { color: #111827; }
-.card-subscription .card-title { color: #fff; }
 
-.accent { color: #34d399; margin-bottom: 4px; }
-:global(.dark-mode) .card-subscription .accent { color: #047857; }
+.accent { color: #047857; margin-bottom: 4px; font-weight: 700; }
+:global(.dark-mode) .card-subscription .accent { color: #34d399; }
 
 
 .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
@@ -368,19 +367,14 @@ onMounted(async () => {
 .switch input:checked + .slider { background: #34d399; }
 .switch input:checked + .slider::before { transform: translateX(18px); }
 
-.plan-text { color: #d1d5db; font-size: 14px; margin-bottom: 16px; }
-:global(.dark-mode) .card-subscription .plan-text { color: #064e3b; }
-.plan-text span { color: #fff; font-weight: 500; }
-:global(.dark-mode) .card-subscription .plan-text span { color: #111827; }
+.plan-text { color: var(--text-secondary); font-size: 14px; margin-bottom: 16px; }
+.plan-text span { color: var(--text-primary); font-weight: 600; }
 
 .plan-features { list-style: none; margin-bottom: 20px; }
-.plan-features li { font-size: 14px; padding: 4px 0; color: #e5e7eb; transition: transform 0.2s ease, color 0.3s ease; }
-:global(.dark-mode) .card-subscription .plan-features li { color: #064e3b; }
+.plan-features li { font-size: 14px; padding: 5px 0; color: var(--text-secondary); transition: transform 0.2s ease; }
 .plan-features li:hover { transform: translateX(4px); }
-.plan-features .ko { color: #f87171; }
-:global(.dark-mode) .card-subscription .plan-features .ko { color: #b91c1c; }
-.plan-features .ok { color: #e5e7eb; }
-:global(.dark-mode) .card-subscription .plan-features .ok { color: #064e3b; }
+.plan-features .ok { color: var(--accent-primary); }
+.plan-features .ko { color: #ef4444; }
 
 .danger { border: 2px solid #fca5a5; }
 .danger-title { color: #ef4444; margin-bottom: 8px; }
