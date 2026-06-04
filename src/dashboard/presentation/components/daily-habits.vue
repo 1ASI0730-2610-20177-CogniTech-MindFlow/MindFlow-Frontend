@@ -39,6 +39,7 @@ const dashboardStore = useDashboardStore()
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 16px;
 }
 
 .habit-item {

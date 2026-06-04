@@ -1,7 +1,15 @@
 <template>
   <button class="lang-btn" :class="{ switching }" @click="toggleLanguage">
-    <span class="globe-icon" :class="{ spin }">🌐</span>
-    <span class="lang-text" :key="currentLang">{{ currentLang.toUpperCase() }}</span>
+    <span class="globe-wrapper" :class="{ spin }">
+      <span class="globe-icon">🌐</span>
+    </span>
+    <span class="lang-text-wrapper">
+      <span
+          class="lang-text"
+          :class="slideDir"
+          :key="currentLang"
+      >{{ currentLang.toUpperCase() }}</span>
+    </span>
   </button>
 </template>
 
@@ -13,8 +21,11 @@ const { locale } = useI18n()
 const currentLang = ref(locale.value)
 const spin = ref(false)
 const switching = ref(false)
+const slideDir = ref('')
+
 const toggleLanguage = () => {
   const newLang = currentLang.value === 'es' ? 'en' : 'es'
+  slideDir.value = newLang === 'es' ? 'slide-down' : 'slide-up'
   locale.value = newLang
   currentLang.value = newLang
   localStorage.setItem('mindflow-lang', newLang)
@@ -29,7 +40,7 @@ const toggleLanguage = () => {
   setTimeout(() => {
     spin.value = false
     switching.value = false
-  }, 600)
+  }, 700)
 }
 </script>
 
@@ -84,33 +95,51 @@ const toggleLanguage = () => {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+.globe-wrapper {
+  display: inline-flex;
+  perspective: 200px;
+}
+
 .globe-icon {
   font-size: 16px;
   display: inline-block;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
 }
 
-.lang-btn:hover .globe-icon {
-  transform: rotate(20deg) scale(1.1);
+
+.globe-wrapper.spin .globe-icon {
+  animation: globe3DSpin 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.globe-icon.spin {
-  animation: globeSpin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+@keyframes globe3DSpin {
+  0% { transform: rotateY(0deg) scale(1); }
+  40% { transform: rotateY(180deg) scale(1.2); }
+  100% { transform: rotateY(360deg) scale(1); }
 }
 
-@keyframes globeSpin {
-  0% { transform: rotate(0deg) scale(1); }
-  25% { transform: rotate(120deg) scale(1.15); }
-  50% { transform: rotate(240deg) scale(1.1); }
-  100% { transform: rotate(360deg) scale(1); }
+.lang-text-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.2em;
+  vertical-align: middle;
+  line-height: 1.2;
 }
 
 .lang-text {
   display: inline-block;
-  animation: textSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: textFlipIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-@keyframes textSlideIn {
+.lang-text.slide-up {
+  animation: textSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.lang-text.slide-down {
+  animation: textSlideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes textFlipIn {
   0% {
     opacity: 0;
     transform: translateY(8px) scale(0.9);
@@ -121,14 +150,46 @@ const toggleLanguage = () => {
   }
 }
 
-.lang-btn.switching {
-  animation: btnPulse 0.6s ease;
+@keyframes textSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes btnPulse {
-  0% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
-  50% { box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); }
-  100% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
+@keyframes textSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lang-btn.switching {
+  animation: btnGlow 0.7s ease;
+}
+
+@keyframes btnGlow {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    background: var(--bg-surface-secondary);
+  }
+  30% {
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12), 0 4px 16px rgba(99, 102, 241, 0.08);
+    background: rgba(99, 102, 241, 0.04);
+    border-color: rgba(99, 102, 241, 0.25);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    background: var(--bg-surface-secondary);
+  }
 }
 
 :global(.dark-mode) .lang-btn {
