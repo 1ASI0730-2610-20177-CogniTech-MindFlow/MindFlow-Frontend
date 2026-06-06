@@ -38,6 +38,21 @@
         <span v-if="dashboardStore.isAnalyzing">{{ t('dashboard.moodInput.processing') }}</span>
         <span v-else>{{ dashboardStore.aiFeedback }}</span>
       </p>
+      <div v-if="dashboardStore.aiFeedback && !dashboardStore.isAnalyzing" class="rating-section">
+        <div v-if="!dashboardStore.ratingSubmitted" class="stars">
+          <span
+            v-for="star in 5"
+            :key="star"
+            class="star"
+            :class="{ filled: star <= hoverRating || star <= dashboardStore.aiRating }"
+            @click="dashboardStore.submitAiRating(star)"
+            @mouseenter="hoverRating = star"
+            @mouseleave="hoverRating = 0"
+          >&#9733;</span>
+          <span class="rating-label">{{ t('dashboard.moodInput.rateLabel') }}</span>
+        </div>
+        <p v-else class="rating-thanks">{{ t('dashboard.moodInput.ratingThanks') }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -51,6 +66,7 @@ const { t } = useI18n()
 const dashboardStore = useDashboardStore()
 const journalText = ref('')
 const selectedTag = ref('Estudios')
+const hoverRating = ref(0)
 
 const saveEntry = async () => {
   if (!journalText.value.trim()) return
@@ -256,5 +272,46 @@ const saveEntry = async () => {
   color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.5;
+}
+
+.rating-section {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  font-size: 22px;
+  color: var(--border-color);
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  user-select: none;
+}
+
+.star.filled {
+  color: #f59e0b;
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+.rating-label {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.rating-thanks {
+  margin: 0;
+  font-size: 13px;
+  color: var(--accent-primary);
+  font-weight: 500;
 }
 </style>

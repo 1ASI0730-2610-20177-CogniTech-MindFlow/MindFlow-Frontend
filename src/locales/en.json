@@ -282,6 +282,8 @@
       "save": "Save Entry",
       "analyzing": "Analyzing...",
       "processing": "Processing your emotions and finding the best advice for you...",
+      "rateLabel": "Rate this advice",
+      "ratingThanks": "Thanks for your feedback! It helps us improve.",
       "tags": {
         "studies": "Studies",
         "work": "Work",

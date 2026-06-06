@@ -11,6 +11,8 @@ export const useDashboardStore = defineStore('dashboard', {
         isLoading: true,
         isAnalyzing: false,
         aiFeedback: null,
+        aiRating: 0,
+        ratingSubmitted: false,
         recentEntries: [],
         habits: [],
         weeklySummary: null,
@@ -97,6 +99,8 @@ export const useDashboardStore = defineStore('dashboard', {
         async submitJournalEntry(text, tag) {
             this.isAnalyzing = true
             this.aiFeedback = null
+            this.aiRating = 0
+            this.ratingSubmitted = false
 
             try {
                 const response = await dashboardApi.processJournalEntry(text, tag)
@@ -109,6 +113,12 @@ export const useDashboardStore = defineStore('dashboard', {
             } finally {
                 this.isAnalyzing = false
             }
+        },
+
+        submitAiRating(rating) {
+            this.aiRating = rating
+            this.ratingSubmitted = true
+            console.info(`AI feedback rated: ${rating}/5`)
         },
 
         toggleHabit(id) {

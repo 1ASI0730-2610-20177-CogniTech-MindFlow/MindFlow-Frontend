@@ -288,6 +288,8 @@
       "save": "Guardar Registro",
       "analyzing": "Analizando...",
       "processing": "Procesando tus emociones y buscando los mejores consejos para ti...",
+      "rateLabel": "Valora este consejo",
+      "ratingThanks": "¡Gracias por tu valoración! Nos ayuda a mejorar.",
       "tags": {
         "studies": "Estudios",
         "work": "Trabajo",
