@@ -77,5 +77,5 @@ const translatedChartData = computed(() => {
   opacity: 0.7;
 }
 
-.chart-wrapper { flex: 1; position: relative; }
+.chart-wrapper { flex: 1; position: relative; min-height: 200px; }
 </style>

@@ -60,5 +60,5 @@ const translatedChartData = computed(() => {
 .bg-light { background: #e2e8f0; }
 .bg-blue { background: var(--global-blue); }
 
-.chart-wrapper { flex: 1; position: relative; }
+.chart-wrapper { flex: 1; position: relative; min-height: 200px; }
 </style>
