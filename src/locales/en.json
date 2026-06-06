@@ -155,11 +155,13 @@
         "category": "Category",
         "date": "Date",
         "sentiment": "Emotional state",
-        "content": "Content"
+        "content": "Content",
+        "images": "Images"
       },
       "placeholders": {
         "title": "Write a short title",
-        "content": "Tell me what happened today..."
+        "content": "Tell me what happened today...",
+        "upload": "Click to upload images"
       },
       "categories": {
         "reflection": "Personal Reflection",

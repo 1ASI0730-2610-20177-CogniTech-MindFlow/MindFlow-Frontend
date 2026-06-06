@@ -156,11 +156,13 @@
           "category": "Categoría",
           "date": "Fecha",
           "sentiment": "Estado emocional",
-          "content": "Contenido"
+          "content": "Contenido",
+          "images": "Imágenes"
         },
         "placeholders": {
           "title": "Escribe un título breve",
-          "content": "Cuéntame qué pasó hoy..."
+          "content": "Cuéntame qué pasó hoy...",
+          "upload": "Haz clic para subir imágenes"
         },
         "categories": {
           "reflection": "Reflexión Personal",

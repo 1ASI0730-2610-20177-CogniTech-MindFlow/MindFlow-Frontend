@@ -54,6 +54,35 @@
           />
         </label>
 
+        <div class="upload-section">
+          <span class="upload-label">{{ $t('journal.composer.fields.images') }}</span>
+          <div class="upload-area" @click="fileInput?.click()">
+            <input
+              ref="fileInput"
+              type="file"
+              accept="image/*"
+              multiple
+              class="file-input"
+              @change="onFilesSelected"
+            />
+            <i class="pi pi-image"></i>
+            <span>{{ $t('journal.composer.placeholders.upload') }}</span>
+          </div>
+          <div v-if="selectedFiles.length" class="file-previews">
+            <div
+              v-for="(file, index) in selectedFiles"
+              :key="index"
+              class="file-preview"
+            >
+              <img :src="file.preview" :alt="file.name" />
+              <button type="button" class="file-remove" @click.stop="removeFile(index)">
+                <i class="pi pi-times"></i>
+              </button>
+              <span class="file-name">{{ file.name }}</span>
+            </div>
+          </div>
+        </div>
+
         <div class="actions">
           <button type="button" class="secondary-btn theme-transition" @click="$emit('close')">
             {{ $t('journal.composer.cancel') }}
@@ -69,7 +98,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -89,7 +118,33 @@ const form = reactive({
   content: ''
 })
 
+const fileInput = ref(null)
+const selectedFiles = ref([])
+
 const canSubmit = computed(() => Boolean(form.title.trim() && form.content.trim() && form.date))
+
+function onFilesSelected(event) {
+  const files = Array.from(event.target.files || [])
+  files.forEach((file) => {
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        selectedFiles.value.push({
+          name: file.name,
+          type: 'image',
+          file: file,
+          preview: e.target.result
+        })
+      }
+      reader.readAsDataURL(file)
+    }
+  })
+  event.target.value = ''
+}
+
+function removeFile(index) {
+  selectedFiles.value.splice(index, 1)
+}
 
 watch(
   () => props.open,
@@ -100,6 +155,7 @@ watch(
       form.date = props.initialDate || today
       form.sentiment = 'neutral'
       form.content = ''
+      selectedFiles.value = []
     }
   }
 )
@@ -122,7 +178,12 @@ const submit = () => {
     date: form.date,
     sentiment: form.sentiment,
     content: form.content.trim(),
-    hasPreview: false
+    hasPreview: false,
+    files: selectedFiles.value.map(f => ({
+      name: f.name,
+      type: f.type,
+      url: f.preview
+    }))
   })
 }
 </script>
@@ -299,6 +360,99 @@ const submit = () => {
 .primary-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.upload-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 2px dashed var(--border-color);
+  border-radius: 14px;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.upload-area:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-surface-secondary);
+}
+
+.upload-area i {
+  font-size: 18px;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.file-preview {
+  position: relative;
+  width: 90px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: var(--bg-surface-secondary);
+}
+
+.file-preview img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
+.file-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.file-preview:hover .file-remove {
+  opacity: 1;
+}
+
+.file-name {
+  display: block;
+  padding: 4px 6px;
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 720px) {

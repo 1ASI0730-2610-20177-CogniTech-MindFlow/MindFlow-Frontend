@@ -257,5 +257,20 @@ export const JournalMediaAPI = {
             console.error(`Error fetching media for journal entry ${entryId}:`, error)
             return []
         }
+    },
+
+    async create(mediaData) {
+        try {
+            const response = await journalMediaEndpoint.create({
+                entry_id: mediaData.entryId ?? mediaData.entry_id,
+                url: mediaData.url,
+                type: mediaData.type,
+                created_at: new Date().toISOString()
+            })
+            return mapJournalMedia(response)
+        } catch (error) {
+            console.error('Error creating journal media:', error)
+            throw error
+        }
     }
 }

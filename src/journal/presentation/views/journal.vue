@@ -54,6 +54,7 @@ import JournalFilters from '../components/JournalFilters.vue'
 import JournalEntryCard from '../components/JournalEntryCard.vue'
 import JournalComposer from '../components/JournalComposer.vue'
 import { useJournalStore } from '@/journal/application/journal.store'
+import { JournalMediaAPI } from '@/journal/infrastructure/journal-api'
 
 const journalStore = useJournalStore()
 const isComposerOpen = ref(false)
@@ -74,10 +75,29 @@ const handleCreateEntry = async (entryData) => {
   isSaving.value = true
 
   try {
-    await journalStore.addEntry({
-      ...entryData,
+    const savedEntry = await journalStore.addEntry({
+      title: entryData.title,
+      category: entryData.category,
+      date: entryData.date,
+      sentiment: entryData.sentiment,
+      content: entryData.content,
+      hasPreview: entryData.hasPreview,
       userId: 'u1'
     })
+
+    if (entryData.files?.length && savedEntry?.id) {
+      await Promise.all(
+        entryData.files.map(file =>
+          JournalMediaAPI.create({
+            entryId: savedEntry.id,
+            url: file.url,
+            type: file.type
+          })
+        )
+      )
+      await journalStore.fetchEntries()
+    }
+
     isComposerOpen.value = false
   } finally {
     isSaving.value = false
