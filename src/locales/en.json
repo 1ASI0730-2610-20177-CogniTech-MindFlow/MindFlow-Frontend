@@ -22,6 +22,10 @@
     "description": "Unlock PDF and CSV report export for your therapist.",
     "viewPlans": "View Plans"
   },
+  "hydration": {
+    "title": "Time to hydrate",
+    "message": "You've been focused for a while. Time to drink some water!"
+  },
   "plansPage": {
     "hero": {
       "title": "Invest in your emotional well-being",

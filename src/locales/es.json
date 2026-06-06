@@ -22,6 +22,10 @@
     "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
     "viewPlans": "Ver Planes"
   },
+  "hydration": {
+    "title": "Hora de hidratarse",
+    "message": "Has estado concentrado un buen rato. ¡Bebe un poco de agua!"
+  },
   "plansPage": {
     "hero": {
       "title": "Invierte en tu bienestar emocional",
