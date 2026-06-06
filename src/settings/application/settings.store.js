@@ -230,6 +230,28 @@ export const useSettingsStore = defineStore('settings', {
             }
         },
 
+        async deleteAccount() {
+            if (!this.profile) return
+
+            try {
+                await api.delete(this.profile.id)
+
+                localStorage.removeItem('mindflow-theme')
+                localStorage.removeItem('auth_token')
+
+                this.profile = null
+                this.userSettings = null
+                this.currentUserId = null
+                this.darkMode = false
+                this.themeLockedByUser = false
+
+                document.documentElement.classList.remove('dark-mode')
+            } catch (error) {
+                console.error('Error al eliminar cuenta:', error)
+                throw error
+            }
+        },
+
         resetSettings() {
             if (this.userSettings) {
                 this.userSettings.pinLockEnabled = false

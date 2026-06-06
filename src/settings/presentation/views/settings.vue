@@ -156,7 +156,12 @@
             <p class="danger-desc theme-transition">
               {{ $t('settings.dangerZone.warning') }}
             </p>
-            <button class="btn btn-danger full hover-lift theme-transition">{{ $t('settings.dangerZone.deleteAccount') }}</button>
+            <button
+              class="btn btn-danger full hover-lift theme-transition"
+              @click="showDeleteConfirm = true"
+            >
+              {{ $t('settings.dangerZone.deleteAccount') }}
+            </button>
           </section>
         </div>
       </div>
@@ -166,15 +171,49 @@
       <div class="spinner"></div>
       <p class="animate-pulse">{{ $t('settings.loading') }}</p>
     </div>
+
+    <div v-if="showDeleteConfirm" class="modal-overlay" @click.self="showDeleteConfirm = false">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">{{ $t('settings.dangerZone.title') }}</h3>
+          <button class="modal-close" @click="showDeleteConfirm = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-warning">{{ $t('settings.dangerZone.confirmText') }}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline hover-lift"
+            :disabled="isDeleting"
+            @click="showDeleteConfirm = false"
+          >
+            {{ $t('settings.dangerZone.cancel') }}
+          </button>
+          <button
+            class="btn btn-danger hover-lift"
+            :disabled="isDeleting"
+            @click="confirmDeleteAccount"
+          >
+            <span v-if="isDeleting" class="spinner-sm"></span>
+            {{ isDeleting ? $t('settings.dangerZone.deleting') : $t('settings.dangerZone.confirmDelete') }}
+          </button>
+        </div>
+      </div>
+    </div>
   </Layout>
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSettingsStore } from '../../application/settings.store'
 import Layout from '@/shared/presentation/components/layout.vue'
 
+const router = useRouter()
 const store = useSettingsStore()
+
+const showDeleteConfirm = ref(false)
+const isDeleting = ref(false)
 
 const pinLockModel = computed({
   get: () => !!store.userSettings?.pinLockEnabled,
@@ -190,6 +229,17 @@ const habitRemindersModel = computed({
   get: () => !!store.userSettings?.habitRemindersEnabled,
   set: (value) => store.setHabitRemindersEnabled(value)
 })
+
+async function confirmDeleteAccount() {
+  isDeleting.value = true
+  try {
+    await store.deleteAccount()
+    router.push('/')
+  } catch {
+    isDeleting.value = false
+    showDeleteConfirm.value = false
+  }
+}
 
 onMounted(async () => {
   await store.fetchProfile('u1')
@@ -258,18 +308,10 @@ onMounted(async () => {
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.06);
 }
 
-:global(.dark-mode) .card-subscription {
-  background: #0f1724;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 10px 30px rgba(2,6,23,0.75);
-}
-
 .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
 
 .accent { color: #047857; margin-bottom: 4px; font-weight: 700; }
-:global(.dark-mode) .card-subscription .accent { color: #34d399; }
-
+html.dark-mode .accent { color: #34d399; }
 
 .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
 
@@ -336,13 +378,6 @@ onMounted(async () => {
 .btn-sm { padding: 4px 12px; font-size: 13px; }
 .btn-primary { background: #6366f1; color: #fff; }
 .btn-primary:hover { background: #4f46e5; }
-:global(.dark-mode) .card-subscription .btn-primary {
-  background: #111827;
-  color: #fff;
-}
-:global(.dark-mode) .card-subscription .btn-primary:hover {
-  background: #1f2937;
-}
 
 .btn-outline {
   background: var(--bg-surface); color: var(--text-primary);
@@ -379,22 +414,6 @@ onMounted(async () => {
 .danger { border: 2px solid #fca5a5; }
 .danger-title { color: #ef4444; margin-bottom: 8px; }
 .danger-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; transition: color 0.3s ease; }
-
-:global(.dark-mode) .danger {
-  border: 1px solid rgba(248,113,113,0.18);
-  background: rgba(248,113,113,0.02);
-  box-shadow: 0 6px 18px rgba(2,6,23,0.35);
-}
-
-:global(.dark-mode) .danger-title {
-  color: #fb7185;
-}
-
-:global(.dark-mode) .btn-danger {
-  background: transparent;
-  color: #fb7185;
-  border-color: rgba(248,113,113,0.18);
-}
 .loading-state { display: flex; justify-content: center; align-items: center; height: 60vh; font-size: 18px; color: var(--text-secondary); }
 
 </style>

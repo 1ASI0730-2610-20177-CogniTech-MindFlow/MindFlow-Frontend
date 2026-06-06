@@ -131,7 +131,11 @@
     "dangerZone": {
       "title": "Danger Zone",
       "warning": "Deleting your account will permanently purge all your encrypted records.",
-      "deleteAccount": "Delete my account"
+      "deleteAccount": "Delete my account",
+      "confirmText": "Are you sure? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirmDelete": "Yes, delete my account",
+      "deleting": "Deleting..."
     },
     "loading": "Loading settings..."
   },

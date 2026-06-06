@@ -131,7 +131,11 @@
     "dangerZone": {
       "title": "Zona de Peligro",
       "warning": "Eliminar tu cuenta purgará permanentemente todos tus registros encriptados.",
-      "deleteAccount": "Eliminar mi cuenta"
+      "deleteAccount": "Eliminar mi cuenta",
+      "confirmText": "¿Estás seguro? Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirmDelete": "Sí, eliminar mi cuenta",
+      "deleting": "Eliminando..."
     },
     "loading": "Cargando configuración..."
   },
