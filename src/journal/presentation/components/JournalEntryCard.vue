@@ -23,7 +23,7 @@
     </div>
 
     <div v-if="entry.media?.length" class="media-section theme-transition">
-      <div class="media-title">Adjuntos</div>
+      <div class="media-title">{{ $t('journal.entryCard.attachments') }}</div>
       <div class="media-grid">
         <a
             v-for="item in entry.media"

@@ -197,8 +197,11 @@
           "negative": "Negativo"
         }
       },
-     "filters": {
-       "stats": "Estadísticas",
+      "entryCard": {
+        "attachments": "Adjuntos"
+      },
+      "filters": {
+        "stats": "Estadísticas",
        "searchPlaceholder": "Buscar en tus pensamientos...",
        "tabs": {
          "all": "Todos",

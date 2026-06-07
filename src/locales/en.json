@@ -196,6 +196,9 @@
         "negative": "Negative"
       }
     },
+    "entryCard": {
+      "attachments": "Attachments"
+    },
     "filters": {
       "searchPlaceholder": "Search in your thoughts...",
       "tabs": {

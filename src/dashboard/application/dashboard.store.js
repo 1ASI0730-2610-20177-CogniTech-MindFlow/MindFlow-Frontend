@@ -48,8 +48,7 @@ export const useDashboardStore = defineStore('dashboard', {
 
             try {
                 const response = await dashboardApi.processJournalEntry(text, tag)
-                const newEntry = new JournalEntry({ text, tag })
-                this.recentEntries.unshift(newEntry)
+                this.recentEntries.unshift({ id: Date.now(), title: text, tags: tag ? [tag] : [], date: new Date().toISOString() })
                 this.aiFeedback = response.aiFeedback
             } catch (error) {
                 console.error("Error al procesar el registro con IA:", error)
