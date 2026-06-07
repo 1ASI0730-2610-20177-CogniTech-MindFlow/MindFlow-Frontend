@@ -141,6 +141,7 @@ const saveEntry = async () => {
   border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   transform: translateY(-2px);
+  caret-color: var(--accent-primary);
 }
 
 .journal-textarea::placeholder {
@@ -284,22 +285,35 @@ const saveEntry = async () => {
   display: flex;
   align-items: center;
   gap: 4px;
+  padding: 8px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
 }
 
 .star {
-  font-size: 22px;
-  color: var(--border-color);
+  font-size: 28px;
+  color: var(--text-muted);
+  opacity: 0.4;
   cursor: pointer;
-  transition: color 0.2s, transform 0.2s;
+  transition: color 0.2s, transform 0.2s, text-shadow 0.2s;
   user-select: none;
+  line-height: 1;
 }
 
 .star.filled {
   color: var(--accent-warning);
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
 }
 
 .star:hover {
-  transform: scale(1.2);
+  transform: scale(1.25);
+  opacity: 1;
+}
+
+.star:active {
+  transform: scale(0.95);
 }
 
 .rating-label {

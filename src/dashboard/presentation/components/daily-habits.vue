@@ -56,6 +56,10 @@ const dashboardStore = useDashboardStore()
   overflow: hidden;
 }
 
+.habit-item:active {
+  transform: scale(0.98);
+}
+
 .habit-item::before {
   content: '';
   position: absolute;
@@ -107,8 +111,12 @@ const dashboardStore = useDashboardStore()
 .custom-checkbox.checked {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3), 0 0 0 2px rgba(99, 102, 241, 0.15);
   animation: checkBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.custom-checkbox.checked:hover {
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4), 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
 @keyframes checkBounce {
@@ -141,7 +149,7 @@ const dashboardStore = useDashboardStore()
 }
 
 .streak-badge {
-  background: var(--bg-surface);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.06));
   color: var(--accent-warning);
   font-size: 12px;
   font-weight: 700;
@@ -150,14 +158,16 @@ const dashboardStore = useDashboardStore()
   display: flex;
   align-items: center;
   gap: 4px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(217, 119, 6, 0.15);
   letter-spacing: 0.02em;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .habit-item:hover .streak-badge {
-  background: var(--bg-surface-secondary);
-  border-color: rgba(217, 119, 6, 0.2);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.08));
+  border-color: rgba(217, 119, 6, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 </style>
