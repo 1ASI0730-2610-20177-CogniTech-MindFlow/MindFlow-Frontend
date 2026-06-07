@@ -20,7 +20,7 @@
         <option value="mensual">{{ $t('habits.addForm.frequency.monthly') }}</option>
       </select>
       <button type="submit" class="create-btn" :disabled="!canSubmit">
-        <i class="pi pi-plus"></i> {{ $t('habits.addForm.create') }}
+        <i class="pi pi-plus" aria-hidden="true"></i> {{ $t('habits.addForm.create') }}
       </button>
     </form>
   </section>

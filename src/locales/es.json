@@ -168,6 +168,7 @@
         "eyebrow": "Nueva reflexión",
         "title": "Agregar otra entrada al journal",
         "close": "Cerrar formulario",
+      "removeFile": "Eliminar archivo",
         "save": "Guardar entrada",
         "saving": "Guardando...",
         "cancel": "Cancelar",
@@ -426,6 +427,7 @@
       "reminder": "Recordatorio",
       "aiAlert": "Alerta de IA"
     },
+    "dismiss": "Descartar notificación",
     "timeAgo": {
       "now": "Ahora",
       "minutes": "hace {n} min",

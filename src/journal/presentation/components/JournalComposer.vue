@@ -1,10 +1,10 @@
 <template>
-  <div v-if="open" class="composer-backdrop" @click.self="$emit('close')">
+  <div v-if="open" ref="composerRef" class="composer-backdrop" role="dialog" aria-modal="true" aria-labelledby="composer-title" @click.self="$emit('close')" @keydown.escape="$emit('close')">
     <section class="composer-card theme-transition">
       <header class="composer-header">
         <div>
           <p class="eyebrow">{{ $t('journal.composer.eyebrow') }}</p>
-          <h2>{{ $t('journal.composer.title') }}</h2>
+          <h2 id="composer-title">{{ $t('journal.composer.title') }}</h2>
         </div>
 
         <button type="button" class="close-btn" @click="$emit('close')" :aria-label="$t('journal.composer.close')">
@@ -75,8 +75,8 @@
               class="file-preview"
             >
               <img :src="file.preview" :alt="file.name" />
-              <button type="button" class="file-remove" @click.stop="removeFile(index)">
-                <i class="pi pi-times"></i>
+              <button type="button" class="file-remove" :aria-label="$t('journal.composer.removeFile')" @click.stop="removeFile(index)">
+                <i class="pi pi-times" aria-hidden="true"></i>
               </button>
               <span class="file-name">{{ file.name }}</span>
             </div>
@@ -88,7 +88,7 @@
             {{ $t('journal.composer.cancel') }}
           </button>
           <button type="submit" class="primary-btn theme-transition" :disabled="!canSubmit || isSaving">
-            <i class="pi pi-send"></i>
+            <i class="pi pi-send" aria-hidden="true"></i>
             {{ isSaving ? $t('journal.composer.saving') : $t('journal.composer.save') }}
           </button>
         </div>
@@ -99,6 +99,7 @@
 
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
+import { useFocusTrap } from '@/shared/presentation/composables/useFocusTrap'
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -120,6 +121,9 @@ const form = reactive({
 
 const fileInput = ref(null)
 const selectedFiles = ref([])
+const composerRef = ref(null)
+
+useFocusTrap(composerRef, () => props.open)
 
 const canSubmit = computed(() => Boolean(form.title.trim() && form.content.trim() && form.date))
 

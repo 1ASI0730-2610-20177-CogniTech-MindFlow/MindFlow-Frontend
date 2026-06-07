@@ -2,15 +2,15 @@
   <transition name="toast-slide">
     <div v-if="visible" class="toast theme-transition" :class="[type, { entering: isEntering }]">
       <div class="toast-icon">
-        <i v-if="type === 'ai_alert'" class="pi pi-cog"></i>
-        <i v-else class="pi pi-clock"></i>
+        <i v-if="type === 'ai_alert'" class="pi pi-cog" aria-hidden="true"></i>
+        <i v-else class="pi pi-clock" aria-hidden="true"></i>
       </div>
       <div class="toast-body">
         <p class="toast-title">{{ notification.title }}</p>
         <p class="toast-message">{{ notification.message }}</p>
       </div>
       <div class="toast-actions">
-        <button class="toast-close" @click="$emit('dismiss', notification.id)"><i class="pi pi-times"></i></button>
+        <button class="toast-close" :aria-label="$t('notifications.dismiss')" @click="$emit('dismiss', notification.id)"><i class="pi pi-times" aria-hidden="true"></i></button>
       </div>
     </div>
   </transition>

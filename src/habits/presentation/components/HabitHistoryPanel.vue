@@ -31,7 +31,7 @@
           <div class="habit-metrics">
             <span class="compliance theme-transition">{{ habit.completedDays }}/{{ habit.trackedDays }} {{ $t('habits.history.days') }}</span>
             <span class="streak theme-transition">
-              <i class="pi pi-bolt"></i> {{ $t('habits.history.streak') }} {{ habit.weekStreak }} {{ $t('habits.history.days') }}
+              <i class="pi pi-bolt" aria-hidden="true"></i> {{ $t('habits.history.streak') }} {{ habit.weekStreak }} {{ $t('habits.history.days') }}
             </span>
           </div>
         </li>

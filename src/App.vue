@@ -11,13 +11,17 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@/settings/application/settings.store'
 import { useHydrationReminder } from '@/shared/presentation/composables/useHydrationReminder'
 import NotificationToast from '@/notifications/presentation/components/notification-toast.vue'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+watch(locale, (val) => {
+  document.documentElement.lang = val
+})
 
 const { showToast, toastNotification } = useHydrationReminder({
   title: t('hydration.title'),

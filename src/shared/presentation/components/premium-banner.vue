@@ -1,6 +1,6 @@
 <template>
   <div class="premium-card theme-transition">
-    <div class="premium-title"><i class="pi pi-star-fill"></i> {{ $t('premium.title') }}</div>
+    <div class="premium-title"><i class="pi pi-star-fill" aria-hidden="true"></i> {{ $t('premium.title') }}</div>
     <p class="premium-text">{{ $t('premium.description') }}</p>
     <button class="premium-btn" @click="goToSubscription">{{ $t('premium.viewPlans') }}</button>
   </div>

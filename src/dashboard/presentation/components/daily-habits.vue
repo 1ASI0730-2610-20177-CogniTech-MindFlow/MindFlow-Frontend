@@ -19,7 +19,7 @@
         </div>
 
         <div v-if="habit.streak > 0" class="streak-badge">
-          <i class="pi pi-bolt"></i> {{ habit.streak }} {{ t('dashboard.dailyHabits.days') }}
+          <i class="pi pi-bolt" aria-hidden="true"></i> {{ habit.streak }} {{ t('dashboard.dailyHabits.days') }}
         </div>
       </div>
     </div>

@@ -129,13 +129,13 @@
             <h3 class="card-title accent">{{ $t('settings.subscription.title') }}</h3>
             <p class="plan-text theme-transition">{{ $t('settings.subscription.currentPlan') }}: <span class="theme-transition">{{ store.profile.planName }}</span></p>
             <ul class="plan-features">
-              <li class="ok theme-transition"><i class="pi pi-check"></i> {{ $t('settings.subscription.features.journal') }}</li>
-              <li class="ok theme-transition"><i class="pi pi-check"></i> {{ $t('settings.subscription.features.habits') }}</li>
+              <li class="ok theme-transition"><i class="pi pi-check" aria-hidden="true"></i> {{ $t('settings.subscription.features.journal') }}</li>
+              <li class="ok theme-transition"><i class="pi pi-check" aria-hidden="true"></i> {{ $t('settings.subscription.features.habits') }}</li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'" class="theme-transition">
-                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'"></i> {{ $t('settings.subscription.features.pdf') }}
+                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'" aria-hidden="true"></i> {{ $t('settings.subscription.features.pdf') }}
               </li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'" class="theme-transition">
-                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'"></i> {{ $t('settings.subscription.features.clinical') }}
+                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'" aria-hidden="true"></i> {{ $t('settings.subscription.features.clinical') }}
               </li>
             </ul>
             <button class="btn btn-primary full hover-lift theme-transition" v-if="!store.profile.isPremium">
@@ -172,11 +172,11 @@
       <p class="animate-pulse">{{ $t('settings.loading') }}</p>
     </div>
 
-    <div v-if="showDeleteConfirm" class="modal-overlay" @click.self="showDeleteConfirm = false">
+    <div v-if="showDeleteConfirm" ref="deleteModalRef" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" @click.self="showDeleteConfirm = false" @keydown.escape="showDeleteConfirm = false">
       <div class="modal-card">
         <div class="modal-header">
-          <h3 class="modal-title">{{ $t('settings.dangerZone.title') }}</h3>
-          <button class="modal-close" @click="showDeleteConfirm = false">&times;</button>
+          <h3 id="delete-modal-title" class="modal-title">{{ $t('settings.dangerZone.title') }}</h3>
+          <button class="modal-close" :aria-label="$t('settings.dangerZone.cancel')" @click="showDeleteConfirm = false">&times;</button>
         </div>
         <div class="modal-body">
           <p class="modal-warning">{{ $t('settings.dangerZone.confirmText') }}</p>
@@ -200,11 +200,11 @@
         </div>
       </div>
     </div>
-    <div v-if="showTicketForm" class="modal-overlay" @click.self="closeTicketForm">
+    <div v-if="showTicketForm" ref="ticketModalRef" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ticket-modal-title" @click.self="closeTicketForm" @keydown.escape="closeTicketForm">
       <div class="modal-card">
         <div class="modal-header">
-          <h3 class="modal-title">{{ $t('settings.support.ticketTitle') }}</h3>
-          <button class="modal-close" @click="closeTicketForm">&times;</button>
+          <h3 id="ticket-modal-title" class="modal-title">{{ $t('settings.support.ticketTitle') }}</h3>
+          <button class="modal-close" :aria-label="$t('settings.support.cancel')" @click="closeTicketForm">&times;</button>
         </div>
         <div class="modal-body" v-if="!ticketSubmitted">
           <div class="field">
@@ -218,7 +218,7 @@
         </div>
         <div class="modal-body" v-else>
           <div class="ticket-success">
-            <i class="pi pi-check-circle success-icon"></i>
+            <i class="pi pi-check-circle success-icon" aria-hidden="true"></i>
             <p class="ticket-number-label">{{ $t('settings.support.ticketNumber') }}</p>
             <p class="ticket-number">{{ ticketNumber }}</p>
             <p class="ticket-info">{{ $t('settings.support.ticketInfo') }}</p>
@@ -234,11 +234,11 @@
       </div>
     </div>
 
-    <div v-if="showFaq" class="modal-overlay" @click.self="showFaq = false">
+    <div v-if="showFaq" ref="faqModalRef" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="faq-modal-title" @click.self="showFaq = false" @keydown.escape="showFaq = false">
       <div class="modal-card">
         <div class="modal-header">
-          <h3 class="modal-title">{{ $t('settings.support.faqTitle') }}</h3>
-          <button class="modal-close" @click="showFaq = false">&times;</button>
+          <h3 id="faq-modal-title" class="modal-title">{{ $t('settings.support.faqTitle') }}</h3>
+          <button class="modal-close" :aria-label="$t('settings.support.close')" @click="showFaq = false">&times;</button>
         </div>
         <div class="modal-body">
           <div v-for="(item, idx) in faqItems" :key="idx" class="faq-item">
@@ -260,6 +260,7 @@ import { useRouter } from 'vue-router'
 import { useSettingsStore } from '../../application/settings.store'
 import { SupportTicketsApi } from '../../infrastructure/support-tickets-api'
 import Layout from '@/shared/presentation/components/layout.vue'
+import { useFocusTrap } from '@/shared/presentation/composables/useFocusTrap'
 
 const router = useRouter()
 const store = useSettingsStore()
@@ -335,6 +336,14 @@ async function confirmDeleteAccount() {
     showDeleteConfirm.value = false
   }
 }
+
+const deleteModalRef = ref(null)
+const ticketModalRef = ref(null)
+const faqModalRef = ref(null)
+
+useFocusTrap(deleteModalRef, showDeleteConfirm)
+useFocusTrap(ticketModalRef, showTicketForm)
+useFocusTrap(faqModalRef, showFaq)
 
 onMounted(async () => {
   await store.fetchProfile('u1')

@@ -7,7 +7,7 @@
         <div class="score-details">
           <h4 class="theme-transition">{{ t('analytics.components.weeklySummary.stabilityIndex') }}</h4>
           <span class="trend-pill theme-transition">
-            <i class="pi pi-arrow-up"></i> {{ t('analytics.components.weeklySummary.trendRange', { trend: data.trendPercentage }) }}
+            <i class="pi pi-arrow-up" aria-hidden="true"></i> {{ t('analytics.components.weeklySummary.trendRange', { trend: data.trendPercentage }) }}
           </span>
         </div>
       </div>

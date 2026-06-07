@@ -167,6 +167,7 @@
       "eyebrow": "New reflection",
       "title": "Add another journal entry",
       "close": "Close form",
+      "removeFile": "Remove file",
       "save": "Save entry",
       "saving": "Saving...",
       "cancel": "Cancel",
@@ -420,6 +421,7 @@
       "reminder": "Reminder",
       "aiAlert": "AI Alert"
     },
+    "dismiss": "Dismiss notification",
     "timeAgo": {
       "now": "Now",
       "minutes": "{n} min ago",
