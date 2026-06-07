@@ -142,7 +142,7 @@ const dashboardStore = useDashboardStore()
 
 .streak-badge {
   background: var(--bg-surface);
-  color: #d97706;
+  color: var(--accent-warning);
   font-size: 12px;
   font-weight: 700;
   padding: 4px 10px;

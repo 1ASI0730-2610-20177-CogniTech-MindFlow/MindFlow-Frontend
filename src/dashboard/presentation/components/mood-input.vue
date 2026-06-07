@@ -295,7 +295,7 @@ const saveEntry = async () => {
 }
 
 .star.filled {
-  color: #f59e0b;
+  color: var(--accent-warning);
 }
 
 .star:hover {
