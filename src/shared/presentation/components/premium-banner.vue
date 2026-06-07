@@ -1,10 +1,8 @@
 <template>
   <div class="premium-card theme-transition">
-    <div class="premium-title"><i class="pi pi-star-fill"></i> MindFlow Premium</div>
-    <p class="premium-text">
-      Desbloquea exportación de reportes PDF y CSV para tu terapeuta.
-    </p>
-    <button class="premium-btn" @click="goToSubscription">Ver Planes</button>
+    <div class="premium-title"><i class="pi pi-star-fill"></i> {{ $t('premium.title') }}</div>
+    <p class="premium-text">{{ $t('premium.description') }}</p>
+    <button class="premium-btn" @click="goToSubscription">{{ $t('premium.viewPlans') }}</button>
   </div>
 </template>
 

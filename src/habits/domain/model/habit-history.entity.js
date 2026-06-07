@@ -67,10 +67,11 @@ export function getWeekEnd(weekStart) {
 
 export function formatWeekLabel(weekStart) {
     const weekEnd = getWeekEnd(weekStart)
+    const locale = typeof localStorage !== 'undefined' ? localStorage.getItem('mindflow-lang') || 'es' : 'es'
     const opts = { day: 'numeric', month: 'short' }
-    const start = weekStart.toLocaleDateString('es-ES', opts)
-    const end = weekEnd.toLocaleDateString('es-ES', { ...opts, year: 'numeric' })
-    return `Semana del ${start} – ${end}`
+    const start = weekStart.toLocaleDateString(locale, opts)
+    const end = weekEnd.toLocaleDateString(locale, { ...opts, year: 'numeric' })
+    return `${start} – ${end}`
 }
 
 function maxStreakInWeek(datesCompleted) {

@@ -5,7 +5,7 @@
           type="button"
           class="status-btn hover-scale"
           :disabled="!habit.canToggle()"
-          :aria-label="habit.isCompleted() ? 'Marcar pendiente' : 'Marcar completado'"
+          :aria-label="habit.isCompleted() ? $t('habits.aria.markPending') : $t('habits.aria.markCompleted')"
           @click="$emit('toggle', habit.id)"
       >
         <i v-if="habit.isPaused()" class="pi pi-pause-circle paused-icon animate-pulse-slow"></i>
@@ -23,14 +23,14 @@
     </td>
     <td class="streak-cell">
       <template v-if="habit.isPaused()">
-        <span class="paused-label">Pausado por IA</span>
+        <span class="paused-label">{{ $t('habits.pausedByAI') }}</span>
       </template>
       <template v-else>
         <span v-if="habit.currentStreak > 0" class="streak theme-transition">
           <i class="pi pi-bolt streak-icon animate-bounce-subtle"></i>
-          {{ habit.currentStreak }} días
+          {{ habit.currentStreak }} {{ $t('habits.history.days') }}
         </span>
-        <span v-else class="streak muted theme-transition">0 días</span>
+        <span v-else class="streak muted theme-transition">0 {{ $t('habits.history.days') }}</span>
       </template>
     </td>
   </tr>

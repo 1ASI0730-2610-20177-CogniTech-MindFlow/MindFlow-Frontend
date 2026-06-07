@@ -32,15 +32,8 @@ export class JournalEntry {
     get formattedDate() {
         const [year, month, day] = this.date.split('-')
         const dateObj = new Date(year, parseInt(month) - 1, day)
-        
-        const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
-        const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-        
-        const dayName = daysOfWeek[dateObj.getDay()]
-        const monthName = months[dateObj.getMonth()]
-        
-        return `${dayName}, ${parseInt(day)} de ${monthName}`
+        const locale = typeof localStorage !== 'undefined' ? localStorage.getItem('mindflow-lang') || 'es' : 'es'
+        return dateObj.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' })
     }
 
     static fromJSON(data) {

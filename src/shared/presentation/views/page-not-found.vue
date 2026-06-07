@@ -6,15 +6,15 @@
           <span class="error-code">404</span>
           <div class="error-line"></div>
         </div>
-        <h2 class="error-title">Página no encontrada</h2>
-        <p class="error-message">La página que buscas no existe o ha sido movida a otra ubicación.</p>
+        <h2 class="error-title">{{ $t('notFound.title') }}</h2>
+        <p class="error-message">{{ $t('notFound.message') }}</p>
         <div class="error-actions">
           <router-link to="/dashboard" class="btn-primary">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Volver al Dashboard
+            {{ $t('notFound.backToDashboard') }}
           </router-link>
           <button class="btn-secondary" @click="$router.back()">
-            Página Anterior
+            {{ $t('notFound.previousPage') }}
           </button>
         </div>
       </div>

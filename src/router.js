@@ -8,44 +8,44 @@ const routes = [
   {
     path: '/',
     component: Home,
-    meta: { title: 'Inicio - MindFlow' }
+    meta: { titleKey: 'routes.home' }
   },
   
  {
     path: '/dashboard',
     component: () => import('./dashboard/presentation/views/dashboard.vue'),
-    meta: { title: 'Dashboard - MindFlow' }
+    meta: { titleKey: 'routes.dashboard' }
   },
   {
     path: '/analytics',
     component: AnalyticsView,
-    meta: { title: 'Estadísticas - MindFlow' }
+    meta: { titleKey: 'routes.analytics' }
   },
   {
     path: '/habits',
     component: () => import('@/habits/presentation/views/habits.vue'),
-    meta: { title: 'Hábitos - MindFlow' }
+    meta: { titleKey: 'routes.habits' }
   },
   {
     path: '/journal',
     component: () => import('@/journal/presentation/views/journal.vue'),
-    meta: { title: 'Diario - MindFlow' }
+    meta: { titleKey: 'routes.journal' }
   },
   {
     path: '/subscription',
     component: () => import('@/subscription/presentation/views/subscription.vue'),
-    meta: { title: 'Suscripción - MindFlow' }
+    meta: { titleKey: 'routes.subscription' }
   },
   {
     path: '/settings',
     component: () => import('@/settings/presentation/views/settings.vue'),
-    meta: { title: 'Configuración - MindFlow' }
+    meta: { titleKey: 'routes.settings' }
   },
 
   {
     path: '/:pathMatch(.*)*',
     component: PageNotFound,
-    meta: { title: '404 - No Encontrado' }
+    meta: { titleKey: 'routes.notFound' }
   }
 ]
 
@@ -55,7 +55,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  if (to.meta.title) {
+  if (to.meta?.titleKey) {
+    import('vue-i18n').then(({ useI18n }) => {
+      const { t } = useI18n()
+      document.title = t(to.meta.titleKey)
+    })
+  } else if (to.meta?.title) {
     document.title = to.meta.title
   }
 })

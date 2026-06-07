@@ -4,13 +4,13 @@
       <section class="hero-section">
         <div class="hero-badge">
           <span class="badge-dot"></span>
-          <span>MindFlow v3.1.0</span>
+          <span>{{ $t('home.badge') }}</span>
         </div>
-        <h1 class="hero-title">Bienvenido a tu espacio de bienestar mental</h1>
-        <p class="hero-subtitle">Monitorea tus hábitos, registra tus emociones y descubre patrones en tu bienestar diario.</p>
+        <h1 class="hero-title">{{ $t('home.hero.title') }}</h1>
+        <p class="hero-subtitle">{{ $t('home.hero.subtitle') }}</p>
         <div class="hero-actions">
           <router-link to="/dashboard" class="btn-primary">
-            <span>Ir al Dashboard</span>
+            <span>{{ $t('home.hero.cta') }}</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </router-link>
 
@@ -22,32 +22,32 @@
           <div class="feature-icon mood-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>
           </div>
-          <h3>Diario Emocional</h3>
-          <p>Registra tus pensamientos y emociones con análisis de sentimiento impulsado por IA.</p>
+          <h3>{{ $t('home.features.moodJournal.title') }}</h3>
+          <p>{{ $t('home.features.moodJournal.desc') }}</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon habit-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="2"/></svg>
           </div>
-          <h3>Seguimiento de Hábitos</h3>
-          <p>Crea rutinas diarias, semanales o mensuales y da seguimiento a tu progreso.</p>
+          <h3>{{ $t('home.features.habitTracking.title') }}</h3>
+          <p>{{ $t('home.features.habitTracking.desc') }}</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon analytics-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 17V21H7V17H3Z" fill="currentColor" opacity="0.6"/><path d="M10 13V21H14V13H10Z" fill="currentColor" opacity="0.8"/><path d="M17 9V21H21V9H17Z" fill="currentColor"/></svg>
           </div>
-          <h3>Analíticas</h3>
-          <p>Visualiza tendencias, rachas y estadísticas detalladas de tu bienestar.</p>
+          <h3>{{ $t('home.features.analytics.title') }}</h3>
+          <p>{{ $t('home.features.analytics.desc') }}</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon premium-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
           </div>
-          <h3>MindFlow Premium</h3>
-          <p>Desbloquea funciones avanzadas, IA mejorada y reportes personalizados.</p>
+          <h3>{{ $t('home.features.premium.title') }}</h3>
+          <p>{{ $t('home.features.premium.desc') }}</p>
         </div>
       </section>
     </div>

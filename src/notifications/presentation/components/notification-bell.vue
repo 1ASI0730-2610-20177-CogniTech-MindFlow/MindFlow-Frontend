@@ -18,7 +18,7 @@
             @click="markAllRead"
             :disabled="isMarkingAll"
           >
-            {{ isMarkingAll ? '...' : $t('notifications.markAllRead') }}
+            {{ isMarkingAll ? $t('notifications.marking') : $t('notifications.markAllRead') }}
           </button>
         </header>
 
@@ -53,6 +53,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   notifications: { type: Array, default: () => [] },
@@ -87,12 +90,12 @@ function timeAgo(date) {
   const now = new Date()
   const diff = now - new Date(date)
   const mins = Math.floor(diff / 60000)
-  if (mins < 1) return 'Ahora'
-  if (mins < 60) return `hace ${mins} min`
+  if (mins < 1) return t('notifications.timeAgo.now')
+  if (mins < 60) return t('notifications.timeAgo.minutes', { n: mins })
   const hours = Math.floor(mins / 60)
-  if (hours < 24) return `hace ${hours}h`
+  if (hours < 24) return t('notifications.timeAgo.hours', { n: hours })
   const days = Math.floor(hours / 24)
-  return `hace ${days}d`
+  return t('notifications.timeAgo.days', { n: days })
 }
 
 function handleClickOutside(e) {

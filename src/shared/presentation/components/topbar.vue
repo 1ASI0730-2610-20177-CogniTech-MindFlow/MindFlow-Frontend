@@ -73,7 +73,8 @@ const route = useRoute()
 const router = useRouter()
 const store = useSettingsStore()
 const notifStore = useNotificationsStore()
-const { t } = useI18n()
+const i18n = useI18n()
+const { t } = i18n
 
 const avatarInitial = computed(() => {
   if (store.profile?.initial) return store.profile.initial
@@ -82,17 +83,18 @@ const avatarInitial = computed(() => {
 })
 
 const currentTitle = computed(() => {
-  // Use the route name to translate the title dynamically, fallback to greeting
   if (route.name) {
      return t(`menu.${route.name.toLowerCase()}`)
   }
-  return route.meta?.title || t('greeting.hello')
+  if (route.meta?.titleKey) {
+    return t(route.meta.titleKey)
+  }
+  return t('greeting.hello')
 })
 
 const formattedDate = computed(() => {
   const options = { weekday: 'long', day: 'numeric', month: 'long' }
-  // You might want to pass the current locale dynamically, e.g., using i18n.locale.value
-  return new Date().toLocaleDateString('es-ES', options)
+  return new Date().toLocaleDateString(i18n.locale.value, options)
 })
 
 // Search Functionality

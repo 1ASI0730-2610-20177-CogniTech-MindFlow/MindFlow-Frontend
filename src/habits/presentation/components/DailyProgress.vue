@@ -1,8 +1,8 @@
 <template>
   <section class="progress-card theme-transition">
     <div class="progress-header">
-      <h3 class="theme-transition">Progreso Diario</h3>
-      <span class="progress-label theme-transition">{{ progress.percent }}% Completado ({{ progress.completed }}/{{ progress.total }})</span>
+      <h3 class="theme-transition">{{ $t('habits.dailyProgress') }}</h3>
+      <span class="progress-label theme-transition">{{ $t('habits.percentCompleted', { percent: progress.percent, completed: progress.completed, total: progress.total }) }}</span>
     </div>
     <div class="progress-track theme-transition">
       <div class="progress-fill theme-transition" :style="{ width: `${progress.percent}%` }" />

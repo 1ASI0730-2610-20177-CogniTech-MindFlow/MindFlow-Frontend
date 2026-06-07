@@ -19,6 +19,7 @@
     "noResults": "No results found"
   },
   "premium": {
+    "title": "MindFlow Premium",
     "description": "Unlock PDF and CSV report export for your therapist.",
     "viewPlans": "View Plans"
   },
@@ -264,6 +265,20 @@
       "daysCompleted": "days completed",
       "streak": "Streak:",
       "days": "days"
+    },
+    "dailyProgress": "Daily Progress",
+    "percentCompleted": "{percent}% Completed ({completed}/{total})",
+    "table": {
+      "status": "Status",
+      "name": "Habit",
+      "category": "Category",
+      "streak": "Current Streak"
+    },
+    "emptyFilter": "No habits match the filter.",
+    "pausedByAI": "Paused by AI",
+    "aria": {
+      "markPending": "Mark as pending",
+      "markCompleted": "Mark as completed"
     }
   },
   "dashboard": {
@@ -400,9 +415,58 @@
     "title": "Notifications",
     "empty": "No new notifications",
     "markAllRead": "Mark all as read",
+    "marking": "...",
     "types": {
       "reminder": "Reminder",
       "aiAlert": "AI Alert"
+    },
+    "timeAgo": {
+      "now": "Now",
+      "minutes": "{n} min ago",
+      "hours": "{n}h ago",
+      "days": "{n}d ago"
     }
+  },
+  "home": {
+    "badge": "MindFlow v3.1.0",
+    "hero": {
+      "title": "Welcome to your mental wellness space",
+      "subtitle": "Track your habits, log your emotions, and discover patterns in your daily well-being.",
+      "cta": "Go to Dashboard"
+    },
+    "features": {
+      "moodJournal": {
+        "title": "Emotional Journal",
+        "desc": "Record your thoughts and emotions with AI-powered sentiment analysis."
+      },
+      "habitTracking": {
+        "title": "Habit Tracking",
+        "desc": "Create daily, weekly or monthly routines and track your progress."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "desc": "Visualize trends, streaks and detailed well-being statistics."
+      },
+      "premium": {
+        "title": "MindFlow Premium",
+        "desc": "Unlock advanced features, enhanced AI and personalized reports."
+      }
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "message": "The page you are looking for does not exist or has been moved.",
+    "backToDashboard": "Back to Dashboard",
+    "previousPage": "Previous Page"
+  },
+  "routes": {
+    "home": "Home - MindFlow",
+    "dashboard": "Dashboard - MindFlow",
+    "analytics": "Analytics - MindFlow",
+    "habits": "Habits - MindFlow",
+    "journal": "Journal - MindFlow",
+    "subscription": "Subscription - MindFlow",
+    "settings": "Settings - MindFlow",
+    "notFound": "404 - Not Found"
   }
 }

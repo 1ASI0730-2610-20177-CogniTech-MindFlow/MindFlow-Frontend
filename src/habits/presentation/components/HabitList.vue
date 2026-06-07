@@ -3,10 +3,10 @@
     <table class="habit-table">
       <thead>
         <tr>
-          <th class="theme-transition">Estado</th>
-          <th class="theme-transition">Hábito</th>
-          <th class="theme-transition">Categoría</th>
-          <th class="theme-transition">Racha Actual</th>
+          <th class="theme-transition">{{ $t('habits.table.status') }}</th>
+          <th class="theme-transition">{{ $t('habits.table.name') }}</th>
+          <th class="theme-transition">{{ $t('habits.table.category') }}</th>
+          <th class="theme-transition">{{ $t('habits.table.streak') }}</th>
         </tr>
       </thead>
       <TransitionGroup name="list" tag="tbody">
@@ -17,7 +17,7 @@
             @toggle="$emit('toggle', $event)"
         />
         <tr v-if="habits.length === 0" key="empty-row">
-          <td colspan="4" class="empty">No hay hábitos que coincidan con el filtro.</td>
+          <td colspan="4" class="empty">{{ $t('habits.emptyFilter') }}</td>
         </tr>
       </TransitionGroup>
     </table>

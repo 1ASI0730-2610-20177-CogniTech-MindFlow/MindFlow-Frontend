@@ -19,6 +19,7 @@
     "noResults": "No se encontraron resultados"
   },
   "premium": {
+    "title": "MindFlow Premium",
     "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
     "viewPlans": "Ver Planes"
   },
@@ -270,6 +271,20 @@
       "daysCompleted": "días cumplidos",
       "streak": "Racha:",
       "days": "días"
+    },
+    "dailyProgress": "Progreso Diario",
+    "percentCompleted": "{percent}% Completado ({completed}/{total})",
+    "table": {
+      "status": "Estado",
+      "name": "Hábito",
+      "category": "Categoría",
+      "streak": "Racha Actual"
+    },
+    "emptyFilter": "No hay hábitos que coincidan con el filtro.",
+    "pausedByAI": "Pausado por IA",
+    "aria": {
+      "markPending": "Marcar pendiente",
+      "markCompleted": "Marcar completado"
     }
   },
   "dashboard": {
@@ -406,9 +421,58 @@
     "title": "Notificaciones",
     "empty": "No tienes notificaciones nuevas",
     "markAllRead": "Marcar todo como leído",
+    "marking": "...",
     "types": {
       "reminder": "Recordatorio",
       "aiAlert": "Alerta de IA"
+    },
+    "timeAgo": {
+      "now": "Ahora",
+      "minutes": "hace {n} min",
+      "hours": "hace {n}h",
+      "days": "hace {n}d"
     }
+  },
+  "home": {
+    "badge": "MindFlow v3.1.0",
+    "hero": {
+      "title": "Bienvenido a tu espacio de bienestar mental",
+      "subtitle": "Monitorea tus hábitos, registra tus emociones y descubre patrones en tu bienestar diario.",
+      "cta": "Ir al Dashboard"
+    },
+    "features": {
+      "moodJournal": {
+        "title": "Diario Emocional",
+        "desc": "Registra tus pensamientos y emociones con análisis de sentimiento impulsado por IA."
+      },
+      "habitTracking": {
+        "title": "Seguimiento de Hábitos",
+        "desc": "Crea rutinas diarias, semanales o mensuales y da seguimiento a tu progreso."
+      },
+      "analytics": {
+        "title": "Analíticas",
+        "desc": "Visualiza tendencias, rachas y estadísticas detalladas de tu bienestar."
+      },
+      "premium": {
+        "title": "MindFlow Premium",
+        "desc": "Desbloquea funciones avanzadas, IA mejorada y reportes personalizados."
+      }
+    }
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "message": "La página que buscas no existe o ha sido movida a otra ubicación.",
+    "backToDashboard": "Volver al Dashboard",
+    "previousPage": "Página Anterior"
+  },
+  "routes": {
+    "home": "Inicio - MindFlow",
+    "dashboard": "Dashboard - MindFlow",
+    "analytics": "Estadísticas - MindFlow",
+    "habits": "Hábitos - MindFlow",
+    "journal": "Diario - MindFlow",
+    "subscription": "Suscripción - MindFlow",
+    "settings": "Configuración - MindFlow",
+    "notFound": "404 - No Encontrado"
   }
 }
