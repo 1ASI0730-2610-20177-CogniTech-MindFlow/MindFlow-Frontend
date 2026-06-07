@@ -130,7 +130,22 @@
     "support": {
       "title": "Technical Support",
       "ticket": "Create Support Ticket",
-      "faq": "Help Center (FAQ)"
+      "faq": "Help Center (FAQ)",
+      "ticketTitle": "Submit a Support Ticket",
+      "subjectLabel": "Subject",
+      "messageLabel": "Describe your issue",
+      "send": "Send Ticket",
+      "cancel": "Cancel",
+      "close": "Close",
+      "ticketNumber": "Your ticket number:",
+      "ticketInfo": "We'll get back to you shortly. Please save your ticket number for reference.",
+      "faqTitle": "Frequently Asked Questions",
+      "faq1q": "How do I reset my PIN?",
+      "faq1a": "Go to Settings > Privacy and toggle the PIN lock off, then on again to set a new PIN.",
+      "faq2q": "How do I export my data?",
+      "faq2a": "Data export is available in the Premium plan. Upgrade from the Subscription section.",
+      "faq3q": "How do I change my language?",
+      "faq3a": "Use the language switcher in the top bar to toggle between English and Spanish."
     },
     "dangerZone": {
       "title": "Danger Zone",

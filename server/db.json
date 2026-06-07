@@ -1350,5 +1350,25 @@
       "created_at": "2024-04-20T00:00:00Z"
     }
   ],
+  "supportTickets": [
+    {
+      "id": "t1",
+      "userId": "u1",
+      "subject": "How to export data?",
+      "message": "I need help exporting my journal entries.",
+      "ticketNumber": "MF-K2T3M-X9K4",
+      "status": "open",
+      "createdAt": "2026-06-01T10:00:00Z"
+    },
+    {
+      "userId": "u1",
+      "subject": "Test ticket",
+      "message": "Testing POST method",
+      "ticketNumber": "MF-TEST-001",
+      "status": "open",
+      "createdAt": "2026-06-06T00:00:00Z",
+      "id": "_FXInn-Jb2s"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

@@ -130,7 +130,22 @@
     "support": {
       "title": "Soporte Técnico",
       "ticket": "Generar Ticket de Ayuda",
-      "faq": "Centro de Preguntas (FAQ)"
+      "faq": "Centro de Preguntas (FAQ)",
+      "ticketTitle": "Enviar un Ticket de Soporte",
+      "subjectLabel": "Asunto",
+      "messageLabel": "Describe tu problema",
+      "send": "Enviar Ticket",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "ticketNumber": "Tu número de ticket:",
+      "ticketInfo": "Te responderemos pronto. Guarda tu número de ticket como referencia.",
+      "faqTitle": "Preguntas Frecuentes",
+      "faq1q": "¿Cómo reinicio mi PIN?",
+      "faq1a": "Ve a Configuración > Privacidad y desactiva el bloqueo PIN, luego actívalo de nuevo para establecer un nuevo PIN.",
+      "faq2q": "¿Cómo exporto mis datos?",
+      "faq2a": "La exportación de datos está disponible en el plan Premium. Actualiza desde la sección de Suscripción.",
+      "faq3q": "¿Cómo cambio mi idioma?",
+      "faq3a": "Usa el selector de idioma en la barra superior para alternar entre inglés y español."
     },
     "dangerZone": {
       "title": "Zona de Peligro",

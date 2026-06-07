@@ -146,8 +146,8 @@
           <section class="card animate-fade-in-up delay-3 theme-transition">
             <h3 class="card-title theme-transition">{{ $t('settings.support.title') }}</h3>
             <div class="stack">
-              <button class="btn btn-outline full hover-lift theme-transition">{{ $t('settings.support.ticket') }}</button>
-              <button class="btn btn-outline full hover-lift theme-transition">{{ $t('settings.support.faq') }}</button>
+              <button class="btn btn-outline full hover-lift theme-transition" @click="openTicketForm">{{ $t('settings.support.ticket') }}</button>
+              <button class="btn btn-outline full hover-lift theme-transition" @click="showFaq = true">{{ $t('settings.support.faq') }}</button>
             </div>
           </section>
 
@@ -200,6 +200,57 @@
         </div>
       </div>
     </div>
+    <div v-if="showTicketForm" class="modal-overlay" @click.self="closeTicketForm">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">{{ $t('settings.support.ticketTitle') }}</h3>
+          <button class="modal-close" @click="closeTicketForm">&times;</button>
+        </div>
+        <div class="modal-body" v-if="!ticketSubmitted">
+          <div class="field">
+            <label>{{ $t('settings.support.subjectLabel') }}</label>
+            <input type="text" v-model="ticketSubject" class="input-transition theme-transition" />
+          </div>
+          <div class="field">
+            <label>{{ $t('settings.support.messageLabel') }}</label>
+            <textarea v-model="ticketMessage" class="input-transition theme-transition ticket-textarea" rows="5"></textarea>
+          </div>
+        </div>
+        <div class="modal-body" v-else>
+          <div class="ticket-success">
+            <i class="pi pi-check-circle success-icon"></i>
+            <p class="ticket-number-label">{{ $t('settings.support.ticketNumber') }}</p>
+            <p class="ticket-number">{{ ticketNumber }}</p>
+            <p class="ticket-info">{{ $t('settings.support.ticketInfo') }}</p>
+          </div>
+        </div>
+        <div class="modal-footer" v-if="!ticketSubmitted">
+          <button class="btn btn-outline hover-lift" @click="closeTicketForm">{{ $t('settings.support.cancel') }}</button>
+          <button class="btn btn-primary hover-lift" :disabled="!ticketSubject.trim() || !ticketMessage.trim()" @click="submitTicket">{{ $t('settings.support.send') }}</button>
+        </div>
+        <div class="modal-footer" v-else>
+          <button class="btn btn-primary hover-lift" @click="closeTicketForm">{{ $t('settings.support.close') }}</button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="showFaq" class="modal-overlay" @click.self="showFaq = false">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">{{ $t('settings.support.faqTitle') }}</h3>
+          <button class="modal-close" @click="showFaq = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div v-for="(item, idx) in faqItems" :key="idx" class="faq-item">
+            <p class="faq-question">{{ $t(item.q) }}</p>
+            <p class="faq-answer">{{ $t(item.a) }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline hover-lift" @click="showFaq = false">{{ $t('settings.support.close') }}</button>
+        </div>
+      </div>
+    </div>
   </Layout>
 </template>
 
@@ -207,13 +258,57 @@
 import { onMounted, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSettingsStore } from '../../application/settings.store'
+import { SupportTicketsApi } from '../../infrastructure/support-tickets-api'
 import Layout from '@/shared/presentation/components/layout.vue'
 
 const router = useRouter()
 const store = useSettingsStore()
+const supportApi = new SupportTicketsApi()
 
 const showDeleteConfirm = ref(false)
 const isDeleting = ref(false)
+
+const showTicketForm = ref(false)
+const ticketSubject = ref('')
+const ticketMessage = ref('')
+const ticketSubmitted = ref(false)
+const ticketNumber = ref('')
+const showFaq = ref(false)
+
+const faqItems = [
+  { q: 'settings.support.faq1q', a: 'settings.support.faq1a' },
+  { q: 'settings.support.faq2q', a: 'settings.support.faq2a' },
+  { q: 'settings.support.faq3q', a: 'settings.support.faq3a' }
+]
+
+function openTicketForm() {
+  ticketSubject.value = ''
+  ticketMessage.value = ''
+  ticketSubmitted.value = false
+  ticketNumber.value = ''
+  showTicketForm.value = true
+}
+
+function closeTicketForm() {
+  showTicketForm.value = false
+}
+
+async function submitTicket() {
+  ticketNumber.value = 'MF-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase()
+  ticketSubmitted.value = true
+  try {
+    await supportApi.create({
+      userId: store.currentUserId || 'u1',
+      subject: ticketSubject.value,
+      message: ticketMessage.value,
+      ticketNumber: ticketNumber.value,
+      status: 'open',
+      createdAt: new Date().toISOString()
+    })
+  } catch (e) {
+    console.error('Error saving ticket:', e)
+  }
+}
 
 const pinLockModel = computed({
   get: () => !!store.userSettings?.pinLockEnabled,
@@ -415,5 +510,23 @@ html.dark-mode .accent { color: #34d399; }
 .danger-title { color: #ef4444; margin-bottom: 8px; }
 .danger-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; transition: color 0.3s ease; }
 .loading-state { display: flex; justify-content: center; align-items: center; height: 60vh; font-size: 18px; color: var(--text-secondary); }
+
+.ticket-textarea {
+  width: 100%; padding: 8px 12px; border: 1px solid var(--border-color);
+  border-radius: 8px; font-size: 14px; background: var(--bg-surface);
+  color: var(--text-primary); resize: vertical; font-family: inherit;
+}
+.ticket-textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+
+.ticket-success { text-align: center; padding: 16px 0; }
+.success-icon { font-size: 48px; color: #34d399; margin-bottom: 12px; }
+.ticket-number-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 4px; }
+.ticket-number { font-size: 24px; font-weight: 700; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; }
+.ticket-info { font-size: 13px; color: var(--text-muted); }
+
+.faq-item { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.faq-answer { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
 
 </style>

@@ -101,6 +101,18 @@ export const useNotificationsStore = defineStore('notifications', {
             })
         },
 
+        async createNotification(notificationData) {
+            try {
+                const created = await api.createNotification(notificationData)
+                const notif = created?.id ? Notification.fromJSON(created) : Notification.fromJSON(notificationData)
+                this.notifications.unshift(notif)
+                return notif
+            } catch (error) {
+                console.error('Error creating notification:', error)
+                throw error
+            }
+        },
+
         async dismissNotification(notificationId) {
             try {
                 await api.deleteNotification(notificationId)
