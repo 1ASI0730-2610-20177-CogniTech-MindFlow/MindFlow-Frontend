@@ -37,6 +37,17 @@
   --habit-cat-salud-mental-color: #be185d;
   --habit-cat-estudios-bg: #ede9fe;
   --habit-cat-estudios-color: #6d28d9;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --btn-radius: 12px;
+  --btn-padding-x: 24px;
+  --btn-padding-y: 10px;
+  --btn-font-size: 14px;
+  --btn-font-weight: 600;
 }
 
 html.dark-mode {
@@ -237,20 +248,20 @@ html.dark-mode .modal-footer .btn-danger {
 
 /* Efecto hover global para botones y elementos interactivos */
 button, a, [role="button"] {
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 button:hover, a:hover, [role="button"]:hover {
   transform: translateY(-2px);
 }
 
-/* Estilos mejorados para inputs */
 input, textarea, select {
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-input:focus, textarea:focus, select:focus {
-  transform: translateY(-1px);
+  transition: border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Gradientes sutiles de fondo */
@@ -271,7 +282,7 @@ input:focus, textarea:focus, select:focus {
 
 /* Efectos de sombra mejorados */
 .shadow-hover:hover {
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
 }
 
 .shadow-soft {
@@ -338,6 +349,14 @@ input:focus, textarea:focus, select:focus {
 /* Scroll suave */
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Animación de carga elegante */
@@ -577,19 +596,19 @@ a {
 
 .gradient-success {
   background: linear-gradient(135deg,
-    #34d399 0%,
-    #10b981 100%);
+    var(--accent-success) 0%,
+    #16a34a 100%);
 }
 
 .gradient-warning {
   background: linear-gradient(135deg,
-    #f59e0b 0%,
+    var(--accent-warning) 0%,
     #d97706 100%);
 }
 
 .gradient-danger {
   background: linear-gradient(135deg,
-    #ef4444 0%,
+    var(--accent-danger) 0%,
     #dc2626 100%);
 }
 
@@ -685,7 +704,7 @@ html.dark-mode .modal-card {
 .modal-title {
   font-size: 16px;
   font-weight: 600;
-  color: #ef4444;
+  color: var(--accent-danger);
 }
 
 html.dark-mode .modal-title {
@@ -732,15 +751,10 @@ html.dark-mode .modal-footer {
   display: inline-block;
   width: 14px;
   height: 14px;
-  border: 2px solid #fca5a5;
-  border-top-color: #ef4444;
+  border: 2px solid var(--accent-danger);
+  border-top-color: transparent;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
   margin-right: 6px;
   vertical-align: middle;
-}
-
-html.dark-mode .spinner-sm {
-  border-color: rgba(248,113,113,0.3);
-  border-top-color: #fb7185;
 }

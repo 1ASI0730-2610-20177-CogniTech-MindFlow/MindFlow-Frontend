@@ -328,7 +328,7 @@ const getDayLabel = (index) => {
 
 @keyframes barGrow {
   from {
-    height: 0 !important;
+    height: 0;
     opacity: 0;
   }
   to {
