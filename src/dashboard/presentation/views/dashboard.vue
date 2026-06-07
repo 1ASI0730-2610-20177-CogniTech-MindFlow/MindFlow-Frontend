@@ -90,13 +90,8 @@ onMounted(() => {
   opacity: 0;
 }
 
-.widget {
-  will-change: transform, opacity;
-}
-
 .optical-grid-bg {
   transition: opacity 0.6s ease, transform 0.8s ease;
-  transform: translateZ(0);
 }
 
 .main-column,

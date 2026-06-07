@@ -72,10 +72,10 @@ const mediaIcon = (type) => {
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm), var(--shadow-lg);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease;
-  will-change: transform, box-shadow;
 }
 
 .hover-lift:hover {
+  will-change: transform, box-shadow;
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }

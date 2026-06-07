@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import i18n from './i18n'
 
 import Home from './shared/presentation/views/home.vue'
 import PageNotFound from './shared/presentation/views/page-not-found.vue'
-import AnalyticsView from './analytics/presentation/views/analytics-view.vue'
 
 const routes = [
   {
@@ -18,7 +18,7 @@ const routes = [
   },
   {
     path: '/analytics',
-    component: AnalyticsView,
+    component: () => import('./analytics/presentation/views/analytics-view.vue'),
     meta: { titleKey: 'routes.analytics' }
   },
   {
@@ -56,10 +56,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (to.meta?.titleKey) {
-    import('vue-i18n').then(({ useI18n }) => {
-      const { t } = useI18n()
-      document.title = t(to.meta.titleKey)
-    })
+    document.title = i18n.global.t(to.meta.titleKey)
   } else if (to.meta?.title) {
     document.title = to.meta.title
   }
