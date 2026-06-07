@@ -48,17 +48,33 @@ const translatedChartData = computed(() => {
 </script>
 
 <style scoped>
-.transparent-chart-container { padding: 36px; display: flex; flex-direction: column; }
+.transparent-chart-container {
+  padding: 36px; display: flex; flex-direction: column;
+  background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.transparent-chart-container:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
 .large-chart { height: 420px; }
 
 .card-header { margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; }
-.card-title { font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700; }
+.card-title {
+  font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700;
+  padding-left: 12px; border-left: 3px solid var(--global-blue);
+}
 
-.chart-legend { display: flex; gap: 20px; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.chart-legend {
+  display: flex; gap: 20px; font-size: 12px; color: var(--text-muted); font-weight: 500;
+  background: var(--bg-surface-secondary); padding: 8px 16px; border-radius: 50px;
+  align-self: flex-start;
+}
 .legend-item { display: flex; align-items: center; gap: 8px; }
-.box { width: 10px; height: 10px; border-radius: 3px; }
-.bg-light { background: #e2e8f0; }
+.box { width: 10px; height: 10px; border-radius: 50%; }
+.bg-light { background: var(--text-muted); }
 .bg-blue { background: var(--global-blue); }
 
-.chart-wrapper { flex: 1; position: relative; min-height: 200px; }
+.chart-wrapper { flex: 1; position: relative; min-height: 200px; border-radius: 12px; overflow: hidden; }
 </style>

@@ -192,6 +192,14 @@ const getDayLabel = (index) => {
   background: rgba(99, 102, 241, 0.08);
 }
 
+.view-all svg {
+  transition: transform 0.3s ease;
+}
+
+.view-all:hover svg {
+  transform: translateX(4px);
+}
+
 .chart-container {
   display: flex;
   flex-direction: column;
@@ -229,9 +237,9 @@ const getDayLabel = (index) => {
 .bar {
   width: 100%;
   border-radius: 6px 6px 0 0;
-  min-height: 4px;
+  min-height: 0;
   animation: barGrow 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, transform 0.3s ease;
   position: relative;
 }
 
@@ -244,6 +252,10 @@ const getDayLabel = (index) => {
   height: 50%;
   border-radius: 6px 6px 0 0;
   background: linear-gradient(180deg, rgba(255,255,255,0.25), transparent);
+}
+
+.bar-group:hover .bar {
+  transform: scaleX(1.05);
 }
 
 .color-green {
@@ -262,7 +274,8 @@ const getDayLabel = (index) => {
 }
 
 .color-light {
-  background: var(--bg-surface-secondary);
+  background: var(--text-muted);
+  opacity: 0.3;
 }
 
 .day-label {
@@ -280,6 +293,8 @@ const getDayLabel = (index) => {
   padding: 16px 20px;
   background: var(--bg-surface-secondary);
   border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
 }
 
 .stat-item {
@@ -308,7 +323,7 @@ const getDayLabel = (index) => {
 .stat-divider {
   width: 1px;
   height: 32px;
-  background: var(--border-color);
+  background: linear-gradient(180deg, transparent, var(--border-color) 50%, transparent);
 }
 
 .empty-state {

@@ -54,19 +54,32 @@ const translatedChartData = computed(() => {
 </script>
 
 <style scoped>
-.transparent-chart-container { padding: 36px; display: flex; flex-direction: column; height: 380px; }
+.transparent-chart-container {
+  padding: 36px; display: flex; flex-direction: column; height: 380px;
+  background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.transparent-chart-container:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
 
 .card-header { margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
 .title-group { display: flex; flex-direction: column; gap: 4px; }
-.card-title { font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700; }
+.card-title {
+  font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700;
+  padding-left: 12px; border-left: 3px solid var(--global-blue);
+}
 .mono-subtitle { font-size: 9px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
 .chart-status {
   display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; color: var(--global-blue);
-  letter-spacing: 0.1em; background: rgba(59, 130, 246, 0.1); padding: 4px 8px; border-radius: 4px;
+  letter-spacing: 0.1em; background: rgba(59, 130, 246, 0.1); padding: 4px 10px; border-radius: 50px;
+  backdrop-filter: blur(8px);
 }
 
-.live-dot { width: 6px; height: 6px; background: var(--global-blue); border-radius: 50%; animation: pulse 2s infinite; }
+.live-dot { width: 6px; height: 6px; background: var(--global-blue); border-radius: 50%; animation: pulse 2s infinite; box-shadow: 0 0 8px var(--global-blue); }
 @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
 
 .chart-content { flex: 1; display: flex; position: relative; }
@@ -74,8 +87,8 @@ const translatedChartData = computed(() => {
 .chart-y-label {
   writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; font-weight: 600;
   color: var(--text-muted); letter-spacing: 0.12em; text-align: center; margin-right: 12px; padding-bottom: 20px;
-  opacity: 0.7;
+  opacity: 0.7; border-right: 1px solid var(--border-color); padding-right: 10px;
 }
 
-.chart-wrapper { flex: 1; position: relative; min-height: 200px; }
+.chart-wrapper { flex: 1; position: relative; min-height: 200px; border-radius: 12px; overflow: hidden; }
 </style>

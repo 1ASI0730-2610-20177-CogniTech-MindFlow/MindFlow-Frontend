@@ -66,9 +66,9 @@ const dotStyle = (colorClass = '') => {
 
 .premium-card {
   background: var(--bg-surface);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   padding: 28px;
   display: flex;
   flex-direction: column;
@@ -92,8 +92,12 @@ const dotStyle = (colorClass = '') => {
 
 .premium-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
   border-color: rgba(99, 102, 241, 0.2);
+}
+
+.premium-card:active {
+  transform: translateY(-2px) scale(0.98);
 }
 
 .premium-card:hover::before {
@@ -121,8 +125,8 @@ const dotStyle = (colorClass = '') => {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: var(--bg-surface-secondary);
-  border: 1px solid var(--border-color);
+  background: rgba(99, 102, 241, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.15);
   padding: 6px 10px;
   border-radius: 50px;
   font-size: 10px;
@@ -130,6 +134,7 @@ const dotStyle = (colorClass = '') => {
   color: var(--text-muted);
   letter-spacing: 0.1em;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(4px);
 }
 
 .premium-card:hover .active-badge {
