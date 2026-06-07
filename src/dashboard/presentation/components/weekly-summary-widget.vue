@@ -274,8 +274,8 @@ const getDayLabel = (index) => {
 }
 
 .color-light {
-  background: var(--text-muted);
-  opacity: 0.3;
+  background: linear-gradient(180deg, rgba(148, 163, 184, 0.25), rgba(148, 163, 184, 0.1));
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .day-label {

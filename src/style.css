@@ -43,6 +43,8 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
 
+  --grid-dot: rgba(15, 23, 42, 0.03);
+
   --btn-radius: 12px;
   --btn-padding-x: 24px;
   --btn-padding-y: 10px;
@@ -69,6 +71,7 @@ html.dark-mode {
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
 
   --chart-grid: #334155;
+  --grid-dot: rgba(248, 250, 252, 0.04);
 
   --mood-positive: #4ade80;
   --mood-neutral: #facc15;

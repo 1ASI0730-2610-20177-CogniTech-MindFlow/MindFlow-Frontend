@@ -2,7 +2,10 @@
   <div class="dashboard-card theme-transition">
     <div class="header-row">
       <h3 class="card-title">{{ t('dashboard.recentEntries.title') }}</h3>
-      <a href="#" class="view-all">{{ t('dashboard.recentEntries.viewAll') }}</a>
+      <router-link to="/analytics" class="view-all">
+        {{ t('dashboard.recentEntries.viewAll') }}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </router-link>
     </div>
 
     <div class="entries-list">
@@ -34,16 +37,28 @@ const dashboardStore = useDashboardStore()
 }
 
 .view-all {
-  font-size: 12px;
-  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--accent-primary);
   text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
 }
 
 .view-all:hover {
-  color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.view-all svg {
+  transition: transform 0.3s ease;
+}
+
+.view-all:hover svg {
+  transform: translateX(4px);
 }
 
 .entries-list {
@@ -78,11 +93,15 @@ const dashboardStore = useDashboardStore()
   transition: opacity 0.3s ease;
 }
 
+.entry-item:active {
+  transform: translateX(2px) scale(0.99);
+}
+
 .entry-item:hover {
   transform: translateX(4px);
   border-color: transparent;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  background: rgba(99, 102, 241, 0.04);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.04), transparent);
 }
 
 .entry-item:hover::before {
@@ -102,20 +121,20 @@ const dashboardStore = useDashboardStore()
 }
 
 .entry-tag {
-  background: var(--bg-surface);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.03));
   color: var(--accent-primary);
   font-size: 11px;
   font-weight: 700;
   padding: 3px 10px;
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(99, 102, 241, 0.12);
   letter-spacing: 0.02em;
   transition: all 0.3s ease;
 }
 
 .entry-item:hover .entry-tag {
-  background: var(--bg-surface-secondary);
-  border-color: rgba(99, 102, 241, 0.2);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.05));
+  border-color: rgba(99, 102, 241, 0.25);
 }
 
 .entry-text {

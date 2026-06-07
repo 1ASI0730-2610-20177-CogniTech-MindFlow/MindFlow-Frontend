@@ -64,7 +64,7 @@ onMounted(() => {
   height: 100vh;
   pointer-events: none;
   z-index: -1;
-  background-image: radial-gradient(circle at center, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(circle at center, var(--grid-dot) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.8;
 }
