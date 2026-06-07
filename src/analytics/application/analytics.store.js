@@ -278,7 +278,7 @@ export const useAnalyticsStore = defineStore('analytics', {
                             callbacks: {
                                 label: (ctx) => {
                                     const val = ctx.parsed.y
-                                    const label = val >= 7 ? 'Alto' : val >= 4 ? 'Moderado' : 'Bajo'
+                                    const label = val >= 7 ? 'High' : val >= 4 ? 'Moderate' : 'Low'
                                     return ` ${val} — ${label}`
                                 }
                             }

@@ -52,7 +52,7 @@ export const useDashboardStore = defineStore('dashboard', {
                 this.aiFeedback = response.aiFeedback
             } catch (error) {
                 console.error("Error al procesar el registro con IA:", error)
-                this.aiFeedback = "Hubo un problema al procesar tu registro. Por favor, intenta de nuevo."
+                this.aiFeedback = "Error processing your journal entry. Please try again."
             } finally {
                 this.isAnalyzing = false
             }
