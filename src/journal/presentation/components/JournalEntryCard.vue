@@ -76,8 +76,8 @@ const mediaIcon = (type) => {
 }
 
 .hover-lift:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: var(--shadow-lg), 0 16px 32px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .entry-header {

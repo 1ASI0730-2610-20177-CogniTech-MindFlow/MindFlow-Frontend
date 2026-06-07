@@ -50,7 +50,7 @@ const dotStyle = (colorClass = '') => {
   }
 
   if (colorClass.includes('orange')) {
-    return { background: '#f59e0b', boxShadow: '0 0 6px #f59e0b' }
+    return { background: 'var(--global-orange)', boxShadow: '0 0 6px var(--global-orange)' }
   }
 
   return { background: 'var(--global-blue)', boxShadow: '0 0 6px var(--global-blue)' }

@@ -83,6 +83,7 @@ onMounted(() => {
 .high-end-analytics-page {
   --global-blue: var(--accent-primary, #3b82f6);
   --global-green: var(--accent-success, #34d399);
+  --global-orange: var(--accent-warning, #f59e0b);
 
   background-color: var(--bg-primary);
   background-image: radial-gradient(circle at center, var(--border-color) 1px, transparent 1px);

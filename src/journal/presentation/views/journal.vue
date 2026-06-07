@@ -146,8 +146,8 @@ onMounted(async () => {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 .hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08), 0 4px 8px -4px rgba(0,0,0,0.04);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .journal-page {

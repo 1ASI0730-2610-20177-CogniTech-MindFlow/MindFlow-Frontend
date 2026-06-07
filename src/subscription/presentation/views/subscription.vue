@@ -268,7 +268,7 @@ onMounted(() => {
 }
 
 .btn-gradient {
-  background: linear-gradient(90deg, #4f46e5 0%, #10b981 100%);
+  background: linear-gradient(90deg, var(--accent-hover) 0%, var(--accent-success) 100%);
   color: #ffffff;
   border: none;
   background-size: 200% auto;
@@ -283,7 +283,7 @@ onMounted(() => {
 
 .btn-gradient:hover:not(:disabled) {
   background-position: right center;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
   transform: translateY(-2px);
 }
 

@@ -85,7 +85,7 @@ const categoryStyle = computed(() => {
 }
 
 .hover-lift {
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease;
 }
 
 .hover-lift:hover {
