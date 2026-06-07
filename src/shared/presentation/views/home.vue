@@ -106,7 +106,7 @@ onMounted(() => {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent-success, #34d399);
+  background: var(--accent-success);
   animation: pulse 2s infinite;
 }
 
@@ -145,7 +145,7 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   background: var(--accent-primary);
-  color: #fff;
+  color: var(--text-on-accent);
   padding: 14px 28px;
   border-radius: var(--btn-radius);
   font-weight: var(--btn-font-weight);
@@ -160,6 +160,10 @@ onMounted(() => {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-secondary {
@@ -179,9 +183,13 @@ onMounted(() => {
 }
 
 .btn-secondary:hover {
-  border-color: var(--accent-primary, #4a9eff);
-  color: var(--accent-primary, #4a9eff);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
   transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .features-grid {
@@ -203,8 +211,12 @@ onMounted(() => {
 
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-lg, 0 12px 40px rgba(0,0,0,0.1));
-  border-color: var(--accent-primary, #4a9eff);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-primary);
+}
+
+.feature-card:active {
+  transform: translateY(-2px) scale(0.98);
 }
 
 .feature-icon {
@@ -214,13 +226,13 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--text-on-accent);
 }
 
-.mood-icon { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-.habit-icon { background: linear-gradient(135deg, #34d399, #059669); }
-.analytics-icon { background: linear-gradient(135deg, #4a9eff, #2563eb); }
-.premium-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.mood-icon { background: var(--feature-mood); }
+.habit-icon { background: var(--feature-habit); }
+.analytics-icon { background: var(--feature-analytics); }
+.premium-icon { background: var(--feature-premium); }
 
 .feature-card h3 {
   font-size: 17px;

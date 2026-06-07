@@ -55,7 +55,7 @@ import Layout from '../components/layout.vue'
   font-size: 120px;
   font-weight: 800;
   line-height: 1;
-  background: linear-gradient(135deg, var(--accent-primary, #4a9eff), #8b5cf6);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -65,7 +65,7 @@ import Layout from '../components/layout.vue'
 .error-line {
   width: 60px;
   height: 3px;
-  background: var(--accent-primary, #4a9eff);
+  background: var(--accent-primary);
   border-radius: 4px;
   opacity: 0.5;
 }
@@ -96,7 +96,7 @@ import Layout from '../components/layout.vue'
   align-items: center;
   gap: 8px;
   background: var(--accent-primary);
-  color: #fff;
+  color: var(--text-on-accent);
   padding: var(--btn-padding-y) var(--btn-padding-x);
   border-radius: var(--btn-radius);
   font-weight: var(--btn-font-weight);
@@ -111,6 +111,10 @@ import Layout from '../components/layout.vue'
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-secondary {
@@ -130,9 +134,13 @@ import Layout from '../components/layout.vue'
 }
 
 .btn-secondary:hover {
-  border-color: var(--accent-primary, #4a9eff);
-  color: var(--accent-primary, #4a9eff);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
   transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 @media (max-width: 640px) {

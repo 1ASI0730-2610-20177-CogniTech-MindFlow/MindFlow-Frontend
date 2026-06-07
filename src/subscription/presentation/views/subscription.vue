@@ -152,6 +152,10 @@ onMounted(() => {
   box-shadow: var(--shadow-lg);
 }
 
+.plan:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
 .plan-featured {
   border: 2px solid var(--accent-primary);
 }
@@ -162,7 +166,7 @@ onMounted(() => {
   left: 50%;
   transform: translateX(-50%);
   background: var(--accent-primary);
-  color: #fff;
+  color: var(--text-on-accent);
   padding: 4px 14px;
   border-radius: 999px;
   font-size: 11px;
@@ -267,9 +271,13 @@ onMounted(() => {
   background: var(--border-color);
 }
 
+.btn-outline:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
 .btn-gradient {
   background: linear-gradient(90deg, var(--accent-hover) 0%, var(--accent-success) 100%);
-  color: #ffffff;
+  color: var(--text-on-accent);
   border: none;
   background-size: 200% auto;
   transition: 0.5s;
@@ -285,6 +293,10 @@ onMounted(() => {
   background-position: right center;
   box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
   transform: translateY(-2px);
+}
+
+.btn-gradient:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
 }
 
 .footer {
@@ -337,13 +349,13 @@ onMounted(() => {
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary), transparent 60%);
   }
   70% {
-    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-primary), transparent 100%);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary), transparent 100%);
   }
 }
 
