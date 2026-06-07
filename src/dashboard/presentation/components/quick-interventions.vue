@@ -70,15 +70,15 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 function startBreathing() {
-  console.log('Iniciar respiración 4-7-8')
+  // TODO: implement 4-7-8 breathing exercise
 }
 
 function startMeditation() {
-  console.log('Iniciar micro-meditación')
+  // TODO: implement micro-meditation
 }
 
 function startGrounding() {
-  console.log('Iniciar técnica de conexión 5-4-3-2-1')
+  // TODO: implement 5-4-3-2-1 grounding technique
 }
 </script>
 

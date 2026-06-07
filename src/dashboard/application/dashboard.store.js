@@ -62,7 +62,7 @@ export const useDashboardStore = defineStore('dashboard', {
         submitAiRating(rating) {
             this.aiRating = rating
             this.ratingSubmitted = true
-            console.info(`AI feedback rated: ${rating}/5`)
+            console.log(`AI feedback rated: ${rating}/5`)
         },
 
         toggleHabit(id) {

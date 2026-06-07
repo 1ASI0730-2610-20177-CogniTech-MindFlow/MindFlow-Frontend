@@ -331,7 +331,8 @@ async function confirmDeleteAccount() {
   try {
     await store.deleteAccount()
     router.push('/')
-  } catch {
+  } catch (e) {
+    console.error('Delete account failed:', e)
     isDeleting.value = false
     showDeleteConfirm.value = false
   }

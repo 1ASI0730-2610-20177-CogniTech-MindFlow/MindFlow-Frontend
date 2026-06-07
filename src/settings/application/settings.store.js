@@ -98,10 +98,9 @@ export const useSettingsStore = defineStore('settings', {
                     updated_at: new Date().toISOString()
                 })
 
-                console.info('Cambios de perfil guardados con éxito')
+                console.log('Profile saved successfully')
             } catch (error) {
                 console.error('Error al guardar perfil:', error)
-                console.error('Error al guardar los cambios')
             }
         },
 
@@ -124,10 +123,9 @@ export const useSettingsStore = defineStore('settings', {
                     language: this.userSettings.language
                 })
 
-                console.info('Configuraciones guardadas con éxito')
+                console.log('Settings saved successfully')
             } catch (error) {
                 console.error('Error al guardar configuraciones:', error)
-                console.error('Error al guardar las configuraciones')
             }
         },
 
@@ -257,7 +255,7 @@ export const useSettingsStore = defineStore('settings', {
                 this.userSettings.reminderTime = '09:00'
                 this.userSettings.language = 'es'
                 this.updateUserSettings()
-                console.info('Settings reset to defaults')
+                console.log('Settings reset to defaults')
             }
         }
     }

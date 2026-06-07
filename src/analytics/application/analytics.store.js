@@ -47,7 +47,8 @@ function parseLegacyData(payload) {
 
     try {
         return JSON.parse(payload.data)
-    } catch {
+    } catch (e) {
+        console.warn('Failed to parse legacy data:', e.message)
         return null
     }
 }

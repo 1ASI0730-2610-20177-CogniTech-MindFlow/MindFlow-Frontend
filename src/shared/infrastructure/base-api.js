@@ -23,7 +23,7 @@ function tryParseJson(data) {
       else if (ch === closeChar) {
         depth--
         if (depth === 0) {
-          try { return JSON.parse(trimmed.slice(0, i + 1)) } catch { return data }
+          try { return JSON.parse(trimmed.slice(0, i + 1)) } catch (e) { console.warn('JSON parse fallback:', e.message); return data }
         }
       }
     }

@@ -97,7 +97,7 @@ export const useNotificationsStore = defineStore('notifications', {
                 return n
             })
             updatedList.forEach(n => {
-                api.markAsRead(n.id, n.toJSON()).catch(() => {})
+                api.markAsRead(n.id, n.toJSON()).catch((e) => console.warn('Mark as read failed:', e))
             })
         },
 
