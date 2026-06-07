@@ -5,7 +5,7 @@ import { JournalEntry } from '@/journal/domain/model/journal-entry.entity'
 export const useJournalStore = defineStore('journal', {
     state: () => ({
         entries: [],
-        loading: false,
+        isLoading: false,
         error: null,
         selectedCategory: 'Todos',
         selectedSentiment: 'Todos',
@@ -15,7 +15,7 @@ export const useJournalStore = defineStore('journal', {
 
     actions: {
         async fetchEntries() {
-            this.loading = true
+            this.isLoading = true
             try {
                 this.entries = await JournalAPI.getAll()
                 this.error = null
@@ -23,7 +23,7 @@ export const useJournalStore = defineStore('journal', {
                 this.error = error.message
                 console.error('Error loading entries:', error)
             } finally {
-                this.loading = false
+                this.isLoading = false
             }
         },
 

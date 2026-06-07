@@ -3,11 +3,11 @@ import { HabitCompletionLog } from '../domain/model/habit-history.entity.js'
 
 const HABIT_LOGS_URL = 'habitLogs'
 
-const habitLogsEndpoint = new BaseEndpoint(HABIT_LOGS_URL)
+function mapHabitLog(data) {
+    return HabitCompletionLog.fromJSON(data)
+}
 
-const mapHabitLog = (data) => HabitCompletionLog.fromJSON(data)
-
-const toHabitLogJSON = (log) => {
+function toHabitLogJSON(log) {
     const payload = log instanceof HabitCompletionLog ? log.toJSON() : HabitCompletionLog.fromJSON(log).toJSON()
 
     if (payload.id == null) {
@@ -17,53 +17,59 @@ const toHabitLogJSON = (log) => {
     return payload
 }
 
-export const HabitsHistoryAPI = {
+export class HabitsHistoryApiService extends BaseEndpoint {
+    constructor() {
+        super(HABIT_LOGS_URL)
+    }
+
     async getAll() {
         try {
-            const data = await habitLogsEndpoint.getAll()
+            const data = await super.getAll()
             return Array.isArray(data) ? data.map(mapHabitLog) : []
         } catch (error) {
             console.error('Error fetching habit logs:', error)
             return []
         }
-    },
+    }
 
     async getByHabitId(habitId) {
         try {
-            const data = await habitLogsEndpoint.search({ habit_id: habitId })
+            const data = await this.search({ habit_id: habitId })
             return Array.isArray(data) ? data.map(mapHabitLog) : []
         } catch (error) {
             console.error(`Error fetching habit logs for habit ${habitId}:`, error)
             return []
         }
-    },
+    }
 
     async create(log) {
         try {
-            const response = await habitLogsEndpoint.create(toHabitLogJSON(log))
+            const response = await super.create(toHabitLogJSON(log))
             return mapHabitLog(response)
         } catch (error) {
             console.error('Error creating habit log:', error)
             throw error
         }
-    },
+    }
 
     async update(id, log) {
         try {
-            const response = await habitLogsEndpoint.update(id, toHabitLogJSON(log))
+            const response = await super.update(id, toHabitLogJSON(log))
             return mapHabitLog(response)
         } catch (error) {
             console.error(`Error updating habit log ${id}:`, error)
             throw error
         }
-    },
+    }
 
     async delete(id) {
         try {
-            return await habitLogsEndpoint.delete(id)
+            return await super.delete(id)
         } catch (error) {
             console.error(`Error deleting habit log ${id}:`, error)
             throw error
         }
     }
 }
+
+export const HabitsHistoryAPI = new HabitsHistoryApiService()
