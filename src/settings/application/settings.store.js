@@ -39,7 +39,6 @@ export const useSettingsStore = defineStore('settings', {
 
             try {
                 const userData = await api.getByUserId(userId)
-                console.log('User data loaded:', userData)
                 
                 if (userData) {
                     this.profile = Profile.fromJSON(userData)
@@ -47,7 +46,6 @@ export const useSettingsStore = defineStore('settings', {
 
                 try {
                     const settingsData = await api.getUserSettings(userId)
-                    console.log('User settings loaded:', settingsData)
                     
                     if (settingsData) {
                         this.userSettings = UserSettings.fromJSON(settingsData)

@@ -24,13 +24,9 @@ export class SettingsApiService extends BaseEndpoint {
 
     async getUserSettings(userId) {
         try {
-            console.log('Fetching user settings for:', userId)
-
             const allSettings = await this.userSettingsEndpoint.getAll()
-            console.log('All settings retrieved:', allSettings)
 
             const userSettings = (Array.isArray(allSettings) ? allSettings : []).find(settings => settings.user_id === userId || settings.userId === userId)
-            console.log('Found user settings:', userSettings)
 
             return userSettings || null
         } catch (error) {
