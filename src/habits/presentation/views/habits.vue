@@ -64,7 +64,7 @@
 import { onMounted } from 'vue'
 import Layout from '../../../shared/presentation/components/layout.vue'
 import { useHabitsStore } from '../../application/habits.store.js'
-import { useSettingsStore } from '@/settings/application/settings.store'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import HabitTabs from '../components/HabitTabs.vue'
 import AiStressAlert from '../components/AiStressAlert.vue'
 import DailyProgress from '../components/DailyProgress.vue'
@@ -74,13 +74,9 @@ import HabitList from '../components/HabitList.vue'
 import HabitHistoryPanel from '../components/HabitHistoryPanel.vue'
 
 const store = useHabitsStore()
-const settingsStore = useSettingsStore()
+const authStore = useAuthStore()
 
 onMounted(async () => {
-  if (!settingsStore.currentUserId) {
-    await settingsStore.fetchProfile('u1')
-  }
-
   await store.loadHabits()
 })
 </script>

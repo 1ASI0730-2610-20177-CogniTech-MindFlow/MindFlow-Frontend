@@ -78,14 +78,19 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useSubscriptionStore } from '../../application/subscription.store'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import Layout from '@/shared/presentation/components/layout.vue'
 import PaymentHistory from '../components/payment-history.vue'
 
 const store = useSubscriptionStore()
+const authStore = useAuthStore()
 
 onMounted(() => {
-  store.fetchSubscription('u1')
-  store.fetchPaymentHistory('u1')
+  const userId = authStore.currentUserId
+  if (userId) {
+    store.fetchSubscription(userId)
+    store.fetchPaymentHistory(userId)
+  }
 })
 </script>
 

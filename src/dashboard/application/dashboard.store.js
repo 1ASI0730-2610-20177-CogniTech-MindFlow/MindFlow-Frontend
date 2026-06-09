@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { dashboardApi } from '../infrastructure/dashboard.endpoint'
-import { useSettingsStore } from '@/settings/application/settings.store'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import { fetchDashboardAggregatedData } from './dashboard.service'
 
 export const useDashboardStore = defineStore('dashboard', {
@@ -18,17 +18,10 @@ export const useDashboardStore = defineStore('dashboard', {
     actions: {
         async fetchDashboardData() {
             this.isLoading = true;
-            const settingsStore = useSettingsStore();
 
             try {
-                let userId = settingsStore.currentUserId;
-
-                if (!userId) {
-                    await settingsStore.fetchProfile('u1');
-                    userId = settingsStore.currentUserId || 'u1';
-                }
-
-                const data = await fetchDashboardAggregatedData(userId);
+                const authStore = useAuthStore();
+                const userId = authStore.currentUserId;
                 this.weeklySummary = data.weeklySummary;
                 this.habits = data.habits;
                 this.recentEntries = data.recentEntries;

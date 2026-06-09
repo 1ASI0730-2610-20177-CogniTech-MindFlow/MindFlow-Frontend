@@ -259,11 +259,13 @@ import { onMounted, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSettingsStore } from '../../application/settings.store'
 import { SupportTicketsApi } from '../../infrastructure/support-tickets-api'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import Layout from '@/shared/presentation/components/layout.vue'
 import { useFocusTrap } from '@/shared/presentation/composables/useFocusTrap'
 
 const router = useRouter()
 const store = useSettingsStore()
+const authStore = useAuthStore()
 const supportApi = new SupportTicketsApi()
 
 const showDeleteConfirm = ref(false)
@@ -299,7 +301,7 @@ async function submitTicket() {
   ticketSubmitted.value = true
   try {
     await supportApi.create({
-      userId: store.currentUserId || 'u1',
+      userId: authStore.currentUserId,
       subject: ticketSubject.value,
       message: ticketMessage.value,
       ticketNumber: ticketNumber.value,
@@ -347,7 +349,10 @@ useFocusTrap(ticketModalRef, showTicketForm)
 useFocusTrap(faqModalRef, showFaq)
 
 onMounted(async () => {
-  await store.fetchProfile('u1')
+  const userId = authStore.currentUserId
+  if (userId) {
+    await store.fetchProfile(userId)
+  }
 })
 </script>
 
