@@ -52,9 +52,28 @@
         @dismiss="notifStore.dismissNotification"
       />
 
-      <div class="avatar" :class="{ loading: !store.profile }">
-        <span class="avatar-ring"></span>
-        <span class="avatar-letter">{{ avatarInitial }}</span>
+      <div class="avatar-wrapper" ref="avatarWrapper">
+        <div class="avatar" :class="{ loading: !store.profile }" @click="toggleAvatarMenu">
+          <span class="avatar-ring"></span>
+          <span class="avatar-letter">{{ avatarInitial }}</span>
+        </div>
+        <Transition name="dropdown">
+          <div v-if="isAvatarOpen" class="avatar-dropdown">
+            <div class="dropdown-user">
+              <span class="dropdown-user-name">{{ store.profile?.name || userName || 'User' }}</span>
+              <span class="dropdown-user-email">{{ store.profile?.email || '' }}</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <router-link to="/settings" class="dropdown-item" @click="isAvatarOpen = false">
+              <i class="pi pi-cog"></i>
+              <span>{{ $t('menu.settings') }}</span>
+            </router-link>
+            <button class="dropdown-item dropdown-item-danger" @click="handleLogout">
+              <i class="pi pi-sign-out"></i>
+              <span>{{ $t('auth.logout') }}</span>
+            </button>
+          </div>
+        </Transition>
       </div>
     </div>
   </header>
@@ -67,20 +86,38 @@ import LanguageSwitcher from './language-switcher.vue'
 import NotificationBell from '@/notifications/presentation/components/notification-bell.vue'
 import { useSettingsStore } from '@/settings/application/settings.store.js'
 import { useNotificationsStore } from '@/notifications/application/notifications.store'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
 const router = useRouter()
 const store = useSettingsStore()
+const authStore = useAuthStore()
 const notifStore = useNotificationsStore()
 const i18n = useI18n()
 const { t } = i18n
 
+const avatarWrapper = ref(null)
+const isAvatarOpen = ref(false)
+
+const userName = computed(() => authStore.userName)
+
 const avatarInitial = computed(() => {
   if (store.profile?.initial) return store.profile.initial
+  if (authStore.userInitial) return authStore.userInitial
   const name = store.profile?.name || 'U'
   return name.charAt(0).toUpperCase()
 })
+
+function toggleAvatarMenu() {
+  isAvatarOpen.value = !isAvatarOpen.value
+}
+
+async function handleLogout() {
+  isAvatarOpen.value = false
+  await authStore.logout()
+  router.push('/login')
+}
 
 const currentTitle = computed(() => {
   if (route.name) {
@@ -130,10 +167,13 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 8
 }
 
-// Click outside to close search
+// Click outside to close search and avatar dropdown
 const handleClickOutside = (event) => {
   if (searchContainer.value && !searchContainer.value.contains(event.target)) {
     isSearchOpen.value = false
+  }
+  if (avatarWrapper.value && !avatarWrapper.value.contains(event.target)) {
+    isAvatarOpen.value = false
   }
 }
 
@@ -455,6 +495,109 @@ onUnmounted(() => {
 
 .avatar:active {
   transform: translateY(-1px) scale(1);
+}
+
+.avatar-wrapper {
+  position: relative;
+}
+
+.avatar-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.dropdown-user {
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dropdown-user-email {
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-primary);
+}
+
+.dropdown-item i {
+  font-size: 14px;
+  color: var(--text-secondary);
+  width: 16px;
+  text-align: center;
+}
+
+.dropdown-item-danger {
+  color: var(--accent-danger, #ef4444);
+}
+
+.dropdown-item-danger i {
+  color: var(--accent-danger, #ef4444);
+}
+
+.dropdown-item-danger:hover {
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.dropdown-enter-active {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdown-leave-active {
+  transition: all 0.15s ease;
+}
+
+.dropdown-enter-from {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.96);
+}
+
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-4px) scale(0.97);
 }
 
 @media (max-width: 768px) {
