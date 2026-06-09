@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { AuthAPI } from '../infrastructure/auth-api.js'
+import { AuthSession } from '../domain/model/auth-session.entity.js'
 import { SessionManager } from '../infrastructure/session-manager.js'
-import { useSettingsStore } from '@/settings/application/settings.store.js'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -95,7 +95,7 @@ export const useAuthStore = defineStore('auth', {
             try {
                 const user = await AuthAPI.getMe()
                 this.user = user
-                this.session = { token: saved.token, refreshToken: saved.refreshToken, userId: saved.userId }
+                this.session = new AuthSession({ token: saved.token, refreshToken: saved.refreshToken, userId: saved.userId })
                 return true
             } catch {
                 SessionManager.clear()

@@ -5,6 +5,72 @@
   "profile": {
     "user": "User"
   },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Access your wellness space",
+      "email": "Email Address",
+      "emailPlaceholder": "your email",
+      "password": "Password",
+      "passwordPlaceholder": "Your password",
+      "button": "Sign In",
+      "loading": "Signing in...",
+      "forgotPassword": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Create one",
+      "error": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email",
+        "passwordRequired": "Password is required",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "invalid": "Invalid credentials. Please try again."
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Start your wellness journey",
+      "name": "Full Name",
+      "namePlaceholder": "Your name",
+      "email": "Email Address",
+      "emailPlaceholder": "your email",
+      "password": "Password",
+      "passwordPlaceholder": "Minimum 6 characters",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "button": "Create Account",
+      "loading": "Creating account...",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "error": {
+        "nameRequired": "Name is required",
+        "nameTooShort": "Name must be at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email",
+        "passwordRequired": "Password is required",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "passwordUppercase": "Must contain at least one uppercase letter",
+        "passwordNumber": "Must contain at least one number",
+        "confirmRequired": "Please confirm your password",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "generic": "Error creating account. Please try again."
+      }
+    },
+    "forgotPassword": {
+      "title": "Recover Password",
+      "subtitle": "Enter your email and we'll send you instructions",
+      "email": "Email Address",
+      "emailPlaceholder": "your email",
+      "button": "Send Instructions",
+      "sending": "Sending...",
+      "sent": "If the email exists in our records, you'll receive instructions to reset your password.",
+      "backToLogin": "Back to Sign In",
+      "error": {
+        "generic": "Error sending instructions. Please try again."
+      }
+    },
+    "logout": "Sign Out",
+    "sessionExpired": "Your session has expired. Please sign in again."
+  },
   "menu": {
     "dashboard": "Dashboard",
     "journal": "Journal",

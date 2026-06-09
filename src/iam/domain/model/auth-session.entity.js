@@ -35,7 +35,7 @@ export class AuthSession {
         return {
             token: this.token,
             refresh_token: this.refreshToken,
-            expires_at: this.expiresAt?.toISO() || this.expiresAt,
+            expires_at: this.expiresAt?.toISOString() || this.expiresAt,
             user_id: this.userId
         }
     }
