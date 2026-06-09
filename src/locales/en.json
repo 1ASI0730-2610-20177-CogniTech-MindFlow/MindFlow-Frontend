@@ -466,6 +466,9 @@
   },
   "routes": {
     "home": "Home - MindFlow",
+    "login": "Sign In - MindFlow",
+    "register": "Create Account - MindFlow",
+    "forgotPassword": "Recover Password - MindFlow",
     "dashboard": "Dashboard - MindFlow",
     "analytics": "Analytics - MindFlow",
     "habits": "Habits - MindFlow",

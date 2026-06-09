@@ -472,6 +472,9 @@
   },
   "routes": {
     "home": "Inicio - MindFlow",
+    "login": "Iniciar Sesión - MindFlow",
+    "register": "Crear Cuenta - MindFlow",
+    "forgotPassword": "Recuperar Contraseña - MindFlow",
     "dashboard": "Dashboard - MindFlow",
     "analytics": "Estadísticas - MindFlow",
     "habits": "Hábitos - MindFlow",
