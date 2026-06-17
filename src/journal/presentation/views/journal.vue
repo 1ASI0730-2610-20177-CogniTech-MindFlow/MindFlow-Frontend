@@ -49,6 +49,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import Layout from '../../../shared/presentation/components/layout.vue'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import JournalCalendar from '../components/JournalCalendar.vue'
 import JournalFilters from '../components/JournalFilters.vue'
 import JournalEntryCard from '../components/JournalEntryCard.vue'
@@ -57,6 +58,7 @@ import { useJournalStore } from '@/journal/application/journal.store'
 import { JournalMediaAPI } from '@/journal/infrastructure/journal-api'
 
 const journalStore = useJournalStore()
+const authStore = useAuthStore()
 const isComposerOpen = ref(false)
 const isSaving = ref(false)
 
@@ -82,7 +84,7 @@ const handleCreateEntry = async (entryData) => {
       sentiment: entryData.sentiment,
       content: entryData.content,
       hasPreview: entryData.hasPreview,
-      userId: 'u1'
+      userId: authStore.currentUserId
     })
 
     if (entryData.files?.length && savedEntry?.id) {
