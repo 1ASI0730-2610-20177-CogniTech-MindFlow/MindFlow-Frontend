@@ -80,8 +80,13 @@ watch(selectedState, (value) => {
 })
 
 
+let searchTimeout = null
 watch(search, (value) => {
   journalStore.setSearchQuery(value)
+  clearTimeout(searchTimeout)
+  searchTimeout = setTimeout(() => {
+    journalStore.fetchEntries(value.trim())
+  }, 400)
 })
 </script>
 

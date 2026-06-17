@@ -55,7 +55,7 @@ import JournalFilters from '../components/JournalFilters.vue'
 import JournalEntryCard from '../components/JournalEntryCard.vue'
 import JournalComposer from '../components/JournalComposer.vue'
 import { useJournalStore } from '@/journal/application/journal.store'
-import { JournalMediaAPI } from '@/journal/infrastructure/journal-api'
+import { JournalAPI } from '@/journal/infrastructure/journal-api'
 
 const journalStore = useJournalStore()
 const authStore = useAuthStore()
@@ -90,11 +90,7 @@ const handleCreateEntry = async (entryData) => {
     if (entryData.files?.length && savedEntry?.id) {
       await Promise.all(
         entryData.files.map(file =>
-          JournalMediaAPI.create({
-            entryId: savedEntry.id,
-            url: file.url,
-            type: file.type
-          })
+          JournalAPI.uploadMedia(savedEntry.id, file.file)
         )
       )
       await journalStore.fetchEntries()

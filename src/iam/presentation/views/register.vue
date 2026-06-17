@@ -6,6 +6,7 @@
       :is-loading="store.isLoading"
       :server-error="store.error"
       @register="handleRegister"
+      @google-login="handleGoogleLogin"
       @clear-error="store.clearError()"
     />
   </AuthLayout>
@@ -22,6 +23,13 @@ const router = useRouter()
 
 async function handleRegister(data) {
   const result = await store.register(data)
+  if (result.success) {
+    router.push('/dashboard')
+  }
+}
+
+async function handleGoogleLogin(credential) {
+  const result = await store.googleLogin(credential)
   if (result.success) {
     router.push('/dashboard')
   }

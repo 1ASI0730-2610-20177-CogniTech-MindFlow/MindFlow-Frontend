@@ -1,19 +1,25 @@
-import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+import apiClient from '@/shared/infrastructure/base-api'
 
-export class DashboardEndpoint extends BaseEndpoint {
-    constructor() {
-        super('dashboard')
-    }
-
+export class DashboardEndpoint {
     async processJournalEntry(text, tag) {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    success: true,
-                    aiFeedback: "MindFlow AI: Noto algo de tensión en tus palabras hoy. Es completamente válido sentirse abrumado a veces. Recuerda que está bien tomar una pausa. ¿Te gustaría intentar un ejercicio rápido de respiración?"
-                })
-            }, 1500)
+        const response = await apiClient.post('/journal/entries', {
+            date: new Date().toISOString().slice(0, 10),
+            title: text.slice(0, 50),
+            content: text,
+            sentiment: '',
+            category: tag || 'Personal'
         })
+        const entry = response.data
+        const aiResponse = entry.ai_response || entry.aiResponse || null
+
+        if (entry.id) {
+            apiClient.delete(`/journal/entries/${entry.id}`).catch(() => {})
+        }
+
+        return {
+            success: true,
+            aiFeedback: aiResponse
+        }
     }
 }
 

@@ -44,11 +44,17 @@
             </div>
           </div>
 
-          <div class="panel-reveal delay-5 deep-shadow-panel theme-transition">
-            <MoodTrendChart
-                :chartData="analyticsStore.trendData"
-                :chartOptions="analyticsStore.trendOptions"
-            />
+          <div class="asymmetric-grid">
+            <div class="panel-reveal delay-5 grid-main deep-shadow-panel theme-transition">
+              <MoodTrendChart
+                  :chartData="analyticsStore.trendData"
+                  :chartOptions="analyticsStore.trendOptions"
+              />
+            </div>
+
+            <div class="panel-reveal delay-5 grid-sidebar">
+              <MoodCalendar />
+            </div>
           </div>
 
           <div class="panel-reveal delay-6 cta-offset">
@@ -70,6 +76,7 @@ import KpiCards from '../components/kpi-cards.vue'
 import MoodFluctuationChart from '../components/mood-fluctuation-chart.vue'
 import WordCloud from '../components/word-cloud.vue'
 import MoodTrendChart from '../components/mood-trend-chart.vue'
+import MoodCalendar from '../components/mood-calendar.vue'
 import ExportBanner from '../components/export-banner.vue'
 
 const analyticsStore = useAnalyticsStore()

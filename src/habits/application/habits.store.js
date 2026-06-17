@@ -3,6 +3,8 @@ import { Habit, HabitFrequency, HabitStatus } from '../domain/model/habit.entity
 import { HabitCompletionLog, buildWeeklySummaries } from '../domain/model/habit-history.entity.js'
 import { HabitsAPI } from '../infrastructure/habits-api.js'
 import { HabitsHistoryAPI } from '../infrastructure/habits-history-api.js'
+import { WellnessAPI } from '../infrastructure/wellness-api.js'
+import { SuggestionsAPI } from '../infrastructure/suggestions-api.js'
 import { useSettingsStore } from '@/settings/application/settings.store.js'
 
 function todayISO() {
@@ -34,7 +36,13 @@ export const useHabitsStore = defineStore('habits', {
         activeTab: 'routines',
         searchQuery: '',
         statusFilter: 'all',
-        aiStressDetected: true,
+        aiStressDetected: false,
+        stressAdvice: '',
+        stressPausedHabits: [],
+        stressLevel: null,
+        stressScore: 0,
+        aiSuggestions: [],
+        suggestionsLoaded: false,
         nextId: 1
     }),
 
@@ -182,6 +190,55 @@ export const useHabitsStore = defineStore('habits', {
 
             await this.persistHabit(habit)
             await this.recordCompletion(habit, habit.isCompleted())
+        },
+
+        async checkStress() {
+            try {
+                const result = await WellnessAPI.stressCheck()
+                const level = result.stress_level || result.stressLevel
+                this.stressAdvice = result.advice || ''
+                this.stressPausedHabits = result.paused_habits || result.pausedHabits || []
+                this.stressLevel = level
+                this.stressScore = result.score || 0
+
+                if (level === 'high') {
+                    this.aiStressDetected = true
+                    this.stressPausedHabits.forEach((name) => {
+                        const habit = this.habits.find(h => h.name === name)
+                        if (habit) {
+                            habit.status = HabitStatus.PAUSED_BY_AI
+                            habit.pausedByAi = true
+                        }
+                    })
+                } else {
+                    this.aiStressDetected = false
+                }
+                return result
+            } catch (error) {
+                console.error('Error checking stress:', error)
+                return null
+            }
+        },
+
+        async loadSuggestions() {
+            try {
+                const data = await SuggestionsAPI.getSuggestions()
+                this.aiSuggestions = data.suggestions || data || []
+                this.suggestionsLoaded = true
+            } catch (error) {
+                console.error('Error loading suggestions:', error)
+                this.aiSuggestions = []
+                this.suggestionsLoaded = true
+            }
+        },
+
+        async adoptSuggestion(suggestion) {
+            await this.createHabit({
+                name: suggestion.name,
+                category: suggestion.category,
+                frequency: suggestion.frequency
+            })
+            this.aiSuggestions = this.aiSuggestions.filter(s => s.name !== suggestion.name)
         }
     }
 })

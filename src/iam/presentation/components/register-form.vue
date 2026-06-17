@@ -68,6 +68,8 @@
       </template>
     </button>
 
+    <GoogleSignInButton @credential="(c) => $emit('googleLogin', c)" />
+
     <p class="form-footer">
       {{ $t('auth.register.haveAccount') }}
       <router-link to="/login" class="form-link">{{ $t('auth.register.loginLink') }}</router-link>
@@ -78,8 +80,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { Registration } from '@/iam/domain/model/registration.entity.js'
+import GoogleSignInButton from './google-sign-in-button.vue'
 
-const emit = defineEmits(['register', 'clearError'])
+const emit = defineEmits(['register', 'clearError', 'googleLogin'])
 
 const name = ref('')
 const email = ref('')

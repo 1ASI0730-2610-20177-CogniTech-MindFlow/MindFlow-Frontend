@@ -7,6 +7,7 @@ export class JournalEntry {
         content,
         sentiment,
         category,
+        aiResponse = null,
         hasPreview,
         createdAt,
         updatedAt,
@@ -21,6 +22,7 @@ export class JournalEntry {
         this.content = content
         this.sentiment = sentiment
         this.category = category
+        this.aiResponse = aiResponse
         this.hasPreview = hasPreview || false
         this.createdAt = createdAt || null
         this.updatedAt = updatedAt || null
@@ -39,12 +41,13 @@ export class JournalEntry {
     static fromJSON(data) {
         return new JournalEntry({
             id: data.id,
-            userId: data.user_id,
+            userId: data.userId ?? data.user_id,
             date: data.date,
             title: data.title,
             content: data.content,
             sentiment: data.sentiment || 'neutral',
             category: data.category || 'Sin categoría',
+            aiResponse: data.ai_response ?? data.aiResponse ?? null,
             hasPreview: data.hasPreview || false,
             createdAt: data.created_at || data.createdAt || null,
             updatedAt: data.updated_at || data.updatedAt || null,
@@ -56,14 +59,11 @@ export class JournalEntry {
 
     toJSON() {
         return {
-            id: this.id,
-            user_id: this.userId,
             date: this.date,
             title: this.title,
             content: this.content,
             sentiment: this.sentiment,
-            category: this.category,
-            hasPreview: this.hasPreview
+            category: this.category
         }
     }
 }

@@ -9,6 +9,75 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/journal/entries': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/journal/tags': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/journal/entry-tags': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/journal/media': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/habits': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/habit-logs': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/analyticsCache': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/wordCloud': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/moodCalendar': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/wellness': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/notifications': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      },
+      '/subscriptions': {
+        target: 'https://mindflow-backend-mlbg.onrender.com',
+        changeOrigin: true,
+        secure: true
+      }
+    }
+  },
   build: {
     rollupOptions: {
       output: {

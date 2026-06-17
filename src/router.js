@@ -27,6 +27,11 @@ const routes = [
     component: () => import('@/iam/presentation/views/forgot-password.vue'),
     meta: { titleKey: 'routes.forgotPassword', requiresAuth: false }
   },
+  {
+    path: '/reset-password',
+    component: () => import('@/iam/presentation/views/reset-password.vue'),
+    meta: { titleKey: 'routes.resetPassword', requiresAuth: false }
+  },
 
   {
     path: '/dashboard',
@@ -54,6 +59,16 @@ const routes = [
     meta: { titleKey: 'routes.subscription', requiresAuth: true }
   },
   {
+    path: '/subscription/success',
+    component: () => import('@/subscription/presentation/views/subscription-result.vue'),
+    meta: { titleKey: 'routes.subscription', requiresAuth: true }
+  },
+  {
+    path: '/subscription/cancel',
+    component: () => import('@/subscription/presentation/views/subscription-result.vue'),
+    meta: { titleKey: 'routes.subscription', requiresAuth: true }
+  },
+  {
     path: '/settings',
     component: () => import('@/settings/presentation/views/settings.vue'),
     meta: { titleKey: 'routes.settings', requiresAuth: true }
@@ -71,7 +86,7 @@ const router = createRouter({
   routes
 })
 
-const publicPaths = ['/', '/login', '/register', '/forgot-password', '/forgot-password/']
+const publicPaths = ['/', '/login', '/register', '/forgot-password', '/forgot-password/', '/reset-password']
 
 router.beforeEach((to, from) => {
   const isAuthenticated = SessionManager.isAuthenticated()

@@ -1,14 +1,14 @@
 export class Subscription {
-    constructor({ id, user_id, type, status, start_date, end_date }) {
-        this.id = id;
-        this.userId = user_id;
-        this.type = type || 'free';
-        this.status = status || 'inactive';
-        this.startDate = start_date ? new Date(start_date) : null;
-        this.endDate = end_date ? new Date(end_date) : null;
+    constructor(data = {}) {
+        this.id = data.id;
+        this.userId = data.user_id ?? data.userId;
+        this.plan = data.plan ?? data.type ?? 'free';
+        this.status = data.status || 'inactive';
+        this.isPremium = data.is_premium ?? data.isPremium ?? false;
+        this.expiresAt = data.expires_at ?? data.expiresAt ?? null;
     }
-    
+
     get isPremiumActive() {
-        return this.status === 'active' && this.type.includes('premium');
+        return this.status === 'active' && this.plan === 'premium';
     }
 }

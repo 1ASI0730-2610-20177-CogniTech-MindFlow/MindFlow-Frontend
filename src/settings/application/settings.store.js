@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
-import { SettingsApiService } from '../infrastructure/settings-api'
+import { SettingsAPI } from '../infrastructure/settings-api'
 import { Profile } from '../domain/model/profile.entity'
 import { UserSettings } from '../domain/model/user-settings.entity'
-
-const api = new SettingsApiService()
+import { SessionManager } from '@/iam/infrastructure/session-manager'
 
 export const useSettingsStore = defineStore('settings', {
     state: () => ({
@@ -38,31 +37,28 @@ export const useSettingsStore = defineStore('settings', {
             this.currentUserId = userId
 
             try {
-                const userData = await api.getByUserId(userId)
-                
-                if (userData) {
-                    this.profile = Profile.fromJSON(userData)
-                }
+                const email = SessionManager.getUserEmail()
+                const name = SessionManager.getUserName()
+                this.profile = Profile.fromJSON({
+                    id: userId,
+                    email: email,
+                    name: name
+                })
 
                 try {
-                    const settingsData = await api.getUserSettings(userId)
-                    
-                    if (settingsData) {
-                        this.userSettings = UserSettings.fromJSON(settingsData)
-                    } else {
-                        this.createDefaultUserSettings(userId)
+                    const pinStatus = await SettingsAPI.getPinStatus()
+                    this.createDefaultUserSettings(userId)
+                    if (this.userSettings) {
+                        this.userSettings.pinLockEnabled = pinStatus.has_pin || false
                     }
                 } catch (settingsError) {
-                    console.warn('Could not load user settings, creating defaults:', settingsError)
+                    console.warn('Could not load PIN status, using defaults:', settingsError)
                     this.createDefaultUserSettings(userId)
                 }
 
                 this.initDarkMode()
             } catch (error) {
                 console.error('Error al cargar perfil:', error)
-                if (!this.isLoading) {
-                    this.isLoading = false
-                }
             } finally {
                 this.isLoading = false
             }
@@ -88,17 +84,13 @@ export const useSettingsStore = defineStore('settings', {
             }
 
             try {
-                await api.update(this.profile.id, {
+                const updated = await SettingsAPI.updateProfile({
                     name: this.profile.name,
-                    email: this.profile.email,
-                    occupation: this.profile.occupation,
-                    is_premium: this.profile.isPremium,
-                    timezone: this.profile.timezone,
-                    dark_mode_enabled: this.profile.darkModeEnabled,
-                    updated_at: new Date().toISOString()
+                    occupation: this.profile.occupation
                 })
-
-                console.log('Profile saved successfully')
+                this.profile = Profile.fromJSON(updated)
+                SessionManager.setUserName(updated.name)
+                SessionManager.setUserEmail(updated.email)
             } catch (error) {
                 console.error('Error al guardar perfil:', error)
             }
@@ -111,19 +103,12 @@ export const useSettingsStore = defineStore('settings', {
             }
 
             try {
-                if (!this.userSettings.isValidReminderTime()) {
-                    console.error('Formato de hora inválido (debe ser HH:mm)')
-                    return
+                if (this.userSettings.pinLockEnabled) {
+                    const status = await SettingsAPI.getPinStatus()
+                    if (!status.has_pin) {
+                        console.warn('PIN lock enabled but no PIN set')
+                    }
                 }
-
-                await api.updateUserSettings(this.userSettings.id, {
-                    pin_lock_enabled: this.userSettings.pinLockEnabled,
-                    habit_reminders_enabled: this.userSettings.habitRemindersEnabled,
-                    reminder_time: this.userSettings.reminderTime,
-                    language: this.userSettings.language
-                })
-
-                console.log('Settings saved successfully')
             } catch (error) {
                 console.error('Error al guardar configuraciones:', error)
             }
@@ -144,10 +129,6 @@ export const useSettingsStore = defineStore('settings', {
             }
 
             localStorage.setItem('mindflow-theme', this.darkMode ? 'dark' : 'light')
-
-            if (this.profile) {
-                this.updateProfile({ silent: true })
-            }
         },
 
         toggleDarkMode() {
@@ -187,24 +168,28 @@ export const useSettingsStore = defineStore('settings', {
             localStorage.setItem('mindflow-theme', preferDarkMode ? 'dark' : 'light')
         },
 
-        setPinLockEnabled(enabled) {
+        async setPinLockEnabled(enabled) {
             if (this.userSettings) {
                 this.userSettings.pinLockEnabled = enabled
-                this.updateUserSettings({ silent: true })
+                if (!enabled) {
+                    try {
+                        await SettingsAPI.removePin()
+                    } catch (error) {
+                        console.error('Error removing PIN:', error)
+                    }
+                }
             }
         },
 
         setHabitRemindersEnabled(enabled) {
             if (this.userSettings) {
                 this.userSettings.habitRemindersEnabled = enabled
-                this.updateUserSettings({ silent: true })
             }
         },
 
         setReminderTime(time) {
             if (this.userSettings) {
                 this.userSettings.reminderTime = time
-                this.updateUserSettings({ silent: true })
             }
         },
 
@@ -212,7 +197,6 @@ export const useSettingsStore = defineStore('settings', {
             if (this.userSettings) {
                 if (UserSettings.getSupportedLanguages().includes(languageCode)) {
                     this.userSettings.language = languageCode
-                    this.updateUserSettings({ silent: true })
                 } else {
                     console.error(`Idioma no soportado: ${languageCode}`)
                 }
@@ -222,7 +206,6 @@ export const useSettingsStore = defineStore('settings', {
         setTimezone(timezone) {
             if (this.profile) {
                 this.profile.timezone = timezone
-                this.updateProfile({ silent: true })
             }
         },
 
@@ -230,10 +213,10 @@ export const useSettingsStore = defineStore('settings', {
             if (!this.profile) return
 
             try {
-                await api.delete(this.profile.id)
+                await SettingsAPI.deleteAccount()
 
                 localStorage.removeItem('mindflow-theme')
-                localStorage.removeItem('auth_token')
+                SessionManager.clear()
 
                 this.profile = null
                 this.userSettings = null
@@ -254,8 +237,6 @@ export const useSettingsStore = defineStore('settings', {
                 this.userSettings.habitRemindersEnabled = true
                 this.userSettings.reminderTime = '09:00'
                 this.userSettings.language = 'es'
-                this.updateUserSettings()
-                console.log('Settings reset to defaults')
             }
         }
     }

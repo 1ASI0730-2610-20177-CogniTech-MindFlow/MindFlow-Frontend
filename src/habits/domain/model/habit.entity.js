@@ -11,15 +11,18 @@ export const HabitFrequency = {
 }
 
 const FREQUENCY_FROM_DB = {
+    Daily: HabitFrequency.DAILY,
+    Weekly: HabitFrequency.WEEKLY,
+    Monthly: HabitFrequency.MONTHLY,
     daily: HabitFrequency.DAILY,
     weekly: HabitFrequency.WEEKLY,
     monthly: HabitFrequency.MONTHLY
 }
 
 const FREQUENCY_TO_DB = {
-    [HabitFrequency.DAILY]: 'daily',
-    [HabitFrequency.WEEKLY]: 'weekly',
-    [HabitFrequency.MONTHLY]: 'monthly'
+    [HabitFrequency.DAILY]: 'Daily',
+    [HabitFrequency.WEEKLY]: 'Weekly',
+    [HabitFrequency.MONTHLY]: 'Monthly'
 }
 
 export const HABIT_CATEGORY_OPTIONS = [
@@ -102,17 +105,13 @@ export class Habit {
 
     toJSON() {
         return {
-            id: this.id,
-            user_id: this.userId,
+            userId: this.userId,
             name: this.name,
             category: this.category,
             frequency: FREQUENCY_TO_DB[this.frequency] || this.frequency,
             streak: this.currentStreak,
             status: this.status,
-            pausedByAi: this.pausedByAi,
-            created_at: this.createdAt,
-            updated_at: this.updatedAt,
-            deleted_at: this.deletedAt
+            pausedByAi: this.pausedByAi
         }
     }
 

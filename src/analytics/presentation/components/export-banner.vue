@@ -5,15 +5,46 @@
       <p>{{ $t('analytics.components.export.desc') }}</p>
     </div>
     <div class="export-actions">
-      <button class="btn-outline">
+      <button class="btn-outline" @click="downloadPdf" :disabled="isDownloading">
         <span class="mono-text">PDF</span>
       </button>
-      <button class="btn-outline">
+      <button class="btn-outline" @click="downloadCsv" :disabled="isDownloading">
         <span class="mono-text">CSV</span>
       </button>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+import { ReportingAPI } from '@/shared/infrastructure/reporting-api'
+
+const isDownloading = ref(false)
+
+async function downloadPdf() {
+  isDownloading.value = true
+  try {
+    const blob = await ReportingAPI.downloadPdf()
+    ReportingAPI.triggerDownload(blob, 'mindflow-report.pdf')
+  } catch (error) {
+    console.error('Error downloading PDF:', error)
+  } finally {
+    isDownloading.value = false
+  }
+}
+
+async function downloadCsv() {
+  isDownloading.value = true
+  try {
+    const blob = await ReportingAPI.downloadCsv()
+    ReportingAPI.triggerDownload(blob, 'mindflow-entries.csv')
+  } catch (error) {
+    console.error('Error downloading CSV:', error)
+  } finally {
+    isDownloading.value = false
+  }
+}
+</script>
 
 <style scoped>
 .premium-card {

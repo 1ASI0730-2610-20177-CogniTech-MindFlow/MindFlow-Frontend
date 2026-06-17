@@ -1,14 +1,29 @@
-import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+import apiClient from '@/shared/infrastructure/base-api.js'
 
-export class AnalyticsEndpoint extends BaseEndpoint {
-    constructor() {
-        super('analyticsCache')
+export class AnalyticsEndpoint {
+    async getAll() {
+        try {
+            const response = await apiClient.get('/analyticsCache')
+            return response.data
+        } catch {
+            return []
+        }
     }
 
-    async getByUserId(userId) {
-        const results = await this.search({ user_id: userId })
-        if (!Array.isArray(results)) return []
-        return results.filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
+    async getByWeekStart(weekStart) {
+        try {
+            const response = await apiClient.get('/analyticsCache', { params: { weekStart } })
+            return response.data
+        } catch {
+            return []
+        }
+    }
+
+    async compute(weekStart) {
+        const response = await apiClient.post('/analyticsCache/compute', null, {
+            params: { weekStart }
+        })
+        return response.data
     }
 }
 

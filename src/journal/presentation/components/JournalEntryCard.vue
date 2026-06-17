@@ -47,6 +47,14 @@
       </div>
     </div>
 
+    <div v-if="entry.aiResponse" class="ai-response theme-transition">
+      <div class="ai-response-header">
+        <i class="pi pi-sparkles ai-icon"></i>
+        <span class="ai-label">MindFlow AI</span>
+      </div>
+      <p class="ai-text">{{ entry.aiResponse }}</p>
+    </div>
+
     <div v-if="entry.hasPreview && !entry.media?.length" class="preview theme-transition"></div>
   </article>
 </template>
@@ -226,6 +234,40 @@ const mediaIcon = (type) => {
   font-size: 12px;
   font-weight: 600;
   text-transform: capitalize;
+}
+
+.ai-response {
+  margin-top: 18px;
+  padding: 16px;
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  border-radius: 14px;
+}
+
+.ai-response-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ai-icon {
+  color: var(--accent-primary);
+  font-size: 14px;
+}
+
+.ai-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  letter-spacing: 0.02em;
+}
+
+.ai-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 .preview {

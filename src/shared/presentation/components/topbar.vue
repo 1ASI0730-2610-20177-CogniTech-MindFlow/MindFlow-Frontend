@@ -181,8 +181,6 @@ onMounted(() => {
   handleScroll()
   document.addEventListener('scroll', handleScroll, { passive: true })
   document.addEventListener('click', handleClickOutside)
-  const userId = authStore.currentUserId
-  notifStore.fetchNotifications(userId)
 })
 
 onUnmounted(() => {

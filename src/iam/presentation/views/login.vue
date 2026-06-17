@@ -6,6 +6,7 @@
       :is-loading="store.isLoading"
       :server-error="store.error"
       @login="handleLogin"
+      @google-login="handleGoogleLogin"
       @clear-error="store.clearError()"
     />
   </AuthLayout>
@@ -23,6 +24,14 @@ const route = useRoute()
 
 async function handleLogin(credentials) {
   const result = await store.login(credentials)
+  if (result.success) {
+    const target = route.query.redirect || store.returnUrl || '/dashboard'
+    router.push(target)
+  }
+}
+
+async function handleGoogleLogin(credential) {
+  const result = await store.googleLogin(credential)
   if (result.success) {
     const target = route.query.redirect || store.returnUrl || '/dashboard'
     router.push(target)

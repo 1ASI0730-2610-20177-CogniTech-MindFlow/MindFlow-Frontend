@@ -1,15 +1,18 @@
-import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+import apiClient from '@/shared/infrastructure/base-api.js'
 
-export class WordCloudEndpoint extends BaseEndpoint {
-    constructor() {
-        super('wordCloud')
+export class WordCloudEndpoint {
+    async getAll() {
+        try {
+            const response = await apiClient.get('/wordCloud')
+            return response.data
+        } catch {
+            return []
+        }
     }
 
-    async getByUserId(userId) {
-        const result = await this.search({ user_id: userId })
-        if (!Array.isArray(result)) return null
-        const filtered = result.filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
-        return filtered.length > 0 ? filtered[0] : null
+    async compute() {
+        const response = await apiClient.post('/wordCloud/compute')
+        return response.data
     }
 }
 

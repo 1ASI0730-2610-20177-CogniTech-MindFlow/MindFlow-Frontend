@@ -1,6 +1,10 @@
 <template>
   <div id="app" class="theme-transition">
-    <router-view />
+    <PinVerificationModal
+      v-if="requiresPinCheck"
+      @verified="pinVerified = true"
+    />
+    <router-view v-if="!requiresPinCheck || pinVerified" />
     <NotificationToast
       :notification="currentToast"
       :visible="showToast"
@@ -11,11 +15,16 @@
 </template>
 
 <script setup>
-import { computed, onMounted, watch } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSettingsStore } from '@/settings/application/settings.store'
 import { useHydrationReminder } from '@/shared/presentation/composables/useHydrationReminder'
+import { SessionManager } from '@/iam/infrastructure/session-manager'
 import NotificationToast from '@/notifications/presentation/components/notification-toast.vue'
+import PinVerificationModal from '@/iam/presentation/components/pin-verification-modal.vue'
+
+const pinVerified = ref(false)
+const requiresPinCheck = computed(() => SessionManager.isAuthenticated() && !pinVerified.value)
 
 const { t, locale } = useI18n()
 

@@ -37,6 +37,7 @@
           <label>
             <span>{{ $t('journal.composer.fields.sentiment') }}</span>
             <select v-model="form.sentiment" class="theme-transition">
+              <option value="">{{ $t('journal.composer.sentiments.auto') || 'Auto-detectar (IA)' }}</option>
               <option value="positive">{{ $t('journal.composer.sentiments.positive') }}</option>
               <option value="neutral">{{ $t('journal.composer.sentiments.neutral') }}</option>
               <option value="negative">{{ $t('journal.composer.sentiments.negative') }}</option>
@@ -60,7 +61,7 @@
             <input
               ref="fileInput"
               type="file"
-              accept="image/*"
+              accept="image/*,.pdf,.mp3,.wav,.ogg,.mp4,.webm"
               multiple
               class="file-input"
               @change="onFilesSelected"
@@ -115,7 +116,7 @@ const form = reactive({
   title: '',
   category: 'Reflexión Personal',
   date: props.initialDate || today,
-  sentiment: 'neutral',
+  sentiment: '',
   content: ''
 })
 
@@ -129,18 +130,22 @@ const canSubmit = computed(() => Boolean(form.title.trim() && form.content.trim(
 
 function onFilesSelected(event) {
   const files = Array.from(event.target.files || [])
-  files.forEach((file) => {
-    if (file.type.startsWith('image/')) {
+  files.forEach((rawFile) => {
+    const entry = {
+      name: rawFile.name,
+      type: rawFile.type.startsWith('image/') ? 'image' : rawFile.type.startsWith('audio/') ? 'audio' : rawFile.type.startsWith('video/') ? 'video' : 'document',
+      file: rawFile,
+      preview: null
+    }
+    if (rawFile.type.startsWith('image/')) {
       const reader = new FileReader()
       reader.onload = (e) => {
-        selectedFiles.value.push({
-          name: file.name,
-          type: 'image',
-          file: file,
-          preview: e.target.result
-        })
+        entry.preview = e.target.result
+        selectedFiles.value.push(entry)
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(rawFile)
+    } else {
+      selectedFiles.value.push(entry)
     }
   })
   event.target.value = ''
@@ -186,7 +191,8 @@ const submit = () => {
     files: selectedFiles.value.map(f => ({
       name: f.name,
       type: f.type,
-      url: f.preview
+      url: f.preview,
+      file: f.file
     }))
   })
 }

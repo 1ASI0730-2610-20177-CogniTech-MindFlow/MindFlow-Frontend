@@ -251,6 +251,33 @@
         </div>
       </div>
     </div>
+    <div v-if="showPinModal" class="modal-overlay" role="dialog" aria-modal="true" @click.self="showPinModal = false" @keydown.escape="showPinModal = false">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">{{ $t('settings.privacy.pinLock') }}</h3>
+          <button class="modal-close" @click="showPinModal = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label>PIN (4-6 digits)</label>
+            <input
+              type="password"
+              v-model="pinInput"
+              maxlength="6"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              class="input-transition theme-transition"
+              @keydown.enter="confirmSetPin"
+            />
+            <p v-if="pinError" style="color: var(--accent-danger); font-size: 12px; margin-top: 4px;">{{ pinError }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline hover-lift" @click="showPinModal = false">{{ $t('settings.dangerZone.cancel') }}</button>
+          <button class="btn btn-primary hover-lift" @click="confirmSetPin">{{ $t('settings.profile.saveChanges') }}</button>
+        </div>
+      </div>
+    </div>
   </Layout>
 </template>
 
@@ -297,26 +324,54 @@ function closeTicketForm() {
 }
 
 async function submitTicket() {
-  ticketNumber.value = 'MF-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase()
-  ticketSubmitted.value = true
   try {
-    await supportApi.create({
-      userId: authStore.currentUserId,
+    const result = await supportApi.create({
       subject: ticketSubject.value,
-      message: ticketMessage.value,
-      ticketNumber: ticketNumber.value,
-      status: 'open',
-      createdAt: new Date().toISOString()
+      message: ticketMessage.value
     })
+    ticketNumber.value = result.ticket_number || result.ticketNumber || '#00000'
+    ticketSubmitted.value = true
   } catch (e) {
     console.error('Error saving ticket:', e)
+    if (e.response) {
+      console.error('Response status:', e.response.status)
+      console.error('Response data:', e.response.data)
+    }
   }
 }
 
+const showPinModal = ref(false)
+const pinInput = ref('')
+const pinError = ref('')
+
 const pinLockModel = computed({
   get: () => !!store.userSettings?.pinLockEnabled,
-  set: (value) => store.setPinLockEnabled(value)
+  set: (value) => {
+    if (value) {
+      pinInput.value = ''
+      pinError.value = ''
+      showPinModal.value = true
+    } else {
+      store.setPinLockEnabled(false)
+    }
+  }
 })
+
+async function confirmSetPin() {
+  if (!/^\d{4,6}$/.test(pinInput.value)) {
+    pinError.value = 'PIN must be 4-6 digits'
+    return
+  }
+  try {
+    const { SettingsAPI } = await import('../../infrastructure/settings-api')
+    await SettingsAPI.setPin(pinInput.value)
+    store.setPinLockEnabled(true)
+    showPinModal.value = false
+  } catch (e) {
+    pinError.value = 'Error setting PIN'
+    console.error('Error setting PIN:', e)
+  }
+}
 
 const darkModeModel = computed({
   get: () => !!store.darkMode,

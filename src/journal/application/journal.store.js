@@ -14,10 +14,12 @@ export const useJournalStore = defineStore('journal', {
     }),
 
     actions: {
-        async fetchEntries() {
+        async fetchEntries(query = '') {
             this.isLoading = true
             try {
-                this.entries = await JournalAPI.getAll()
+                const params = {}
+                if (query) params.q = query
+                this.entries = await JournalAPI.getAll(params)
                 this.error = null
             } catch (error) {
                 this.error = error.message

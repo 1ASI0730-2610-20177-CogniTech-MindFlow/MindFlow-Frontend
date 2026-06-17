@@ -6,11 +6,11 @@
       <div class="dashboard-grid">
         <div class="main-column">
           <div class="widget animate-fade-in-up" style="animation-delay: 0s">
-            <MoodInput />
+            <MoodInput @open-chat="chatOpen = true" />
           </div>
 
           <div class="widget animate-fade-in-up" style="animation-delay: 0.12s">
-            <RecentEntries />
+            <RecentEntries @open-chat="chatOpen = true" />
           </div>
 
           <div class="widget animate-fade-in-up" style="animation-delay: 0.24s">
@@ -29,15 +29,34 @@
         </div>
       </div>
     </div>
+
+    <Teleport to="body">
+      <Transition name="chat-slide">
+        <div v-if="chatOpen" class="chat-overlay" @click.self="closeChat">
+          <div class="chat-panel">
+            <AiChat @close="closeChat" />
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </Layout>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
 import Layout from '@/shared/presentation/components/layout.vue'
+import { ref } from 'vue'
 import MoodInput from '../components/mood-input.vue'
 import RecentEntries from '../components/recent-entries.vue'
+import AiChat from '../components/ai-chat.vue'
 import WeeklySummaryWidget from '../components/weekly-summary-widget.vue'
+
+const chatOpen = ref(false)
+
+function closeChat() {
+  dashboardStore.saveCurrentConversation()
+  chatOpen.value = false
+}
 import QuickInterventions from '../components/quick-interventions.vue'
 import DailyHabits from '../components/daily-habits.vue'
 import { useDashboardStore } from '@/dashboard/application/dashboard.store'
@@ -133,5 +152,63 @@ onMounted(() => {
   .side-column {
     gap: 24px;
   }
+}
+</style>
+
+<style>
+.chat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.chat-panel {
+  width: 100%;
+  max-width: 700px;
+  height: 80vh;
+  max-height: 700px;
+}
+
+.chat-panel .chat-container {
+  height: 100%;
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+}
+
+.chat-slide-enter-active,
+.chat-slide-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.chat-slide-enter-active .chat-panel,
+.chat-slide-leave-active .chat-panel {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.chat-slide-enter-from {
+  opacity: 0;
+}
+
+.chat-slide-enter-from .chat-panel {
+  transform: translateY(40px) scale(0.95);
+  opacity: 0;
+}
+
+.chat-slide-leave-to {
+  opacity: 0;
+}
+
+.chat-slide-leave-to .chat-panel {
+  transform: translateY(20px) scale(0.98);
+  opacity: 0;
 }
 </style>

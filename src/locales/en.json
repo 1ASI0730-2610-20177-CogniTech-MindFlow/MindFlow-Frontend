@@ -68,8 +68,29 @@
         "generic": "Error sending instructions. Please try again."
       }
     },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Minimum 6 characters",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Repeat your new password",
+      "button": "Reset Password",
+      "sending": "Resetting...",
+      "success": "Your password has been reset successfully. You can now sign in with your new password.",
+      "backToLogin": "Go to Sign In"
+    },
+    "google": {
+      "or": "or continue with"
+    },
     "logout": "Sign Out",
     "sessionExpired": "Your session has expired. Please sign in again."
+  },
+  "pin": {
+    "title": "Enter your PIN",
+    "subtitle": "Enter your 4-digit code to access",
+    "error": "Incorrect PIN. Try again.",
+    "verifying": "Verifying..."
   },
   "menu": {
     "dashboard": "Dashboard",
@@ -140,6 +161,14 @@
         "f5Bold": "Priority Support:",
         "f5Text": " Technical issue resolution."
       }
+    },
+    "result": {
+      "successTitle": "Payment successful!",
+      "successDesc": "Your premium subscription has been activated. Enjoy all advanced features.",
+      "viewPlan": "View my plan",
+      "cancelTitle": "Payment cancelled",
+      "cancelDesc": "The payment process was cancelled. You can try again whenever you want.",
+      "backToPlans": "Back to plans"
     },
     "footer": "🔒 Payments encrypted and processed securely via Stripe.",
     "loading": "Loading plan information...",
@@ -229,6 +258,7 @@
     "title": "Your Emotional History",
     "subtitle": "Add a new entry whenever you want to revisit an important moment.",
     "newEntry": "New entry",
+    "noEntries": "No entries found with the selected filters",
     "composer": {
       "eyebrow": "New reflection",
       "title": "Add another journal entry",
@@ -257,6 +287,7 @@
         "family": "Family"
       },
       "sentiments": {
+        "auto": "Auto-detect (AI)",
         "positive": "Positive",
         "neutral": "Neutral",
         "negative": "Negative"
@@ -301,14 +332,37 @@
       "title": "AI Suggestions",
       "desc": "Coming soon: Recommended habits based on your emotional state and current routines."
     },
+    "suggestions": {
+      "poweredBy": "MindFlow AI Suggestions",
+      "subtitle": "Recommended habits based on your emotional state and current routines.",
+      "wellnessInsight": "Your wellness this week",
+      "stress": "Stress",
+      "adopt": "Adopt",
+      "allAdopted": "You've adopted all suggestions. Keep it up!",
+      "reasons": {
+        "breathingReason": "Reduces anxiety and improves focus during stressful moments.",
+        "walkReason": "Boosts mood and creativity. Great for clearing your mind.",
+        "journalingReason": "Processing emotions before sleep improves sleep quality.",
+        "stretchReason": "Activates your body and reduces accumulated muscle tension.",
+        "digitalReason": "Disconnecting reduces cognitive overload and stress.",
+        "gratitudeReason": "Practicing gratitude increases satisfaction and overall well-being.",
+        "hydrationReason": "Staying hydrated improves concentration and energy.",
+        "readingReason": "Stimulates the mind and helps disconnect before sleep.",
+        "yogaReason": "Combines movement and meditation for holistic well-being.",
+        "reviewReason": "Reflecting on your goals maintains motivation and direction.",
+        "napReason": "A short nap restores energy and reduces stress.",
+        "meditationReason": "Calms the mind and strengthens emotional resilience."
+      }
+    },
     "tabs": {
       "routines": "My Routines",
       "suggestions": "AI Suggestions",
       "history": "History"
     },
     "alerts": {
-      "stressTitle": "MindFlow AI",
-      "stressMessage": " detects higher than average stress levels. We have automatically paused your highly demanding cognitive tasks. Prioritize your well-being and rest today."
+      "stressTitle": "MindFlow AI: ",
+      "stressMessage": "Higher than average stress levels detected. We have automatically paused your highly demanding cognitive tasks. Prioritize your well-being and rest today.",
+      "pausedHabits": "Paused habits:"
     },
     "addForm": {
       "title": "Add New Habit",
@@ -361,9 +415,15 @@
       "peak": "Peak",
       "low": "Low"
     },
+    "chat": {
+      "welcomeTitle": "Hi, how are you feeling today?",
+      "welcomeDesc": "Write what you're thinking or feeling. MindFlow AI will analyze your emotions and give you personalized advice."
+    },
     "recentEntries": {
       "title": "Recent Conversations",
-      "viewAll": "View full conversation history"
+      "viewAll": "View full history",
+      "you": "You",
+      "empty": "No conversations yet. Write how you feel to start."
     },
     "dailyHabits": {
       "title": "Daily Habits",
@@ -378,6 +438,27 @@
       "microMeditationDesc": "3-minute guided meditation",
       "grounding": "5-4-3-2-1 Grounding",
       "groundingDesc": "Present-moment awareness exercise"
+    },
+    "interventions": {
+      "inhale": "Inhale",
+      "inhaleDesc": "Breathe in deeply through your nose for 4 seconds",
+      "hold": "Hold",
+      "holdDesc": "Hold the air in your lungs for 7 seconds",
+      "exhale": "Exhale",
+      "exhaleDesc": "Slowly release the air through your mouth for 8 seconds",
+      "round": "Round",
+      "see": "Sight",
+      "seeDesc": "Name 5 things you can see around you",
+      "touch": "Touch",
+      "touchDesc": "Identify 4 things you can touch right now",
+      "hear": "Hearing",
+      "hearDesc": "Listen to 3 different sounds around you",
+      "smell": "Smell",
+      "smellDesc": "Notice 2 distinct smells near you",
+      "taste": "Taste",
+      "tasteDesc": "Notice 1 taste in your mouth right now",
+      "next": "Next",
+      "complete": "Exercise completed"
     },
     "moodInput": {
       "title": "How are you feeling right now?",
@@ -411,6 +492,9 @@
       "entriesMonth": "ENTRIES THIS MONTH",
       "moodAverage": "AVERAGE MOOD",
       "maxHabitStreak": "LONGEST HABIT STREAK"
+    },
+    "moodCalendar": {
+      "title": "Mood Calendar"
     },
     "moods": {
       "positive": "Positive",
@@ -535,6 +619,7 @@
     "login": "Sign In - MindFlow",
     "register": "Create Account - MindFlow",
     "forgotPassword": "Recover Password - MindFlow",
+    "resetPassword": "Reset Password - MindFlow",
     "dashboard": "Dashboard - MindFlow",
     "analytics": "Analytics - MindFlow",
     "habits": "Habits - MindFlow",

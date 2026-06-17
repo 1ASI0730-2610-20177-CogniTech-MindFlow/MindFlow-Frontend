@@ -1,7 +1,7 @@
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 import { HabitCompletionLog } from '../domain/model/habit-history.entity.js'
 
-const HABIT_LOGS_URL = 'habitLogs'
+const HABIT_LOGS_URL = 'habit-logs'
 
 function mapHabitLog(data) {
     return HabitCompletionLog.fromJSON(data)
@@ -34,7 +34,7 @@ export class HabitsHistoryApiService extends BaseEndpoint {
 
     async getByHabitId(habitId) {
         try {
-            const data = await this.search({ habit_id: habitId })
+            const data = await this.search({ habitId })
             return Array.isArray(data) ? data.map(mapHabitLog) : []
         } catch (error) {
             console.error(`Error fetching habit logs for habit ${habitId}:`, error)

@@ -1,13 +1,14 @@
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint'
 import { JournalEntry } from '@/journal/domain/model/journal-entry.entity'
+import apiClient from '@/shared/infrastructure/base-api'
 
-const JOURNAL_ENTRIES_URL = 'journalEntries'
-const JOURNAL_ENTRY_TAGS_URL = 'journalEntryTags'
-const JOURNAL_TAGS_URL = 'tags'
-const JOURNAL_MEDIA_URL = 'media'
+const JOURNAL_ENTRIES_URL = 'journal/entries'
+const JOURNAL_ENTRY_TAGS_URL = 'journal/entry-tags'
+const JOURNAL_TAGS_URL = 'journal/tags'
+const JOURNAL_MEDIA_URL = 'journal/media'
 
 function mapJournalEntryTag(data) {
-    return { id: data.id, entryId: data.entry_id, tagId: data.tag_id }
+    return { id: data.id, entryId: data.entryId ?? data.entry_id, tagId: data.tagId ?? data.tag_id }
 }
 
 function mapJournalTag(data) {
@@ -15,11 +16,7 @@ function mapJournalTag(data) {
 }
 
 function mapJournalMedia(data) {
-    return { id: data.id, entryId: data.entry_id, url: data.url, type: data.type, createdAt: data.created_at || null }
-}
-
-function toJournalEntryTagJSON(relation) {
-    return { id: relation.id, entry_id: relation.entryId ?? relation.entry_id, tagId: relation.tagId ?? relation.tag_id }
+    return { id: data.id, entryId: data.entryId ?? data.entry_id, url: data.url, type: data.type, createdAt: data.createdAt ?? data.created_at ?? null }
 }
 
 function toArray(value) {
@@ -92,10 +89,10 @@ export class JournalApiService extends BaseEndpoint {
         })
     }
 
-    async getAll() {
+    async getAll(params = {}) {
         try {
-            const data = await super.getAll()
-            return await this.enrichEntries(data)
+            const data = await super.getAll(params)
+            return Array.isArray(data) ? data.map(e => JournalEntry.fromJSON(e)) : []
         } catch (error) {
             console.error('Error fetching journal entries:', error)
             return []
@@ -105,31 +102,17 @@ export class JournalApiService extends BaseEndpoint {
     async getById(id) {
         try {
             const data = await super.getById(id)
-            const [entry] = await this.enrichEntries([data])
-            return entry
+            return JournalEntry.fromJSON(data)
         } catch (error) {
             console.error(`Error fetching journal entry ${id}:`, error)
             throw error
         }
     }
 
-    async getByUserId(userId) {
-        try {
-            const data = await this.search({ user_id: userId })
-            const filtered = Array.isArray(data)
-                ? data.filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
-                : []
-            return await this.enrichEntries(filtered)
-        } catch (error) {
-            console.error(`Error fetching journal entries for user ${userId}:`, error)
-            return []
-        }
-    }
-
     async search(filters) {
         try {
             const data = await super.search(filters)
-            return await this.enrichEntries(data)
+            return Array.isArray(data) ? data.map(e => JournalEntry.fromJSON(e)) : []
         } catch (error) {
             console.error('Error searching journal entries:', error)
             return []
@@ -166,6 +149,17 @@ export class JournalApiService extends BaseEndpoint {
             throw error
         }
     }
+
+    async uploadMedia(entryId, file) {
+        const formData = new FormData()
+        formData.append('entryId', entryId)
+        formData.append('file', file)
+
+        const response = await apiClient.post('/journal/media/upload', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+        return response.data
+    }
 }
 
 export class JournalEntryTagsApiService extends BaseEndpoint {
@@ -185,7 +179,7 @@ export class JournalEntryTagsApiService extends BaseEndpoint {
 
     async getByEntryId(entryId) {
         try {
-            const data = await this.search({ entry_id: entryId })
+            const data = await this.search({ entryId })
             return Array.isArray(data) ? data.map(mapJournalEntryTag) : []
         } catch (error) {
             console.error(`Error fetching tags for journal entry ${entryId}:`, error)
@@ -195,22 +189,11 @@ export class JournalEntryTagsApiService extends BaseEndpoint {
 
     async save(relation) {
         try {
-            const payload = toJournalEntryTagJSON(relation)
+            const payload = { entryId: relation.entryId, tagId: relation.tagId }
             const response = await super.create(payload)
             return mapJournalEntryTag(response)
         } catch (error) {
             console.error('Error saving journal entry tag relation:', error)
-            throw error
-        }
-    }
-
-    async update(id, relation) {
-        try {
-            const payload = toJournalEntryTagJSON(relation)
-            const response = await super.update(id, payload)
-            return mapJournalEntryTag(response)
-        } catch (error) {
-            console.error(`Error updating journal entry tag relation ${id}:`, error)
             throw error
         }
     }
@@ -258,26 +241,11 @@ export class JournalMediaApiService extends BaseEndpoint {
 
     async getByEntryId(entryId) {
         try {
-            const data = await this.search({ entry_id: entryId })
+            const data = await this.search({ entryId })
             return Array.isArray(data) ? data.map(mapJournalMedia) : []
         } catch (error) {
             console.error(`Error fetching media for journal entry ${entryId}:`, error)
             return []
-        }
-    }
-
-    async create(mediaData) {
-        try {
-            const response = await super.create({
-                entry_id: mediaData.entryId ?? mediaData.entry_id,
-                url: mediaData.url,
-                type: mediaData.type,
-                created_at: new Date().toISOString()
-            })
-            return mapJournalMedia(response)
-        } catch (error) {
-            console.error('Error creating journal media:', error)
-            throw error
         }
     }
 }

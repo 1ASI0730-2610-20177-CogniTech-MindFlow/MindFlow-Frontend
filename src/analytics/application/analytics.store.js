@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { AnalyticsSummary, KpiData } from '../domain/model/analytics.model'
 import { analyticsApi } from '@/analytics/infrastructure/analytics.endpoint'
 import { wordCloudApi } from '@/analytics/infrastructure/word-cloud.endpoint'
+import { moodCalendarApi } from '@/analytics/infrastructure/mood-calendar.endpoint'
 import { useSettingsStore } from '@/settings/application/settings.store'
 
 function resolveCssVar(varName, fallback) {
@@ -115,19 +116,26 @@ function mapTrendData(record) {
     }
 }
 
+function parseWords(raw) {
+    if (Array.isArray(raw)) return raw
+    if (typeof raw === 'string') {
+        try { return JSON.parse(raw) } catch { return [] }
+    }
+    return []
+}
+
 function mapWordCloudWords(wordCloudRecord, legacyData) {
     let wordsToMap = [];
-    
+
     if (Array.isArray(wordCloudRecord) && wordCloudRecord.length > 0) {
-       if (wordCloudRecord[0] && Array.isArray(wordCloudRecord[0].words)) {
-           wordsToMap = wordCloudRecord[0].words;
+       if (wordCloudRecord[0] && wordCloudRecord[0].words) {
+           wordsToMap = parseWords(wordCloudRecord[0].words);
        } else {
            wordsToMap = wordCloudRecord;
        }
-    } 
-    // Check if it's an object with a 'words' property
-    else if (wordCloudRecord && Array.isArray(wordCloudRecord.words)) {
-        wordsToMap = wordCloudRecord.words;
+    }
+    else if (wordCloudRecord && wordCloudRecord.words) {
+        wordsToMap = parseWords(wordCloudRecord.words);
     }
     // Fallback to legacy
     else if (legacyData && Array.isArray(legacyData.wordCloud)) {
@@ -197,27 +205,31 @@ function mapWordCloudWords(wordCloudRecord, legacyData) {
 }
 
 async function loadAnalyticsRecord() {
-    const settingsStore = useSettingsStore()
-    const currentUserId = settingsStore.currentUserId
+    const today = new Date()
+    const dayOfWeek = today.getDay()
+    const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)
+    const weekStart = new Date(today.setDate(diff)).toISOString().slice(0, 10)
 
-    if (currentUserId) {
-        const byUser = await analyticsApi.getByUserId(currentUserId)
-        if (byUser.length > 0) return byUser[0]
+    try {
+        const result = await analyticsApi.getByWeekStart(weekStart)
+        if (Array.isArray(result) && result.length > 0) return result[0]
+        if (result && !Array.isArray(result)) return result
+    } catch {
+        // fall through
     }
 
     const all = await analyticsApi.getAll()
-    return all[0] || null
+    return Array.isArray(all) && all.length > 0 ? all[0] : all || null
 }
 
 async function loadWordCloudRecord() {
-    const settingsStore = useSettingsStore()
-    const currentUserId = settingsStore.currentUserId
-    if (currentUserId) {
-        return await wordCloudApi.getByUserId(currentUserId)
+    try {
+        const all = await wordCloudApi.getAll()
+        if (Array.isArray(all) && all.length > 0) return all[0]
+        return all || null
+    } catch {
+        return null
     }
-
-    const all = await wordCloudApi.getAll();
-    return all.length > 0 ? all[0] : null;
 }
 
 export const useAnalyticsStore = defineStore('analytics', {
@@ -229,6 +241,7 @@ export const useAnalyticsStore = defineStore('analytics', {
         fluctuationOptions: null,
         trendData: null,
         trendOptions: null,
+        moodCalendar: null,
         isLoading: true
     }),
 
@@ -237,10 +250,14 @@ export const useAnalyticsStore = defineStore('analytics', {
             this.isLoading = true
 
             try {
-                const [record, wordCloudRecord] = await Promise.all([
+                const now = new Date()
+                const [record, wordCloudRecord, moodData] = await Promise.all([
                     loadAnalyticsRecord(),
-                    loadWordCloudRecord()
+                    loadWordCloudRecord(),
+                    moodCalendarApi.get(now.getFullYear(), now.getMonth() + 1).catch(() => null)
                 ]);
+
+                this.moodCalendar = moodData
 
                 const legacyData = parseLegacyData(record)
 

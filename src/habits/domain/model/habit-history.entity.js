@@ -21,16 +21,11 @@ export class HabitCompletionLog {
 
     toJSON() {
         return {
-            id: this.id,
             habit_id: this.habitId,
             habit_name: this.habitName,
-            habitId: this.habitId,
-            habitName: this.habitName,
             category: this.category,
             date: this.date,
-            completed: this.completed,
-            completed_at: this.completedAt,
-            created_at: this.createdAt
+            completed_at: this.completedAt || new Date().toISOString()
         }
     }
 

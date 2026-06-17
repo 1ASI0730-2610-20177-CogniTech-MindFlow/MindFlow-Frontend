@@ -1,11 +1,24 @@
 <template>
   <div class="ai-alert theme-transition" role="status">
     <span class="alert-icon"><i class="pi pi-exclamation-triangle"></i></span>
-    <p>
-      <strong>{{ $t('habits.alerts.stressTitle') }}</strong>{{ $t('habits.alerts.stressMessage') }}
-    </p>
+    <div>
+      <p>
+        <strong>{{ $t('habits.alerts.stressTitle') }}</strong>
+        {{ advice || $t('habits.alerts.stressMessage') }}
+      </p>
+      <p v-if="pausedHabits.length" class="paused-list">
+        {{ $t('habits.alerts.pausedHabits') || 'Pausados:' }} {{ pausedHabits.join(', ') }}
+      </p>
+    </div>
   </div>
 </template>
+
+<script setup>
+defineProps({
+  advice: { type: String, default: '' },
+  pausedHabits: { type: Array, default: () => [] }
+})
+</script>
 
 <style scoped>
 .ai-alert {

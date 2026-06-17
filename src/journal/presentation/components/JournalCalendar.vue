@@ -69,15 +69,31 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useJournalStore } from '@/journal/application/journal.store'
 
 const { tm } = useI18n()
 const journalStore = useJournalStore()
 
-const currentMonth = ref(4) // Mayo (0-11)
-const currentYear = ref(2024)
+function getLatestEntryDate() {
+  const entries = journalStore.entries
+  if (!entries.length) return new Date()
+  const sorted = [...entries].sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+  const [year, month] = (sorted[0].date || '').split('-').map(Number)
+  if (year && month) return new Date(year, month - 1, 1)
+  return new Date()
+}
+
+const initDate = getLatestEntryDate()
+const currentMonth = ref(initDate.getMonth())
+const currentYear = ref(initDate.getFullYear())
+
+watch(() => journalStore.entries.length, () => {
+  const d = getLatestEntryDate()
+  currentMonth.value = d.getMonth()
+  currentYear.value = d.getFullYear()
+})
 const selectedDate = computed({
   get: () => journalStore.selectedDate,
   set: (value) => journalStore.setSelectedDate(value)

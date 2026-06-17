@@ -15,7 +15,12 @@
       <Transition name="fade-slide" mode="out-in">
         <div :key="store.activeTab">
           <template v-if="store.activeTab === 'routines'">
-            <AiStressAlert v-if="store.showAiAlert" class="animate-scale-in" />
+            <AiStressAlert
+              v-if="store.showAiAlert"
+              :advice="store.stressAdvice"
+              :paused-habits="store.stressPausedHabits"
+              class="animate-scale-in"
+            />
 
             <div class="stagger-1">
               <DailyProgress :progress="store.dailyProgress" />
@@ -42,11 +47,9 @@
             </div>
           </template>
 
-          <section v-else-if="store.activeTab === 'suggestions'" class="placeholder-panel animate-fade-in-up theme-transition">
-            <div class="pulse-icon"><i class="pi pi-sparkles"></i></div>
-            <h3 class="theme-transition">{{ $t('habits.placeholder.title') }}</h3>
-            <p class="theme-transition">{{ $t('habits.placeholder.desc') }}</p>
-          </section>
+          <div v-else-if="store.activeTab === 'suggestions'" class="animate-fade-in-up">
+            <AiSuggestions />
+          </div>
 
           <HabitHistoryPanel
               v-else
@@ -72,12 +75,14 @@ import AddHabitForm from '../components/AddHabitForm.vue'
 import HabitFilters from '../components/HabitFilters.vue'
 import HabitList from '../components/HabitList.vue'
 import HabitHistoryPanel from '../components/HabitHistoryPanel.vue'
+import AiSuggestions from '../components/AiSuggestions.vue'
 
 const store = useHabitsStore()
 const authStore = useAuthStore()
 
 onMounted(async () => {
   await store.loadHabits()
+  await store.checkStress()
 })
 </script>
 

@@ -57,7 +57,7 @@
             </ul>
 
             <button class="btn btn-gradient theme-transition" disabled v-if="store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
-            <button class="btn btn-gradient theme-transition" v-else>{{ $t('plansPage.buttons.upgrade') }}</button>
+            <button class="btn btn-gradient theme-transition" v-else @click="handleUpgrade" :disabled="store.isProcessingPayment">{{ store.isProcessingPayment ? '...' : $t('plansPage.buttons.upgrade') }}</button>
           </article>
         </section>
 
@@ -65,7 +65,7 @@
           {{ $t('plansPage.footer') }}
         </footer>
 
-        <PaymentHistory :payments="store.paymentHistory" />
+        <!-- PaymentHistory managed by Stripe -->
       </main>
 
       <div v-else class="loading-state">
@@ -80,18 +80,21 @@ import { onMounted } from 'vue'
 import { useSubscriptionStore } from '../../application/subscription.store'
 import { useAuthStore } from '@/iam/application/auth.store.js'
 import Layout from '@/shared/presentation/components/layout.vue'
-import PaymentHistory from '../components/payment-history.vue'
 
 const store = useSubscriptionStore()
 const authStore = useAuthStore()
 
 onMounted(() => {
-  const userId = authStore.currentUserId
-  if (userId) {
-    store.fetchSubscription(userId)
-    store.fetchPaymentHistory(userId)
-  }
+  store.fetchSubscription()
 })
+
+async function handleUpgrade() {
+  try {
+    await store.startCheckout()
+  } catch (error) {
+    console.error('Checkout failed:', error)
+  }
+}
 </script>
 
 <style scoped>

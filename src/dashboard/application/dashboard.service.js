@@ -9,25 +9,26 @@ function toLocaleString(date) {
 }
 
 function mapEntries(entriesData) {
-  return entriesData.slice(0, 3).map(entry => new JournalEntry({
+  return entriesData.slice(0, 5).map(entry => new JournalEntry({
     id: entry.id,
     time: toLocaleString(entry.created_at || entry.date || Date.now()),
     text: entry.content || entry.text || '',
-    tag: entry.category || entry.tag || 'General'
+    tag: entry.category || entry.tag || 'General',
+    aiResponse: entry.ai_response || entry.aiResponse || null
   }))
 }
 
 function mapHabits(allHabits) {
   const sorted = [...allHabits].sort((a, b) => {
-    const statusA = a.status || (a.completed ? 'completed' : 'pending')
-    const statusB = b.status || (b.completed ? 'completed' : 'pending')
+    const statusA = (a.status || '').toLowerCase()
+    const statusB = (b.status || '').toLowerCase()
     if (statusA === statusB) return (a.streak || 0) - (b.streak || 0)
     return statusA === 'pending' ? -1 : 1
   })
   return sorted.slice(0, 3).map(habit => new DailyHabit({
     id: habit.id,
     title: habit.name || habit.title || 'Hábito',
-    completed: (habit.status === 'completed') || habit.completed === true,
+    completed: (habit.status || '').toLowerCase() === 'completed' || habit.completed === true,
     streak: habit.streak || 0
   }))
 }
@@ -39,11 +40,9 @@ function mapWeeklySummary(analyticsData) {
 
 export async function fetchDashboardAggregatedData(userId) {
   const [analyticsResponse, habitsResponse, entriesResponse] = await Promise.all([
-    userId ? analyticsApi.getByUserId(userId) : analyticsApi.getAll(),
+    analyticsApi.getAll(),
     userId ? HabitsAPI.getByUserId(userId) : HabitsAPI.getAll(),
-    userId
-      ? JournalAPI.search({ user_id: userId, _sort: 'date', _order: 'desc', _limit: 3 })
-      : JournalAPI.search({ _sort: 'date', _order: 'desc', _limit: 3 })
+    JournalAPI.getAll({ _sort: 'date', _order: 'desc', _limit: 3 })
   ])
 
   const analyticsData = extractArrayData(analyticsResponse, 'analyticsCache')

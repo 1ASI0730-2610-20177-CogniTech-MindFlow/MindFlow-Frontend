@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
-import { NotificationsApiService } from '../infrastructure/notifications-api'
+import { NotificationsAPI } from '../infrastructure/notifications-api'
 import { Notification } from '../domain/model/notification.entity'
-
-const api = new NotificationsApiService()
 
 export const useNotificationsStore = defineStore('notifications', {
     state: () => ({
         notifications: [],
-        isLoading: false
+        isLoading: false,
+        deviceRegistered: false
     }),
 
     getters: {
@@ -37,90 +36,54 @@ export const useNotificationsStore = defineStore('notifications', {
     },
 
     actions: {
-        async fetchNotifications(userId) {
-            if (!userId) return
-
-            this.isLoading = true
+        async registerDevice(fcmToken) {
             try {
-                const data = await api.getByUserId(userId)
-                this.notifications = (data || []).map(n => Notification.fromJSON(n))
+                await NotificationsAPI.registerDevice(fcmToken, 'web')
+                this.deviceRegistered = true
             } catch (error) {
-                console.error('Error al cargar notificaciones:', error)
-                this.notifications = []
-            } finally {
-                this.isLoading = false
+                console.error('Error registering device for push notifications:', error)
             }
         },
 
-        async fetchUnreadNotifications(userId) {
-            if (!userId) return
-
+        async unregisterDevice(fcmToken) {
             try {
-                const data = await api.getUnreadByUserId(userId)
-                const unread = (data || []).map(n => Notification.fromJSON(n))
-                const existingIds = new Set(this.notifications.map(n => n.id))
-                const newOnes = unread.filter(n => !existingIds.has(n.id))
-                this.notifications = [...newOnes, ...this.notifications]
+                await NotificationsAPI.unregisterDevice(fcmToken)
+                this.deviceRegistered = false
             } catch (error) {
-                console.error('Error al cargar notificaciones no leídas:', error)
+                console.error('Error unregistering device:', error)
             }
+        },
+
+        addNotification(notificationData) {
+            const notif = Notification.fromJSON(notificationData)
+            this.notifications.unshift(notif)
+            return notif
         },
 
         markAsRead(notificationId) {
-            let updated = null
             this.notifications = this.notifications.map(n => {
                 if (n.id === notificationId && n.isUnread) {
                     const json = n.toJSON()
                     json.read_at = new Date().toISOString()
-                    updated = Notification.fromJSON(json)
-                    return updated
+                    return Notification.fromJSON(json)
                 }
                 return n
             })
-            if (updated) {
-                api.markAsRead(notificationId, updated.toJSON()).catch(e =>
-                    console.error('Error al marcar notificación como leída:', e)
-                )
-            }
         },
 
         markAllAsRead() {
-            const updatedList = []
             this.notifications = this.notifications.map(n => {
                 if (n.isUnread) {
                     const json = n.toJSON()
                     json.read_at = new Date().toISOString()
-                    const updated = Notification.fromJSON(json)
-                    updatedList.push(updated)
-                    return updated
+                    return Notification.fromJSON(json)
                 }
                 return n
             })
-            updatedList.forEach(n => {
-                api.markAsRead(n.id, n.toJSON()).catch((e) => console.warn('Mark as read failed:', e))
-            })
         },
 
-        async createNotification(notificationData) {
-            try {
-                const created = await api.createNotification(notificationData)
-                const notif = created?.id ? Notification.fromJSON(created) : Notification.fromJSON(notificationData)
-                this.notifications.unshift(notif)
-                return notif
-            } catch (error) {
-                console.error('Error creating notification:', error)
-                throw error
-            }
-        },
-
-        async dismissNotification(notificationId) {
-            try {
-                await api.deleteNotification(notificationId)
-                this.notifications = this.notifications.filter(n => n.id !== notificationId)
-            } catch (error) {
-                console.error('Error al eliminar notificación:', error)
-                throw error
-            }
+        dismissNotification(notificationId) {
+            this.notifications = this.notifications.filter(n => n.id !== notificationId)
         },
 
         clearNotifications() {

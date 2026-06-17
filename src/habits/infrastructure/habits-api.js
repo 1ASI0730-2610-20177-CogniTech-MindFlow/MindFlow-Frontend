@@ -28,11 +28,9 @@ export class HabitsApiService extends BaseEndpoint {
 
     async getByUserId(userId) {
         try {
-            const data = await this.search({ user_id: userId })
+            const data = await this.search({ userId })
             if (!Array.isArray(data)) return []
-            return data
-                .filter(item => String(item.user_id) === String(userId) || String(item.userId) === String(userId))
-                .map(mapHabit)
+            return data.map(mapHabit)
         } catch (error) {
             console.error(`Error fetching habits for user ${userId}:`, error)
             return []
