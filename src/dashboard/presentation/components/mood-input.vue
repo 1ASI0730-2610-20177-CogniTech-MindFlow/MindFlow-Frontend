@@ -1,59 +1,37 @@
 <template>
-  <div class="dashboard-card">
+  <div class="dashboard-card theme-transition">
     <div class="input-header">
-      <h3 class="card-title">¿Cómo te sientes en este momento?</h3>
+      <h3 class="card-title">{{ t('dashboard.moodInput.title') }}</h3>
       <div class="ai-status">
-        <span class="status-dot"></span> MindFlow AI Activa
+        <span class="status-dot"></span> {{ t('dashboard.moodInput.aiActive') }}
       </div>
     </div>
 
-    <textarea
-        v-model="journalText"
-        placeholder="Escribe aquí tus pensamientos. Este es un espacio seguro y encriptado..."
-        class="journal-textarea"
-    ></textarea>
-
-    <div class="input-actions">
-      <select v-model="selectedTag" class="tag-select">
-        <option value="Estudios">Estudios</option>
-        <option value="Trabajo">Trabajo</option>
-        <option value="Familia">Familia</option>
-        <option value="Personal">Personal</option>
-      </select>
-
-      <button
-          class="btn-primary"
-          @click="saveEntry"
-          :disabled="!journalText.trim() || dashboardStore.isAnalyzing"
-      >
-        {{ dashboardStore.isAnalyzing ? 'Analizando...' : 'Guardar Registro' }}
-      </button>
+    <div class="fake-textarea" role="button" tabindex="0" @click="startNewChat" @keydown.enter="startNewChat">
+      <span class="placeholder-text">{{ t('dashboard.moodInput.placeholder') }}</span>
     </div>
 
-    <div v-if="dashboardStore.isAnalyzing || dashboardStore.aiFeedback" class="ai-feedback-box">
+    <div v-if="dashboardStore.aiFeedback" class="ai-feedback-box">
       <div class="ai-feedback-header">
-        <span class="sparkle">✨</span> <strong>MindFlow AI</strong>
+        <i class="pi pi-sparkles sparkle"></i> <strong>MindFlow AI</strong>
       </div>
-      <p class="ai-feedback-text">
-        <span v-if="dashboardStore.isAnalyzing">Procesando tus emociones y buscando los mejores consejos para ti...</span>
-        <span v-else>{{ dashboardStore.aiFeedback }}</span>
-      </p>
+      <p class="ai-feedback-text">{{ dashboardStore.aiFeedback }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useDashboardStore } from '@/dashboard/application/dashboard.store'
 
-const dashboardStore = useDashboardStore()
-const journalText = ref('')
-const selectedTag = ref('Estudios')
+const emit = defineEmits(['openChat'])
 
-const saveEntry = async () => {
-  if (!journalText.value.trim()) return
-  await dashboardStore.submitJournalEntry(journalText.value, selectedTag.value)
-  journalText.value = '' // Limpiamos el texto después de enviar
+const { t } = useI18n()
+const dashboardStore = useDashboardStore()
+
+function startNewChat() {
+  dashboardStore.startNewConversation()
+  emit('openChat')
 }
 </script>
 
@@ -62,109 +40,92 @@ const saveEntry = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .ai-status {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 12px;
   font-weight: 600;
-  color: #3b82f6;
-  background: #eff6ff;
-  padding: 4px 12px;
-  border-radius: 99px;
+  color: var(--text-primary);
+  background: var(--bg-surface-secondary);
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1px solid var(--border-color);
 }
 
 .status-dot {
-  width: 6px;
-  height: 6px;
-  background-color: #34d399;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-success);
   border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
 }
 
-.journal-textarea {
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.fake-textarea {
   width: 100%;
-  height: 120px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  min-height: 80px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   padding: 16px;
-  font-family: inherit;
-  font-size: 14px;
-  color: #334155;
-  resize: none;
-  outline: none;
-  transition: border-color 0.2s;
-  margin-bottom: 16px;
-}
-
-.journal-textarea:focus {
-  border-color: #94a3b8;
-}
-
-.journal-textarea::placeholder {
-  color: #94a3b8;
-}
-
-.input-actions {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.tag-select {
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #475569;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  outline: none;
-  cursor: pointer;
+.fake-textarea:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-2px);
 }
 
-.btn-primary {
-  background: #34d399;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: #10b981;
-}
-
-.btn-primary:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.placeholder-text {
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
 .ai-feedback-box {
-  margin-top: 24px;
-  background: #f0fdf4;
-  border-left: 4px solid #34d399;
-  border-radius: 4px 8px 8px 4px;
+  margin-top: 20px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 0 12px 12px 0;
   padding: 16px 20px;
 }
 
 .ai-feedback-header {
-  color: #3b82f6;
+  color: var(--text-primary);
   font-size: 13px;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 6px;
+  font-weight: 600;
+}
+
+.sparkle {
+  font-size: 16px;
+  animation: sparkleFloat 2s ease-in-out infinite;
+}
+
+@keyframes sparkleFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(10deg); }
 }
 
 .ai-feedback-text {
   margin: 0;
-  color: #334155;
+  color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.5;
 }

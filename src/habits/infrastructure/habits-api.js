@@ -1,65 +1,70 @@
-const STORAGE_KEY = 'mindflow_habits'
+import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+import { Habit } from '../domain/model/habit.entity.js'
 
-export const DEFAULT_HABITS = [
-    {
-        id: 1,
-        name: 'Beber 2L de agua',
-        category: 'Salud Física',
-        frequency: 'diario',
-        currentStreak: 12,
-        status: 'completed',
-        pausedByAi: false
-    },
-    {
-        id: 2,
-        name: 'Pausa activa de 5 min',
-        category: 'Bienestar',
-        frequency: 'diario',
-        currentStreak: 5,
-        status: 'completed',
-        pausedByAi: false
-    },
-    {
-        id: 3,
-        name: 'Desconexión digital (9PM)',
-        category: 'Sueño',
-        frequency: 'diario',
-        currentStreak: 0,
-        status: 'pending',
-        pausedByAi: false
-    },
-    {
-        id: 4,
-        name: 'Meditar 10 minutos',
-        category: 'Salud Mental',
-        frequency: 'diario',
-        currentStreak: 3,
-        status: 'pending',
-        pausedByAi: false
-    },
-    {
-        id: 5,
-        name: 'Estudiar Estadística (2h)',
-        category: 'Estudios',
-        frequency: 'diario',
-        currentStreak: 0,
-        status: 'paused_by_ai',
-        pausedByAi: true
+const HABITS_URL = 'habits'
+
+function mapHabit(data) {
+    return Habit.fromJSON(data)
+}
+
+function toHabitJSON(habit) {
+    return habit instanceof Habit ? habit.toJSON() : Habit.fromJSON(habit).toJSON()
+}
+
+export class HabitsApiService extends BaseEndpoint {
+    constructor() {
+        super(HABITS_URL)
     }
-]
 
-export const HabitsAPI = {
-    getAll() {
-        const stored = localStorage.getItem(STORAGE_KEY)
-        if (!stored) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_HABITS))
-            return [...DEFAULT_HABITS]
+    async getAll() {
+        try {
+            const data = await super.getAll()
+            return Array.isArray(data) ? data.map(mapHabit) : []
+        } catch (error) {
+            console.error('Error fetching habits:', error)
+            return []
         }
-        return JSON.parse(stored)
-    },
+    }
 
-    saveAll(habits) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(habits))
-        return habits
+    async getByUserId(userId) {
+        try {
+            const data = await this.search({ userId })
+            if (!Array.isArray(data)) return []
+            return data.map(mapHabit)
+        } catch (error) {
+            console.error(`Error fetching habits for user ${userId}:`, error)
+            return []
+        }
+    }
+
+    async create(habit) {
+        try {
+            const response = await super.create(toHabitJSON(habit))
+            return mapHabit(response)
+        } catch (error) {
+            console.error('Error creating habit:', error)
+            throw error
+        }
+    }
+
+    async update(id, habit) {
+        try {
+            const response = await super.update(id, toHabitJSON(habit))
+            return mapHabit(response)
+        } catch (error) {
+            console.error(`Error updating habit ${id}:`, error)
+            throw error
+        }
+    }
+
+    async delete(id) {
+        try {
+            return await super.delete(id)
+        } catch (error) {
+            console.error(`Error deleting habit ${id}:`, error)
+            throw error
+        }
     }
 }
+
+export const HabitsAPI = new HabitsApiService()

@@ -1,5 +1,5 @@
 <template>
-  <div class="history-panel">
+  <div class="history-panel theme-transition">
     <p v-if="weeks.length === 0" class="empty theme-transition">{{ $t('habits.history.empty') }}</p>
 
     <article v-for="week in weeks" :key="week.weekLabel" class="week-card theme-transition">
@@ -18,7 +18,12 @@
       </div>
 
       <ul class="habit-stats">
-        <li v-for="habit in week.habits" :key="`${week.weekLabel}-${habit.habitId}`" class="theme-transition">
+        <li
+          v-for="habit in week.habits"
+          :key="`${week.weekLabel}-${habit.habitId}`"
+          class="habit-stat-row theme-transition"
+          @click="$emit('view-habit', habit.habitId)"
+        >
           <div class="habit-info">
             <span class="habit-name theme-transition">{{ habit.habitName }}</span>
             <span class="habit-category theme-transition">{{ habit.category }}</span>
@@ -26,7 +31,7 @@
           <div class="habit-metrics">
             <span class="compliance theme-transition">{{ habit.completedDays }}/{{ habit.trackedDays }} {{ $t('habits.history.days') }}</span>
             <span class="streak theme-transition">
-              <i class="pi pi-bolt"></i> {{ $t('habits.history.streak') }} {{ habit.weekStreak }} {{ $t('habits.history.days') }}
+              <i class="pi pi-bolt" aria-hidden="true"></i> {{ $t('habits.history.streak') }} {{ habit.weekStreak }} {{ $t('habits.history.days') }}
             </span>
           </div>
         </li>
@@ -39,6 +44,8 @@
 defineProps({
   weeks: { type: Array, default: () => [] }
 })
+
+defineEmits(['view-habit'])
 </script>
 
 <style scoped>
@@ -100,7 +107,7 @@ defineProps({
 
 .week-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent-success), #16a34a);
+  background: var(--accent-success);
   border-radius: 999px;
 }
 
@@ -121,6 +128,13 @@ defineProps({
   padding: 10px 12px;
   background: var(--bg-surface-secondary);
   border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.habit-stats li:hover {
+  background: rgba(99, 102, 241, 0.04);
+  transform: translateX(3px);
 }
 
 .habit-info {

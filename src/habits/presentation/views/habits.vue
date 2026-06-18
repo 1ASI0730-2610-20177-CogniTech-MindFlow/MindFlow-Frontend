@@ -15,7 +15,12 @@
       <Transition name="fade-slide" mode="out-in">
         <div :key="store.activeTab">
           <template v-if="store.activeTab === 'routines'">
-            <AiStressAlert v-if="store.showAiAlert" class="animate-scale-in" />
+            <AiStressAlert
+              v-if="store.showAiAlert"
+              :advice="store.stressAdvice"
+              :paused-habits="store.stressPausedHabits"
+              class="animate-scale-in"
+            />
 
             <div class="stagger-1">
               <DailyProgress :progress="store.dailyProgress" />
@@ -42,16 +47,15 @@
             </div>
           </template>
 
-          <section v-else-if="store.activeTab === 'suggestions'" class="placeholder-panel animate-fade-in-up theme-transition">
-            <div class="pulse-icon"><i class="pi pi-sparkles"></i></div>
-            <h3 class="theme-transition">{{ $t('habits.placeholder.title') }}</h3>
-            <p class="theme-transition">{{ $t('habits.placeholder.desc') }}</p>
-          </section>
+          <div v-else-if="store.activeTab === 'suggestions'" class="animate-fade-in-up">
+            <AiSuggestions />
+          </div>
 
           <HabitHistoryPanel
               v-else
               :weeks="store.weeklyHistory"
               class="animate-fade-in-up"
+              @view-habit="store.setActiveTab('routines')"
           />
         </div>
       </Transition>
@@ -63,6 +67,7 @@
 import { onMounted } from 'vue'
 import Layout from '../../../shared/presentation/components/layout.vue'
 import { useHabitsStore } from '../../application/habits.store.js'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import HabitTabs from '../components/HabitTabs.vue'
 import AiStressAlert from '../components/AiStressAlert.vue'
 import DailyProgress from '../components/DailyProgress.vue'
@@ -70,16 +75,18 @@ import AddHabitForm from '../components/AddHabitForm.vue'
 import HabitFilters from '../components/HabitFilters.vue'
 import HabitList from '../components/HabitList.vue'
 import HabitHistoryPanel from '../components/HabitHistoryPanel.vue'
+import AiSuggestions from '../components/AiSuggestions.vue'
 
 const store = useHabitsStore()
+const authStore = useAuthStore()
 
-onMounted(() => {
-  store.loadHabits()
+onMounted(async () => {
+  await store.loadHabits()
+  await store.checkStress()
 })
 </script>
 
 <style scoped>
-/* Core Animations */
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-15px); }
   to { opacity: 1; transform: translateY(0); }
@@ -105,7 +112,6 @@ onMounted(() => {
   50% { transform: translateY(-5px) scale(1.1); opacity: 1; color: var(--accent-primary); }
 }
 
-/* Animation Classes */
 .animate-fade-in-down {
   animation: fadeInDown 0.5s ease-out forwards;
 }
@@ -123,39 +129,35 @@ onMounted(() => {
   animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Staggering Delays */
 .delay-1 { animation-delay: 0.1s; }
 .stagger-1 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.1s; }
 .stagger-2 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.2s; }
 .stagger-3 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.3s; }
 .stagger-4 { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; animation-delay: 0.4s; }
 
-/* Vue Transition Component (Tab switching) */
-.fade-slide-enter-active,
-.fade-slide-leave-active {
+:global(.fade-slide-enter-active),
+:global(.fade-slide-leave-active) {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.fade-slide-enter-from {
+:global(.fade-slide-enter-from) {
   opacity: 0;
   transform: translateX(10px);
 }
-.fade-slide-leave-to {
+:global(.fade-slide-leave-to) {
   opacity: 0;
   transform: translateX(-10px);
 }
 
-/* Interactive States */
 .hover-lift {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  box-shadow: var(--shadow-md);
 }
 
 .habits-page {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .page-header {

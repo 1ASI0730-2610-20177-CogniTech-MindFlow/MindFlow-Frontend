@@ -1,8 +1,6 @@
 <template>
   <Layout>
     <div class="high-end-analytics-page theme-transition">
-      <div class="optical-grid-bg theme-transition"></div>
-
       <header class="hero-header hero-reveal theme-transition">
         <div class="header-content">
           <h1 class="gradient-title theme-transition">{{ $t('analytics.title') }}</h1>
@@ -42,15 +40,21 @@
             </div>
 
             <div class="panel-reveal delay-4 grid-sidebar floating-sidebar">
-              <WordCloud class="theme-transition" />
+              <WordCloud :words="analyticsStore.wordCloudWords" class="theme-transition" />
             </div>
           </div>
 
-          <div class="panel-reveal delay-5 deep-shadow-panel theme-transition">
-            <MoodTrendChart
-                :chartData="analyticsStore.trendData"
-                :chartOptions="analyticsStore.trendOptions"
-            />
+          <div class="asymmetric-grid">
+            <div class="panel-reveal delay-5 grid-main deep-shadow-panel theme-transition">
+              <MoodTrendChart
+                  :chartData="analyticsStore.trendData"
+                  :chartOptions="analyticsStore.trendOptions"
+              />
+            </div>
+
+            <div class="panel-reveal delay-5 grid-sidebar">
+              <MoodCalendar />
+            </div>
           </div>
 
           <div class="panel-reveal delay-6 cta-offset">
@@ -72,6 +76,7 @@ import KpiCards from '../components/kpi-cards.vue'
 import MoodFluctuationChart from '../components/mood-fluctuation-chart.vue'
 import WordCloud from '../components/word-cloud.vue'
 import MoodTrendChart from '../components/mood-trend-chart.vue'
+import MoodCalendar from '../components/mood-calendar.vue'
 import ExportBanner from '../components/export-banner.vue'
 
 const analyticsStore = useAnalyticsStore()
@@ -83,29 +88,22 @@ onMounted(() => {
 
 <style scoped>
 .high-end-analytics-page {
-  /* Retain specific color vars for this page but link them to the global theme */
-  --global-blue: var(--accent-primary, #3b82f6);
+  --global-blue: var(--accent-primary, #6366f1);
   --global-green: var(--accent-success, #34d399);
+  --global-orange: var(--accent-warning, #f59e0b);
 
   background-color: var(--bg-primary);
+  background-image: radial-gradient(circle at center, var(--border-color) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: 16px 16px;
   color: var(--text-primary);
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 80px 48px;
+  padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
   z-index: 1;
-}
-
-.optical-grid-bg {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: -1;
-  background-image: radial-gradient(circle at center, var(--border-color) 1px, transparent 1px);
-  background-size: 32px 32px;
-  opacity: 0.8;
 }
 
 .hero-header { margin-bottom: 56px; display: flex; justify-content: space-between; align-items: flex-end; position: relative; padding-left: 24px; }
@@ -137,7 +135,7 @@ onMounted(() => {
 .w-summary-offset { transform: translateX(12px); }
 .cta-offset { transform: translateX(-12px); }
 
-.asymmetric-grid { display: grid; grid-template-columns: minmax(auto, 65%) 1fr; gap: 48px; align-items: center; }
+.asymmetric-grid { display: grid; grid-template-columns: minmax(auto, 65%) 1fr; gap: 48px; align-items: stretch; }
 
 .deep-shadow-panel {
   background: var(--bg-surface); backdrop-filter: blur(20px); border: 1px solid var(--border-light);
@@ -148,7 +146,7 @@ onMounted(() => {
   transform: translateY(-8px) scale(1.01);
   box-shadow: var(--shadow-lg);
 }
-.floating-sidebar { position: relative; top: -24px; }
+.floating-sidebar { position: relative; }
 
 .premium-loading-state { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 24px; }
 .organic-spinner { width: 50px; height: 50px; animation: rotate 2s linear infinite; }
@@ -164,7 +162,6 @@ onMounted(() => {
 .panel-reveal { opacity: 0; animation: fluidAscent 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .delay-1 { animation-delay: 150ms; } .delay-2 { animation-delay: 300ms; } .delay-3 { animation-delay: 450ms; } .delay-4 { animation-delay: 600ms; } .delay-5 { animation-delay: 750ms; } .delay-6 { animation-delay: 900ms; }
 
-/* === RESPONSIVE MEDIA QUERIES === */
 @media (max-width: 1024px) {
   .high-end-analytics-page { padding: 40px 24px; }
   .asymmetric-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -178,6 +175,6 @@ onMounted(() => {
   .hero-header { padding-left: 16px; margin-bottom: 32px; }
   .gradient-title { font-size: 32px; }
   .asymmetric-content-wrapper { gap: 32px; }
-  .deep-shadow-panel:hover { transform: none; } /* Desactivar hover en mobile */
+  .deep-shadow-panel:hover { transform: none; }
 }
 </style>

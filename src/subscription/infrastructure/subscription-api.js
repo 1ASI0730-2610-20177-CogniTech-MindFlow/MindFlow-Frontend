@@ -1,22 +1,27 @@
-import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint'
 import apiClient from '@/shared/infrastructure/base-api'
 
-export class SubscriptionApiService extends BaseEndpoint {
-    constructor() {
-        super('subscriptions')
+const SUBSCRIPTIONS_URL = '/api/v1/subscriptions'
+
+export class SubscriptionApiService {
+    async getMySubscription() {
+        const response = await apiClient.get(`${SUBSCRIPTIONS_URL}/me`)
+        return response.data
     }
 
-    async getByUserId(userId) {
-        try {
-            const response = await apiClient.get(`/${this.resource}`)
-            const allSubscriptions = response.data
+    async createCheckout() {
+        const response = await apiClient.post(`${SUBSCRIPTIONS_URL}/checkout`)
+        return response.data
+    }
 
-            const userSubscription = allSubscriptions.filter(sub => sub.user_id === userId)
-            
-            return userSubscription
-        } catch (error) {
-             console.error(`Error fetching subscriptions for user ${userId}:`, error)
-             throw error
-        }
+    async verifySession(sessionId) {
+        const response = await apiClient.post(`${SUBSCRIPTIONS_URL}/verify-session?sessionId=${encodeURIComponent(sessionId)}`)
+        return response.data
+    }
+
+    async cancelSubscription() {
+        const response = await apiClient.post(`${SUBSCRIPTIONS_URL}/cancel`)
+        return response.data
     }
 }
+
+export const SubscriptionAPI = new SubscriptionApiService()

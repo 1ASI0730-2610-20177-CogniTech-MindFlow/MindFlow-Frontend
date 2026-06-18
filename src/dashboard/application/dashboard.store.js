@@ -1,58 +1,129 @@
 import { defineStore } from 'pinia'
-import { dashboardApi } from '../infrastructure/dashboard.endpoint'
-import { JournalEntry, DailyHabit } from '../domain/model/dashboard.model'
+import { ChatAPI } from '../infrastructure/chat-api'
+import { useAuthStore } from '@/iam/application/auth.store.js'
+import { fetchDashboardAggregatedData } from './dashboard.service'
+import { AiFeedbackAPI } from '@/shared/infrastructure/ai-feedback-api'
 
 export const useDashboardStore = defineStore('dashboard', {
     state: () => ({
-        isLoading: false,
+        isLoading: true,
         isAnalyzing: false,
         aiFeedback: null,
-        // Usamos el modelo para instanciar los datos iniciales
-        recentEntries: [
-            new JournalEntry({ id: 1, time: 'Hace 3 horas', text: 'Siento que no avancé nada hoy. La procrastinación me está ganando...', tag: 'Estudios' }),
-            new JournalEntry({ id: 2, time: 'Ayer, 9:00 PM', text: 'Hoy tuvimos la presentación del proyecto. Me sentí muy abrumado al principio...', tag: 'Trabajo' }),
-            new JournalEntry({ id: 3, time: 'Lunes, 8:15 AM', text: 'Tuve una pequeña discusión en casa y me dejó con poca energía para empezar...', tag: 'Familia' })
-        ],
-        habits: [
-            new DailyHabit({ id: 1, title: 'Beber 2L de agua', completed: true, streak: 5 }),
-            new DailyHabit({ id: 2, title: 'Pausa activa (Estiramientos)', completed: false, streak: 2 }),
-            new DailyHabit({ id: 3, title: 'Desconexión digital (9PM)', completed: false, streak: 0 })
-        ]
+        aiRating: 0,
+        ratingSubmitted: false,
+        conversationsList: [],
+        activeConversationId: null,
+        messages: [],
+        recentEntries: [],
+        habits: [],
+        weeklySummary: null
     }),
 
+    getters: {
+        activeConversation: (state) =>
+            state.conversationsList.find(c => c.id === state.activeConversationId) || null
+    },
+
     actions: {
-        async submitJournalEntry(text, tag) {
+        async fetchDashboardData() {
+            this.isLoading = true
+            try {
+                const authStore = useAuthStore()
+                const userId = authStore.currentUserId
+                const [data] = await Promise.all([
+                    fetchDashboardAggregatedData(userId),
+                    this.fetchConversations()
+                ])
+                this.weeklySummary = data.weeklySummary
+                this.habits = data.habits
+                this.recentEntries = data.recentEntries
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error)
+            } finally {
+                this.isLoading = false
+            }
+        },
+
+        async fetchConversations() {
+            const data = await ChatAPI.getConversations()
+            this.conversationsList = Array.isArray(data) ? data : []
+        },
+
+        async openConversation(conversationId) {
+            this.activeConversationId = conversationId
+            this.messages = []
+            this.aiFeedback = null
+            this.aiRating = 0
+            this.ratingSubmitted = false
+            const data = await ChatAPI.getMessages(conversationId)
+            const msgs = Array.isArray(data) ? data : (data?.messages || data?.content || [])
+            this.messages = msgs
+            const lastAi = [...msgs].reverse().find(m => m.role === 'assistant')
+            if (lastAi) this.aiFeedback = lastAi.content
+        },
+
+        async submitMessage(text, category) {
             this.isAnalyzing = true
             this.aiFeedback = null
+            this.aiRating = 0
+            this.ratingSubmitted = false
 
             try {
-                // 1. Llamamos a la infraestructura (API)
-                const response = await dashboardApi.processJournalEntry(text, tag)
-
-                // 2. Guardamos la nueva entrada en la UI usando el Modelo
-                const newEntry = new JournalEntry({ text, tag })
-                this.recentEntries.unshift(newEntry)
-
-                // 3. Mostramos el feedback de la IA
-                this.aiFeedback = response.aiFeedback
-
+                if (!this.activeConversationId) {
+                    const conversation = await ChatAPI.createConversation(text, category)
+                    this.activeConversationId = conversation.id
+                    const msgs = conversation.messages || []
+                    this.messages = msgs
+                    const aiMsg = msgs.find(m => m.role === 'assistant')
+                    this.aiFeedback = aiMsg?.content || null
+                    await this.fetchConversations()
+                } else {
+                    const response = await ChatAPI.sendMessage(this.activeConversationId, text)
+                    const userMsg = response.user_message || response.userMessage
+                    const aiMsg = response.ai_message || response.aiMessage
+                    if (userMsg) this.messages.push(userMsg)
+                    if (aiMsg) {
+                        this.messages.push(aiMsg)
+                        this.aiFeedback = aiMsg.content
+                    }
+                    await this.fetchConversations()
+                }
             } catch (error) {
-                console.error("Error al procesar el registro con IA:", error)
-                this.aiFeedback = "Hubo un problema al procesar tu registro. Por favor, intenta de nuevo."
+                console.error("Error al procesar con IA:", error)
+                this.aiFeedback = "Error al procesar tu mensaje. Intenta de nuevo."
             } finally {
                 this.isAnalyzing = false
             }
+        },
+
+        async deleteConversation(conversationId) {
+            await ChatAPI.deleteConversation(conversationId)
+            if (this.activeConversationId === conversationId) {
+                this.activeConversationId = null
+                this.messages = []
+            }
+            await this.fetchConversations()
+        },
+
+        startNewConversation() {
+            this.activeConversationId = null
+            this.messages = []
+            this.aiFeedback = null
+            this.aiRating = 0
+            this.ratingSubmitted = false
+        },
+
+        submitAiRating(rating) {
+            this.aiRating = rating
+            this.ratingSubmitted = true
         },
 
         toggleHabit(id) {
             const habit = this.habits.find(h => h.id === id)
             if (habit) {
                 habit.completed = !habit.completed
-                // Si se completa, aumentamos la racha visualmente (opcional)
                 if (habit.completed) habit.streak++
                 else habit.streak--
-
-                // Aquí podrías llamar a un endpoint: dashboardApi.updateHabit(id, habit.completed)
             }
         }
     }

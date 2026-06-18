@@ -1,11 +1,10 @@
-/* CSS Variables for Theming */
 :root {
-  /* Light Theme (Default) */
   --bg-primary: #f8fafc;
   --bg-surface: #ffffff;
   --bg-surface-secondary: #f1f5f9;
 
   --text-primary: #0f172a;
+  --text-dark: #0f172a;
   --text-secondary: #64748b;
   --text-muted: #94a3b8;
 
@@ -23,15 +22,49 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 
   --chart-grid: #e5e7eb;
+
+  --mood-positive: #6fcf97;
+  --mood-neutral: #f2c94c;
+  --mood-negative: #f58c8c;
+
+  --habit-cat-salud-fisica-bg: #dbeafe;
+  --habit-cat-salud-fisica-color: #1d4ed8;
+  --habit-cat-bienestar-bg: #fef3c7;
+  --habit-cat-bienestar-color: #b45309;
+  --habit-cat-sueno-bg: #e0e7ff;
+  --habit-cat-sueno-color: #4338ca;
+  --habit-cat-salud-mental-bg: #fce7f3;
+  --habit-cat-salud-mental-color: #be185d;
+  --habit-cat-estudios-bg: #ede9fe;
+  --habit-cat-estudios-color: #6d28d9;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --grid-dot: rgba(15, 23, 42, 0.03);
+  --feature-mood: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  --feature-habit: linear-gradient(135deg, #34d399, #059669);
+  --feature-analytics: linear-gradient(135deg, #4a9eff, #2563eb);
+  --feature-premium: linear-gradient(135deg, #f59e0b, #d97706);
+  --text-on-accent: #ffffff;
+
+  --btn-radius: 12px;
+  --btn-padding-x: 24px;
+  --btn-padding-y: 10px;
+  --btn-font-size: 14px;
+  --btn-font-weight: 600;
 }
 
-/* Dark Theme Overrides */
 html.dark-mode {
   --bg-primary: #0f172a;
   --bg-surface: #1e293b;
   --bg-surface-secondary: #334155;
 
   --text-primary: #f8fafc;
+  /* texto oscuro en modo oscuro: por defecto usar el color de texto primario claro */
+  --text-dark: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
 
@@ -43,6 +76,22 @@ html.dark-mode {
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
 
   --chart-grid: #334155;
+  --grid-dot: rgba(248, 250, 252, 0.04);
+
+  --mood-positive: #4ade80;
+  --mood-neutral: #facc15;
+  --mood-negative: #f87171;
+
+  --habit-cat-salud-fisica-bg: rgba(59, 130, 246, 0.14);
+  --habit-cat-salud-fisica-color: #93c5fd;
+  --habit-cat-bienestar-bg: rgba(245, 158, 11, 0.14);
+  --habit-cat-bienestar-color: #fbbf24;
+  --habit-cat-sueno-bg: rgba(99, 102, 241, 0.16);
+  --habit-cat-sueno-color: #a5b4fc;
+  --habit-cat-salud-mental-bg: rgba(236, 72, 153, 0.16);
+  --habit-cat-salud-mental-color: #f9a8d4;
+  --habit-cat-estudios-bg: rgba(168, 85, 247, 0.16);
+  --habit-cat-estudios-color: #d8b4fe;
 }
 
 * {
@@ -51,22 +100,656 @@ html.dark-mode {
   padding: 0;
 }
 
-body, html {
+html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
 }
 
 #app {
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
-/* Utility classes for theme transitions */
 .theme-transition {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.dark-mode .settings-page .card-subscription {
+  background: #0f1724;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 34px rgba(2,6,23,0.8);
+}
+
+html.dark-mode .settings-page .card-subscription {
+  border-color: rgba(52,211,153,0.12);
+}
+
+html.dark-mode .settings-page .card-subscription .card-title {
+  color: #34d399;
+  font-weight: 700;
+}
+
+html.dark-mode .settings-page .card-subscription .plan-text {
+  color: rgba(255,255,255,0.9);
+}
+
+.settings-page .card-subscription .card-title {
+  color: #34d399;
+  font-weight: 700;
+}
+
+html.dark-mode .settings-page .danger {
+  border: 1px solid rgba(248,113,113,0.18);
+  background: rgba(248,113,113,0.02);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+}
+
+html.dark-mode .settings-page .danger .danger-title {
+  color: #fb7185;
+}
+
+html.dark-mode .settings-page .btn-danger {
+  background: transparent;
+  color: #fb7185;
+  border-color: rgba(248,113,113,0.18);
+}
+
+html.dark-mode .modal-footer .btn-danger {
+  background: transparent;
+  color: #fb7185;
+  border-color: rgba(248,113,113,0.18);
+}
+
+/* ========== ANIMACIONES Y EFECTOS MEJORADOS ========== */
+
+/* Animaciones de entrada smooth */
+@keyframes smoothFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes smoothFadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes smoothFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes smoothScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(99, 102, 241, 0.1);
+  }
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* Clases de animación global */
+.fade-in-up {
+  animation: smoothFadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fade-in-down {
+  animation: smoothFadeInDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fade-in {
+  animation: smoothFadeIn 0.6s ease;
+}
+
+.scale-in {
+  animation: smoothScaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Efecto hover global para botones y elementos interactivos */
+button, a, [role="button"] {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+button:hover:not(:disabled), a:hover, [role="button"]:hover {
+  transform: translateY(-2px);
+}
+
+input, textarea, select {
+  transition: border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Gradientes sutiles de fondo */
+.gradient-bg-subtle {
+  background: linear-gradient(135deg,
+    var(--bg-surface) 0%,
+    var(--bg-surface-secondary) 100%);
+}
+
+.gradient-text-primary {
+  background: linear-gradient(135deg,
+    var(--accent-primary) 0%,
+    var(--accent-hover) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Efectos de sombra mejorados */
+.shadow-hover:hover {
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+}
+
+.shadow-soft {
+  box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-elevated {
+  box-shadow: 0 12px 24px -3px rgba(0, 0, 0, 0.12);
+}
+
+/* Efecto de bloom suave en elementos */
+.bloom:hover {
+  animation: subtleGlow 2s ease-in-out;
+}
+
+/* Efecto de pulsación suave */
+.pulse-soft {
+  animation: softPulse 2s ease-in-out infinite;
+}
+
+/* Bordes con efecto de transición */
+.border-smooth {
+  transition: border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.border-smooth:hover {
+  border-color: var(--accent-primary);
+}
+
+/* Overlay effect para cartas */
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.04) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Estilo de placeholder mejorado */
+::placeholder {
+  transition: color 0.3s ease;
+}
+
+:focus::placeholder {
+  color: var(--text-muted);
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Animación de carga elegante */
+.loader {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Efecto hover para enlaces */
+a {
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Contraste mejorado en texto seleccionado */
+::selection {
+  background-color: var(--accent-primary);
+  color: white;
+}
+
+/* ========== UTILIDADES DE ANIMACIONES REUTILIZABLES ========== */
+
+/* Entrada suave */
+.animate-enter {
+  animation: smoothEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes smoothEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entrada desde arriba */
+.animate-enter-from-top {
+  animation: enterFromTop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes enterFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Escala suave */
+.animate-scale-smooth {
+  animation: scaleSmooth 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes scaleSmooth {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Desvanecimiento suave */
+.animate-fade-smooth {
+  animation: fadeSmooth 0.6s ease forwards;
+}
+
+@keyframes fadeSmooth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pulsación elegante */
+.pulse-elegant {
+  animation: elegantPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes elegantPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Brillo suave */
+.shimmer {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmerEffect 2s infinite;
+}
+
+@keyframes shimmerEffect {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Movimiento suave infinito */
+.float {
+  animation: floatEffect 3s ease-in-out infinite;
+}
+
+@keyframes floatEffect {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Rotación suave */
+.spin-smooth {
+  animation: spinSmooth 3s linear infinite;
+}
+
+@keyframes spinSmooth {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Aparición en cascada para listas */
+.stagger-item {
+  opacity: 0;
+  animation: staggerFadeIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Clase para aplicar delay a items en cascada */
+.stagger-item:nth-child(1) { animation-delay: 0.05s; }
+.stagger-item:nth-child(2) { animation-delay: 0.1s; }
+.stagger-item:nth-child(3) { animation-delay: 0.15s; }
+.stagger-item:nth-child(4) { animation-delay: 0.2s; }
+.stagger-item:nth-child(5) { animation-delay: 0.25s; }
+.stagger-item:nth-child(6) { animation-delay: 0.3s; }
+.stagger-item:nth-child(7) { animation-delay: 0.35s; }
+.stagger-item:nth-child(8) { animation-delay: 0.4s; }
+.stagger-item:nth-child(9) { animation-delay: 0.45s; }
+.stagger-item:nth-child(10) { animation-delay: 0.5s; }
+
+/* Efecto de vibración sutil */
+.shake-subtle {
+  animation: subtleShake 0.3s ease-in-out;
+}
+
+@keyframes subtleShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+/* ========== UTILIDADES DE TRANSICIONES ========== */
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.transition-fast {
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.transition-slow {
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========== EFECTOS DE SOMBRA REUTILIZABLES ========== */
+
+.shadow-subtle {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-deep {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== GRADIENTES REUTILIZABLES ========== */
+
+.gradient-primary {
+  background: linear-gradient(135deg,
+    var(--accent-primary) 0%,
+    var(--accent-hover) 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg,
+    var(--accent-success) 0%,
+    #16a34a 100%);
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg,
+    var(--accent-warning) 0%,
+    #d97706 100%);
+}
+
+.gradient-danger {
+  background: linear-gradient(135deg,
+    var(--accent-danger) 0%,
+    #dc2626 100%);
+}
+
+.gradient-subtle {
+  background: linear-gradient(135deg,
+    var(--bg-surface) 0%,
+    var(--bg-surface-secondary) 100%);
+}
+
+/* ========== EFECTOS HOVER REUTILIZABLES ========== */
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* ========== UTILIDADES DE TEXTO ========== */
+
+.text-gradient {
+  background: linear-gradient(135deg,
+    var(--accent-primary) 0%,
+    var(--accent-hover) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: var(--bg-surface);
+  border-radius: 14px;
+  padding: 0;
+  width: 400px;
+  max-width: 90vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+html.dark-mode .modal-card {
+  background: #0f1724;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(2,6,23,0.8);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 0;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-title.danger {
+  color: var(--accent-danger);
+}
+
+html.dark-mode .modal-title.danger {
+  color: #fb7185;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 16px 24px;
+}
+
+.modal-warning {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--border-light);
+}
+
+html.dark-mode .modal-footer {
+  border-top-color: rgba(255,255,255,0.06);
+}
+
+.spinner-sm {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--accent-danger);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 6px;
+  vertical-align: middle;
 }

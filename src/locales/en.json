@@ -5,6 +5,93 @@
   "profile": {
     "user": "User"
   },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Access your wellness space",
+      "email": "Email Address",
+      "emailPlaceholder": "your email",
+      "password": "Password",
+      "passwordPlaceholder": "Your password",
+      "button": "Sign In",
+      "loading": "Signing in...",
+      "forgotPassword": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Create one",
+      "error": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email",
+        "passwordRequired": "Password is required",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "invalid": "Invalid credentials. Please try again."
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Start your wellness journey",
+      "name": "Full Name",
+      "namePlaceholder": "Your name",
+      "email": "Email Address",
+      "emailPlaceholder": "your email",
+      "password": "Password",
+      "passwordPlaceholder": "Minimum 6 characters",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "button": "Create Account",
+      "loading": "Creating account...",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "error": {
+        "nameRequired": "Name is required",
+        "nameTooShort": "Name must be at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email",
+        "passwordRequired": "Password is required",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "passwordUppercase": "Must contain at least one uppercase letter",
+        "passwordNumber": "Must contain at least one number",
+        "confirmRequired": "Please confirm your password",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "generic": "Error creating account. Please try again."
+      }
+    },
+    "forgotPassword": {
+      "title": "Recover Password",
+      "subtitle": "Enter your email and we'll send you instructions",
+      "email": "Email Address",
+      "emailPlaceholder": "your email",
+      "button": "Send Instructions",
+      "sending": "Sending...",
+      "sent": "If the email exists in our records, you'll receive instructions to reset your password.",
+      "backToLogin": "Back to Sign In",
+      "error": {
+        "generic": "Error sending instructions. Please try again."
+      }
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Minimum 6 characters",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Repeat your new password",
+      "button": "Reset Password",
+      "sending": "Resetting...",
+      "success": "Your password has been reset successfully. You can now sign in with your new password.",
+      "backToLogin": "Go to Sign In"
+    },
+    "google": {
+      "or": "or continue with"
+    },
+    "logout": "Sign Out",
+    "sessionExpired": "Your session has expired. Please sign in again."
+  },
+  "pin": {
+    "title": "Enter your PIN",
+    "subtitle": "Enter your 4-digit code to access",
+    "error": "Incorrect PIN. Try again.",
+    "verifying": "Verifying..."
+  },
   "menu": {
     "dashboard": "Dashboard",
     "journal": "Journal",
@@ -12,9 +99,20 @@
     "analytics": "Analytics",
     "settings": "Settings"
   },
+  "topbar": {
+    "subtitle": "Your AI is ready to listen.",
+    "search": "Search...",
+    "sections": "Sections",
+    "noResults": "No results found"
+  },
   "premium": {
+    "title": "MindFlow Premium",
     "description": "Unlock PDF and CSV report export for your therapist.",
     "viewPlans": "View Plans"
+  },
+  "hydration": {
+    "title": "Time to hydrate",
+    "message": "You've been focused for a while. Time to drink some water!"
   },
   "plansPage": {
     "hero": {
@@ -31,7 +129,8 @@
     "buttons": {
       "activePlan": "Active Plan",
       "downgrade": "Downgrade Plan",
-      "upgrade": "Upgrade to Premium"
+      "upgrade": "Upgrade to Premium",
+      "confirmDowngrade": "Are you sure you want to cancel your premium subscription and switch to the free plan?"
     },
     "freemium": {
       "title": "Freemium",
@@ -64,8 +163,35 @@
         "f5Text": " Technical issue resolution."
       }
     },
+    "result": {
+      "successTitle": "Payment successful!",
+      "successDesc": "Your premium subscription has been activated. Enjoy all advanced features.",
+      "viewPlan": "View my plan",
+      "cancelTitle": "Payment cancelled",
+      "cancelDesc": "The payment process was cancelled. You can try again whenever you want.",
+      "backToPlans": "Back to plans"
+    },
     "footer": "🔒 Payments encrypted and processed securely via Stripe.",
-    "loading": "Loading plan information..."
+    "loading": "Loading plan information...",
+    "paymentHistory": {
+      "title": "Payment History",
+      "empty": "No payments recorded yet.",
+      "date": "Date",
+      "amount": "Amount",
+      "method": "Method",
+      "status": "Status",
+      "methods": {
+        "creditCard": "Credit Card",
+        "paypal": "PayPal",
+        "freeTrial": "Free Trial"
+      },
+      "statuses": {
+        "completed": "Completed",
+        "pending": "Pending",
+        "failed": "Failed",
+        "refunded": "Refunded"
+      }
+    }
   },
   "settings": {
     "profile": {
@@ -83,7 +209,9 @@
       "darkMode": "Dark Mode",
       "darkModeDesc": "Ideal for logging emotions at night.",
       "habitReminders": "Habit Reminders",
-      "habitRemindersDesc": "Push notifications for hydration and breaks."
+      "habitRemindersDesc": "Push notifications for hydration and breaks.",
+      "reminderTime": "Reminder Time",
+      "reminderTimeDesc": "Set the time to receive habit reminders."
     },
     "subscription": {
       "title": "Subscription",
@@ -99,17 +227,76 @@
     "support": {
       "title": "Technical Support",
       "ticket": "Create Support Ticket",
-      "faq": "Help Center (FAQ)"
+      "faq": "Help Center (FAQ)",
+      "ticketTitle": "Submit a Support Ticket",
+      "subjectLabel": "Subject",
+      "messageLabel": "Describe your issue",
+      "send": "Send Ticket",
+      "cancel": "Cancel",
+      "close": "Close",
+      "ticketNumber": "Your ticket number:",
+      "ticketInfo": "We'll get back to you shortly. Please save your ticket number for reference.",
+      "faqTitle": "Frequently Asked Questions",
+      "faq1q": "How do I reset my PIN?",
+      "faq1a": "Go to Settings > Privacy and toggle the PIN lock off, then on again to set a new PIN.",
+      "faq2q": "How do I export my data?",
+      "faq2a": "Data export is available in the Premium plan. Upgrade from the Subscription section.",
+      "faq3q": "How do I change my language?",
+      "faq3a": "Use the language switcher in the top bar to toggle between English and Spanish."
     },
     "dangerZone": {
       "title": "Danger Zone",
       "warning": "Deleting your account will permanently purge all your encrypted records.",
-      "deleteAccount": "Delete my account"
+      "deleteAccount": "Delete my account",
+      "confirmText": "Are you sure? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirmDelete": "Yes, delete my account",
+      "deleting": "Deleting..."
     },
     "loading": "Loading settings..."
   },
   "journal": {
     "title": "Your Emotional History",
+    "subtitle": "Add a new entry whenever you want to revisit an important moment.",
+    "newEntry": "New entry",
+    "noEntries": "No entries found with the selected filters",
+    "composer": {
+      "eyebrow": "New reflection",
+      "title": "Add another journal entry",
+      "close": "Close form",
+      "removeFile": "Remove file",
+      "save": "Save entry",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "fields": {
+        "title": "Title",
+        "category": "Category",
+        "date": "Date",
+        "sentiment": "Emotional state",
+        "content": "Content",
+        "images": "Images"
+      },
+      "placeholders": {
+        "title": "Write a short title",
+        "content": "Tell me what happened today...",
+        "upload": "Click to upload images"
+      },
+      "categories": {
+        "reflection": "Personal Reflection",
+        "work": "Work",
+        "studies": "Studies",
+        "family": "Family"
+      },
+      "sentiments": {
+        "auto": "Auto-detect (AI)",
+        "positive": "Positive",
+        "neutral": "Neutral",
+        "negative": "Negative"
+      }
+    },
+    "entryCard": {
+      "attachments": "Attachments"
+    },
     "filters": {
       "searchPlaceholder": "Search in your thoughts...",
       "tabs": {
@@ -127,6 +314,7 @@
     },
     "calendar": {
       "previousMonth": "View Previous Month",
+      "nextMonth": "View Next Month",
       "weekdays": ["M", "T", "W", "T", "F", "S", "S"],
       "months": [
         "January", "February", "March", "April", "May", "June",
@@ -145,14 +333,37 @@
       "title": "AI Suggestions",
       "desc": "Coming soon: Recommended habits based on your emotional state and current routines."
     },
+    "suggestions": {
+      "poweredBy": "MindFlow AI Suggestions",
+      "subtitle": "Recommended habits based on your emotional state and current routines.",
+      "wellnessInsight": "Your wellness this week",
+      "stress": "Stress",
+      "adopt": "Adopt",
+      "allAdopted": "You've adopted all suggestions. Keep it up!",
+      "reasons": {
+        "breathingReason": "Reduces anxiety and improves focus during stressful moments.",
+        "walkReason": "Boosts mood and creativity. Great for clearing your mind.",
+        "journalingReason": "Processing emotions before sleep improves sleep quality.",
+        "stretchReason": "Activates your body and reduces accumulated muscle tension.",
+        "digitalReason": "Disconnecting reduces cognitive overload and stress.",
+        "gratitudeReason": "Practicing gratitude increases satisfaction and overall well-being.",
+        "hydrationReason": "Staying hydrated improves concentration and energy.",
+        "readingReason": "Stimulates the mind and helps disconnect before sleep.",
+        "yogaReason": "Combines movement and meditation for holistic well-being.",
+        "reviewReason": "Reflecting on your goals maintains motivation and direction.",
+        "napReason": "A short nap restores energy and reduces stress.",
+        "meditationReason": "Calms the mind and strengthens emotional resilience."
+      }
+    },
     "tabs": {
       "routines": "My Routines",
       "suggestions": "AI Suggestions",
       "history": "History"
     },
     "alerts": {
-      "stressTitle": "MindFlow AI",
-      "stressMessage": " detects higher than average stress levels. We have automatically paused your highly demanding cognitive tasks. Prioritize your well-being and rest today."
+      "stressTitle": "MindFlow AI: ",
+      "stressMessage": "Higher than average stress levels detected. We have automatically paused your highly demanding cognitive tasks. Prioritize your well-being and rest today.",
+      "pausedHabits": "Paused habits:"
     },
     "addForm": {
       "title": "Add New Habit",
@@ -179,15 +390,140 @@
       "daysCompleted": "days completed",
       "streak": "Streak:",
       "days": "days"
+    },
+    "dailyProgress": "Daily Progress",
+    "percentCompleted": "{percent}% Completed ({completed}/{total})",
+    "table": {
+      "status": "Status",
+      "name": "Habit",
+      "category": "Category",
+      "streak": "Current Streak"
+    },
+    "emptyFilter": "No habits match the filter.",
+    "pausedByAI": "Paused by AI",
+    "aria": {
+      "markPending": "Mark as pending",
+      "markCompleted": "Mark as completed"
+    }
+  },
+  "dashboard": {
+    "weeklySummary": {
+      "title": "Weekly Mood Summary",
+      "viewAll": "View Full Report",
+      "loading": "Loading weekly summary...",
+      "empty": "Not enough data to display the summary.",
+      "average": "Average",
+      "peak": "Peak",
+      "low": "Low"
+    },
+    "chat": {
+      "welcomeTitle": "Hi, how are you feeling today?",
+      "welcomeDesc": "Write what you're thinking or feeling. MindFlow AI will analyze your emotions and give you personalized advice.",
+      "history": "History",
+      "newChat": "New chat",
+      "suggestions": {
+        "s1": "I'm feeling anxious about work today",
+        "s2": "Had a good day, feeling grateful",
+        "s3": "I haven't been sleeping well lately",
+        "s4": "I'm stressed about exams"
+      }
+    },
+    "recentEntries": {
+      "title": "Recent Conversations",
+      "viewAll": "View full history",
+      "you": "You",
+      "empty": "No conversations yet. Write how you feel to start."
+    },
+    "dailyHabits": {
+      "title": "Daily Habits",
+      "days": "days"
+    },
+    "quickInterventions": {
+      "title": "Quick Interventions",
+      "live": "LIVE",
+      "breathing": "4-7-8 Breathing",
+      "breathingDesc": "Breathing technique to reduce anxiety",
+      "microMeditation": "Micro-meditation",
+      "microMeditationDesc": "3-minute guided meditation",
+      "grounding": "5-4-3-2-1 Grounding",
+      "groundingDesc": "Present-moment awareness exercise",
+      "meditation": {
+        "step1": "Close your eyes and take a deep breath...",
+        "step2": "Observe your thoughts without judging them...",
+        "step3": "Feel your body relax with each breath...",
+        "step4": "Connect with the present moment...",
+        "step5": "Slowly, return to your surroundings..."
+      }
+    },
+    "interventions": {
+      "inhale": "Inhale",
+      "inhaleDesc": "Breathe in deeply through your nose for 4 seconds",
+      "hold": "Hold",
+      "holdDesc": "Hold the air in your lungs for 7 seconds",
+      "exhale": "Exhale",
+      "exhaleDesc": "Slowly release the air through your mouth for 8 seconds",
+      "round": "Round",
+      "see": "Sight",
+      "seeDesc": "Name 5 things you can see around you",
+      "touch": "Touch",
+      "touchDesc": "Identify 4 things you can touch right now",
+      "hear": "Hearing",
+      "hearDesc": "Listen to 3 different sounds around you",
+      "smell": "Smell",
+      "smellDesc": "Notice 2 distinct smells near you",
+      "taste": "Taste",
+      "tasteDesc": "Notice 1 taste in your mouth right now",
+      "next": "Next",
+      "complete": "Exercise completed"
+    },
+    "moodInput": {
+      "title": "How are you feeling right now?",
+      "aiActive": "MindFlow AI Active",
+      "placeholder": "Write your thoughts here. This is a safe and encrypted space...",
+      "save": "Save Entry",
+      "analyzing": "Analyzing...",
+      "processing": "Processing your emotions and finding the best advice for you...",
+      "rateLabel": "Rate this advice",
+      "ratingThanks": "Thanks for your feedback! It helps us improve.",
+      "tags": {
+        "studies": "Studies",
+        "work": "Work",
+        "family": "Family",
+        "personal": "Personal"
+      }
     }
   },
   "analytics": {
     "title": "Your Emotional Landscape",
     "telemetry": "BIOMETRIC SYNC ACTIVE // V.3.1.0",
     "loading": "Encrypting and analyzing biometric data...",
+    "insights": {
+      "u1": "You showed strong resilience this week. Work-related stress dropped significantly after Wednesday.",
+      "u2": "Your workload was higher this week; it may help to pause a little and prioritize rest.",
+      "u3": "Your emotional recovery pace has been very solid; working with patients seems to energize you positively.",
+      "u4": "Although the week brought academic pressure, you kept a steady and consistent progression.",
+      "u5": "Your digital rest is improving your sleep quality and night routine consistency."
+    },
+    "kpis": {
+      "entriesMonth": "ENTRIES THIS MONTH",
+      "moodAverage": "AVERAGE MOOD",
+      "maxHabitStreak": "LONGEST HABIT STREAK"
+    },
+    "moodCalendar": {
+      "title": "Mood Calendar"
+    },
+    "moods": {
+      "positive": "Positive",
+      "neutral": "Neutral",
+      "negative": "Negative"
+    },
+    "units": {
+      "days": "days"
+    },
     "components": {
       "wordCloud": {
         "title": "frequent word cloud",
+        "subtitle": "NLP_ANALYSIS",
         "words": {
           "calm": "Calm",
           "anxious": "> anxious.log",
@@ -195,27 +531,118 @@
           "grateful": "Grateful",
           "family": "[FAMILY]",
           "tired": "Tired"
-        }
+        },
+        "empty": "Not enough data to generate the word cloud."
       },
       "export": {
         "title": "Export Clinical Reports",
         "desc": "Download your structured history with charts to formally share with your therapist."
       },
       "weeklySummary": {
+        "logDateRange": "LOG_DATE: {start} - {end}",
+        "trendRange": "{trend} (7D)",
         "stabilityIndex": "Stability Index",
+        "aiAnalysis": "NEXUS_AI_ANALYSIS",
         "active": "ACTIVE"
       },
       "fluctuationChart": {
         "title": "Activity Level in Sessions",
-        "yLabel": "Task count / Phase"
+        "subtitle": "FREQ_DISTRIBUTION",
+        "live": "LIVE",
+        "yLabel": "Task count / Phase",
+        "dataset": {
+          "interactions": "Interactions"
+        },
+        "labels": {
+          "assessment": "Assessment",
+          "growth": "Growth",
+          "reflection": "Reflection",
+          "action": "Action",
+          "integration": "Integration"
+        }
       },
       "trendChart": {
         "title": "Mood Trend",
+        "dataset": {
+          "wellbeing": "Wellbeing Level"
+        },
+        "labels": {
+          "mon": "Mon",
+          "tue": "Tue",
+          "wed": "Wed",
+          "thu": "Thu",
+          "fri": "Fri",
+          "sat": "Sat",
+          "sun": "Sun"
+        },
         "legend": {
           "wellbeing": "Wellbeing Level",
           "stress": "Stress Load"
         }
       }
     }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No new notifications",
+    "markAllRead": "Mark all as read",
+    "marking": "...",
+    "types": {
+      "reminder": "Reminder",
+      "aiAlert": "AI Alert"
+    },
+    "dismiss": "Dismiss notification",
+    "timeAgo": {
+      "now": "Now",
+      "minutes": "{n} min ago",
+      "hours": "{n}h ago",
+      "days": "{n}d ago"
+    }
+  },
+  "home": {
+    "badge": "MindFlow v3.1.0",
+    "hero": {
+      "title": "Welcome to your mental wellness space",
+      "subtitle": "Track your habits, log your emotions, and discover patterns in your daily well-being.",
+      "cta": "Go to Dashboard"
+    },
+    "features": {
+      "moodJournal": {
+        "title": "Emotional Journal",
+        "desc": "Record your thoughts and emotions with AI-powered sentiment analysis."
+      },
+      "habitTracking": {
+        "title": "Habit Tracking",
+        "desc": "Create daily, weekly or monthly routines and track your progress."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "desc": "Visualize trends, streaks and detailed well-being statistics."
+      },
+      "premium": {
+        "title": "MindFlow Premium",
+        "desc": "Unlock advanced features, enhanced AI and personalized reports."
+      }
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "message": "The page you are looking for does not exist or has been moved.",
+    "backToDashboard": "Back to Dashboard",
+    "previousPage": "Previous Page"
+  },
+  "routes": {
+    "home": "Home - MindFlow",
+    "login": "Sign In - MindFlow",
+    "register": "Create Account - MindFlow",
+    "forgotPassword": "Recover Password - MindFlow",
+    "resetPassword": "Reset Password - MindFlow",
+    "dashboard": "Dashboard - MindFlow",
+    "analytics": "Analytics - MindFlow",
+    "habits": "Habits - MindFlow",
+    "journal": "Journal - MindFlow",
+    "subscription": "Subscription - MindFlow",
+    "settings": "Settings - MindFlow",
+    "notFound": "404 - Not Found"
   }
 }

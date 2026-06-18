@@ -1,29 +1,52 @@
 export class HabitCompletionLog {
-    constructor({ habitId, habitName, category, date, completed }) {
+    constructor({
+        id = null,
+        habitId,
+        habitName,
+        category,
+        date,
+        completed,
+        completedAt = null,
+        createdAt = null
+    }) {
+        this.id = id
         this.habitId = habitId
         this.habitName = habitName
         this.category = category
         this.date = date
         this.completed = completed
+        this.completedAt = completedAt
+        this.createdAt = createdAt
     }
 
     toJSON() {
         return {
-            habitId: this.habitId,
-            habitName: this.habitName,
+            habit_id: this.habitId,
+            habit_name: this.habitName,
             category: this.category,
             date: this.date,
-            completed: this.completed
+            completed_at: this.completedAt || new Date().toISOString()
         }
     }
 
     static fromJSON(data) {
-        return new HabitCompletionLog(data)
+        const completedAt = data.completed_at ?? data.completedAt ?? null
+        return new HabitCompletionLog({
+            id: data.id,
+            habitId: data.habit_id ?? data.habitId,
+            habitName: data.habit_name ?? data.habitName,
+            category: data.category,
+            date: data.date ?? (completedAt ? completedAt.slice(0, 10) : null),
+            completed: data.completed ?? true,
+            completedAt,
+            createdAt: data.created_at ?? data.createdAt ?? null
+        })
     }
 }
 
 export function getWeekStart(date) {
     const d = new Date(date)
+    if (isNaN(d.getTime())) return d
     const day = d.getDay()
     const diff = d.getDate() - day + (day === 0 ? -6 : 1)
     d.setDate(diff)
@@ -39,16 +62,19 @@ export function getWeekEnd(weekStart) {
 
 export function formatWeekLabel(weekStart) {
     const weekEnd = getWeekEnd(weekStart)
+    const locale = typeof localStorage !== 'undefined' ? localStorage.getItem('mindflow-lang') || 'es' : 'es'
     const opts = { day: 'numeric', month: 'short' }
-    const start = weekStart.toLocaleDateString('es-ES', opts)
-    const end = weekEnd.toLocaleDateString('es-ES', { ...opts, year: 'numeric' })
-    return `Semana del ${start} – ${end}`
+    const start = weekStart.toLocaleDateString(locale, opts)
+    const end = weekEnd.toLocaleDateString(locale, { ...opts, year: 'numeric' })
+    return `${start} – ${end}`
 }
 
 function maxStreakInWeek(datesCompleted) {
     if (!datesCompleted.length) return 0
 
-    const sorted = [...datesCompleted].sort()
+    const sorted = [...datesCompleted].filter(d => !isNaN(new Date(d).getTime())).sort()
+    if (!sorted.length) return 0
+
     let max = 1
     let current = 1
 
@@ -69,10 +95,15 @@ function maxStreakInWeek(datesCompleted) {
 }
 
 export function buildWeeklySummaries(logs) {
+    if (!Array.isArray(logs) || logs.length === 0) return []
+
     const byWeek = {}
 
     for (const log of logs) {
-        const weekStart = getWeekStart(new Date(log.date))
+        const date = new Date(log.date)
+        if (isNaN(date.getTime())) continue
+
+        const weekStart = getWeekStart(date)
         const key = weekStart.toISOString().slice(0, 10)
 
         if (!byWeek[key]) {

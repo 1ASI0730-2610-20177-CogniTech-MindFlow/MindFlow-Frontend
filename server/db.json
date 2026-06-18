@@ -1,13 +1,14 @@
 {
   "users": [
     {
-      "id": "u1",
       "name": "Carlos Mendoza",
       "email": "carlos.mendoza@email.com",
-      "password": "$2b$10$hashed_password_1",
       "occupation": "Software Engineer",
       "is_premium": true,
-      "created_at": "2024-01-15T08:30:00Z"
+      "timezone": "GMT-7",
+      "dark_mode_enabled": true,
+      "updated_at": "2026-05-23T15:09:33.807Z",
+      "id": "u1"
     },
     {
       "id": "u2",
@@ -16,7 +17,11 @@
       "password": "$2b$10$hashed_password_2",
       "occupation": "Diseñadora UX",
       "is_premium": false,
-      "created_at": "2024-02-10T10:00:00Z"
+      "timezone": "GMT-5",
+      "dark_mode_enabled": true,
+      "created_at": "2024-02-10T10:00:00Z",
+      "updated_at": "2024-05-18T14:20:00Z",
+      "deleted_at": null
     },
     {
       "id": "u3",
@@ -25,7 +30,11 @@
       "password": "$2b$10$hashed_password_3",
       "occupation": "Psicólogo",
       "is_premium": true,
-      "created_at": "2024-03-05T09:15:00Z"
+      "timezone": "GMT-5",
+      "dark_mode_enabled": false,
+      "created_at": "2024-03-05T09:15:00Z",
+      "updated_at": "2024-05-19T11:30:00Z",
+      "deleted_at": null
     },
     {
       "id": "u4",
@@ -34,7 +43,11 @@
       "password": "$2b$10$hashed_password_4",
       "occupation": "Estudiante",
       "is_premium": false,
-      "created_at": "2024-04-20T14:45:00Z"
+      "timezone": "GMT-5",
+      "dark_mode_enabled": true,
+      "created_at": "2024-04-20T14:45:00Z",
+      "updated_at": "2024-05-17T09:00:00Z",
+      "deleted_at": null
     },
     {
       "id": "u5",
@@ -43,7 +56,61 @@
       "password": "$2b$10$hashed_password_5",
       "occupation": "Médico",
       "is_premium": true,
-      "created_at": "2024-05-01T07:00:00Z"
+      "timezone": "GMT-5",
+      "dark_mode_enabled": false,
+      "created_at": "2024-05-01T07:00:00Z",
+      "updated_at": "2024-05-21T08:45:00Z",
+      "deleted_at": null
+    }
+  ],
+  "userSettings": [
+    {
+      "pin_lock_enabled": false,
+      "habit_reminders_enabled": false,
+      "reminder_time": "09:00",
+      "language": "es",
+      "updated_at": "2026-05-22T21:09:46.131Z",
+      "id": "us1"
+    },
+    {
+      "id": "us2",
+      "user_id": "u2",
+      "pin_lock_enabled": false,
+      "habit_reminders_enabled": true,
+      "reminder_time": "08:30",
+      "language": "es",
+      "created_at": "2024-02-10T10:00:00Z",
+      "updated_at": "2024-05-18T14:20:00Z"
+    },
+    {
+      "id": "us3",
+      "user_id": "u3",
+      "pin_lock_enabled": true,
+      "habit_reminders_enabled": true,
+      "reminder_time": "10:00",
+      "language": "es",
+      "created_at": "2024-03-05T09:15:00Z",
+      "updated_at": "2024-05-19T11:30:00Z"
+    },
+    {
+      "id": "us4",
+      "user_id": "u4",
+      "pin_lock_enabled": false,
+      "habit_reminders_enabled": true,
+      "reminder_time": "07:00",
+      "language": "es",
+      "created_at": "2024-04-20T14:45:00Z",
+      "updated_at": "2024-05-17T09:00:00Z"
+    },
+    {
+      "id": "us5",
+      "user_id": "u5",
+      "pin_lock_enabled": true,
+      "habit_reminders_enabled": true,
+      "reminder_time": "06:30",
+      "language": "es",
+      "created_at": "2024-05-01T07:00:00Z",
+      "updated_at": "2024-05-21T08:45:00Z"
     }
   ],
   "habits": [
@@ -51,167 +118,374 @@
       "id": "h1",
       "user_id": "u1",
       "name": "Meditación matutina",
+      "category": "Salud Mental",
       "frequency": "daily",
       "streak": 14,
-      "created_at": "2024-01-20T07:00:00Z"
+      "status": "completed",
+      "pausedByAi": false,
+      "created_at": "2024-01-20T07:00:00Z",
+      "updated_at": "2026-05-23T12:47:54.571Z",
+      "deleted_at": null
     },
     {
       "id": "h2",
       "user_id": "u1",
       "name": "Ejercicio 30 min",
+      "category": "Salud Física",
       "frequency": "daily",
       "streak": 7,
-      "created_at": "2024-01-22T07:00:00Z"
+      "status": "pending",
+      "pausedByAi": false,
+      "created_at": "2024-01-22T07:00:00Z",
+      "updated_at": "2026-05-23T12:45:59.971Z",
+      "deleted_at": null
     },
     {
       "id": "h3",
       "user_id": "u2",
       "name": "Leer 20 páginas",
+      "category": "Estudios",
       "frequency": "daily",
       "streak": 21,
-      "created_at": "2024-02-15T08:00:00Z"
+      "status": "pending",
+      "pausedByAi": false,
+      "created_at": "2024-02-15T08:00:00Z",
+      "updated_at": "2026-05-23T12:45:59.180Z",
+      "deleted_at": null
     },
     {
       "id": "h4",
       "user_id": "u3",
       "name": "Journaling nocturno",
+      "category": "Salud Mental",
       "frequency": "daily",
       "streak": 30,
-      "created_at": "2024-03-10T20:00:00Z"
+      "status": "pending",
+      "pausedByAi": false,
+      "created_at": "2024-03-10T20:00:00Z",
+      "updated_at": "2026-05-23T12:45:58.724Z",
+      "deleted_at": null
     },
     {
       "id": "h5",
       "user_id": "u4",
       "name": "Yoga",
+      "category": "Bienestar",
       "frequency": "weekly",
       "streak": 5,
-      "created_at": "2024-04-25T06:00:00Z"
+      "status": "pending",
+      "pausedByAi": false,
+      "created_at": "2024-04-25T06:00:00Z",
+      "updated_at": "2026-05-23T12:45:56.731Z",
+      "deleted_at": null
     },
     {
       "id": "h6",
       "user_id": "u5",
       "name": "Sin redes sociales antes de dormir",
+      "category": "Sueño",
       "frequency": "daily",
       "streak": 10,
-      "created_at": "2024-05-05T21:00:00Z"
+      "status": "pending",
+      "pausedByAi": false,
+      "created_at": "2024-05-05T21:00:00Z",
+      "updated_at": "2026-05-23T12:46:01.214Z",
+      "deleted_at": null
     },
     {
       "id": "h7",
       "user_id": "u2",
       "name": "Beber 2L de agua",
+      "category": "Salud Física",
       "frequency": "daily",
       "streak": 12,
-      "created_at": "2024-02-20T08:00:00Z"
+      "status": "pending",
+      "pausedByAi": false,
+      "created_at": "2024-02-20T08:00:00Z",
+      "updated_at": "2026-05-23T12:46:01.779Z",
+      "deleted_at": null
     }
   ],
   "habitLogs": [
     {
       "id": "hl1",
       "habit_id": "h1",
-      "completed_at": "2024-05-10T07:05:00Z"
+      "category": "Salud Mental",
+      "date": "2024-05-10",
+      "completed": true,
+      "completed_at": "2024-05-10T07:05:00Z",
+      "created_at": "2024-05-10T07:05:00Z"
     },
     {
       "id": "hl2",
       "habit_id": "h1",
-      "completed_at": "2024-05-11T07:10:00Z"
+      "category": "Salud Mental",
+      "date": "2024-05-11",
+      "completed": true,
+      "completed_at": "2024-05-11T07:10:00Z",
+      "created_at": "2024-05-11T07:10:00Z"
     },
     {
       "id": "hl3",
       "habit_id": "h2",
-      "completed_at": "2024-05-10T08:00:00Z"
+      "category": "Salud Física",
+      "date": "2024-05-10",
+      "completed": true,
+      "completed_at": "2024-05-10T08:00:00Z",
+      "created_at": "2024-05-10T08:00:00Z"
     },
     {
       "id": "hl4",
       "habit_id": "h3",
-      "completed_at": "2024-05-09T22:00:00Z"
+      "category": "Estudios",
+      "date": "2024-05-09",
+      "completed": true,
+      "completed_at": "2024-05-09T22:00:00Z",
+      "created_at": "2024-05-09T22:00:00Z"
     },
     {
       "id": "hl5",
       "habit_id": "h3",
-      "completed_at": "2024-05-10T22:15:00Z"
+      "category": "Estudios",
+      "date": "2024-05-10",
+      "completed": true,
+      "completed_at": "2024-05-10T22:15:00Z",
+      "created_at": "2024-05-10T22:15:00Z"
     },
     {
       "id": "hl6",
       "habit_id": "h4",
-      "completed_at": "2024-05-10T23:00:00Z"
+      "category": "Salud Mental",
+      "date": "2024-05-10",
+      "completed": true,
+      "completed_at": "2024-05-10T23:00:00Z",
+      "created_at": "2024-05-10T23:00:00Z"
     },
     {
       "id": "hl7",
       "habit_id": "h5",
-      "completed_at": "2024-05-08T06:30:00Z"
+      "category": "Bienestar",
+      "date": "2024-05-08",
+      "completed": true,
+      "completed_at": "2024-05-08T06:30:00Z",
+      "created_at": "2024-05-08T06:30:00Z"
     },
     {
       "id": "hl8",
       "habit_id": "h6",
-      "completed_at": "2024-05-10T22:00:00Z"
+      "category": "Sueño",
+      "date": "2024-05-10",
+      "completed": true,
+      "completed_at": "2024-05-10T22:00:00Z",
+      "created_at": "2024-05-10T22:00:00Z"
     },
     {
       "id": "hl9",
       "habit_id": "h7",
-      "completed_at": "2024-05-11T18:00:00Z"
+      "category": "Salud Física",
+      "date": "2024-05-11",
+      "completed": true,
+      "completed_at": "2024-05-11T18:00:00Z",
+      "created_at": "2024-05-11T18:00:00Z"
     },
     {
       "id": "hl10",
       "habit_id": "h2",
-      "completed_at": "2024-05-11T08:30:00Z"
+      "category": "Salud Física",
+      "date": "2024-05-11",
+      "completed": true,
+      "completed_at": "2024-05-11T08:30:00Z",
+      "created_at": "2024-05-11T08:30:00Z"
+    },
+    {
+      "habit_id": "h5",
+      "habit_name": "Yoga",
+      "habitId": "h5",
+      "habitName": "Yoga",
+      "category": "Bienestar",
+      "date": "2026-05-23",
+      "completed": false,
+      "completed_at": null,
+      "created_at": null,
+      "id": "GOTaY6_EpGg"
+    },
+    {
+      "habit_id": "h4",
+      "habit_name": "Journaling nocturno",
+      "habitId": "h4",
+      "habitName": "Journaling nocturno",
+      "category": "Salud Mental",
+      "date": "2026-05-23",
+      "completed": false,
+      "completed_at": null,
+      "created_at": null,
+      "id": "VDEJtvIkjyw"
+    },
+    {
+      "habit_id": "h3",
+      "habit_name": "Leer 20 páginas",
+      "habitId": "h3",
+      "habitName": "Leer 20 páginas",
+      "category": "Estudios",
+      "date": "2026-05-23",
+      "completed": false,
+      "completed_at": null,
+      "created_at": null,
+      "id": "jaSDCjL0O_w"
+    },
+    {
+      "habit_id": "h2",
+      "habit_name": "Ejercicio 30 min",
+      "habitId": "h2",
+      "habitName": "Ejercicio 30 min",
+      "category": "Salud Física",
+      "date": "2026-05-23",
+      "completed": false,
+      "completed_at": null,
+      "created_at": null,
+      "id": "BLHFZDNWqVA"
+    },
+    {
+      "habit_id": "h1",
+      "habit_name": "Meditación matutina",
+      "habitId": "h1",
+      "habitName": "Meditación matutina",
+      "category": "Salud Mental",
+      "date": "2026-05-23",
+      "completed": true,
+      "completed_at": null,
+      "created_at": null,
+      "id": "RVHja-Qhex0"
+    },
+    {
+      "habit_id": "h6",
+      "habit_name": "Sin redes sociales antes de dormir",
+      "habitId": "h6",
+      "habitName": "Sin redes sociales antes de dormir",
+      "category": "Sueño",
+      "date": "2026-05-23",
+      "completed": false,
+      "completed_at": null,
+      "created_at": null,
+      "id": "obQ3f00-T64"
+    },
+    {
+      "habit_id": "h7",
+      "habit_name": "Beber 2L de agua",
+      "habitId": "h7",
+      "habitName": "Beber 2L de agua",
+      "category": "Salud Física",
+      "date": "2026-05-23",
+      "completed": false,
+      "completed_at": null,
+      "created_at": null,
+      "id": "G2mE9_Z2l2U"
     }
   ],
   "journalEntries": [
     {
       "id": "je1",
       "user_id": "u1",
+      "title": "Día productivo y meditación",
       "content": "Hoy fue un día muy productivo. Logré terminar el sprint y medité por 20 minutos. Me siento en paz.",
       "sentiment": "positive",
-      "created_at": "2024-05-10T22:00:00Z"
+      "date": "2024-05-10",
+      "category": "Reflexión Personal",
+      "hasPreview": false,
+      "created_at": "2024-05-10T22:00:00Z",
+      "updated_at": "2024-05-10T22:00:00Z",
+      "deleted_at": null
     },
     {
       "id": "je2",
       "user_id": "u1",
+      "title": "Reunión difícil con el equipo",
       "content": "Tuve una reunión difícil con el equipo. Siento que no me escucharon bien. Debo trabajar en mi comunicación.",
       "sentiment": "negative",
-      "created_at": "2024-05-08T21:30:00Z"
+      "date": "2024-05-08",
+      "category": "Trabajo",
+      "hasPreview": false,
+      "created_at": "2024-05-08T21:30:00Z",
+      "updated_at": "2024-05-08T21:30:00Z",
+      "deleted_at": null
     },
     {
       "id": "je3",
       "user_id": "u2",
+      "title": "Terminé un libro",
       "content": "Terminé el libro que llevaba meses leyendo. Fue una historia hermosa. Ahora sé qué quiero en mi próximo proyecto.",
       "sentiment": "positive",
-      "created_at": "2024-05-09T20:00:00Z"
+      "date": "2024-05-09",
+      "category": "Estudios",
+      "hasPreview": false,
+      "created_at": "2024-05-09T20:00:00Z",
+      "updated_at": "2024-05-09T20:00:00Z",
+      "deleted_at": null
     },
     {
       "id": "je4",
       "user_id": "u3",
+      "title": "Sesión de terapia reveladora",
       "content": "Sesión de terapia muy reveladora. Empiezo a entender patrones de comportamiento que me frenan.",
       "sentiment": "neutral",
-      "created_at": "2024-05-07T19:00:00Z"
+      "date": "2024-05-07",
+      "category": "Reflexión Personal",
+      "hasPreview": false,
+      "created_at": "2024-05-07T19:00:00Z",
+      "updated_at": "2024-05-07T19:00:00Z",
+      "deleted_at": null
     },
     {
       "id": "je5",
       "user_id": "u4",
+      "title": "Estrés de exámenes finales",
       "content": "Los exámenes finales están pesando. Me siento agotada pero también orgullosa del esfuerzo que estoy haciendo.",
       "sentiment": "neutral",
-      "created_at": "2024-05-11T23:00:00Z"
+      "date": "2024-05-11",
+      "category": "Estudios",
+      "hasPreview": false,
+      "created_at": "2024-05-11T23:00:00Z",
+      "updated_at": "2024-05-11T23:00:00Z",
+      "deleted_at": null
     },
     {
       "id": "je6",
       "user_id": "u5",
+      "title": "Primer día sin revisar el teléfono",
       "content": "Primer día sin revisar el teléfono antes de dormir. Dormí muchísimo mejor. Vale la pena el esfuerzo.",
       "sentiment": "positive",
-      "created_at": "2024-05-10T22:45:00Z"
+      "date": "2024-05-10",
+      "category": "Reflexión Personal",
+      "hasPreview": false,
+      "created_at": "2024-05-10T22:45:00Z",
+      "updated_at": "2024-05-10T22:45:00Z",
+      "deleted_at": null
     },
     {
       "id": "je7",
       "user_id": "u2",
+      "title": "Frustración con un cliente",
       "content": "Me frustré con un cliente hoy. Tuve que respirar profundo varias veces. Al final todo salió bien.",
       "sentiment": "negative",
-      "created_at": "2024-05-06T18:00:00Z"
+      "date": "2024-05-06",
+      "category": "Trabajo",
+      "hasPreview": false,
+      "created_at": "2024-05-06T18:00:00Z",
+      "updated_at": "2024-05-06T18:00:00Z",
+      "deleted_at": null
     },
     {
       "id": "je8",
       "user_id": "u3",
+      "title": "Ayudé a un paciente",
       "content": "Hoy ayudé a un paciente a superar un bloqueo que llevaba semanas. Es por esto que amo mi trabajo.",
       "sentiment": "positive",
-      "created_at": "2024-05-11T20:00:00Z"
+      "date": "2024-05-11",
+      "category": "Trabajo",
+      "hasPreview": false,
+      "created_at": "2024-05-11T20:00:00Z",
+      "updated_at": "2024-05-11T20:00:00Z",
+      "deleted_at": null
     }
   ],
   "tags": [
@@ -315,31 +589,36 @@
       "id": "m1",
       "entry_id": "je1",
       "url": "https://storage.example.com/media/u1/photo_20240510.jpg",
-      "type": "image"
+      "type": "image",
+      "created_at": "2024-05-10T22:00:00Z"
     },
     {
       "id": "m2",
       "entry_id": "je3",
       "url": "https://storage.example.com/media/u2/voice_note_20240509.mp3",
-      "type": "audio"
+      "type": "audio",
+      "created_at": "2024-05-09T20:00:00Z"
     },
     {
       "id": "m3",
       "entry_id": "je5",
       "url": "https://storage.example.com/media/u4/study_photo.jpg",
-      "type": "image"
+      "type": "image",
+      "created_at": "2024-05-11T23:00:00Z"
     },
     {
       "id": "m4",
       "entry_id": "je6",
       "url": "https://storage.example.com/media/u5/sleep_stats.pdf",
-      "type": "document"
+      "type": "document",
+      "created_at": "2024-05-10T22:45:00Z"
     },
     {
       "id": "m5",
       "entry_id": "je8",
       "url": "https://storage.example.com/media/u3/session_notes.pdf",
-      "type": "document"
+      "type": "document",
+      "created_at": "2024-05-11T20:00:00Z"
     }
   ],
   "subscriptions": [
@@ -349,7 +628,11 @@
       "type": "premium_annual",
       "status": "active",
       "start_date": "2024-01-15T00:00:00Z",
-      "end_date": "2025-01-15T00:00:00Z"
+      "end_date": "2025-01-15T00:00:00Z",
+      "auto_renew": true,
+      "payment_method": "credit_card",
+      "created_at": "2024-01-15T00:00:00Z",
+      "updated_at": "2024-05-10T00:00:00Z"
     },
     {
       "id": "s2",
@@ -357,7 +640,11 @@
       "type": "premium_monthly",
       "status": "active",
       "start_date": "2024-05-01T00:00:00Z",
-      "end_date": "2024-06-01T00:00:00Z"
+      "end_date": "2024-06-01T00:00:00Z",
+      "auto_renew": true,
+      "payment_method": "credit_card",
+      "created_at": "2024-05-01T00:00:00Z",
+      "updated_at": "2024-05-01T00:00:00Z"
     },
     {
       "id": "s3",
@@ -365,7 +652,11 @@
       "type": "premium_annual",
       "status": "active",
       "start_date": "2024-05-01T00:00:00Z",
-      "end_date": "2025-05-01T00:00:00Z"
+      "end_date": "2025-05-01T00:00:00Z",
+      "auto_renew": true,
+      "payment_method": "paypal",
+      "created_at": "2024-05-01T00:00:00Z",
+      "updated_at": "2024-05-01T00:00:00Z"
     },
     {
       "id": "s4",
@@ -373,7 +664,11 @@
       "type": "free_trial",
       "status": "expired",
       "start_date": "2024-02-10T00:00:00Z",
-      "end_date": "2024-03-10T00:00:00Z"
+      "end_date": "2024-03-10T00:00:00Z",
+      "auto_renew": false,
+      "payment_method": null,
+      "created_at": "2024-02-10T00:00:00Z",
+      "updated_at": "2024-03-10T00:00:00Z"
     },
     {
       "id": "s5",
@@ -381,7 +676,11 @@
       "type": "free_trial",
       "status": "active",
       "start_date": "2024-04-20T00:00:00Z",
-      "end_date": "2024-05-20T00:00:00Z"
+      "end_date": "2024-05-20T00:00:00Z",
+      "auto_renew": false,
+      "payment_method": null,
+      "created_at": "2024-04-20T00:00:00Z",
+      "updated_at": "2024-04-20T00:00:00Z"
     }
   ],
   "analyticsCache": [
@@ -389,31 +688,687 @@
       "id": "ac1",
       "user_id": "u1",
       "generated_at": "2024-05-11T00:00:00Z",
+      "updated_at": "2024-05-21T08:00:00Z",
+      "score": 78,
+      "trend_percentage": "+12%",
+      "start_date": "2024-05-12",
+      "end_date": "2024-05-18",
+      "ai_insight_localized": {
+        "es": "Has mostrado una gran resiliencia esta semana. El estrés relacionado con el trabajo disminuyó significativamente después del miércoles.",
+        "en": "You showed strong resilience this week. Work-related stress dropped significantly after Wednesday."
+      },
+      "kpis": [
+        {
+          "labelKey": "analytics.kpis.entriesMonth",
+          "value": "24",
+          "colorClass": "border-blue"
+        },
+        {
+          "labelKey": "analytics.kpis.moodAverage",
+          "value_key": "analytics.moods.positive",
+          "colorClass": "border-green"
+        },
+        {
+          "labelKey": "analytics.kpis.maxHabitStreak",
+          "value": "14",
+          "unit_key": "analytics.units.days",
+          "colorClass": "border-orange"
+        }
+      ],
+      "fluctuation_data": {
+        "labels_keys": [
+          "analytics.components.fluctuationChart.labels.assessment",
+          "analytics.components.fluctuationChart.labels.growth",
+          "analytics.components.fluctuationChart.labels.reflection",
+          "analytics.components.fluctuationChart.labels.action",
+          "analytics.components.fluctuationChart.labels.integration"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.fluctuationChart.dataset.interactions",
+            "data": [
+              4,
+              2,
+              6,
+              5,
+              3
+            ],
+            "backgroundColor": "rgba(165, 180, 252, 0.7)",
+            "hoverBackgroundColor": "rgba(99, 102, 241, 0.9)",
+            "borderRadius": {
+              "topLeft": 4,
+              "topRight": 4
+            },
+            "borderSkipped": false,
+            "barPercentage": 0.35,
+            "categoryPercentage": 0.8
+          }
+        ]
+      },
+      "trend_data": {
+        "labels_keys": [
+          "analytics.components.trendChart.labels.mon",
+          "analytics.components.trendChart.labels.tue",
+          "analytics.components.trendChart.labels.wed",
+          "analytics.components.trendChart.labels.thu",
+          "analytics.components.trendChart.labels.fri",
+          "analytics.components.trendChart.labels.sat",
+          "analytics.components.trendChart.labels.sun"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.trendChart.dataset.wellbeing",
+            "data": [
+              6,
+              4,
+              7,
+              8,
+              5,
+              9,
+              8
+            ],
+            "fill": true,
+            "borderColor": "#3b82f6",
+            "backgroundColor": "rgba(59, 130, 246, 0.1)",
+            "tension": 0.4,
+            "pointBackgroundColor": "var(--bg-surface)",
+            "pointBorderColor": "#3b82f6",
+            "pointBorderWidth": 2,
+            "pointRadius": 4
+          }
+        ]
+      },
       "data": "{\"totalEntries\":2,\"avgSentiment\":0.5,\"habitsCompleted\":4,\"streakMax\":14,\"mostUsedTag\":\"mindfulness\"}"
     },
     {
       "id": "ac2",
       "user_id": "u2",
       "generated_at": "2024-05-11T00:00:00Z",
+      "updated_at": "2024-05-21T08:00:00Z",
+      "score": 63,
+      "trend_percentage": "-4%",
+      "start_date": "2024-05-12",
+      "end_date": "2024-05-18",
+      "ai_insight_localized": {
+        "es": "Tu carga de trabajo estuvo más alta esta semana; conviene pausar un poco y priorizar descanso.",
+        "en": "Your workload was higher this week; it may help to pause a little and prioritize rest."
+      },
+      "kpis": [
+        {
+          "labelKey": "analytics.kpis.entriesMonth",
+          "value": "19",
+          "colorClass": "border-blue"
+        },
+        {
+          "labelKey": "analytics.kpis.moodAverage",
+          "value_key": "analytics.moods.neutral",
+          "colorClass": "border-green"
+        },
+        {
+          "labelKey": "analytics.kpis.maxHabitStreak",
+          "value": "21",
+          "unit_key": "analytics.units.days",
+          "colorClass": "border-orange"
+        }
+      ],
+      "fluctuation_data": {
+        "labels_keys": [
+          "analytics.components.fluctuationChart.labels.assessment",
+          "analytics.components.fluctuationChart.labels.growth",
+          "analytics.components.fluctuationChart.labels.reflection",
+          "analytics.components.fluctuationChart.labels.action",
+          "analytics.components.fluctuationChart.labels.integration"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.fluctuationChart.dataset.interactions",
+            "data": [
+              3,
+              4,
+              5,
+              4,
+              2
+            ],
+            "backgroundColor": "rgba(165, 180, 252, 0.7)",
+            "hoverBackgroundColor": "rgba(99, 102, 241, 0.9)",
+            "borderRadius": {
+              "topLeft": 4,
+              "topRight": 4
+            },
+            "borderSkipped": false,
+            "barPercentage": 0.35,
+            "categoryPercentage": 0.8
+          }
+        ]
+      },
+      "trend_data": {
+        "labels_keys": [
+          "analytics.components.trendChart.labels.mon",
+          "analytics.components.trendChart.labels.tue",
+          "analytics.components.trendChart.labels.wed",
+          "analytics.components.trendChart.labels.thu",
+          "analytics.components.trendChart.labels.fri",
+          "analytics.components.trendChart.labels.sat",
+          "analytics.components.trendChart.labels.sun"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.trendChart.dataset.wellbeing",
+            "data": [
+              5,
+              4,
+              5,
+              6,
+              5,
+              4,
+              5
+            ],
+            "fill": true,
+            "borderColor": "#3b82f6",
+            "backgroundColor": "rgba(59, 130, 246, 0.1)",
+            "tension": 0.4,
+            "pointBackgroundColor": "var(--bg-surface)",
+            "pointBorderColor": "#3b82f6",
+            "pointBorderWidth": 2,
+            "pointRadius": 4
+          }
+        ]
+      },
       "data": "{\"totalEntries\":2,\"avgSentiment\":0.3,\"habitsCompleted\":3,\"streakMax\":21,\"mostUsedTag\":\"trabajo\"}"
     },
     {
       "id": "ac3",
       "user_id": "u3",
       "generated_at": "2024-05-11T00:00:00Z",
+      "updated_at": "2024-05-21T08:00:00Z",
+      "score": 86,
+      "trend_percentage": "+8%",
+      "start_date": "2024-05-12",
+      "end_date": "2024-05-18",
+      "ai_insight_localized": {
+        "es": "Tu ritmo de recuperación emocional ha sido muy sólido; el trabajo con pacientes parece darte energía positiva.",
+        "en": "Your emotional recovery pace has been very solid; working with patients seems to energize you positively."
+      },
+      "kpis": [
+        {
+          "labelKey": "analytics.kpis.entriesMonth",
+          "value": "18",
+          "colorClass": "border-blue"
+        },
+        {
+          "labelKey": "analytics.kpis.moodAverage",
+          "value_key": "analytics.moods.positive",
+          "colorClass": "border-green"
+        },
+        {
+          "labelKey": "analytics.kpis.maxHabitStreak",
+          "value": "30",
+          "unit_key": "analytics.units.days",
+          "colorClass": "border-orange"
+        }
+      ],
+      "fluctuation_data": {
+        "labels_keys": [
+          "analytics.components.fluctuationChart.labels.assessment",
+          "analytics.components.fluctuationChart.labels.growth",
+          "analytics.components.fluctuationChart.labels.reflection",
+          "analytics.components.fluctuationChart.labels.action",
+          "analytics.components.fluctuationChart.labels.integration"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.fluctuationChart.dataset.interactions",
+            "data": [
+              2,
+              3,
+              3,
+              5,
+              4
+            ],
+            "backgroundColor": "rgba(165, 180, 252, 0.7)",
+            "hoverBackgroundColor": "rgba(99, 102, 241, 0.9)",
+            "borderRadius": {
+              "topLeft": 4,
+              "topRight": 4
+            },
+            "borderSkipped": false,
+            "barPercentage": 0.35,
+            "categoryPercentage": 0.8
+          }
+        ]
+      },
+      "trend_data": {
+        "labels_keys": [
+          "analytics.components.trendChart.labels.mon",
+          "analytics.components.trendChart.labels.tue",
+          "analytics.components.trendChart.labels.wed",
+          "analytics.components.trendChart.labels.thu",
+          "analytics.components.trendChart.labels.fri",
+          "analytics.components.trendChart.labels.sat",
+          "analytics.components.trendChart.labels.sun"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.trendChart.dataset.wellbeing",
+            "data": [
+              7,
+              6,
+              7,
+              8,
+              7,
+              8,
+              9
+            ],
+            "fill": true,
+            "borderColor": "#3b82f6",
+            "backgroundColor": "rgba(59, 130, 246, 0.1)",
+            "tension": 0.4,
+            "pointBackgroundColor": "var(--bg-surface)",
+            "pointBorderColor": "#3b82f6",
+            "pointBorderWidth": 2,
+            "pointRadius": 4
+          }
+        ]
+      },
       "data": "{\"totalEntries\":2,\"avgSentiment\":0.7,\"habitsCompleted\":2,\"streakMax\":30,\"mostUsedTag\":\"crecimiento personal\"}"
     },
     {
       "id": "ac4",
       "user_id": "u4",
       "generated_at": "2024-05-11T00:00:00Z",
+      "updated_at": "2024-05-21T08:00:00Z",
+      "score": 69,
+      "trend_percentage": "+3%",
+      "start_date": "2024-05-12",
+      "end_date": "2024-05-18",
+      "ai_insight_localized": {
+        "es": "Aunque la semana tuvo presión académica, sostuviste un progreso estable y consistente.",
+        "en": "Although the week brought academic pressure, you kept a steady and consistent progression."
+      },
+      "kpis": [
+        {
+          "labelKey": "analytics.kpis.entriesMonth",
+          "value": "12",
+          "colorClass": "border-blue"
+        },
+        {
+          "labelKey": "analytics.kpis.moodAverage",
+          "value_key": "analytics.moods.neutral",
+          "colorClass": "border-green"
+        },
+        {
+          "labelKey": "analytics.kpis.maxHabitStreak",
+          "value": "5",
+          "unit_key": "analytics.units.days",
+          "colorClass": "border-orange"
+        }
+      ],
+      "fluctuation_data": {
+        "labels_keys": [
+          "analytics.components.fluctuationChart.labels.assessment",
+          "analytics.components.fluctuationChart.labels.growth",
+          "analytics.components.fluctuationChart.labels.reflection",
+          "analytics.components.fluctuationChart.labels.action",
+          "analytics.components.fluctuationChart.labels.integration"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.fluctuationChart.dataset.interactions",
+            "data": [
+              2,
+              1,
+              3,
+              3,
+              2
+            ],
+            "backgroundColor": "rgba(165, 180, 252, 0.7)",
+            "hoverBackgroundColor": "rgba(99, 102, 241, 0.9)",
+            "borderRadius": {
+              "topLeft": 4,
+              "topRight": 4
+            },
+            "borderSkipped": false,
+            "barPercentage": 0.35,
+            "categoryPercentage": 0.8
+          }
+        ]
+      },
+      "trend_data": {
+        "labels_keys": [
+          "analytics.components.trendChart.labels.mon",
+          "analytics.components.trendChart.labels.tue",
+          "analytics.components.trendChart.labels.wed",
+          "analytics.components.trendChart.labels.thu",
+          "analytics.components.trendChart.labels.fri",
+          "analytics.components.trendChart.labels.sat",
+          "analytics.components.trendChart.labels.sun"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.trendChart.dataset.wellbeing",
+            "data": [
+              4,
+              4,
+              5,
+              5,
+              5,
+              6,
+              6
+            ],
+            "fill": true,
+            "borderColor": "#3b82f6",
+            "backgroundColor": "rgba(59, 130, 246, 0.1)",
+            "tension": 0.4,
+            "pointBackgroundColor": "var(--bg-surface)",
+            "pointBorderColor": "#3b82f6",
+            "pointBorderWidth": 2,
+            "pointRadius": 4
+          }
+        ]
+      },
       "data": "{\"totalEntries\":1,\"avgSentiment\":0.5,\"habitsCompleted\":1,\"streakMax\":5,\"mostUsedTag\":\"metas\"}"
     },
     {
       "id": "ac5",
       "user_id": "u5",
       "generated_at": "2024-05-11T00:00:00Z",
+      "updated_at": "2024-05-21T08:00:00Z",
+      "score": 74,
+      "trend_percentage": "+10%",
+      "start_date": "2024-05-12",
+      "end_date": "2024-05-18",
+      "ai_insight_localized": {
+        "es": "Tu descanso digital está mejorando tu calidad de sueño y la constancia de hábitos nocturnos.",
+        "en": "Your digital rest is improving your sleep quality and night routine consistency."
+      },
+      "kpis": [
+        {
+          "labelKey": "analytics.kpis.entriesMonth",
+          "value": "10",
+          "colorClass": "border-blue"
+        },
+        {
+          "labelKey": "analytics.kpis.moodAverage",
+          "value_key": "analytics.moods.positive",
+          "colorClass": "border-green"
+        },
+        {
+          "labelKey": "analytics.kpis.maxHabitStreak",
+          "value": "10",
+          "unit_key": "analytics.units.days",
+          "colorClass": "border-orange"
+        }
+      ],
+      "fluctuation_data": {
+        "labels_keys": [
+          "analytics.components.fluctuationChart.labels.assessment",
+          "analytics.components.fluctuationChart.labels.growth",
+          "analytics.components.fluctuationChart.labels.reflection",
+          "analytics.components.fluctuationChart.labels.action",
+          "analytics.components.fluctuationChart.labels.integration"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.fluctuationChart.dataset.interactions",
+            "data": [
+              1,
+              2,
+              2,
+              3,
+              3
+            ],
+            "backgroundColor": "rgba(165, 180, 252, 0.7)",
+            "hoverBackgroundColor": "rgba(99, 102, 241, 0.9)",
+            "borderRadius": {
+              "topLeft": 4,
+              "topRight": 4
+            },
+            "borderSkipped": false,
+            "barPercentage": 0.35,
+            "categoryPercentage": 0.8
+          }
+        ]
+      },
+      "trend_data": {
+        "labels_keys": [
+          "analytics.components.trendChart.labels.mon",
+          "analytics.components.trendChart.labels.tue",
+          "analytics.components.trendChart.labels.wed",
+          "analytics.components.trendChart.labels.thu",
+          "analytics.components.trendChart.labels.fri",
+          "analytics.components.trendChart.labels.sat",
+          "analytics.components.trendChart.labels.sun"
+        ],
+        "datasets": [
+          {
+            "label_key": "analytics.components.trendChart.dataset.wellbeing",
+            "data": [
+              6,
+              6,
+              7,
+              8,
+              8,
+              9,
+              9
+            ],
+            "fill": true,
+            "borderColor": "#3b82f6",
+            "backgroundColor": "rgba(59, 130, 246, 0.1)",
+            "tension": 0.4,
+            "pointBackgroundColor": "var(--bg-surface)",
+            "pointBorderColor": "#3b82f6",
+            "pointBorderWidth": 2,
+            "pointRadius": 4
+          }
+        ]
+      },
       "data": "{\"totalEntries\":1,\"avgSentiment\":0.8,\"habitsCompleted\":2,\"streakMax\":10,\"mostUsedTag\":\"salud\"}"
     }
-  ]
+  ],
+  "wordCloud": [
+    {
+      "id": "wc1",
+      "user_id": "u1",
+      "words": [
+        {
+          "tag": "Ansiedad",
+          "weight": 8,
+          "score": 0.8
+        },
+        {
+          "tag": "Estrés",
+          "weight": 9,
+          "score": 0.9
+        },
+        {
+          "tag": "Felicidad",
+          "weight": 7,
+          "score": 0.7
+        },
+        {
+          "tag": "Trabajo",
+          "weight": 6,
+          "score": 0.6
+        },
+        {
+          "tag": "Familia",
+          "weight": 5,
+          "score": 0.5
+        }
+      ]
+    }
+  ],
+  "notifications": [
+    {
+      "id": "n1",
+      "user_id": "u1",
+      "habit_id": "h1",
+      "type": "reminder",
+      "title": "Recordatorio: Meditación matutina",
+      "message": "Es hora de tu sesión de meditación. ¡Dedícate 10 minutos para entrenar tu mente!",
+      "sent_at": "2024-05-21T07:00:00Z",
+      "read_at": "2024-05-21T07:05:00Z",
+      "created_at": "2024-05-21T07:00:00Z"
+    },
+    {
+      "id": "n2",
+      "user_id": "u1",
+      "habit_id": "h2",
+      "type": "reminder",
+      "title": "Recordatorio: Ejercicio",
+      "message": "¡Tiempo de ejercitarse! 30 minutos de actividad física te esperan.",
+      "sent_at": "2024-05-21T08:00:00Z",
+      "read_at": null,
+      "created_at": "2024-05-21T08:00:00Z"
+    },
+    {
+      "id": "n3",
+      "user_id": "u3",
+      "habit_id": "h4",
+      "type": "ai_alert",
+      "title": "Alerta de IA: Baja de mood detectada",
+      "message": "He notado que tu estado de ánimo ha bajado esta semana. ¿Quieres intentar una técnica de relajación?",
+      "sent_at": "2024-05-21T15:00:00Z",
+      "read_at": null,
+      "created_at": "2024-05-21T15:00:00Z"
+    },
+    {
+      "id": "n4",
+      "user_id": "u2",
+      "habit_id": "h3",
+      "type": "reminder",
+      "title": "Recordatorio: Leer",
+      "message": "Es hora de tu sesión de lectura. ¡20 páginas te están esperando!",
+      "sent_at": "2024-05-21T19:00:00Z",
+      "read_at": "2024-05-21T19:30:00Z",
+      "created_at": "2024-05-21T19:00:00Z"
+    },
+    {
+      "id": "n5",
+      "user_id": "u5",
+      "habit_id": "h6",
+      "type": "reminder",
+      "title": "Recordatorio: Desconexión digital",
+      "message": "Es hora de desconectarte de las redes sociales. ¡Prepárate para una mejor noche de sueño!",
+      "sent_at": "2024-05-21T21:00:00Z",
+      "read_at": null,
+      "created_at": "2024-05-21T21:00:00Z"
+    },
+    {
+      "id": "n6",
+      "user_id": "u1",
+      "habit_id": null,
+      "type": "ai_alert",
+      "title": "Alerta de IA: Estrés detectado",
+      "message": "MindFlow AI ha detectado un aumento en tu nivel de estrés. Quizás quieras tomarte un descanso.",
+      "sent_at": "2026-05-22T14:00:00Z",
+      "read_at": null,
+      "created_at": "2026-05-22T14:00:00Z"
+    },
+    {
+      "id": "n7",
+      "user_id": "u1",
+      "habit_id": null,
+      "type": "ai_alert",
+      "title": "MindFlow AI: Insight semanal",
+      "message": "Has completado 4 de 5 hábitos esta semana. ¡Sigue así! Revisa tu reporte de analíticas.",
+      "sent_at": "2026-05-23T10:00:00Z",
+      "read_at": null,
+      "created_at": "2026-05-23T10:00:00Z"
+    },
+    {
+      "id": "n8",
+      "user_id": "u1",
+      "habit_id": "h1",
+      "type": "reminder",
+      "title": "Recordatorio: Meditación matutina",
+      "message": "Buenos días, es momento de tu meditación. Dedica 10 minutos a tu bienestar mental.",
+      "sent_at": "2026-05-23T07:00:00Z",
+      "read_at": null,
+      "created_at": "2026-05-23T07:00:00Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "p1",
+      "subscription_id": "s1",
+      "user_id": "u1",
+      "amount": 99.99,
+      "currency": "USD",
+      "status": "completed",
+      "payment_method": "credit_card",
+      "transaction_id": "txn_1234567890",
+      "paid_at": "2024-01-15T00:00:00Z",
+      "created_at": "2024-01-15T00:00:00Z"
+    },
+    {
+      "id": "p2",
+      "subscription_id": "s2",
+      "user_id": "u3",
+      "amount": 9.99,
+      "currency": "USD",
+      "status": "completed",
+      "payment_method": "credit_card",
+      "transaction_id": "txn_0987654321",
+      "paid_at": "2024-05-01T00:00:00Z",
+      "created_at": "2024-05-01T00:00:00Z"
+    },
+    {
+      "id": "p3",
+      "subscription_id": "s3",
+      "user_id": "u5",
+      "amount": 99.99,
+      "currency": "USD",
+      "status": "completed",
+      "payment_method": "paypal",
+      "transaction_id": "txn_1111111111",
+      "paid_at": "2024-05-01T00:00:00Z",
+      "created_at": "2024-05-01T00:00:00Z"
+    },
+    {
+      "id": "p4",
+      "subscription_id": "s4",
+      "user_id": "u2",
+      "amount": 0,
+      "currency": "USD",
+      "status": "completed",
+      "payment_method": "free_trial",
+      "transaction_id": null,
+      "paid_at": "2024-02-10T00:00:00Z",
+      "created_at": "2024-02-10T00:00:00Z"
+    },
+    {
+      "id": "p5",
+      "subscription_id": "s5",
+      "user_id": "u4",
+      "amount": 0,
+      "currency": "USD",
+      "status": "completed",
+      "payment_method": "free_trial",
+      "transaction_id": null,
+      "paid_at": "2024-04-20T00:00:00Z",
+      "created_at": "2024-04-20T00:00:00Z"
+    }
+  ],
+  "supportTickets": [
+    {
+      "id": "t1",
+      "userId": "u1",
+      "subject": "How to export data?",
+      "message": "I need help exporting my journal entries.",
+      "ticketNumber": "MF-K2T3M-X9K4",
+      "status": "open",
+      "createdAt": "2026-06-01T10:00:00Z"
+    },
+    {
+      "userId": "u1",
+      "subject": "Test ticket",
+      "message": "Testing POST method",
+      "ticketNumber": "MF-TEST-001",
+      "status": "open",
+      "createdAt": "2026-06-06T00:00:00Z",
+      "id": "_FXInn-Jb2s"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

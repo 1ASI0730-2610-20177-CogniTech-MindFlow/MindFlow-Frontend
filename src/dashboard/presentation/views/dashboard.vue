@@ -5,27 +5,61 @@
 
       <div class="dashboard-grid">
         <div class="main-column">
-          <MoodInput />
-          <RecentEntries />
-          <WeeklySummaryWidget />
+          <div class="widget animate-fade-in-up" style="animation-delay: 0s">
+            <MoodInput @open-chat="chatOpen = true" />
+          </div>
+
+          <div class="widget animate-fade-in-up" style="animation-delay: 0.12s">
+            <WeeklySummaryWidget />
+          </div>
         </div>
 
         <div class="side-column">
-          <QuickInterventions />
-          <DailyHabits />
+          <div class="widget animate-fade-in-up" style="animation-delay: 0.08s">
+            <QuickInterventions />
+          </div>
+
+          <div class="widget animate-fade-in-up" style="animation-delay: 0.2s">
+            <DailyHabits />
+          </div>
         </div>
       </div>
     </div>
+
+    <Teleport to="body">
+      <Transition name="chat-slide">
+        <div v-if="chatOpen" class="chat-overlay" @click.self="closeChat">
+          <div class="chat-panel">
+            <AiChat @close="closeChat" />
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </Layout>
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import Layout from '@/shared/presentation/components/layout.vue'
+import { ref } from 'vue'
 import MoodInput from '../components/mood-input.vue'
-import RecentEntries from '../components/recent-entries.vue'
+import AiChat from '../components/ai-chat.vue'
 import WeeklySummaryWidget from '../components/weekly-summary-widget.vue'
+
+const chatOpen = ref(false)
+
+function closeChat() {
+  chatOpen.value = false
+}
 import QuickInterventions from '../components/quick-interventions.vue'
 import DailyHabits from '../components/daily-habits.vue'
+import { useDashboardStore } from '@/dashboard/application/dashboard.store'
+
+const dashboardStore = useDashboardStore()
+
+onMounted(() => {
+  dashboardStore.fetchDashboardData()
+})
 </script>
 
 <style scoped>
@@ -35,7 +69,6 @@ import DailyHabits from '../components/daily-habits.vue'
   z-index: 1;
 }
 
-/* Patrón de fondo consistente con el módulo de analíticas */
 .optical-grid-bg {
   position: fixed;
   top: 0;
@@ -44,12 +77,12 @@ import DailyHabits from '../components/daily-habits.vue'
   height: 100vh;
   pointer-events: none;
   z-index: -1;
-  background-image: radial-gradient(circle at center, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(circle at center, var(--grid-dot) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.8;
+  transition: opacity 0.6s ease, transform 0.8s ease;
 }
 
-/* Distribución asimétrica de columnas basada en tu prototipo */
 .dashboard-grid {
   display: grid;
   grid-template-columns: minmax(auto, 65%) 1fr;
@@ -60,6 +93,16 @@ import DailyHabits from '../components/daily-habits.vue'
   width: 100%;
 }
 
+@keyframes dfadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: dfadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 0;
+}
+
 .main-column,
 .side-column {
   display: flex;
@@ -67,15 +110,14 @@ import DailyHabits from '../components/daily-habits.vue'
   gap: 32px;
 }
 
-/* Estilo unificado para todas las tarjetas del dashboard mediante selectores profundos */
 :deep(.dashboard-card) {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
   border-radius: 24px;
-  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.02) inset;
+  box-shadow: var(--shadow-md);
   padding: 32px;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :deep(.dashboard-card:hover) {
@@ -85,12 +127,11 @@ import DailyHabits from '../components/daily-habits.vue'
 
 :deep(.card-title) {
   font-size: 18px;
-  color: #0f172a;
+  color: var(--text-primary);
   margin: 0;
   font-weight: 700;
 }
 
-/* === DISEÑO RESPONSIVO (MOBILE FIRST) === */
 @media (max-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
@@ -101,5 +142,63 @@ import DailyHabits from '../components/daily-habits.vue'
   .side-column {
     gap: 24px;
   }
+}
+</style>
+
+<style>
+.chat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.chat-panel {
+  width: 100%;
+  max-width: 900px;
+  height: 80vh;
+  max-height: 700px;
+}
+
+.chat-panel .chat-container {
+  height: 100%;
+  border-radius: 24px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+}
+
+.chat-slide-enter-active,
+.chat-slide-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.chat-slide-enter-active .chat-panel,
+.chat-slide-leave-active .chat-panel {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.chat-slide-enter-from {
+  opacity: 0;
+}
+
+.chat-slide-enter-from .chat-panel {
+  transform: translateY(40px) scale(0.95);
+  opacity: 0;
+}
+
+.chat-slide-leave-to {
+  opacity: 0;
+}
+
+.chat-slide-leave-to .chat-panel {
+  transform: translateY(20px) scale(0.98);
+  opacity: 0;
 }
 </style>

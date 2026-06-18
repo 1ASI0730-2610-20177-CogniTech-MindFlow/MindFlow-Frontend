@@ -2,80 +2,113 @@
   <Layout>
     <div class="journal-page theme-transition">
       <div class="page-header animate-fade-in-down">
-        <h1 class="theme-transition">{{ $t('journal.title') }}</h1>
+        <div>
+          <h1 class="theme-transition">{{ $t('journal.title') }}</h1>
+          <p class="subtitle theme-transition">{{ $t('journal.subtitle') }}</p>
+        </div>
+
+        <button type="button" class="new-entry-btn theme-transition" @click="openComposer">
+          <i class="pi pi-plus"></i>
+          {{ $t('journal.newEntry') }}
+        </button>
       </div>
 
       <div class="journal-grid">
         <div class="left-panel animate-fade-in-left delay-1">
           <div class="card hover-lift theme-transition">
-            <JournalFilters
-                @change-state="handleMoodChange"
-            />
-            <JournalCalendar
-                :selectedMood="selectedMood"
-            />
+            <JournalFilters />
+            <JournalCalendar />
           </div>
         </div>
 
         <div class="right-panel">
           <JournalEntryCard
-              v-for="(entry, index) in entries"
+              v-for="(entry, index) in filteredEntries"
               :key="entry.id"
               :entry="entry"
               class="animate-fade-in-up"
               :style="{ animationDelay: `${0.2 + (index * 0.1)}s` }"
           />
+          <div v-if="filteredEntries.length === 0" class="no-entries">
+            <i class="pi pi-book"></i>
+            <p>{{ $t('journal.noEntries') }}</p>
+          </div>
         </div>
       </div>
+
+      <JournalComposer
+          :open="isComposerOpen"
+          :initial-date="journalStore.selectedDate"
+          :is-saving="isSaving"
+          @close="closeComposer"
+          @submit="handleCreateEntry"
+      />
     </div>
   </Layout>
 </template>
 
 <script setup>
+import { computed, onMounted, ref } from 'vue'
 import Layout from '../../../shared/presentation/components/layout.vue'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import JournalCalendar from '../components/JournalCalendar.vue'
 import JournalFilters from '../components/JournalFilters.vue'
 import JournalEntryCard from '../components/JournalEntryCard.vue'
-import { ref } from 'vue'
+import JournalComposer from '../components/JournalComposer.vue'
+import { useJournalStore } from '@/journal/application/journal.store'
+import { JournalAPI } from '@/journal/infrastructure/journal-api'
 
-const selectedMood = ref('Positivo')
-const handleMoodChange = (mood) => {
-  selectedMood.value = mood
+const journalStore = useJournalStore()
+const authStore = useAuthStore()
+const isComposerOpen = ref(false)
+const isSaving = ref(false)
+
+const filteredEntries = computed(() => journalStore.getFilteredEntries)
+
+const openComposer = () => {
+  isComposerOpen.value = true
 }
 
-const entries = [
-  {
-    id: 1,
-    date: 'Domingo, 26 de Abril, 3:09 AM',
-    category: 'Reflexión Personal',
-    title: 'Insomnio y nuevos comienzos',
-    content:
-        'No he podido dormir, sigo pensando en la estructuración del nuevo proyecto. Aunque me siento un poco cansado físicamente, mentalmente estoy muy emocionado por lo que estamos construyendo con MindFlow. Mañana intentaré descansar mejor.',
-    hasPreview: false
-  },
-  {
-    id: 2,
-    date: 'Jueves, 23 de Abril, 6:30 PM',
-    category: 'Trabajo',
-    title: 'Presentación del MVP',
-    content:
-        'Hoy tuvimos la presentación del proyecto. Me sentí muy abrumado al principio, la ansiedad estaba a tope, pero la guía de respiración de 4-7-8 que me sugirió la app me ayudó a centrarme justo antes de hablar.',
-    hasPreview: false
-  },
-  {
-    id: 3,
-    date: 'Lunes, 20 de Abril, 9:00 PM',
-    category: 'Estudios',
-    title: 'Bloqueo mental total',
-    content:
-        'No logré concentrarme nada hoy. Siento que la procrastinación me está ganando y me frustra no haber avanzado en los diagramas de arquitectura.',
-    hasPreview: false
+const closeComposer = () => {
+  if (isSaving.value) return
+  isComposerOpen.value = false
+}
+
+const handleCreateEntry = async (entryData) => {
+  isSaving.value = true
+
+  try {
+    const savedEntry = await journalStore.addEntry({
+      title: entryData.title,
+      category: entryData.category,
+      date: entryData.date,
+      sentiment: entryData.sentiment,
+      content: entryData.content,
+      hasPreview: entryData.hasPreview,
+      userId: authStore.currentUserId
+    })
+
+    if (entryData.files?.length && savedEntry?.id) {
+      await Promise.all(
+        entryData.files.map(file =>
+          JournalAPI.uploadMedia(savedEntry.id, file.file)
+        )
+      )
+      await journalStore.fetchEntries()
+    }
+
+    isComposerOpen.value = false
+  } finally {
+    isSaving.value = false
   }
-]
+}
+
+onMounted(async () => {
+  await journalStore.fetchEntries()
+})
 </script>
 
 <style scoped>
-/* Animations */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -108,20 +141,18 @@ const entries = [
 
 .delay-1 { animation-delay: 0.15s; }
 
-/* Interactions */
 .hover-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 .hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08), 0 4px 8px -4px rgba(0,0,0,0.04);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .journal-page {
   min-height: 100vh;
   background: var(--bg-primary);
   padding: 28px;
-  font-family: Inter, sans-serif;
 }
 
 .page-header {
@@ -129,12 +160,57 @@ const entries = [
   justify-content: space-between;
   align-items: center;
   margin-bottom: 26px;
+  gap: 16px;
 }
 
 .page-header h1 {
   font-size: 20px;
   font-weight: 700;
   color: var(--text-primary);
+  padding-left: 14px;
+  position: relative;
+}
+.page-header h1::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  background: var(--accent-primary);
+  border-radius: 3px;
+}
+
+.subtitle {
+  margin: 6px 0 0 14px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.new-entry-btn {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.new-entry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.3);
+}
+
+.new-entry-btn:active {
+  transform: translateY(0);
 }
 
 .search-box input {
@@ -165,17 +241,48 @@ const entries = [
 
 .card {
   background: var(--bg-surface);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 24px;
   border: 1px solid var(--border-light);
-  box-shadow:
-      0 1px 2px var(--shadow-sm),
-      0 8px 24px var(--shadow-lg);
+  box-shadow: var(--shadow-sm), var(--shadow-lg);
 }
 
 .right-panel {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.no-entries {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+.no-entries i {
+  font-size: 32px;
+  opacity: 0.4;
+}
+.no-entries p {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .journal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .new-entry-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>

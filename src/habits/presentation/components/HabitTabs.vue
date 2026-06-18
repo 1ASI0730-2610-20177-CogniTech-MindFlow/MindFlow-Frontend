@@ -1,5 +1,5 @@
 <template>
-  <div class="habit-tabs">
+  <div class="habit-tabs theme-transition">
     <button
         v-for="tab in localizedTabs"
         :key="tab.id"
@@ -35,26 +35,33 @@ const localizedTabs = computed(() => [
 <style scoped>
 .habit-tabs {
   display: flex;
-  gap: 28px;
-  border-bottom: 1px solid #e8ecf3;
-  margin-bottom: 22px;
+  gap: 32px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 28px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .tab {
   background: none;
   border: none;
-  padding: 0 0 12px;
+  padding: 0 0 14px;
   font: inherit;
   font-size: 14px;
-  font-weight: 500;
-  color: #94a3b8;
+  font-weight: 600;
+  color: var(--text-secondary);
   cursor: pointer;
   position: relative;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  letter-spacing: 0.3px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  transform: translateY(-2px);
 }
 
 .tab.active {
-  color: #4f46e5;
-  font-weight: 600;
+  color: var(--accent-primary);
 }
 
 .tab.active::after {
@@ -63,8 +70,36 @@ const localizedTabs = computed(() => [
   left: 0;
   right: 0;
   bottom: -1px;
-  height: 2px;
-  background: #4f46e5;
-  border-radius: 2px 2px 0 0;
+  height: 3px;
+  background: var(--accent-primary);
+  border-radius: 3px 3px 0 0;
+  animation: expandWidth 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes expandWidth {
+  from {
+    width: 0;
+    left: 50%;
+  }
+  to {
+    width: 100%;
+    left: 0;
+  }
+}
+
+.tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: transparent;
+  border-radius: 3px 3px 0 0;
+  transition: background 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tab:hover::before {
+  background: rgba(99, 102, 241, 0.1);
 }
 </style>

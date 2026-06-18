@@ -8,9 +8,14 @@
         {{ currentMonthName }} {{ currentYear }}
       </h3>
 
-      <span @click="previousMonth" class="theme-transition">
-        {{ $t('journal.calendar.previousMonth') }}
-      </span>
+      <div class="month-actions">
+        <button type="button" @click="previousMonth" class="month-action theme-transition" :aria-label="$t('journal.calendar.previousMonth')">
+          <span class="nav-char">‹</span>
+        </button>
+        <button type="button" @click="nextMonth" class="month-action theme-transition" :aria-label="$t('journal.calendar.nextMonth')">
+          <span class="nav-char">›</span>
+        </button>
+      </div>
 
     </div>
 
@@ -25,14 +30,15 @@
     <div class="days-grid">
 
       <div
-          v-for="day in days"
-          :key="day.number"
+          v-for="(day, index) in days"
+          :key="index"
           class="day theme-transition"
           :class="[
           day.mood,
-          { selected: selectedDay === day.number }
+          { empty: !day.number }
         ]"
-          @click="updateDayMood(day)"
+          :style="getDayStyle(day)"
+          @click="selectDay(day)"
       >
         {{ day.number }}
       </div>
@@ -63,20 +69,38 @@
 </template>
 
 <script setup>
-
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useJournalStore } from '@/journal/application/journal.store'
 
-const { t, tm } = useI18n()
+const { tm } = useI18n()
+const journalStore = useJournalStore()
 
-const currentMonth = ref(3)
-const currentYear = ref(2026)
+function getLatestEntryDate() {
+  const entries = journalStore.entries
+  if (!entries.length) return new Date()
+  const sorted = [...entries].sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+  const [year, month] = (sorted[0].date || '').split('-').map(Number)
+  if (year && month) return new Date(year, month - 1, 1)
+  return new Date()
+}
 
-const selectedDay = ref(26)
+const initDate = getLatestEntryDate()
+const currentMonth = ref(initDate.getMonth())
+const currentYear = ref(initDate.getFullYear())
+
+watch(() => journalStore.entries.length, () => {
+  const d = getLatestEntryDate()
+  currentMonth.value = d.getMonth()
+  currentYear.value = d.getFullYear()
+})
+const selectedDate = computed({
+  get: () => journalStore.selectedDate,
+  set: (value) => journalStore.setSelectedDate(value)
+})
 
 const localizedWeekdays = computed(() => {
   const wd = tm('journal.calendar.weekdays')
-  // tm returns the array proxy if defined in locales.
   return Array.isArray(wd) ? wd : ['L', 'M', 'X', 'J', 'V', 'S', 'D']
 })
 
@@ -90,82 +114,112 @@ const currentMonthName = computed(() => {
 })
 
 const previousMonth = () => {
-
   currentMonth.value--
-
   if (currentMonth.value < 0) {
     currentMonth.value = 11
     currentYear.value--
   }
 }
 
-const updateDayMood = (day) => {
-
-  if (props.selectedMood === 'Positivo') {
-    day.mood = 'positive'
+const nextMonth = () => {
+  currentMonth.value++
+  if (currentMonth.value > 11) {
+    currentMonth.value = 0
+    currentYear.value++
   }
-
-  if (props.selectedMood === 'Neutral') {
-    day.mood = 'neutral'
-  }
-
-  if (props.selectedMood === 'Negativo') {
-    day.mood = 'negative'
-  }
-
-  selectedDay.value = day.number
 }
 
-const moods = [
-  'positive',
-  'neutral',
-  'negative'
-]
-
-const props = defineProps({
-  selectedMood: String
+const calendarData = computed(() => {
+  return journalStore.getCalendarData(currentYear.value, currentMonth.value + 1)
 })
 
+const sentimentMap = {
+  'positive': 'positive',
+  'neutral': 'neutral',
+  'negative': 'negative'
+}
 
+const days = computed(() => {
+  const firstDay = new Date(currentYear.value, currentMonth.value, 1)
+  const lastDay = new Date(currentYear.value, currentMonth.value + 1, 0)
+  const daysInMonth = lastDay.getDate()
+  const startingDayOfWeek = firstDay.getDay()
 
-const days = ref(
+  const daysArray = []
 
-    Array.from({ length: 30 }, (_, i) => {
+  for (let i = 0; i < startingDayOfWeek; i++) {
+    daysArray.push({ number: null, mood: '' })
+  }
 
-      const dayNumber = i + 1
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = String(day).padStart(2, '0')
+    const sentiment = calendarData.value[dateStr] || ''
+    const moodClass = sentimentMap[sentiment] || ''
+    const date = `${currentYear.value}-${String(currentMonth.value + 1).padStart(2, '0')}-${dateStr}`
 
-      return {
-
-        number: dayNumber,
-
-
-        mood:
-            dayNumber <= 26
-                ? moods[Math.floor(Math.random() * moods.length)]
-                : ''
-
-      }
-
+    daysArray.push({
+      number: day,
+      mood: moodClass,
+      sentiment: sentiment,
+      date
     })
+  }
 
-)
+  while (daysArray.length % 7 !== 0) {
+    daysArray.push({ number: null, mood: '' })
+  }
+
+  return daysArray
+})
+
+const selectDay = (day) => {
+  if (!day.number) return
+
+  if (selectedDate.value === day.date) {
+    selectedDate.value = ''
+    return
+  }
+
+  selectedDate.value = day.date
+}
+
+const getDayStyle = (day) => {
+  if (!day.number) {
+    return {
+      cursor: 'default',
+      pointerEvents: 'none'
+    }
+  }
+
+  if (selectedDate.value === day.date) {
+    return {
+      border: '2px solid var(--text-primary)'
+    }
+  }
+
+  return {}
+}
+
 
 </script>
 
 <style scoped>
-
 .calendar {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-
-
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.month-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .calendar-header h3 {
@@ -174,118 +228,116 @@ const days = ref(
   color: var(--text-primary);
 }
 
-.calendar-header span {
-  font-size: 13px;
-  color: var(--accent-primary);
-  font-weight: 500;
-  cursor: pointer;
-}
-
-
-
-.weekdays {
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
-
-  text-align: center;
-
-  font-size: 12px;
-
-  color: var(--text-muted);
-
-  font-weight: 600;
-}
-
-/* GRID */
-
-.days-grid {
-  display: grid;
-
-  grid-template-columns: repeat(7,1fr);
-
-  gap: 8px;
-}
-
-
-
-.day {
-  width: 40px;
-  height: 40px;
-
-  border-radius: 10px;
-
+.month-action {
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 14px;
-  font-weight: 600;
-
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
   cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.month-action:hover {
+  background: var(--accent-primary);
+  color: #fff;
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+.month-action:active {
+  transform: scale(0.92);
+}
 
-  transition: .2s ease;
+.nav-char {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 38px);
+  gap: 6px;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 38px);
+  justify-content: center;
+  gap: 6px;
 }
 
 .day {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
   background: var(--bg-surface);
   color: var(--text-primary);
-
   border: 1px solid var(--border-light);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
 }
+.day:not(.empty):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
 .day.positive {
-  background: #6fcf97;
-  border-color: #6fcf97;
+  background: var(--mood-positive);
+  border-color: var(--mood-positive);
+  color: #fff;
+}
+.day.neutral {
+  background: var(--mood-neutral);
+  border-color: var(--mood-neutral);
+  color: #111827;
+}
+.day.negative {
+  background: var(--mood-negative);
+  border-color: var(--mood-negative);
   color: #fff;
 }
 
-.day.neutral {
-  background: #f2c94c;
-  border-color: #f2c94c;
-  color: #111827;
-}
-
-.day.negative {
-  background: #f58c8c;
-  border-color: #f58c8c;
-  color: white;
-}
-
-
 .dot.positive {
-  background: #6fcf97;
+  background: var(--mood-positive);
 }
-
 .dot.neutral {
-  background: #f2c94c;
+  background: var(--mood-neutral);
 }
-
 .dot.negative {
-  background: #f58c8c;
-}
-.day:not(.positive):not(.neutral):not(.negative):hover {
-  background: var(--bg-surface-secondary);
+  background: var(--mood-negative);
 }
 
-.selected {
-  border: 2px solid var(--text-primary);
+.day.empty {
+  visibility: hidden;
+  pointer-events: none;
 }
-
-/* LEGEND */
 
 .legend {
   display: flex;
   justify-content: center;
-  gap: 18px;
-  margin-top: 8px;
+  gap: 16px;
+  margin-top: 4px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   gap: 6px;
-
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .dot {
@@ -293,5 +345,4 @@ const days = ref(
   height: 8px;
   border-radius: 999px;
 }
-
 </style>

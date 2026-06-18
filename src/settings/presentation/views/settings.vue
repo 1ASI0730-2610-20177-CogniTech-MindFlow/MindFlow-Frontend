@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <main class="container" v-if="store.profile">
+    <main class="container settings-page" v-if="store.profile">
       <div class="grid">
         <div class="col">
           <section class="card animate-fade-in-up theme-transition">
@@ -27,7 +27,9 @@
               </div>
               <div class="field">
                 <label class="theme-transition">{{ $t('settings.profile.timezone') }}</label>
-                <input type="text" value="GMT-5 (Lima, Perú)" disabled class="input-transition theme-transition" />
+                <select v-model="store.profile.timezone" class="input-transition theme-transition" @change="store.setTimezone(store.profile.timezone)">
+                  <option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.value }} ({{ tz.label }})</option>
+                </select>
               </div>
             </div>
 
@@ -45,7 +47,11 @@
                   <p class="toggle-desc theme-transition">{{ $t('settings.privacy.pinLockDesc') }}</p>
                 </div>
                 <label class="switch hover-scale">
-                  <input type="checkbox" checked />
+                  <input
+                    v-if="store.userSettings"
+                    type="checkbox"
+                    v-model="pinLockModel"
+                  />
                   <span class="slider theme-transition"></span>
                 </label>
               </div>
@@ -55,7 +61,10 @@
                   <p class="toggle-desc theme-transition">{{ $t('settings.privacy.darkModeDesc') }}</p>
                 </div>
                 <label class="switch hover-scale">
-                  <input type="checkbox" v-model="store.darkMode" @change="store.toggleDarkMode" />
+                  <input
+                    type="checkbox"
+                    v-model="darkModeModel"
+                  />
                   <span class="slider theme-transition"></span>
                 </label>
               </div>
@@ -65,9 +74,26 @@
                   <p class="toggle-desc theme-transition">{{ $t('settings.privacy.habitRemindersDesc') }}</p>
                 </div>
                 <label class="switch hover-scale">
-                  <input type="checkbox" checked />
+                  <input
+                    v-if="store.userSettings"
+                    type="checkbox"
+                    v-model="habitRemindersModel"
+                  />
                   <span class="slider theme-transition"></span>
                 </label>
+              </div>
+
+              <div v-if="store.userSettings && store.userSettings.habitRemindersEnabled" class="reminder-time-row">
+                <div>
+                  <p class="toggle-label theme-transition">{{ $t('settings.privacy.reminderTime') || 'Hora de recordatorios' }}</p>
+                  <p class="toggle-desc theme-transition">{{ $t('settings.privacy.reminderTimeDesc') || 'Establece la hora para recibir recordatorios de hábitos' }}</p>
+                </div>
+                <input
+                  type="time"
+                  v-model="store.userSettings.reminderTime"
+                  @change="store.setReminderTime(store.userSettings.reminderTime)"
+                  class="time-input input-transition theme-transition"
+                />
               </div>
             </div>
           </section>
@@ -78,25 +104,25 @@
             <h3 class="card-title accent">{{ $t('settings.subscription.title') }}</h3>
             <p class="plan-text theme-transition">{{ $t('settings.subscription.currentPlan') }}: <span class="theme-transition">{{ store.profile.planName }}</span></p>
             <ul class="plan-features">
-              <li class="ok theme-transition">✓ {{ $t('settings.subscription.features.journal') }}</li>
-              <li class="ok theme-transition">✓ {{ $t('settings.subscription.features.habits') }}</li>
+              <li class="ok theme-transition"><i class="pi pi-check" aria-hidden="true"></i> {{ $t('settings.subscription.features.journal') }}</li>
+              <li class="ok theme-transition"><i class="pi pi-check" aria-hidden="true"></i> {{ $t('settings.subscription.features.habits') }}</li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'" class="theme-transition">
-                {{ store.profile.isPremium ? '✓' : '✗' }} {{ $t('settings.subscription.features.pdf') }}
+                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'" aria-hidden="true"></i> {{ $t('settings.subscription.features.pdf') }}
               </li>
               <li :class="store.profile.isPremium ? 'ok' : 'ko'" class="theme-transition">
-                {{ store.profile.isPremium ? '✓' : '✗' }} {{ $t('settings.subscription.features.clinical') }}
+                <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'" aria-hidden="true"></i> {{ $t('settings.subscription.features.clinical') }}
               </li>
             </ul>
-            <button class="btn btn-primary full hover-lift theme-transition" v-if="!store.profile.isPremium">
+            <router-link to="/subscription" class="btn btn-primary full hover-lift theme-transition upgrade-link" v-if="!store.profile.isPremium">
               {{ $t('settings.subscription.upgrade') }}
-            </button>
+            </router-link>
           </section>
 
           <section class="card animate-fade-in-up delay-3 theme-transition">
             <h3 class="card-title theme-transition">{{ $t('settings.support.title') }}</h3>
             <div class="stack">
-              <button class="btn btn-outline full hover-lift theme-transition">{{ $t('settings.support.ticket') }}</button>
-              <button class="btn btn-outline full hover-lift theme-transition">{{ $t('settings.support.faq') }}</button>
+              <button class="btn btn-outline full hover-lift theme-transition" @click="openTicketForm">{{ $t('settings.support.ticket') }}</button>
+              <button class="btn btn-outline full hover-lift theme-transition" @click="showFaq = true">{{ $t('settings.support.faq') }}</button>
             </div>
           </section>
 
@@ -105,7 +131,12 @@
             <p class="danger-desc theme-transition">
               {{ $t('settings.dangerZone.warning') }}
             </p>
-            <button class="btn btn-danger full hover-lift theme-transition">{{ $t('settings.dangerZone.deleteAccount') }}</button>
+            <button
+              class="btn btn-danger full hover-lift theme-transition"
+              @click="showDeleteConfirm = true"
+            >
+              {{ $t('settings.dangerZone.deleteAccount') }}
+            </button>
           </section>
         </div>
       </div>
@@ -115,19 +146,272 @@
       <div class="spinner"></div>
       <p class="animate-pulse">{{ $t('settings.loading') }}</p>
     </div>
+
+    <div v-if="showDeleteConfirm" ref="deleteModalRef" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" @click.self="showDeleteConfirm = false" @keydown.escape="showDeleteConfirm = false">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="delete-modal-title" class="modal-title danger">{{ $t('settings.dangerZone.title') }}</h3>
+          <button class="modal-close" :aria-label="$t('settings.dangerZone.cancel')" @click="showDeleteConfirm = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-warning">{{ $t('settings.dangerZone.confirmText') }}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline hover-lift"
+            :disabled="isDeleting"
+            @click="showDeleteConfirm = false"
+          >
+            {{ $t('settings.dangerZone.cancel') }}
+          </button>
+          <button
+            class="btn btn-danger hover-lift"
+            :disabled="isDeleting"
+            @click="confirmDeleteAccount"
+          >
+            <span v-if="isDeleting" class="spinner-sm"></span>
+            {{ isDeleting ? $t('settings.dangerZone.deleting') : $t('settings.dangerZone.confirmDelete') }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div v-if="showTicketForm" ref="ticketModalRef" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ticket-modal-title" @click.self="closeTicketForm" @keydown.escape="closeTicketForm">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="ticket-modal-title" class="modal-title">{{ $t('settings.support.ticketTitle') }}</h3>
+          <button class="modal-close" :aria-label="$t('settings.support.cancel')" @click="closeTicketForm">&times;</button>
+        </div>
+        <div class="modal-body" v-if="!ticketSubmitted">
+          <div class="field">
+            <label>{{ $t('settings.support.subjectLabel') }}</label>
+            <input type="text" v-model="ticketSubject" class="input-transition theme-transition" />
+          </div>
+          <div class="field">
+            <label>{{ $t('settings.support.messageLabel') }}</label>
+            <textarea v-model="ticketMessage" class="input-transition theme-transition ticket-textarea" rows="5"></textarea>
+          </div>
+        </div>
+        <div class="modal-body" v-else>
+          <div class="ticket-success">
+            <i class="pi pi-check-circle success-icon" aria-hidden="true"></i>
+            <p class="ticket-number-label">{{ $t('settings.support.ticketNumber') }}</p>
+            <p class="ticket-number">{{ ticketNumber }}</p>
+            <p class="ticket-info">{{ $t('settings.support.ticketInfo') }}</p>
+          </div>
+        </div>
+        <div class="modal-footer" v-if="!ticketSubmitted">
+          <button class="btn btn-outline hover-lift" @click="closeTicketForm">{{ $t('settings.support.cancel') }}</button>
+          <button class="btn btn-primary hover-lift" :disabled="!ticketSubject.trim() || !ticketMessage.trim()" @click="submitTicket">{{ $t('settings.support.send') }}</button>
+        </div>
+        <div class="modal-footer" v-else>
+          <button class="btn btn-primary hover-lift" @click="closeTicketForm">{{ $t('settings.support.close') }}</button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="showFaq" ref="faqModalRef" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="faq-modal-title" @click.self="showFaq = false" @keydown.escape="showFaq = false">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="faq-modal-title" class="modal-title">{{ $t('settings.support.faqTitle') }}</h3>
+          <button class="modal-close" :aria-label="$t('settings.support.close')" @click="showFaq = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div v-for="(item, idx) in faqItems" :key="idx" class="faq-item">
+            <p class="faq-question">{{ $t(item.q) }}</p>
+            <p class="faq-answer">{{ $t(item.a) }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline hover-lift" @click="showFaq = false">{{ $t('settings.support.close') }}</button>
+        </div>
+      </div>
+    </div>
+    <div v-if="showPinModal" class="modal-overlay" role="dialog" aria-modal="true" @click.self="showPinModal = false" @keydown.escape="showPinModal = false">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 class="modal-title">{{ $t('settings.privacy.pinLock') }}</h3>
+          <button class="modal-close" @click="showPinModal = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label>PIN (4-6 digits)</label>
+            <input
+              type="password"
+              v-model="pinInput"
+              maxlength="6"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              class="input-transition theme-transition"
+              @keydown.enter="confirmSetPin"
+            />
+            <p v-if="pinError" style="color: var(--accent-danger); font-size: 12px; margin-top: 4px;">{{ pinError }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline hover-lift" @click="showPinModal = false">{{ $t('settings.dangerZone.cancel') }}</button>
+          <button class="btn btn-primary hover-lift" @click="confirmSetPin">{{ $t('settings.profile.saveChanges') }}</button>
+        </div>
+      </div>
+    </div>
   </Layout>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSettingsStore } from '../../application/settings.store'
+import { SupportTicketsApi } from '../../infrastructure/support-tickets-api'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import Layout from '@/shared/presentation/components/layout.vue'
+import { useFocusTrap } from '@/shared/presentation/composables/useFocusTrap'
 
+const router = useRouter()
 const store = useSettingsStore()
+const authStore = useAuthStore()
+const supportApi = new SupportTicketsApi()
 
-onMounted(() => {
-  store.fetchProfile('u1')
-  store.initDarkMode()
+const timezones = [
+  { value: 'GMT-12', label: 'Baker Island' },
+  { value: 'GMT-11', label: 'Samoa' },
+  { value: 'GMT-10', label: 'Hawaii' },
+  { value: 'GMT-9', label: 'Alaska' },
+  { value: 'GMT-8', label: 'Pacific Time' },
+  { value: 'GMT-7', label: 'Mountain Time' },
+  { value: 'GMT-6', label: 'Central America' },
+  { value: 'GMT-5', label: 'Lima, New York' },
+  { value: 'GMT-4', label: 'Caracas, La Paz' },
+  { value: 'GMT-3', label: 'São Paulo, Buenos Aires' },
+  { value: 'GMT-2', label: 'Mid-Atlantic' },
+  { value: 'GMT-1', label: 'Azores' },
+  { value: 'GMT', label: 'London, Dublin' },
+  { value: 'GMT+1', label: 'Paris, Madrid, Berlin' },
+  { value: 'GMT+2', label: 'Istanbul, Cairo' },
+  { value: 'GMT+3', label: 'Moscow, Nairobi' },
+  { value: 'GMT+4', label: 'Dubai' },
+  { value: 'GMT+5', label: 'Pakistan, Tashkent' },
+  { value: 'GMT+5:30', label: 'India' },
+  { value: 'GMT+6', label: 'Bangladesh' },
+  { value: 'GMT+7', label: 'Thailand, Bangkok' },
+  { value: 'GMT+8', label: 'China, Hong Kong, Singapore' },
+  { value: 'GMT+9', label: 'Japan, Seoul' },
+  { value: 'GMT+10', label: 'Sydney' },
+  { value: 'GMT+11', label: 'Solomon Islands' },
+  { value: 'GMT+12', label: 'New Zealand, Fiji' }
+]
+
+const showDeleteConfirm = ref(false)
+const isDeleting = ref(false)
+
+const showTicketForm = ref(false)
+const ticketSubject = ref('')
+const ticketMessage = ref('')
+const ticketSubmitted = ref(false)
+const ticketNumber = ref('')
+const showFaq = ref(false)
+
+const faqItems = [
+  { q: 'settings.support.faq1q', a: 'settings.support.faq1a' },
+  { q: 'settings.support.faq2q', a: 'settings.support.faq2a' },
+  { q: 'settings.support.faq3q', a: 'settings.support.faq3a' }
+]
+
+function openTicketForm() {
+  ticketSubject.value = ''
+  ticketMessage.value = ''
+  ticketSubmitted.value = false
+  ticketNumber.value = ''
+  showTicketForm.value = true
+}
+
+function closeTicketForm() {
+  showTicketForm.value = false
+}
+
+async function submitTicket() {
+  try {
+    const result = await supportApi.create({
+      subject: ticketSubject.value,
+      message: ticketMessage.value
+    })
+    ticketNumber.value = result.ticket_number || result.ticketNumber || '#00000'
+    ticketSubmitted.value = true
+  } catch (e) {
+    console.error('Error saving ticket:', e)
+    if (e.response) {
+      console.error('Response status:', e.response.status)
+      console.error('Response data:', e.response.data)
+    }
+  }
+}
+
+const showPinModal = ref(false)
+const pinInput = ref('')
+const pinError = ref('')
+
+const pinLockModel = computed({
+  get: () => !!store.userSettings?.pinLockEnabled,
+  set: (value) => {
+    if (value) {
+      pinInput.value = ''
+      pinError.value = ''
+      showPinModal.value = true
+    } else {
+      store.setPinLockEnabled(false)
+    }
+  }
+})
+
+async function confirmSetPin() {
+  if (!/^\d{4,6}$/.test(pinInput.value)) {
+    pinError.value = 'PIN must be 4-6 digits'
+    return
+  }
+  try {
+    const { SettingsAPI } = await import('../../infrastructure/settings-api')
+    await SettingsAPI.setPin(pinInput.value)
+    store.setPinLockEnabled(true)
+    showPinModal.value = false
+  } catch (e) {
+    pinError.value = 'Error setting PIN'
+    console.error('Error setting PIN:', e)
+  }
+}
+
+const darkModeModel = computed({
+  get: () => !!store.darkMode,
+  set: (value) => store.setDarkMode(value)
+})
+
+const habitRemindersModel = computed({
+  get: () => !!store.userSettings?.habitRemindersEnabled,
+  set: (value) => store.setHabitRemindersEnabled(value)
+})
+
+async function confirmDeleteAccount() {
+  isDeleting.value = true
+  try {
+    await store.deleteAccount()
+    router.push('/')
+  } catch (e) {
+    console.error('Delete account failed:', e)
+    isDeleting.value = false
+    showDeleteConfirm.value = false
+  }
+}
+
+const deleteModalRef = ref(null)
+const ticketModalRef = ref(null)
+const faqModalRef = ref(null)
+
+useFocusTrap(deleteModalRef, showDeleteConfirm)
+useFocusTrap(ticketModalRef, showTicketForm)
+useFocusTrap(faqModalRef, showFaq)
+
+onMounted(async () => {
+  const userId = authStore.currentUserId
+  if (userId) {
+    await store.fetchProfile(userId)
+  }
 })
 </script>
 
@@ -160,14 +444,14 @@ onMounted(() => {
 .delay-4 { animation-delay: 0.4s; }
 
 .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-.hover-lift:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+.hover-lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
 .hover-scale { transition: transform 0.2s ease; }
 .hover-scale:hover { transform: scale(1.05); }
 
 .input-transition { transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease; }
 
-.spinner { border: 3px solid #f3f3f3; border-top: 3px solid #6366f1; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin-right: 12px; }
+.spinner { border: 3px solid var(--border-color); border-top: 3px solid var(--accent-primary); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin-right: 12px; }
 
 .container { max-width: 1100px; margin: 0 auto; padding: 32px 32px 64px 32px; }
 .grid { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
@@ -176,46 +460,34 @@ onMounted(() => {
 
 .card {
   background: var(--bg-surface);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--text-primary), transparent 96%);
   transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   color: var(--text-primary);
   border: 1px solid var(--border-light);
 }
 
-.card:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+.card:hover { box-shadow: 0 4px 6px -1px color-mix(in srgb, var(--text-primary), transparent 90%); }
 
-/* The premium subscription card should remain visually distinct.
-   In light mode it's dark navy. In dark mode, it matches the requested rgb(52, 211, 153) color. */
 .card-subscription {
-  background: #111827;
-  color: #fff;
-  border: 1px solid #111827;
-}
-
-/* Modificamos el color al rgb(52, 211, 153) solicitado */
-:global(.dark-mode) .card-subscription {
-  background: rgb(52, 211, 153);
-  color: #111827; /* Dark text for contrast against mint green */
-  border: 1px solid rgb(52, 211, 153);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid color-mix(in srgb, var(--accent-primary), transparent 80%);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent-primary), transparent 94%);
 }
 
 .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary); }
-:global(.dark-mode) .card-subscription .card-title { color: #111827; }
-.card-subscription .card-title { color: #fff; }
 
-.accent { color: #34d399; margin-bottom: 4px; }
-:global(.dark-mode) .card-subscription .accent { color: #047857; } /* Darker accent for contrast in dark mode mint card */
-
+.accent { color: var(--accent-success); margin-bottom: 4px; font-weight: 700; }
 
 .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
 
 .avatar {
   width: 64px; height: 64px; border-radius: 50%;
-  background: linear-gradient(135deg, #2dd4bf, #14b8a6); color: #fff;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover)); color: var(--text-on-accent);
   display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 600; box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.4);
+  font-size: 24px; font-weight: 600; box-shadow: 0 4px 6px -1px color-mix(in srgb, var(--accent-primary), transparent 60%);
 }
 
 .username { font-weight: 500; margin-bottom: 8px; color: var(--text-primary); }
@@ -232,63 +504,106 @@ onMounted(() => {
   border-radius: 8px; font-size: 14px; background: var(--bg-surface);
   color: var(--text-primary);
 }
-.field input:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+.field input:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary), transparent 85%); }
 .field input:disabled { background: var(--bg-surface-secondary); color: var(--text-muted); cursor: not-allowed; }
 
+.field select {
+  width: 100%; padding: 8px 12px; border: 1px solid var(--border-color);
+  border-radius: 8px; font-size: 14px; background: var(--bg-surface);
+  color: var(--text-primary);
+}
+.field select:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary), transparent 85%); }
+.field select:disabled { background: var(--bg-surface-secondary); color: var(--text-muted); cursor: not-allowed; }
+
+.reminder-time-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-light);
+  margin-top: 12px;
+}
+
+.time-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary), transparent 85%);
+}
+
 .save-btn { margin-top: 24px; }
-.btn { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease; }
+.btn { display: inline-block; padding: 8px 16px; border-radius: 8px; font-size: var(--btn-font-size); font-weight: var(--btn-font-weight); cursor: pointer; border: 1px solid transparent; transition: background-color 0.2s ease, color 0.2s ease; }
 .btn-sm { padding: 4px 12px; font-size: 13px; }
-.btn-primary { background: #6366f1; color: #fff; }
-.btn-primary:hover { background: #4f46e5; }
-:global(.dark-mode) .card-subscription .btn-primary {
-  background: #111827; /* Dark button on mint background */
-  color: #fff;
-}
-:global(.dark-mode) .card-subscription .btn-primary:hover {
-  background: #1f2937;
-}
+.btn-primary { background: var(--accent-primary); color: var(--text-on-accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-primary:active { transform: scale(0.97); }
 
 .btn-outline {
   background: var(--bg-surface); color: var(--text-primary);
   border-color: var(--border-color);
 }
 .btn-outline:hover { background: var(--bg-surface-secondary); }
-.btn-danger { background: var(--bg-surface); color: #ef4444; border-color: #fca5a5; }
-.btn-danger:hover { background: #fef2f2; }
+.btn-outline:active { transform: scale(0.97); }
+.btn-danger { background: var(--bg-surface); color: var(--accent-danger); border-color: var(--accent-danger); }
+.btn-danger:hover { background: var(--bg-surface-secondary); }
+.btn-danger:active { transform: scale(0.97); }
 .full { width: 100%; }
+.upgrade-link { text-decoration: none; text-align: center; display: block; }
 .stack { display: flex; flex-direction: column; gap: 12px; }
 .toggle-list { display: flex; flex-direction: column; gap: 20px; }
 .toggle-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
 
 .toggle-label { font-size: 14px; color: var(--text-primary); transition: color 0.2s ease; }
-.toggle-row:hover .toggle-label { color: #6366f1; }
+.toggle-row:hover .toggle-label { color: var(--accent-primary); }
 .toggle-desc { font-size: 13px; color: var(--text-secondary); transition: color 0.3s ease; }
 
 .switch { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; inset: 0; background: var(--border-color); border-radius: 22px; transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); }
-.slider::before { content: ""; position: absolute; height: 18px; width: 18px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-.switch input:checked + .slider { background: #34d399; }
+.slider::before { content: ""; position: absolute; height: 18px; width: 18px; left: 2px; top: 2px; background: var(--text-on-accent); border-radius: 50%; transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 2px 4px color-mix(in srgb, var(--text-primary), transparent 80%); }
+.switch input:checked + .slider { background: var(--accent-success); }
 .switch input:checked + .slider::before { transform: translateX(18px); }
 
-/* Subscription Card specific text colors */
-.plan-text { color: #d1d5db; font-size: 14px; margin-bottom: 16px; }
-:global(.dark-mode) .card-subscription .plan-text { color: #064e3b; } /* Darker text for mint bg */
-.plan-text span { color: #fff; font-weight: 500; }
-:global(.dark-mode) .card-subscription .plan-text span { color: #111827; }
+.plan-text { color: var(--text-secondary); font-size: 14px; margin-bottom: 16px; }
+.plan-text span { color: var(--text-primary); font-weight: 600; }
 
 .plan-features { list-style: none; margin-bottom: 20px; }
-.plan-features li { font-size: 14px; padding: 4px 0; color: #e5e7eb; transition: transform 0.2s ease, color 0.3s ease; }
-:global(.dark-mode) .card-subscription .plan-features li { color: #064e3b; } /* Dark text for mint bg */
+.plan-features li { font-size: 14px; padding: 5px 0; color: var(--text-secondary); transition: transform 0.2s ease; display: flex; align-items: center; gap: 6px; }
 .plan-features li:hover { transform: translateX(4px); }
-.plan-features .ko { color: #f87171; }
-:global(.dark-mode) .card-subscription .plan-features .ko { color: #b91c1c; } /* Dark red for mint bg */
-.plan-features .ok { color: #e5e7eb; }
-:global(.dark-mode) .card-subscription .plan-features .ok { color: #064e3b; }
+.plan-features .ok { color: var(--accent-primary); }
+.plan-features .ko { color: var(--accent-danger); }
 
-.danger { border: 2px solid #fca5a5; }
-.danger-title { color: #ef4444; margin-bottom: 8px; }
+.danger { border: 2px solid var(--accent-danger); }
+.danger-title { color: var(--accent-danger); margin-bottom: 8px; }
 .danger-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; transition: color 0.3s ease; }
 .loading-state { display: flex; justify-content: center; align-items: center; height: 60vh; font-size: 18px; color: var(--text-secondary); }
+
+.ticket-textarea {
+  width: 100%; padding: 8px 12px; border: 1px solid var(--border-color);
+  border-radius: 8px; font-size: 14px; background: var(--bg-surface);
+  color: var(--text-primary); resize: vertical; font-family: inherit;
+}
+.ticket-textarea:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary), transparent 85%); }
+
+.ticket-success { text-align: center; padding: 16px 0; }
+.success-icon { font-size: 48px; color: var(--accent-success); margin-bottom: 12px; }
+.ticket-number-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 4px; }
+.ticket-number { font-size: 24px; font-weight: 700; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; }
+.ticket-info { font-size: 13px; color: var(--text-muted); }
+
+.faq-item { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+.faq-item:last-child { border-bottom: none; }
+.faq-question { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.faq-answer { font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
 
 </style>

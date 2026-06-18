@@ -1,37 +1,206 @@
 <template>
-  <div class="premium-card export-banner">
+  <div class="premium-card export-banner theme-transition">
     <div class="export-info">
       <h3>{{ $t('analytics.components.export.title') }}</h3>
       <p>{{ $t('analytics.components.export.desc') }}</p>
     </div>
     <div class="export-actions">
-      <button class="btn-outline">
+      <button class="btn-outline" @click="downloadPdf" :disabled="isDownloading">
         <span class="mono-text">PDF</span>
       </button>
-      <button class="btn-outline">
+      <button class="btn-outline" @click="downloadCsv" :disabled="isDownloading">
         <span class="mono-text">CSV</span>
       </button>
     </div>
   </div>
 </template>
 
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useSubscriptionStore } from '@/subscription/application/subscription.store'
+import { ReportingAPI } from '@/shared/infrastructure/reporting-api'
+
+const router = useRouter()
+const subscriptionStore = useSubscriptionStore()
+const isDownloading = ref(false)
+
+function requirePremium() {
+  if (!subscriptionStore.isPremium) {
+    router.push('/subscription')
+    return true
+  }
+  return false
+}
+
+async function downloadPdf() {
+  if (requirePremium()) return
+  isDownloading.value = true
+  try {
+    const blob = await ReportingAPI.downloadPdf()
+    ReportingAPI.triggerDownload(blob, 'mindflow-report.pdf')
+  } catch (error) {
+    console.error('Error downloading PDF:', error)
+  } finally {
+    isDownloading.value = false
+  }
+}
+
+async function downloadCsv() {
+  if (requirePremium()) return
+  isDownloading.value = true
+  try {
+    const blob = await ReportingAPI.downloadCsv()
+    ReportingAPI.triggerDownload(blob, 'mindflow-entries.csv')
+  } catch (error) {
+    console.error('Error downloading CSV:', error)
+  } finally {
+    isDownloading.value = false
+  }
+}
+</script>
+
 <style scoped>
-.premium-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 20px; box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.04); padding: 28px 36px; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s ease; }
-.premium-card:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08); }
+.premium-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 32px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
 
-.export-info h3 { margin: 0 0 6px 0; color: var(--text-dark); font-size: 18px; font-weight: 700; }
-.export-info p { margin: 0; color: var(--text-muted); font-size: 14px; }
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
 
-.export-actions { display: flex; gap: 12px; }
+.premium-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  border-color: rgba(99, 102, 241, 0.2);
+}
 
-.btn-outline { background: transparent; border: 1px solid rgba(15, 23, 42, 0.1); color: var(--text-dark); padding: 10px 24px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
-.btn-outline:hover { background: var(--text-dark); color: #ffffff; border-color: var(--text-dark); }
-.mono-text { font-size: 12px; letter-spacing: 0.05em; font-weight: 700; }
+.premium-card:hover::before {
+  left: 100%;
+}
 
-/* === RESPONSIVE === */
+.export-info {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.export-info h3 {
+  margin: 0 0 8px 0;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 800;
+  transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  letter-spacing: -0.01em;
+}
+
+.export-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-weight: 500;
+}
+
+.premium-card:hover .export-info h3 {
+  color: var(--accent-primary);
+}
+
+.export-actions {
+  display: flex;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-outline {
+  background: rgba(99, 102, 241, 0.05);
+  border: 2px solid rgba(99, 102, 241, 0.25);
+  color: var(--accent-primary);
+  padding: 11px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.btn-outline::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.btn-outline:hover {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  color: #ffffff;
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+}
+
+.btn-outline:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-outline:active {
+  transform: translateY(0);
+}
+
+.mono-text {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  font-family: 'Courier New', monospace;
+}
+
 @media (max-width: 768px) {
-  .premium-card { flex-direction: column; padding: 24px; text-align: center; gap: 24px; }
-  .export-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
-  .btn-outline { padding: 12px; }
+  .premium-card {
+    flex-direction: column;
+    padding: 24px;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .export-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .btn-outline {
+    padding: 12px;
+  }
 }
 </style>

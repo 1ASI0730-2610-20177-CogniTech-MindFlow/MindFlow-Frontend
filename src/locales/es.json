@@ -5,16 +5,114 @@
   "profile": {
     "user": "Usuario"
   },
+  "auth": {
+    "login": {
+      "title": "Iniciar Sesión",
+      "subtitle": "Accede a tu espacio de bienestar",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "mi correo",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Tu contraseña",
+      "button": "Iniciar Sesión",
+      "loading": "Iniciando sesión...",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes cuenta?",
+      "registerLink": "Crear una",
+      "error": {
+        "emailRequired": "El correo es obligatorio",
+        "emailInvalid": "Ingresa un correo válido",
+        "passwordRequired": "La contraseña es obligatoria",
+        "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+        "invalid": "Credenciales inválidas. Intenta de nuevo."
+      }
+    },
+    "register": {
+      "title": "Crear Cuenta",
+      "subtitle": "Comienza tu viaje de bienestar",
+      "name": "Nombre Completo",
+      "namePlaceholder": "Tu nombre",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "mi correo",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Mínimo 6 caracteres",
+      "confirmPassword": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Repite tu contraseña",
+      "button": "Crear Cuenta",
+      "loading": "Creando cuenta...",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "loginLink": "Inicia sesión",
+      "error": {
+        "nameRequired": "El nombre es obligatorio",
+        "nameTooShort": "El nombre debe tener al menos 2 caracteres",
+        "emailRequired": "El correo es obligatorio",
+        "emailInvalid": "Ingresa un correo válido",
+        "passwordRequired": "La contraseña es obligatoria",
+        "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+        "passwordUppercase": "Debe contener al menos una mayúscula",
+        "passwordNumber": "Debe contener al menos un número",
+        "confirmRequired": "Confirma tu contraseña",
+        "passwordsDoNotMatch": "Las contraseñas no coinciden",
+        "generic": "Error al crear la cuenta. Intenta de nuevo."
+      }
+    },
+    "forgotPassword": {
+      "title": "Recuperar Contraseña",
+      "subtitle": "Ingresa tu correo y te enviaremos instrucciones",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "mi correo",
+      "button": "Enviar Instrucciones",
+      "sending": "Enviando...",
+      "sent": "Si el correo existe en nuestros registros, recibirás instrucciones para restablecer tu contraseña.",
+      "backToLogin": "Volver a Iniciar Sesión",
+      "error": {
+        "generic": "Error al enviar las instrucciones. Intenta de nuevo."
+      }
+    },
+    "resetPassword": {
+      "title": "Restablecer Contraseña",
+      "subtitle": "Ingresa tu nueva contraseña",
+      "newPassword": "Nueva Contraseña",
+      "newPasswordPlaceholder": "Mínimo 6 caracteres",
+      "confirmPassword": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Repite tu nueva contraseña",
+      "button": "Restablecer Contraseña",
+      "sending": "Restableciendo...",
+      "success": "Tu contraseña ha sido restablecida exitosamente. Ya puedes iniciar sesión con tu nueva contraseña.",
+      "backToLogin": "Ir a Iniciar Sesión"
+    },
+    "google": {
+      "or": "o continúa con"
+    },
+    "logout": "Cerrar Sesión",
+    "sessionExpired": "Tu sesión ha expirado. Inicia sesión de nuevo."
+  },
+  "pin": {
+    "title": "Ingresa tu PIN",
+    "subtitle": "Ingresa tu codigo de 4 digitos para acceder",
+    "error": "PIN incorrecto. Intenta de nuevo.",
+    "verifying": "Verificando..."
+  },
   "menu": {
     "dashboard": "Dashboard",
-    "journal": "Diario (Journal)",
+    "journal": "Diario",
     "habits": "Hábitos",
     "analytics": "Analíticas",
     "settings": "Configuración"
   },
+  "topbar": {
+    "subtitle": "Tu IA está lista para escucharte.",
+    "search": "Buscar...",
+    "sections": "Secciones",
+    "noResults": "No se encontraron resultados"
+  },
   "premium": {
+    "title": "MindFlow Premium",
     "description": "Desbloquea exportación de reportes PDF y CSV para tu terapeuta.",
     "viewPlans": "Ver Planes"
+  },
+  "hydration": {
+    "title": "Hora de hidratarse",
+    "message": "Has estado concentrado un buen rato. ¡Bebe un poco de agua!"
   },
   "plansPage": {
     "hero": {
@@ -31,7 +129,8 @@
     "buttons": {
       "activePlan": "Plan Activo",
       "downgrade": "Bajar de Plan",
-      "upgrade": "Actualizar a Premium"
+      "upgrade": "Actualizar a Premium",
+      "confirmDowngrade": "¿Estás seguro de que deseas cancelar tu suscripción premium y cambiar al plan gratuito?"
     },
     "freemium": {
       "title": "Freemium",
@@ -64,8 +163,35 @@
         "f5Text": " Resolución de dudas técnicas."
       }
     },
+    "result": {
+      "successTitle": "¡Pago exitoso!",
+      "successDesc": "Tu suscripción premium ha sido activada. Disfruta de todas las funciones avanzadas.",
+      "viewPlan": "Ver mi plan",
+      "cancelTitle": "Pago cancelado",
+      "cancelDesc": "El proceso de pago fue cancelado. Puedes intentarlo de nuevo cuando quieras.",
+      "backToPlans": "Volver a planes"
+    },
     "footer": "🔒 Pagos encriptados y procesados de forma segura a través de Stripe.",
-    "loading": "Cargando información de planes..."
+    "loading": "Cargando información de planes...",
+    "paymentHistory": {
+      "title": "Historial de Pagos",
+      "empty": "Aún no hay pagos registrados.",
+      "date": "Fecha",
+      "amount": "Monto",
+      "method": "Método",
+      "status": "Estado",
+      "methods": {
+        "creditCard": "Tarjeta de crédito",
+        "paypal": "PayPal",
+        "freeTrial": "Prueba gratuita"
+      },
+      "statuses": {
+        "completed": "Completado",
+        "pending": "Pendiente",
+        "failed": "Fallido",
+        "refunded": "Reembolsado"
+      }
+    }
   },
   "settings": {
     "profile": {
@@ -83,7 +209,9 @@
       "darkMode": "Modo Oscuro",
       "darkModeDesc": "Ideal para registrar emociones en la noche.",
       "habitReminders": "Recordatorios de Hábitos",
-      "habitRemindersDesc": "Notificaciones push para hidratación y pausas."
+      "habitRemindersDesc": "Notificaciones push para hidratación y pausas.",
+      "reminderTime": "Hora de recordatorios",
+      "reminderTimeDesc": "Establece la hora para recibir recordatorios de hábitos."
     },
     "subscription": {
       "title": "Suscripción",
@@ -99,51 +227,138 @@
     "support": {
       "title": "Soporte Técnico",
       "ticket": "Generar Ticket de Ayuda",
-      "faq": "Centro de Preguntas (FAQ)"
+      "faq": "Centro de Preguntas (FAQ)",
+      "ticketTitle": "Enviar un Ticket de Soporte",
+      "subjectLabel": "Asunto",
+      "messageLabel": "Describe tu problema",
+      "send": "Enviar Ticket",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "ticketNumber": "Tu número de ticket:",
+      "ticketInfo": "Te responderemos pronto. Guarda tu número de ticket como referencia.",
+      "faqTitle": "Preguntas Frecuentes",
+      "faq1q": "¿Cómo reinicio mi PIN?",
+      "faq1a": "Ve a Configuración > Privacidad y desactiva el bloqueo PIN, luego actívalo de nuevo para establecer un nuevo PIN.",
+      "faq2q": "¿Cómo exporto mis datos?",
+      "faq2a": "La exportación de datos está disponible en el plan Premium. Actualiza desde la sección de Suscripción.",
+      "faq3q": "¿Cómo cambio mi idioma?",
+      "faq3a": "Usa el selector de idioma en la barra superior para alternar entre inglés y español."
     },
     "dangerZone": {
       "title": "Zona de Peligro",
       "warning": "Eliminar tu cuenta purgará permanentemente todos tus registros encriptados.",
-      "deleteAccount": "Eliminar mi cuenta"
+      "deleteAccount": "Eliminar mi cuenta",
+      "confirmText": "¿Estás seguro? Esta acción no se puede deshacer.",
+      "cancel": "Cancelar",
+      "confirmDelete": "Sí, eliminar mi cuenta",
+      "deleting": "Eliminando..."
     },
     "loading": "Cargando configuración..."
   },
-  "journal": {
-    "title": "Tu Historial Emocional",
-    "filters": {
-      "searchPlaceholder": "Buscar en tus pensamientos...",
-      "tabs": {
-        "all": "Todos",
-        "work": "Trabajo",
-        "studies": "Estudios",
-        "family": "Familia"
+   "journal": {
+     "title": "Tu Historial Emocional",
+      "subtitle": "Registra una nueva entrada cuando quieras volver sobre un momento importante.",
+      "newEntry": "Nueva entrada",
+     "noEntries": "No se encontraron entradas con los filtros seleccionados",
+      "composer": {
+        "eyebrow": "Nueva reflexión",
+        "title": "Agregar otra entrada al journal",
+        "close": "Cerrar formulario",
+      "removeFile": "Eliminar archivo",
+        "save": "Guardar entrada",
+        "saving": "Guardando...",
+        "cancel": "Cancelar",
+        "fields": {
+          "title": "Título",
+          "category": "Categoría",
+          "date": "Fecha",
+          "sentiment": "Estado emocional",
+          "content": "Contenido",
+          "images": "Imágenes"
+        },
+        "placeholders": {
+          "title": "Escribe un título breve",
+          "content": "Cuéntame qué pasó hoy...",
+          "upload": "Haz clic para subir imágenes"
+        },
+        "categories": {
+          "reflection": "Reflexión Personal",
+          "work": "Trabajo",
+          "studies": "Estudios",
+          "family": "Familia"
+        },
+        "sentiments": {
+          "auto": "Auto-detectar (IA)",
+          "positive": "Positivo",
+          "neutral": "Neutral",
+          "negative": "Negativo"
+        }
       },
-      "states": {
-        "all": "Todos",
-        "positive": "Positivo",
-        "neutral": "Neutral",
-        "negative": "Negativo"
-      }
-    },
-    "calendar": {
-      "previousMonth": "Ver Mes Anterior",
-      "weekdays": ["L", "M", "X", "J", "V", "S", "D"],
-      "months": [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-      ],
-      "legend": {
-        "positive": "Positivo",
-        "neutral": "Neutral",
-        "negative": "Negativo"
-      }
-    }
-  },
+      "entryCard": {
+        "attachments": "Adjuntos"
+      },
+      "filters": {
+        "stats": "Estadísticas",
+       "searchPlaceholder": "Buscar en tus pensamientos...",
+       "tabs": {
+         "all": "Todos",
+         "work": "Trabajo",
+         "studies": "Estudios",
+         "family": "Familia"
+       },
+       "states": {
+         "all": "Todos",
+         "positive": "Positivo",
+         "neutral": "Neutral",
+         "negative": "Negativo"
+       },
+       "sort": "Ordenar por",
+       "sortRecent": "Más recientes",
+       "sortOldest": "Más antiguos",
+       "clear": "Limpiar filtros"
+     },
+     "calendar": {
+       "previousMonth": "Ver Mes Anterior",
+        "nextMonth": "Ver Mes Siguiente",
+       "weekdays": ["L", "M", "X", "J", "V", "S", "D"],
+       "months": [
+         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+       ],
+       "legend": {
+         "positive": "Positivo",
+         "neutral": "Neutral",
+         "negative": "Negativo"
+       }
+     }
+   },
   "habits": {
     "title": "Hábitos",
     "placeholder": {
       "title": "Sugerencias de IA",
       "desc": "Próximamente: hábitos recomendados según tu estado emocional y rutinas actuales."
+    },
+    "suggestions": {
+      "poweredBy": "Sugerencias MindFlow AI",
+      "subtitle": "Habitos recomendados segun tu estado emocional y rutinas actuales.",
+      "wellnessInsight": "Tu bienestar esta semana",
+      "stress": "Estres",
+      "adopt": "Adoptar",
+      "allAdopted": "Ya adoptaste todas las sugerencias. Sigue asi!",
+      "reasons": {
+        "breathingReason": "Reduce la ansiedad y mejora el enfoque en momentos de estres.",
+        "walkReason": "Mejora el animo y la creatividad. Ideal para despejar la mente.",
+        "journalingReason": "Procesar emociones antes de dormir mejora la calidad del sueno.",
+        "stretchReason": "Activa tu cuerpo y reduce la tension muscular acumulada.",
+        "digitalReason": "Desconectarte reduce la sobrecarga cognitiva y el estres.",
+        "gratitudeReason": "Practicar gratitud aumenta la satisfaccion y el bienestar general.",
+        "hydrationReason": "Mantenerte hidratado mejora la concentracion y energia.",
+        "readingReason": "Estimula la mente y ayuda a desconectar antes de dormir.",
+        "yogaReason": "Combina movimiento y meditacion para un bienestar integral.",
+        "reviewReason": "Reflexionar sobre tus metas mantiene la motivacion y el rumbo.",
+        "napReason": "Una siesta corta restaura la energia y reduce el estres.",
+        "meditationReason": "Calma la mente y fortalece la resiliencia emocional."
+      }
     },
     "tabs": {
       "routines": "Mis Rutinas",
@@ -151,8 +366,9 @@
       "history": "Historial"
     },
     "alerts": {
-      "stressTitle": "MindFlow AI",
-      "stressMessage": " detecta niveles de estrés por encima del promedio. Hemos pausado tus tareas de alta exigencia cognitiva automáticamente. Prioriza hoy tu bienestar y descanso."
+      "stressTitle": "MindFlow AI: ",
+      "stressMessage": "Detectamos niveles de estrés por encima del promedio. Hemos pausado tus tareas de alta exigencia cognitiva automáticamente. Prioriza hoy tu bienestar y descanso.",
+      "pausedHabits": "Hábitos pausados:"
     },
     "addForm": {
       "title": "Añadir Nuevo Hábito",
@@ -179,15 +395,140 @@
       "daysCompleted": "días cumplidos",
       "streak": "Racha:",
       "days": "días"
+    },
+    "dailyProgress": "Progreso Diario",
+    "percentCompleted": "{percent}% Completado ({completed}/{total})",
+    "table": {
+      "status": "Estado",
+      "name": "Hábito",
+      "category": "Categoría",
+      "streak": "Racha Actual"
+    },
+    "emptyFilter": "No hay hábitos que coincidan con el filtro.",
+    "pausedByAI": "Pausado por IA",
+    "aria": {
+      "markPending": "Marcar pendiente",
+      "markCompleted": "Marcar completado"
+    }
+  },
+  "dashboard": {
+    "weeklySummary": {
+      "title": "Resumen Semanal de Ánimo",
+      "viewAll": "Ver Reporte Completo",
+      "loading": "Cargando resumen semanal...",
+      "empty": "No hay datos suficientes para mostrar el resumen.",
+      "average": "Promedio",
+      "peak": "Pico",
+      "low": "Mínimo"
+    },
+    "chat": {
+      "welcomeTitle": "Hola, ¿como te sientes hoy?",
+      "welcomeDesc": "Escribe lo que piensas o sientes. MindFlow AI analizara tus emociones y te dara consejos personalizados.",
+      "history": "Historial",
+      "newChat": "Nuevo chat",
+      "suggestions": {
+        "s1": "Hoy me siento ansioso por el trabajo",
+        "s2": "Tuve un buen dia, estoy agradecido",
+        "s3": "No puedo dormir bien ultimamente",
+        "s4": "Me siento estresado por los examenes"
+      }
+    },
+    "recentEntries": {
+      "title": "Conversaciones Recientes",
+      "viewAll": "Ver historial completo",
+      "you": "Tú",
+      "empty": "Aún no hay conversaciones. Escribe cómo te sientes para iniciar."
+    },
+    "dailyHabits": {
+      "title": "Hábitos Diarios",
+      "days": "días"
+    },
+    "quickInterventions": {
+      "title": "Intervenciones Rápidas",
+      "live": "EN VIVO",
+      "breathing": "Respiración 4-7-8",
+      "breathingDesc": "Técnica de respiración para reducir la ansiedad",
+      "microMeditation": "Micro-meditación",
+      "microMeditationDesc": "Meditación guiada de 3 minutos",
+      "grounding": "Conexión 5-4-3-2-1",
+      "groundingDesc": "Ejercicio de conexión con el presente",
+      "meditation": {
+        "step1": "Cierra los ojos y respira profundo...",
+        "step2": "Observa tus pensamientos sin juzgarlos...",
+        "step3": "Siente tu cuerpo relajarse con cada respiración...",
+        "step4": "Conecta con el momento presente...",
+        "step5": "Lentamente, vuelve a tu entorno..."
+      }
+    },
+    "interventions": {
+      "inhale": "Inhala",
+      "inhaleDesc": "Respira profundamente por la nariz durante 4 segundos",
+      "hold": "Sostén",
+      "holdDesc": "Mantén el aire en tus pulmones durante 7 segundos",
+      "exhale": "Exhala",
+      "exhaleDesc": "Suelta el aire lentamente por la boca durante 8 segundos",
+      "round": "Ronda",
+      "see": "Vista",
+      "seeDesc": "Nombra 5 cosas que puedas ver a tu alrededor",
+      "touch": "Tacto",
+      "touchDesc": "Identifica 4 cosas que puedas tocar ahora mismo",
+      "hear": "Oido",
+      "hearDesc": "Escucha 3 sonidos diferentes a tu alrededor",
+      "smell": "Olfato",
+      "smellDesc": "Percibe 2 olores distintos cerca de ti",
+      "taste": "Gusto",
+      "tasteDesc": "Nota 1 sabor en tu boca ahora mismo",
+      "next": "Siguiente",
+      "complete": "Ejercicio completado"
+    },
+    "moodInput": {
+      "title": "¿Cómo te sientes en este momento?",
+      "aiActive": "MindFlow AI Activa",
+      "placeholder": "Escribe aquí tus pensamientos. Este es un espacio seguro y encriptado...",
+      "save": "Guardar Registro",
+      "analyzing": "Analizando...",
+      "processing": "Procesando tus emociones y buscando los mejores consejos para ti...",
+      "rateLabel": "Valora este consejo",
+      "ratingThanks": "¡Gracias por tu valoración! Nos ayuda a mejorar.",
+      "tags": {
+        "studies": "Estudios",
+        "work": "Trabajo",
+        "family": "Familia",
+        "personal": "Personal"
+      }
     }
   },
   "analytics": {
     "title": "Tu Panorama Emocional",
     "telemetry": "SINC. BIOMÉTRICA ACTIVA // V.3.1.0",
     "loading": "Cifrando y analizando datos biométricos...",
+    "insights": {
+      "u1": "Has mostrado una gran resiliencia esta semana. El estrés relacionado con el trabajo disminuyó significativamente después del miércoles.",
+      "u2": "Tu carga de trabajo estuvo más alta esta semana; conviene pausar un poco y priorizar descanso.",
+      "u3": "Tu ritmo de recuperación emocional ha sido muy sólido; el trabajo con pacientes parece darte energía positiva.",
+      "u4": "Aunque la semana tuvo presión académica, sostuviste un progreso estable y consistente.",
+      "u5": "Tu descanso digital está mejorando tu calidad de sueño y la constancia de hábitos nocturnos."
+    },
+    "kpis": {
+      "entriesMonth": "ENTRADAS ESTE MES",
+      "moodAverage": "ÁNIMO PROMEDIO",
+      "maxHabitStreak": "MAYOR RACHA HÁBITOS"
+    },
+    "moodCalendar": {
+      "title": "Calendario de Animo"
+    },
+    "moods": {
+      "positive": "Positivo",
+      "neutral": "Neutral",
+      "negative": "Negativo"
+    },
+    "units": {
+      "days": "días"
+    },
     "components": {
       "wordCloud": {
         "title": "nube de palabras frecuentes",
+        "subtitle": "ANÁLISIS_NLP",
         "words": {
           "calm": "Calma",
           "anxious": "> ansioso.log",
@@ -195,27 +536,118 @@
           "grateful": "Agradecido",
           "family": "[FAMILIA]",
           "tired": "Cansado"
-        }
+        },
+        "empty": "No hay datos suficientes para generar la nube de palabras."
       },
       "export": {
         "title": "Exportar Reportes Clínicos",
         "desc": "Descarga tu historial estructurado con gráficas para compartirlo formalmente con tu psicólogo."
       },
       "weeklySummary": {
+        "logDateRange": "FECHA_LOG: {start} - {end}",
+        "trendRange": "{trend} (7D)",
         "stabilityIndex": "Índice de Estabilidad",
+        "aiAnalysis": "ANÁLISIS_IA_NEXUS",
         "active": "ACTIVO"
       },
       "fluctuationChart": {
         "title": "Nivel de Actividad en Sesiones",
-        "yLabel": "Cantidad de tareas / Fase"
+        "subtitle": "DISTRIBUCIÓN_DE_FRECUENCIA",
+        "live": "EN VIVO",
+        "yLabel": "Cantidad de tareas / Fase",
+        "dataset": {
+          "interactions": "Interacciones"
+        },
+        "labels": {
+          "assessment": "Evaluación",
+          "growth": "Crecimiento",
+          "reflection": "Reflexión",
+          "action": "Acción",
+          "integration": "Integración"
+        }
       },
       "trendChart": {
         "title": "Tendencia de Ánimo",
+        "dataset": {
+          "wellbeing": "Nivel de Bienestar"
+        },
+        "labels": {
+          "mon": "Lun",
+          "tue": "Mar",
+          "wed": "Mié",
+          "thu": "Jue",
+          "fri": "Vie",
+          "sat": "Sáb",
+          "sun": "Dom"
+        },
         "legend": {
           "wellbeing": "Nivel de Bienestar",
           "stress": "Carga de Estrés"
         }
       }
     }
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "empty": "No tienes notificaciones nuevas",
+    "markAllRead": "Marcar todo como leído",
+    "marking": "...",
+    "types": {
+      "reminder": "Recordatorio",
+      "aiAlert": "Alerta de IA"
+    },
+    "dismiss": "Descartar notificación",
+    "timeAgo": {
+      "now": "Ahora",
+      "minutes": "hace {n} min",
+      "hours": "hace {n}h",
+      "days": "hace {n}d"
+    }
+  },
+  "home": {
+    "badge": "MindFlow v3.1.0",
+    "hero": {
+      "title": "Bienvenido a tu espacio de bienestar mental",
+      "subtitle": "Monitorea tus hábitos, registra tus emociones y descubre patrones en tu bienestar diario.",
+      "cta": "Ir al Dashboard"
+    },
+    "features": {
+      "moodJournal": {
+        "title": "Diario Emocional",
+        "desc": "Registra tus pensamientos y emociones con análisis de sentimiento impulsado por IA."
+      },
+      "habitTracking": {
+        "title": "Seguimiento de Hábitos",
+        "desc": "Crea rutinas diarias, semanales o mensuales y da seguimiento a tu progreso."
+      },
+      "analytics": {
+        "title": "Analíticas",
+        "desc": "Visualiza tendencias, rachas y estadísticas detalladas de tu bienestar."
+      },
+      "premium": {
+        "title": "MindFlow Premium",
+        "desc": "Desbloquea funciones avanzadas, IA mejorada y reportes personalizados."
+      }
+    }
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "message": "La página que buscas no existe o ha sido movida a otra ubicación.",
+    "backToDashboard": "Volver al Dashboard",
+    "previousPage": "Página Anterior"
+  },
+  "routes": {
+    "home": "Inicio - MindFlow",
+    "login": "Iniciar Sesión - MindFlow",
+    "register": "Crear Cuenta - MindFlow",
+    "forgotPassword": "Recuperar Contraseña - MindFlow",
+    "resetPassword": "Restablecer Contraseña - MindFlow",
+    "dashboard": "Dashboard - MindFlow",
+    "analytics": "Estadísticas - MindFlow",
+    "habits": "Hábitos - MindFlow",
+    "journal": "Diario - MindFlow",
+    "subscription": "Suscripción - MindFlow",
+    "settings": "Configuración - MindFlow",
+    "notFound": "404 - No Encontrado"
   }
 }

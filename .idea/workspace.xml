@@ -4,28 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.development" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+    <list default="true" id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="feat: integrate chat system, fix subscription endpoints, improve analytics parsing and UI consistency">
+      <change afterPath="$PROJECT_DIR$/scripts/seed-test-data.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dashboard/infrastructure/chat-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/application/analytics.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/application/analytics.store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/infrastructure/analytics.endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/infrastructure/analytics.endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/infrastructure/mood-calendar.endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/infrastructure/mood-calendar.endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/infrastructure/word-cloud.endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/infrastructure/word-cloud.endpoint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/export-banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/export-banner.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/mood-calendar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/mood-calendar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/mood-fluctuation-chart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/mood-fluctuation-chart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/mood-trend-chart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/mood-trend-chart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/word-cloud.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/word-cloud.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/views/analytics-view.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/views/analytics-view.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/application/dashboard.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/application/dashboard.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/application/dashboard.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/application/dashboard.store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/infrastructure/dashboard.endpoint.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/ai-chat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/ai-chat.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/daily-habits.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/daily-habits.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/mood-input.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/mood-input.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/quick-interventions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/quick-interventions.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/recent-entries.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/recent-entries.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/weekly-summary-widget.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/weekly-summary-widget.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/views/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/views/dashboard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/habits/infrastructure/suggestions-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/habits/infrastructure/suggestions-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/habits/infrastructure/wellness-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/habits/infrastructure/wellness-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/habits/presentation/views/habits.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/habits/presentation/views/habits.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/iam/application/auth.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/iam/application/auth.store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/iam/presentation/components/login-form.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/iam/presentation/components/login-form.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/iam/presentation/components/register-form.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/iam/presentation/components/register-form.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/journal/presentation/views/journal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/journal/presentation/views/journal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/locales/es.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/es.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pinia.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pinia.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/base-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/base-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/base-endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/base-endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/language-switcher.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/language-switcher.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notifications/infrastructure/notifications-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/notifications/infrastructure/notifications-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/settings/infrastructure/settings-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings/infrastructure/settings-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/settings/presentation/views/settings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings/presentation/views/settings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/ai-feedback-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/ai-feedback-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/reporting-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/reporting-api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/layout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/premium-banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/premium-banner.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/sidebar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/topbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/topbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/presentation/views/page-not-found.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/views/page-not-found.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscription/application/subscription.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/application/subscription.store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscription/infrastructure/subscription-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/infrastructure/subscription-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscription/presentation/views/subscription-result.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/presentation/views/subscription-result.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/subscription/presentation/views/subscription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/presentation/views/subscription.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,58 +59,140 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/User/WebstormProjects/MindFlow-Frontend" value="3FI61MSXFRRzRFhRgETjYXwN37K" />
+      <entry key="_C:/Users/User/WebstormProjects/mindflow-frontend" value="3Dm0j85yDRUcYXcDmSzWAEToIzb" />
+    </persistenceIdMap>
+  </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="56" />
+    <option name="cachedIndexableFilesCount" value="125" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JFranco556"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JFranco556&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/1ASI0730-2610-20177-CogniTech-MindFlow/MindFlow-Frontend.git",
-    "accountId": "4833b7bf-ed95-48c3-8441-19ba3d1e736b"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/1ASI0730-2610-20177-CogniTech-MindFlow/MindFlow-Frontend.git&quot;,
+    &quot;accountId&quot;: &quot;a7f58221-1759-4f7a-a150-bdf06c989744&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0,
-  "fromUser": false
-}]]></component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.019598876609499" />
+      <entry key="MS500" value="2.2501685291432088" />
+      <entry key="S2" value="5.21389521239935" />
+      <entry key="S5" value="6.672547829398464" />
+      <entry key="S10" value="7.293634933611389" />
+      <entry key="S30" value="7.754282383369869" />
+      <entry key="S60" value="7.875805550126475" />
+      <entry key="M2" value="7.937565209021089" />
+      <entry key="M5" value="7.989259486095443" />
+      <entry key="M10" value="8.455700243503356" />
+      <entry key="M15" value="9.596703979220807" />
+      <entry key="M30" value="15.639212388656098" />
+      <entry key="H1" value="32.02749410453171" />
+      <entry key="H2" value="58.725091789075904" />
+      <entry key="H4" value="89.09116387826161" />
+      <entry key="D1" value="145.42661998958022" />
+      <entry key="W1" value="161.92771860205835" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.10026513276380612" />
+      <entry key="MS500" value="1.8468813585057748" />
+      <entry key="S2" value="5.0884163042609245" />
+      <entry key="S5" value="6.619480427028042" />
+      <entry key="S10" value="7.266559178344127" />
+      <entry key="S30" value="7.745129605632217" />
+      <entry key="S60" value="7.871212741502775" />
+      <entry key="M2" value="7.935264662197953" />
+      <entry key="M5" value="7.988336458614399" />
+      <entry key="M10" value="8.455210043139845" />
+      <entry key="M15" value="9.596329525862384" />
+      <entry key="M30" value="15.638897678008973" />
+      <entry key="H1" value="32.02716162891785" />
+      <entry key="H2" value="58.72478421943081" />
+      <entry key="H4" value="89.09093268832997" />
+      <entry key="D1" value="145.42655902770863" />
+      <entry key="W1" value="161.92770899420879" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3Dm0j85yDRUcYXcDmSzWAEToIzb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.base-api.js.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/WebstormProjects/MindFlow-Frontend/docs&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\User\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\WebstormProjects\MindFlow-Frontend\docs" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.25134.101" />
       </set>
     </attachedChunks>
   </component>
@@ -96,10 +204,27 @@
       <option name="presentableId" value="Default" />
       <updated>1778872069069</updated>
       <workItem from="1778872070076" duration="1642000" />
+      <workItem from="1781660004467" duration="27220000" />
+      <workItem from="1781750025457" duration="9209000" />
+      <workItem from="1781797259737" duration="19359000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: update project">
+      <option name="closed" value="true" />
+      <created>1781687507166</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1781687507166</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: update project" />
+    <MESSAGE value="feat: integrate chat system, fix subscription endpoints, improve analytics parsing and UI consistency" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: integrate chat system, fix subscription endpoints, improve analytics parsing and UI consistency" />
   </component>
 </project>

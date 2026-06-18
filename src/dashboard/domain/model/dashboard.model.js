@@ -1,9 +1,10 @@
 export class JournalEntry {
-    constructor({ id, time, text, tag }) {
+    constructor({ id, time, text, tag, aiResponse }) {
         this.id = id || Date.now();
         this.time = time || 'Justo ahora';
         this.text = text;
         this.tag = tag;
+        this.aiResponse = aiResponse || null;
     }
 }
 

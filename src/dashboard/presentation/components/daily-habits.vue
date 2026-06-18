@@ -1,13 +1,16 @@
 <template>
-  <div class="dashboard-card">
-    <h3 class="card-title">Hábitos Diarios</h3>
+  <div class="dashboard-card theme-transition">
+    <h3 class="card-title">{{ t('dashboard.dailyHabits.title') }}</h3>
 
     <div class="habits-list">
       <div
           v-for="habit in dashboardStore.habits"
           :key="habit.id"
           class="habit-item"
+          role="button"
+          tabindex="0"
           @click="dashboardStore.toggleHabit(habit.id)"
+          @keydown.enter="dashboardStore.toggleHabit(habit.id)"
       >
         <div class="habit-left">
           <div :class="['custom-checkbox', { 'checked': habit.completed }]">
@@ -19,7 +22,7 @@
         </div>
 
         <div v-if="habit.streak > 0" class="streak-badge">
-          🔥 {{ habit.streak }} días
+          <i class="pi pi-bolt" aria-hidden="true"></i> {{ habit.streak }} {{ t('dashboard.dailyHabits.days') }}
         </div>
       </div>
     </div>
@@ -27,7 +30,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { useDashboardStore } from '@/dashboard/application/dashboard.store'
+
+const { t } = useI18n()
 const dashboardStore = useDashboardStore()
 </script>
 
@@ -35,7 +41,8 @@ const dashboardStore = useDashboardStore()
 .habits-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
+  margin-top: 16px;
 }
 
 .habit-item {
@@ -43,7 +50,41 @@ const dashboardStore = useDashboardStore()
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  padding: 4px 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.habit-item:active {
+  transform: scale(0.98);
+}
+
+.habit-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 14px 0 0 14px;
+  background: var(--accent-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.habit-item:hover {
+  transform: translateX(4px);
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  background: rgba(99, 102, 241, 0.04);
+}
+
+.habit-item:hover::before {
+  opacity: 1;
 }
 
 .habit-left {
@@ -53,41 +94,83 @@ const dashboardStore = useDashboardStore()
 }
 
 .custom-checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #e2e8f0;
-  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: var(--bg-surface);
+  flex-shrink: 0;
+}
+
+.custom-checkbox:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.05);
 }
 
 .custom-checkbox.checked {
-  background-color: #34d399;
-  border-color: #34d399;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3), 0 0 0 2px rgba(99, 102, 241, 0.15);
+  animation: checkBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.custom-checkbox.checked:hover {
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4), 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+@keyframes checkBounce {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.custom-checkbox i {
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .habit-title {
   font-size: 14px;
-  color: #334155;
-  transition: color 0.2s;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.habit-item:hover .habit-title:not(.text-strikethrough) {
+  color: var(--accent-primary);
+  font-weight: 600;
 }
 
 .text-strikethrough {
   text-decoration: line-through;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .streak-badge {
-  background: #fffbeb;
-  color: #d97706;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.06));
+  color: var(--accent-warning);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 4px;
+  border: 1px solid rgba(217, 119, 6, 0.15);
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.habit-item:hover .streak-badge {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.08));
+  border-color: rgba(217, 119, 6, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 </style>

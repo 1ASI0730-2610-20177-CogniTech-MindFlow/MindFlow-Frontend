@@ -3,9 +3,30 @@ import { Habit, HabitFrequency, HabitStatus } from '../domain/model/habit.entity
 import { HabitCompletionLog, buildWeeklySummaries } from '../domain/model/habit-history.entity.js'
 import { HabitsAPI } from '../infrastructure/habits-api.js'
 import { HabitsHistoryAPI } from '../infrastructure/habits-history-api.js'
+import { WellnessAPI } from '../infrastructure/wellness-api.js'
+import { SuggestionsAPI } from '../infrastructure/suggestions-api.js'
+import { useSettingsStore } from '@/settings/application/settings.store.js'
 
 function todayISO() {
     return new Date().toISOString().slice(0, 10)
+}
+
+function extractHabitSequence(id) {
+    if (typeof id === 'number' && Number.isFinite(id)) {
+        return id
+    }
+
+    const match = String(id ?? '').match(/(\d+)$/)
+    return match ? Number.parseInt(match[1], 10) : 0
+}
+
+function buildHabitId(sequence) {
+    return `h${sequence}`
+}
+
+function resolveCurrentUserId() {
+    const settingsStore = useSettingsStore()
+    return settingsStore.currentUserId || null
 }
 
 export const useHabitsStore = defineStore('habits', {
@@ -15,8 +36,14 @@ export const useHabitsStore = defineStore('habits', {
         activeTab: 'routines',
         searchQuery: '',
         statusFilter: 'all',
-        aiStressDetected: true,
-        nextId: 6
+        aiStressDetected: false,
+        stressAdvice: '',
+        stressPausedHabits: [],
+        stressLevel: null,
+        stressScore: 0,
+        aiSuggestions: [],
+        suggestionsLoaded: false,
+        nextId: 1
     }),
 
     getters: {
@@ -59,22 +86,35 @@ export const useHabitsStore = defineStore('habits', {
     },
 
     actions: {
-        loadHabits() {
-            const data = HabitsAPI.getAll()
+        async loadHabits() {
+            const currentUserId = resolveCurrentUserId()
+            const data = currentUserId ? await HabitsAPI.getByUserId(currentUserId) : await HabitsAPI.getAll()
+
             this.habits = data.map((item) => Habit.fromJSON(item))
-            const maxId = this.habits.reduce((max, h) => Math.max(max, h.id), 0)
-            this.nextId = maxId + 1
+            this.nextId = this.habits.reduce((max, habit) => Math.max(max, extractHabitSequence(habit.id)), 0) + 1
 
-            const history = HabitsHistoryAPI.getAll()
-            this.completionHistory = history.map((item) => HabitCompletionLog.fromJSON(item))
+            const history = await HabitsHistoryAPI.getAll()
+            const habitById = new Map(this.habits.map((habit) => [String(habit.id), habit]))
+
+            this.completionHistory = history
+                .filter((item) => !currentUserId || habitById.has(String(item.habitId)))
+                .map((item) => {
+                    const habit = habitById.get(String(item.habitId))
+                    return new HabitCompletionLog({
+                        ...item,
+                        habitName: item.habitName || habit?.name,
+                        category: item.category || habit?.category
+                    })
+                })
         },
 
-        persistHabits() {
-            HabitsAPI.saveAll(this.habits.map((h) => h.toJSON()))
-        },
-
-        persistHistory() {
-            HabitsHistoryAPI.saveAll(this.completionHistory.map((log) => log.toJSON()))
+        async persistHabit(habit) {
+            const stored = await HabitsAPI.update(habit.id, habit)
+            const index = this.habits.findIndex((item) => item.id === habit.id)
+            if (index >= 0) {
+                this.habits[index] = stored
+            }
+            return stored
         },
 
         setActiveTab(tab) {
@@ -89,10 +129,10 @@ export const useHabitsStore = defineStore('habits', {
             this.statusFilter = filter
         },
 
-        recordCompletion(habit, completed) {
+        async recordCompletion(habit, completed) {
             const date = todayISO()
             const existing = this.completionHistory.findIndex(
-                (log) => log.habitId === habit.id && log.date === date
+                (log) => String(log.habitId) === String(habit.id) && log.date === date
             )
 
             const entry = new HabitCompletionLog({
@@ -104,33 +144,39 @@ export const useHabitsStore = defineStore('habits', {
             })
 
             if (existing >= 0) {
-                this.completionHistory[existing] = entry
+                this.completionHistory[existing] = await HabitsHistoryAPI.update(
+                    this.completionHistory[existing].id,
+                    entry
+                )
             } else {
-                this.completionHistory.push(entry)
+                const stored = await HabitsHistoryAPI.create(entry)
+                this.completionHistory.push(stored)
             }
-
-            this.persistHistory()
         },
 
-        createHabit({ name, frequency, category }) {
+        async createHabit({ name, frequency, category }) {
             const trimmed = name.trim()
             if (!trimmed || !category) return
 
             const habit = new Habit({
-                id: this.nextId++,
+                id: buildHabitId(this.nextId++),
+                userId: resolveCurrentUserId(),
                 name: trimmed,
                 category,
                 frequency: frequency || HabitFrequency.DAILY,
                 currentStreak: 0,
                 status: HabitStatus.PENDING,
-                pausedByAi: false
+                pausedByAi: false,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                deletedAt: null
             })
 
-            this.habits.unshift(habit)
-            this.persistHabits()
+            const stored = await HabitsAPI.create(habit)
+            this.habits.unshift(stored)
         },
 
-        toggleHabit(id) {
+        async toggleHabit(id) {
             const habit = this.habits.find((h) => h.id === id)
             if (!habit?.canToggle()) return
 
@@ -140,8 +186,59 @@ export const useHabitsStore = defineStore('habits', {
                 habit.currentStreak = 1
             }
 
-            this.recordCompletion(habit, habit.isCompleted())
-            this.persistHabits()
+            habit.updatedAt = new Date().toISOString()
+
+            await this.persistHabit(habit)
+            await this.recordCompletion(habit, habit.isCompleted())
+        },
+
+        async checkStress() {
+            try {
+                const result = await WellnessAPI.stressCheck()
+                const level = result.stress_level || result.stressLevel
+                this.stressAdvice = result.advice || ''
+                this.stressPausedHabits = result.paused_habits || result.pausedHabits || []
+                this.stressLevel = level
+                this.stressScore = result.score || 0
+
+                if (level === 'high') {
+                    this.aiStressDetected = true
+                    this.stressPausedHabits.forEach((name) => {
+                        const habit = this.habits.find(h => h.name === name)
+                        if (habit) {
+                            habit.status = HabitStatus.PAUSED_BY_AI
+                            habit.pausedByAi = true
+                        }
+                    })
+                } else {
+                    this.aiStressDetected = false
+                }
+                return result
+            } catch (error) {
+                console.error('Error checking stress:', error)
+                return null
+            }
+        },
+
+        async loadSuggestions() {
+            try {
+                const data = await SuggestionsAPI.getSuggestions()
+                this.aiSuggestions = data.suggestions || data || []
+                this.suggestionsLoaded = true
+            } catch (error) {
+                console.error('Error loading suggestions:', error)
+                this.aiSuggestions = []
+                this.suggestionsLoaded = true
+            }
+        },
+
+        async adoptSuggestion(suggestion) {
+            await this.createHabit({
+                name: suggestion.name,
+                category: suggestion.category,
+                frequency: suggestion.frequency
+            })
+            this.aiSuggestions = this.aiSuggestions.filter(s => s.name !== suggestion.name)
         }
     }
 })

@@ -23,16 +23,16 @@
             </p>
 
             <ul class="features">
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f1Bold') }}</b>{{ $t('plansPage.freemium.features.f1Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f2Bold') }}</b>{{ $t('plansPage.freemium.features.f2Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f3Bold') }}</b>{{ $t('plansPage.freemium.features.f3Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.freemium.features.f4Bold') }}</b>{{ $t('plansPage.freemium.features.f4Text') }}</span></li>
-              <li class="ko theme-transition"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f5') }}</span></li>
-              <li class="ko theme-transition"><span class="icon">✗</span><span>{{ $t('plansPage.freemium.features.f6') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f1Bold') }}</b>{{ $t('plansPage.freemium.features.f1Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f2Bold') }}</b>{{ $t('plansPage.freemium.features.f2Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f3Bold') }}</b>{{ $t('plansPage.freemium.features.f3Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.freemium.features.f4Bold') }}</b>{{ $t('plansPage.freemium.features.f4Text') }}</span></li>
+              <li class="ko theme-transition"><i class="pi pi-times icon"></i><span>{{ $t('plansPage.freemium.features.f5') }}</span></li>
+              <li class="ko theme-transition"><i class="pi pi-times icon"></i><span>{{ $t('plansPage.freemium.features.f6') }}</span></li>
             </ul>
 
             <button class="btn btn-outline theme-transition" disabled v-if="!store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
-            <button class="btn btn-outline theme-transition" v-else>{{ $t('plansPage.buttons.downgrade') }}</button>
+            <button class="btn btn-outline theme-transition" v-else @click="handleDowngrade" :disabled="store.isProcessingPayment">{{ store.isProcessingPayment ? '...' : $t('plansPage.buttons.downgrade') }}</button>
           </article>
 
           <article class="plan theme-transition" :class="{ 'plan-featured': store.isPremium }">
@@ -49,21 +49,23 @@
             </p>
 
             <ul class="features">
-              <li class="ok theme-transition"><span class="icon">✓</span><span>{{ $t('plansPage.premium.features.f1') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f2Bold') }}</b>{{ $t('plansPage.premium.features.f2Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f3Bold') }}</b>{{ $t('plansPage.premium.features.f3Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f4Bold') }}</b>{{ $t('plansPage.premium.features.f4Text') }}</span></li>
-              <li class="ok theme-transition"><span class="icon">✓</span><span><b>{{ $t('plansPage.premium.features.f5Bold') }}</b>{{ $t('plansPage.premium.features.f5Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span>{{ $t('plansPage.premium.features.f1') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f2Bold') }}</b>{{ $t('plansPage.premium.features.f2Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f3Bold') }}</b>{{ $t('plansPage.premium.features.f3Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f4Bold') }}</b>{{ $t('plansPage.premium.features.f4Text') }}</span></li>
+              <li class="ok theme-transition"><i class="pi pi-check icon"></i><span><b>{{ $t('plansPage.premium.features.f5Bold') }}</b>{{ $t('plansPage.premium.features.f5Text') }}</span></li>
             </ul>
 
             <button class="btn btn-gradient theme-transition" disabled v-if="store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
-            <button class="btn btn-gradient theme-transition" v-else>{{ $t('plansPage.buttons.upgrade') }}</button>
+            <button class="btn btn-gradient theme-transition" v-else @click="handleUpgrade" :disabled="store.isProcessingPayment">{{ store.isProcessingPayment ? '...' : $t('plansPage.buttons.upgrade') }}</button>
           </article>
         </section>
 
         <footer class="footer theme-transition">
           {{ $t('plansPage.footer') }}
         </footer>
+
+        <!-- PaymentHistory managed by Stripe -->
       </main>
 
       <div v-else class="loading-state">
@@ -75,14 +77,35 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSubscriptionStore } from '../../application/subscription.store'
+import { useAuthStore } from '@/iam/application/auth.store.js'
 import Layout from '@/shared/presentation/components/layout.vue'
 
+const { t } = useI18n()
 const store = useSubscriptionStore()
+const authStore = useAuthStore()
 
 onMounted(() => {
-  store.fetchSubscription('u1')
+  store.fetchSubscription()
 })
+
+async function handleUpgrade() {
+  try {
+    await store.startCheckout()
+  } catch (error) {
+    console.error('Checkout failed:', error)
+  }
+}
+
+async function handleDowngrade() {
+  if (!confirm(t('plansPage.buttons.confirmDowngrade'))) return
+  try {
+    await store.cancelSubscription()
+  } catch (error) {
+    console.error('Downgrade failed:', error)
+  }
+}
 </script>
 
 <style scoped>
@@ -148,6 +171,10 @@ onMounted(() => {
   box-shadow: var(--shadow-lg);
 }
 
+.plan:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
 .plan-featured {
   border: 2px solid var(--accent-primary);
 }
@@ -158,7 +185,7 @@ onMounted(() => {
   left: 50%;
   transform: translateX(-50%);
   background: var(--accent-primary);
-  color: #fff;
+  color: var(--text-on-accent);
   padding: 4px 14px;
   border-radius: 999px;
   font-size: 11px;
@@ -213,8 +240,7 @@ onMounted(() => {
 
 .features .icon {
   flex-shrink: 0;
-  width: 18px;
-  font-weight: 700;
+  font-size: 14px;
   line-height: 1.4;
 }
 
@@ -264,24 +290,34 @@ onMounted(() => {
   background: var(--border-color);
 }
 
+.btn-outline:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
 .btn-gradient {
-  background: linear-gradient(90deg, #4f46e5 0%, #10b981 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  color: var(--text-on-accent);
   border: none;
   background-size: 200% auto;
   transition: 0.5s;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
 }
 
 .btn-gradient:disabled {
   cursor: default;
-  background: var(--text-muted);
-  color: var(--bg-surface-secondary);
+  background: var(--bg-surface-secondary);
+  color: var(--text-muted);
+  opacity: 0.6;
 }
 
 .btn-gradient:hover:not(:disabled) {
   background-position: right center;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
   transform: translateY(-2px);
+}
+
+.btn-gradient:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
 }
 
 .footer {
@@ -334,13 +370,13 @@ onMounted(() => {
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary), transparent 60%);
   }
   70% {
-    box-shadow: 0 0 0 6px rgba(99, 102, 241, 0);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-primary), transparent 100%);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-primary), transparent 100%);
   }
 }
 
