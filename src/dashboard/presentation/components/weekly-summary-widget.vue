@@ -232,7 +232,7 @@ const getDayLabel = (index) => {
   display: flex;
   align-items: flex-end;
   border-radius: 6px;
-  background: var(--bg-surface-secondary);
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
   overflow: hidden;
   position: relative;
 }

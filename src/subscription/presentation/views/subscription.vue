@@ -295,11 +295,12 @@ async function handleDowngrade() {
 }
 
 .btn-gradient {
-  background: linear-gradient(90deg, var(--accent-hover) 0%, var(--accent-success) 100%);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
   color: var(--text-on-accent);
   border: none;
   background-size: 200% auto;
   transition: 0.5s;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
 }
 
 .btn-gradient:disabled {

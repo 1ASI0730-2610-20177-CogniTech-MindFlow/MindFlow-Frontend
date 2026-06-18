@@ -90,6 +90,17 @@ const dotStyle = (colorClass = '') => {
   pointer-events: none;
 }
 
+.premium-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-hover));
+  border-radius: 0 0 3px 3px;
+}
+
 .premium-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);

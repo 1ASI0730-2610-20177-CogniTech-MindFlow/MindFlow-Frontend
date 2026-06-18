@@ -114,19 +114,22 @@ const mediaIcon = (type) => {
 }
 
 .sentiment-dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 999px;
   flex-shrink: 0;
 }
 .sentiment-dot.positive {
   background: var(--accent-success);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
 }
 .sentiment-dot.neutral {
   background: var(--accent-warning);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
 }
 .sentiment-dot.negative {
   background: var(--accent-danger);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
 
 .badge {
@@ -172,6 +175,11 @@ const mediaIcon = (type) => {
   font-size: 12px;
   font-weight: 500;
   border: 1px solid var(--border-light);
+  border-left: 2px solid var(--accent-primary);
+  transition: all 0.2s ease;
+}
+.tag-chip:hover {
+  background: rgba(99, 102, 241, 0.08);
 }
 
 .media-section {

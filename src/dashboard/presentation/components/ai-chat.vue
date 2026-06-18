@@ -540,7 +540,7 @@ watch(() => store.messages.length, () => {
 }
 
 .chip {
-  padding: 8px 16px;
+  padding: 8px 16px 8px 14px;
   border-radius: 20px;
   border: 1px solid var(--border-color);
   background: var(--bg-surface-secondary);
@@ -548,6 +548,11 @@ watch(() => store.messages.length, () => {
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+.chip::before {
+  content: '\2728';
+  margin-right: 6px;
+  font-size: 12px;
 }
 
 .chip:hover {

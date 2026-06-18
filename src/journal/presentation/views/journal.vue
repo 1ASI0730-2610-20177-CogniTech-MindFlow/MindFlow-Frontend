@@ -30,7 +30,8 @@
               :style="{ animationDelay: `${0.2 + (index * 0.1)}s` }"
           />
           <div v-if="filteredEntries.length === 0" class="no-entries">
-            {{ $t('journal.noEntries') }}
+            <i class="pi pi-book"></i>
+            <p>{{ $t('journal.noEntries') }}</p>
           </div>
         </div>
       </div>
@@ -253,10 +254,20 @@ onMounted(async () => {
 }
 
 .no-entries {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text-secondary);
-  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+.no-entries i {
+  font-size: 32px;
+  opacity: 0.4;
+}
+.no-entries p {
+  margin: 0;
 }
 
 @media (max-width: 900px) {

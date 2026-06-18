@@ -133,8 +133,8 @@ async function downloadCsv() {
 
 .btn-outline {
   background: rgba(99, 102, 241, 0.05);
-  border: 2px solid var(--border-color);
-  color: var(--text-primary);
+  border: 2px solid rgba(99, 102, 241, 0.25);
+  color: var(--accent-primary);
   padding: 11px 24px;
   border-radius: 12px;
   cursor: pointer;

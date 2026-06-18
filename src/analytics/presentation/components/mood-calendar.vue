@@ -117,6 +117,7 @@ watch([year, month], () => loadData(), { immediate: true })
   border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 24px;
+  box-shadow: var(--shadow-sm);
 }
 
 .calendar-header {
@@ -193,6 +194,10 @@ watch([year, month], () => loadData(), { immediate: true })
   justify-content: center;
   position: relative;
   transition: transform 0.2s;
+}
+
+.day-cell:not(.empty) {
+  background: var(--bg-surface-secondary);
 }
 
 .day-cell:not(.empty):hover {

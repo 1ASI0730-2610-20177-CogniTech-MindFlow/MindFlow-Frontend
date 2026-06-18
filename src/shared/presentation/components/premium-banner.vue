@@ -123,6 +123,7 @@ const goToSubscription = () => {
 }
 
 .premium-btn:active {
-  transform: translateY(0px);
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
 }
 </style>
