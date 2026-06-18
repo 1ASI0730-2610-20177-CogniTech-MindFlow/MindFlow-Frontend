@@ -54,15 +54,22 @@ function parseLegacyData(payload) {
     }
 }
 
+function parseJson(raw, fallback) {
+    if (!raw) return fallback
+    if (typeof raw === 'object') return raw
+    try { return JSON.parse(raw) } catch { return fallback }
+}
+
 function mapKpis(kpis = []) {
-    return kpis.map((kpi) => new KpiData({
+    const parsed = parseJson(kpis, [])
+    return parsed.map((kpi) => new KpiData({
         labelKey: kpi.labelKey || kpi.label_key || null,
         label: kpi.label || '',
         valueKey: kpi.valueKey || kpi.value_key || null,
         value: kpi.value ?? '',
         unitKey: kpi.unitKey || kpi.unit_key || null,
         unit: kpi.unit || '',
-        colorClass: kpi.colorClass || 'border-blue'
+        colorClass: kpi.colorClass || kpi.color_class || 'border-blue'
     }))
 }
 
@@ -99,7 +106,7 @@ function mapSummary(record, legacyData) {
 }
 
 function mapFluctuationData(record) {
-    const data = record.fluctuation_data || {}
+    const data = parseJson(record.fluctuation_data, {})
     return {
         labelsKeys: data.labels_keys || data.labelsKeys || [],
         labels: data.labels || [],
@@ -108,7 +115,7 @@ function mapFluctuationData(record) {
 }
 
 function mapTrendData(record) {
-    const data = record.trend_data || {}
+    const data = parseJson(record.trend_data, {})
     return {
         labelsKeys: data.labels_keys || data.labelsKeys || [],
         labels: data.labels || [],
@@ -124,7 +131,7 @@ function parseWords(raw) {
     return []
 }
 
-function mapWordCloudWords(wordCloudRecord, legacyData) {
+function mapWordCloudWords(wordCloudRecord) {
     let wordsToMap = [];
 
     if (Array.isArray(wordCloudRecord) && wordCloudRecord.length > 0) {
@@ -137,71 +144,57 @@ function mapWordCloudWords(wordCloudRecord, legacyData) {
     else if (wordCloudRecord && wordCloudRecord.words) {
         wordsToMap = parseWords(wordCloudRecord.words);
     }
-    // Fallback to legacy
-    else if (legacyData && Array.isArray(legacyData.wordCloud)) {
-        wordsToMap = legacyData.wordCloud;
-    }
 
-    if (wordsToMap.length > 0) {
-        const words = [...wordsToMap].sort((a, b) => b.score - a.score);
+    if (wordsToMap.length === 0) return []
 
-        const positions = [
-            { top: '45%', left: '50%' },
-            { top: '25%', left: '35%' },
-            { top: '65%', left: '65%' },
-            { top: '30%', left: '70%' },
-            { top: '60%', left: '25%' },
-            { top: '80%', left: '45%' },
-            { top: '15%', left: '60%' },
-            { top: '50%', left: '85%' },
-            { top: '85%', left: '15%' },
-            { top: '15%', left: '15%' },
-        ];
+    const words = [...wordsToMap].sort((a, b) => b.score - a.score).slice(0, 15);
 
-        const negativeWords = ['ansiedad', 'estres', 'cansado', 'triste', 'frustracion', 'miedo'];
+    const positions = [
+        { top: '45%', left: '50%' },
+        { top: '20%', left: '25%' },
+        { top: '70%', left: '70%' },
+        { top: '25%', left: '75%' },
+        { top: '65%', left: '20%' },
+        { top: '82%', left: '45%' },
+        { top: '12%', left: '50%' },
+        { top: '50%', left: '85%' },
+        { top: '85%', left: '15%' },
+        { top: '10%', left: '12%' },
+        { top: '40%', left: '15%' },
+        { top: '75%', left: '85%' },
+        { top: '55%', left: '38%' },
+        { top: '30%', left: '55%' },
+        { top: '85%', left: '65%' },
+    ];
 
-        const getColor = (word) => {
-            const normalizedTag = String(word.tag || '')
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
+    const negativeWords = ['ansiedad', 'estres', 'cansado', 'triste', 'frustracion', 'miedo'];
 
-            if (negativeWords.includes(normalizedTag)) {
-                return word.score > 0.7 ? 'var(--accent-danger)' : 'var(--text-muted)';
-            }
+    const getColor = (word) => {
+        const normalizedTag = String(word.tag || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
 
-            if (word.score >= 0.85) return 'var(--accent-primary)';
-            if (word.score >= 0.7) return 'var(--accent-success)';
-            if (word.score >= 0.55) return 'var(--accent-warning)';
-            return 'var(--text-muted)';
+        if (negativeWords.includes(normalizedTag)) {
+            return word.score > 0.7 ? 'var(--accent-danger)' : 'var(--text-muted)';
+        }
+
+        if (word.score >= 0.85) return 'var(--accent-primary)';
+        if (word.score >= 0.7) return 'var(--accent-success)';
+        if (word.score >= 0.55) return 'var(--accent-warning)';
+        return 'var(--text-muted)';
+    };
+
+    return words.map((word, index) => {
+        const position = positions[index % positions.length];
+        return {
+            text: word.tag,
+            size: Math.max(14, 10 + (word.score * 25)),
+            color: getColor(word),
+            weight: word.score > 0.7 ? 700 : 500,
+            ...position
         };
-
-        return words.map((word, index) => {
-            const position = positions[index % positions.length];
-            return {
-                text: word.tag,
-                size: Math.max(14, 10 + (word.score * 25)),
-                color: getColor(word),
-                weight: word.score > 0.7 ? 700 : 500,
-                ...position
-            };
-        });
-    }
-    
-    if (legacyData?.mostUsedTag) {
-        return [
-            {
-                text: legacyData.mostUsedTag,
-                size: 32,
-                color: 'var(--global-blue)',
-                weight: 700,
-                top: '50%',
-                left: '45%'
-            }
-        ]
-    }
-
-    return []
+    });
 }
 
 async function loadAnalyticsRecord() {
@@ -271,7 +264,7 @@ export const useAnalyticsStore = defineStore('analytics', {
                     this.trendData = withResolvedChartColors(mapTrendData(record))
                 }
 
-                this.wordCloudWords = mapWordCloudWords(wordCloudRecord, legacyData)
+                this.wordCloudWords = mapWordCloudWords(wordCloudRecord)
 
                 const tooltipBase = {
                     backgroundColor: 'rgba(15, 23, 42, 0.9)',

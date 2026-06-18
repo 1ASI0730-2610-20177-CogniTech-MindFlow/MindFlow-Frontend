@@ -4,17 +4,27 @@ const REPORTING_URL = '/api/v1/reporting/export'
 
 export class ReportingApiService {
     async downloadPdf() {
-        const response = await apiClient.get(`${REPORTING_URL}/pdf`, {
-            responseType: 'blob'
-        })
-        return response.data
+        try {
+            const response = await apiClient.get(`${REPORTING_URL}/pdf`, {
+                responseType: 'blob'
+            })
+            return response.data
+        } catch (error) {
+            console.error('Error downloading PDF:', error)
+            throw error
+        }
     }
 
     async downloadCsv() {
-        const response = await apiClient.get(`${REPORTING_URL}/csv`, {
-            responseType: 'blob'
-        })
-        return response.data
+        try {
+            const response = await apiClient.get(`${REPORTING_URL}/csv`, {
+                responseType: 'blob'
+            })
+            return response.data
+        } catch (error) {
+            console.error('Error downloading CSV:', error)
+            throw error
+        }
     }
 
     triggerDownload(blob, filename) {

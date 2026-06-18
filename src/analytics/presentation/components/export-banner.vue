@@ -17,11 +17,24 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useSubscriptionStore } from '@/subscription/application/subscription.store'
 import { ReportingAPI } from '@/shared/infrastructure/reporting-api'
 
+const router = useRouter()
+const subscriptionStore = useSubscriptionStore()
 const isDownloading = ref(false)
 
+function requirePremium() {
+  if (!subscriptionStore.isPremium) {
+    router.push('/subscription')
+    return true
+  }
+  return false
+}
+
 async function downloadPdf() {
+  if (requirePremium()) return
   isDownloading.value = true
   try {
     const blob = await ReportingAPI.downloadPdf()
@@ -34,6 +47,7 @@ async function downloadPdf() {
 }
 
 async function downloadCsv() {
+  if (requirePremium()) return
   isDownloading.value = true
   try {
     const blob = await ReportingAPI.downloadCsv()
@@ -106,8 +120,7 @@ async function downloadCsv() {
   font-weight: 500;
 }
 
-.premium-card:hover .export-info h3,
-.premium-card:hover .export-info p {
+.premium-card:hover .export-info h3 {
   color: var(--accent-primary);
 }
 

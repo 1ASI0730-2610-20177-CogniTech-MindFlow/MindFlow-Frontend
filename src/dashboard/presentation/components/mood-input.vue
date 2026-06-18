@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <div class="fake-textarea" @click="startNewChat">
+    <div class="fake-textarea" role="button" tabindex="0" @click="startNewChat" @keydown.enter="startNewChat">
       <span class="placeholder-text">{{ t('dashboard.moodInput.placeholder') }}</span>
     </div>
 
@@ -30,10 +30,7 @@ const { t } = useI18n()
 const dashboardStore = useDashboardStore()
 
 function startNewChat() {
-  dashboardStore.conversations = []
-  dashboardStore.aiFeedback = null
-  dashboardStore.aiRating = 0
-  dashboardStore.ratingSubmitted = false
+  dashboardStore.startNewConversation()
   emit('openChat')
 }
 </script>
@@ -62,7 +59,7 @@ function startNewChat() {
 .status-dot {
   width: 8px;
   height: 8px;
-  background-color: var(--accent-primary);
+  background-color: var(--accent-success);
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
   box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
@@ -100,10 +97,10 @@ function startNewChat() {
 .ai-feedback-box {
   margin-top: 20px;
   background: var(--bg-surface-secondary);
+  border: 1px solid var(--border-color);
   border-left: 4px solid var(--accent-primary);
   border-radius: 0 12px 12px 0;
   padding: 16px 20px;
-  border: 1px solid var(--border-color);
 }
 
 .ai-feedback-header {

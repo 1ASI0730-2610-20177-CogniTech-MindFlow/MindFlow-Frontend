@@ -47,7 +47,7 @@ export const useAuthStore = defineStore('auth', {
                 SessionManager.save({ token, userId: user.id, email: user.email, name: user.name })
                 return { success: true }
             } catch (error) {
-                const message = error.response?.data?.message || 'auth.login.error.invalid'
+                const message = error.response?.data?.error || error.response?.data?.message || 'auth.login.error.invalid'
                 this.error = message
                 return { success: false, error: message }
             } finally {
@@ -70,7 +70,7 @@ export const useAuthStore = defineStore('auth', {
                 SessionManager.save({ token, userId: user.id, email: user.email, name: user.name })
                 return { success: true }
             } catch (error) {
-                const message = error.response?.data?.message || 'auth.register.error.generic'
+                const message = error.response?.data?.error || error.response?.data?.message || 'auth.register.error.generic'
                 this.error = message
                 return { success: false, error: message }
             } finally {

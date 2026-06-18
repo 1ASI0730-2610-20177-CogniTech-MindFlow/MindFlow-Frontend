@@ -27,9 +27,9 @@
     </div>
 
     <div class="calendar-legend">
-      <div class="legend-item"><span class="dot" style="background: #4CAF50"></span> {{ $t('analytics.moods.positive') }}</div>
-      <div class="legend-item"><span class="dot" style="background: #FF9800"></span> {{ $t('analytics.moods.neutral') }}</div>
-      <div class="legend-item"><span class="dot" style="background: #F44336"></span> {{ $t('analytics.moods.negative') }}</div>
+      <div class="legend-item"><span class="dot dot-positive"></span> {{ $t('analytics.moods.positive') }}</div>
+      <div class="legend-item"><span class="dot dot-neutral"></span> {{ $t('analytics.moods.neutral') }}</div>
+      <div class="legend-item"><span class="dot dot-negative"></span> {{ $t('analytics.moods.negative') }}</div>
     </div>
   </div>
 </template>
@@ -247,5 +247,9 @@ watch([year, month], () => loadData(), { immediate: true })
   width: 8px;
   height: 8px;
   border-radius: 50%;
+}
+.dot-positive { background: var(--mood-positive); }
+.dot-neutral { background: var(--mood-neutral); }
+.dot-negative { background: var(--mood-negative);
 }
 </style>

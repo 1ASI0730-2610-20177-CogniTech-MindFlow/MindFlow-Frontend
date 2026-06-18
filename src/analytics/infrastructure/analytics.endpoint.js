@@ -20,10 +20,15 @@ export class AnalyticsEndpoint {
     }
 
     async compute(weekStart) {
-        const response = await apiClient.post('/analyticsCache/compute', null, {
-            params: { weekStart }
-        })
-        return response.data
+        try {
+            const response = await apiClient.post('/analyticsCache/compute', null, {
+                params: { weekStart }
+            })
+            return response.data
+        } catch (error) {
+            console.error('Error computing analytics:', error)
+            throw error
+        }
     }
 }
 

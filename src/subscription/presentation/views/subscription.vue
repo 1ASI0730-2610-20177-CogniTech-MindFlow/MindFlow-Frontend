@@ -32,7 +32,7 @@
             </ul>
 
             <button class="btn btn-outline theme-transition" disabled v-if="!store.isPremium">{{ $t('plansPage.buttons.activePlan') }}</button>
-            <button class="btn btn-outline theme-transition" v-else>{{ $t('plansPage.buttons.downgrade') }}</button>
+            <button class="btn btn-outline theme-transition" v-else @click="handleDowngrade" :disabled="store.isProcessingPayment">{{ store.isProcessingPayment ? '...' : $t('plansPage.buttons.downgrade') }}</button>
           </article>
 
           <article class="plan theme-transition" :class="{ 'plan-featured': store.isPremium }">
@@ -77,10 +77,12 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSubscriptionStore } from '../../application/subscription.store'
 import { useAuthStore } from '@/iam/application/auth.store.js'
 import Layout from '@/shared/presentation/components/layout.vue'
 
+const { t } = useI18n()
 const store = useSubscriptionStore()
 const authStore = useAuthStore()
 
@@ -93,6 +95,15 @@ async function handleUpgrade() {
     await store.startCheckout()
   } catch (error) {
     console.error('Checkout failed:', error)
+  }
+}
+
+async function handleDowngrade() {
+  if (!confirm(t('plansPage.buttons.confirmDowngrade'))) return
+  try {
+    await store.cancelSubscription()
+  } catch (error) {
+    console.error('Downgrade failed:', error)
   }
 }
 </script>
@@ -293,8 +304,9 @@ async function handleUpgrade() {
 
 .btn-gradient:disabled {
   cursor: default;
-  background: var(--text-muted);
-  color: var(--bg-surface-secondary);
+  background: var(--bg-surface-secondary);
+  color: var(--text-muted);
+  opacity: 0.6;
 }
 
 .btn-gradient:hover:not(:disabled) {

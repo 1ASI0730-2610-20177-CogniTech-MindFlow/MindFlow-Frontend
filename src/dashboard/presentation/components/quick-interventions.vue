@@ -2,7 +2,6 @@
   <div class="dashboard-card theme-transition">
     <div class="header-row">
       <h3 class="card-title">{{ t('dashboard.quickInterventions.title') }}</h3>
-      <span class="live-badge">● {{ t('dashboard.quickInterventions.live') }}</span>
     </div>
 
     <div class="interventions-list">
@@ -112,7 +111,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted } from 'vue'
+import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -168,13 +167,13 @@ function setBreathingStep(index) {
 // === MEDITATION ===
 const meditationTimer = ref(180)
 const meditationStep = ref(0)
-const meditationSteps = [
-  'Cierra los ojos y respira profundo...',
-  'Observa tus pensamientos sin juzgarlos...',
-  'Siente tu cuerpo relajarse con cada respiracion...',
-  'Conecta con el momento presente...',
-  'Lentamente, vuelve a tu entorno...'
-]
+const meditationSteps = computed(() => [
+  t('dashboard.quickInterventions.meditation.step1'),
+  t('dashboard.quickInterventions.meditation.step2'),
+  t('dashboard.quickInterventions.meditation.step3'),
+  t('dashboard.quickInterventions.meditation.step4'),
+  t('dashboard.quickInterventions.meditation.step5')
+])
 
 function startMeditation() {
   meditationTimer.value = 180
@@ -371,7 +370,7 @@ onUnmounted(() => stop())
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
 /* Exercise Modal */
-.exercise-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+.exercise-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; }
 .exercise-modal { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 48px; max-width: 400px; width: 100%; position: relative; }
 .exercise-close { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 10; }
 .exercise-close:hover { background: rgba(255,255,255,0.2); }

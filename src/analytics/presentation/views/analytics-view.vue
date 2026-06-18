@@ -88,7 +88,7 @@ onMounted(() => {
 
 <style scoped>
 .high-end-analytics-page {
-  --global-blue: var(--accent-primary, #3b82f6);
+  --global-blue: var(--accent-primary, #6366f1);
   --global-green: var(--accent-success, #34d399);
   --global-orange: var(--accent-warning, #f59e0b);
 
@@ -100,7 +100,7 @@ onMounted(() => {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 80px 48px;
+  padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
   z-index: 1;
@@ -135,7 +135,7 @@ onMounted(() => {
 .w-summary-offset { transform: translateX(12px); }
 .cta-offset { transform: translateX(-12px); }
 
-.asymmetric-grid { display: grid; grid-template-columns: minmax(auto, 65%) 1fr; gap: 48px; align-items: center; }
+.asymmetric-grid { display: grid; grid-template-columns: minmax(auto, 65%) 1fr; gap: 48px; align-items: stretch; }
 
 .deep-shadow-panel {
   background: var(--bg-surface); backdrop-filter: blur(20px); border: 1px solid var(--border-light);
@@ -146,7 +146,7 @@ onMounted(() => {
   transform: translateY(-8px) scale(1.01);
   box-shadow: var(--shadow-lg);
 }
-.floating-sidebar { position: relative; top: -24px; }
+.floating-sidebar { position: relative; }
 
 .premium-loading-state { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh; gap: 24px; }
 .organic-spinner { width: 50px; height: 50px; animation: rotate 2s linear infinite; }

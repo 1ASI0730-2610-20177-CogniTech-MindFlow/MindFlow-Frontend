@@ -4,22 +4,32 @@
       <h3 class="card-title">{{ t('dashboard.recentEntries.title') }}</h3>
     </div>
 
-    <div v-if="store.savedConversation" class="entry-item" @click="resumeConversation">
-      <div class="conversation-preview">
-        <div class="preview-header">
-          <div class="preview-title">
-            <i class="pi pi-sparkles ai-icon"></i>
-            <span>MindFlow AI</span>
+    <div v-if="store.conversationsList.length" class="entries-list">
+      <div
+        v-for="conv in store.conversationsList.slice(0, 5)"
+        :key="conv.id"
+        class="entry-item"
+        :class="{ active: store.activeConversationId === conv.id }"
+        @click="resumeConversation(conv.id)"
+      >
+        <div class="conversation-preview">
+          <div class="preview-header">
+            <div class="preview-title">
+              <i class="pi pi-sparkles ai-icon"></i>
+              <span class="conv-title">{{ conv.title || 'Conversación' }}</span>
+            </div>
+            <span class="message-count">{{ conv.message_count || conv.messageCount || '' }}</span>
           </div>
-          <span class="message-count">{{ store.savedConversation.count }} {{ store.savedConversation.count === 1 ? 'mensaje' : 'mensajes' }}</span>
-        </div>
 
-        <div class="last-exchange">
-          <p class="last-user"><strong>{{ t('dashboard.recentEntries.you') }}:</strong> {{ lastUserMessage }}</p>
-          <p v-if="lastAiResponse" class="last-ai"><strong>AI:</strong> {{ lastAiResponse }}</p>
-        </div>
+          <p v-if="conv.last_message || conv.lastMessage" class="last-ai">
+            <strong>AI:</strong> {{ conv.last_message || conv.lastMessage }}
+          </p>
 
-        <span class="entry-time">{{ store.savedConversation.time }}</span>
+          <div class="preview-footer">
+            <span class="entry-time">{{ formatTime(conv.updated_at || conv.created_at) }}</span>
+            <span class="entry-category">{{ conv.category }}</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -31,7 +41,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDashboardStore } from '@/dashboard/application/dashboard.store'
 
@@ -40,19 +49,13 @@ const emit = defineEmits(['openChat'])
 const { t } = useI18n()
 const store = useDashboardStore()
 
-const lastUserMessage = computed(() => {
-  const msgs = store.savedConversation?.messages
-  return msgs?.[0]?.text || ''
-})
+function formatTime(dateStr) {
+  if (!dateStr) return ''
+  return new Date(dateStr).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: 'numeric' })
+}
 
-const lastAiResponse = computed(() => {
-  const msgs = store.savedConversation?.messages
-  return msgs?.[0]?.aiResponse || null
-})
-
-function resumeConversation() {
-  store.conversations = [...store.savedConversation.messages]
-  store.aiFeedback = store.conversations[0]?.aiResponse || null
+async function resumeConversation(conversationId) {
+  await store.openConversation(conversationId)
   emit('openChat')
 }
 </script>
@@ -63,6 +66,12 @@ function resumeConversation() {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .entry-item {
@@ -89,14 +98,16 @@ function resumeConversation() {
   transition: opacity 0.3s ease;
 }
 
-.entry-item:hover {
+.entry-item:hover,
+.entry-item.active {
   transform: translateX(4px);
   border-color: transparent;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.04), transparent);
 }
 
-.entry-item:hover::before {
+.entry-item:hover::before,
+.entry-item.active::before {
   opacity: 1;
 }
 
@@ -107,7 +118,7 @@ function resumeConversation() {
 .conversation-preview {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .preview-header {
@@ -123,10 +134,19 @@ function resumeConversation() {
   font-size: 14px;
   font-weight: 700;
   color: var(--accent-primary);
+  min-width: 0;
+  flex: 1;
+}
+
+.conv-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ai-icon {
   font-size: 14px;
+  flex-shrink: 0;
 }
 
 .message-count {
@@ -137,15 +157,9 @@ function resumeConversation() {
   padding: 3px 10px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
-.last-exchange {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.last-user,
 .last-ai {
   margin: 0;
   font-size: 13px;
@@ -157,16 +171,28 @@ function resumeConversation() {
   overflow: hidden;
 }
 
-.last-user strong,
 .last-ai strong {
   color: var(--text-primary);
   font-weight: 600;
+}
+
+.preview-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .entry-time {
   font-size: 11px;
   color: var(--text-muted);
   font-weight: 500;
+}
+
+.entry-category {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  opacity: 0.7;
 }
 
 .empty-state {

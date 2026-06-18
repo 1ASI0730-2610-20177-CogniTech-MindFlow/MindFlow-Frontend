@@ -13,19 +13,21 @@
     <div class="chart-content">
       <div class="chart-y-label">{{ t('analytics.components.fluctuationChart.yLabel') }}</div>
       <div class="chart-wrapper">
-        <Chart v-if="translatedChartData" type="bar" :data="translatedChartData" :options="chartOptions" style="height: 100%; width: 100%;" />
+        <Chart v-if="ready && translatedChartData" type="bar" :data="translatedChartData" :options="chartOptions" style="height: 100%; width: 100%;" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Chart from 'primevue/chart'
 
 const props = defineProps({ chartData: Object, chartOptions: Object })
 const { t } = useI18n()
+const ready = ref(false)
+onMounted(() => { setTimeout(() => { ready.value = true }, 800) })
 
 const translateIfNeeded = (key, fallback = '') => {
   if (!key) return fallback
@@ -34,11 +36,11 @@ const translateIfNeeded = (key, fallback = '') => {
 }
 
 const translatedChartData = computed(() => {
-  if (!props.chartData) return null
+  if (!props.chartData?.datasets?.length) return null
 
   return {
     ...props.chartData,
-    labels: (props.chartData.labelsKeys || props.chartData.labels || []).map((item, index) => {
+    labels: (props.chartData.labelsKeys?.length ? props.chartData.labelsKeys : props.chartData.labels || []).map((item, index) => {
       if (typeof item === 'string') {
         return translateIfNeeded(item, props.chartData.labels?.[index] || item)
       }
@@ -68,7 +70,7 @@ const translatedChartData = computed(() => {
 .card-header { margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
 .title-group { display: flex; flex-direction: column; gap: 4px; }
 .card-title {
-  font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700;
+  font-size: 18px; color: var(--text-primary); margin: 0; font-weight: 700;
   padding-left: 12px; border-left: 3px solid var(--global-blue);
 }
 .mono-subtitle { font-size: 9px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }

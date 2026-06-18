@@ -1,10 +1,13 @@
 <template>
-  <aside class="sidebar">
+  <aside class="sidebar" :class="{ collapsed: collapsed }">
     <div class="logo">
       <div class="logo-icon">
         <img src="/assets/mindflow-logo.png" alt="MindFlow Logo" class="logo-img" />
       </div>
       <span class="logo-text">MindFlow</span>
+      <button class="close-sidebar" @click="$emit('close')" aria-label="Close menu">
+        <i class="pi pi-times"></i>
+      </button>
     </div>
 
     <div class="nav-wrapper">
@@ -16,6 +19,7 @@
             class="nav-item"
             :style="{ '--index': index }"
             active-class="active"
+            @click="$emit('close')"
         >
           <span class="nav-indicator"></span>
           <span class="nav-icon"><i :class="['pi', item.icon]"></i></span>
@@ -30,6 +34,12 @@
 
 <script setup>
 import PremiumBanner from './premium-banner.vue'
+
+defineProps({
+  collapsed: { type: Boolean, default: false }
+})
+
+defineEmits(['close'])
 
 const menuItems = [
   { path: '/dashboard', label: 'menu.dashboard', icon: 'pi-objects-column' },
@@ -51,6 +61,21 @@ const menuItems = [
   height: 100vh;
   position: sticky;
   top: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.close-sidebar {
+  display: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface-secondary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
 }
 
 .logo {
@@ -198,15 +223,20 @@ const menuItems = [
 
 @media (max-width: 768px) {
   .sidebar {
-    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
   }
 
-  .logo {
-    padding: 20px 16px 16px;
+  .sidebar.collapsed {
+    transform: translateX(-100%);
   }
 
-  .logo-text {
-    font-size: 17px;
+  .close-sidebar {
+    display: flex;
   }
 }
 </style>

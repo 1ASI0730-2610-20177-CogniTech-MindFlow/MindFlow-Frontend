@@ -2,6 +2,14 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
+const backendTarget = 'https://mindflow-backend-mlbg.onrender.com'
+
+function apiOnly(req, res, proxyOptions) {
+  if (req.headers.accept && req.headers.accept.includes('text/html')) {
+    return '/index.html'
+  }
+}
+
 export default defineConfig({
   plugins: [vue()],
   resolve: {
@@ -12,69 +20,81 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
         secure: true
       },
       '/journal/entries': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/journal/tags': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/journal/entry-tags': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/journal/media': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/habits': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/habit-logs': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/analyticsCache': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/wordCloud': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/moodCalendar': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/wellness': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
       '/notifications': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       },
-      '/subscriptions': {
-        target: 'https://mindflow-backend-mlbg.onrender.com',
+      '/chat': {
+        target: backendTarget,
         changeOrigin: true,
-        secure: true
+        secure: true,
+        bypass: apiOnly
       }
     }
   },

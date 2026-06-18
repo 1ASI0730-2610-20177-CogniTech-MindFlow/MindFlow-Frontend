@@ -2,8 +2,13 @@ import apiClient from '@/shared/infrastructure/base-api'
 
 export class SuggestionsApiService {
     async getSuggestions() {
-        const response = await apiClient.post('/habits/suggestions')
-        return response.data
+        try {
+            const response = await apiClient.post('/habits/suggestions')
+            return response.data
+        } catch (error) {
+            console.error('Error fetching suggestions:', error)
+            return []
+        }
     }
 }
 

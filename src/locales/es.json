@@ -129,7 +129,8 @@
     "buttons": {
       "activePlan": "Plan Activo",
       "downgrade": "Bajar de Plan",
-      "upgrade": "Actualizar a Premium"
+      "upgrade": "Actualizar a Premium",
+      "confirmDowngrade": "¿Estás seguro de que deseas cancelar tu suscripción premium y cambiar al plan gratuito?"
     },
     "freemium": {
       "title": "Freemium",
@@ -422,7 +423,15 @@
     },
     "chat": {
       "welcomeTitle": "Hola, ¿como te sientes hoy?",
-      "welcomeDesc": "Escribe lo que piensas o sientes. MindFlow AI analizara tus emociones y te dara consejos personalizados."
+      "welcomeDesc": "Escribe lo que piensas o sientes. MindFlow AI analizara tus emociones y te dara consejos personalizados.",
+      "history": "Historial",
+      "newChat": "Nuevo chat",
+      "suggestions": {
+        "s1": "Hoy me siento ansioso por el trabajo",
+        "s2": "Tuve un buen dia, estoy agradecido",
+        "s3": "No puedo dormir bien ultimamente",
+        "s4": "Me siento estresado por los examenes"
+      }
     },
     "recentEntries": {
       "title": "Conversaciones Recientes",
@@ -442,7 +451,14 @@
       "microMeditation": "Micro-meditación",
       "microMeditationDesc": "Meditación guiada de 3 minutos",
       "grounding": "Conexión 5-4-3-2-1",
-      "groundingDesc": "Ejercicio de conexión con el presente"
+      "groundingDesc": "Ejercicio de conexión con el presente",
+      "meditation": {
+        "step1": "Cierra los ojos y respira profundo...",
+        "step2": "Observa tus pensamientos sin juzgarlos...",
+        "step3": "Siente tu cuerpo relajarse con cada respiración...",
+        "step4": "Conecta con el momento presente...",
+        "step5": "Lentamente, vuelve a tu entorno..."
+      }
     },
     "interventions": {
       "inhale": "Inhala",
@@ -520,7 +536,8 @@
           "grateful": "Agradecido",
           "family": "[FAMILIA]",
           "tired": "Cansado"
-        }
+        },
+        "empty": "No hay datos suficientes para generar la nube de palabras."
       },
       "export": {
         "title": "Exportar Reportes Clínicos",

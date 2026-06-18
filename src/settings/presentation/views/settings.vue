@@ -28,32 +28,7 @@
               <div class="field">
                 <label class="theme-transition">{{ $t('settings.profile.timezone') }}</label>
                 <select v-model="store.profile.timezone" class="input-transition theme-transition" @change="store.setTimezone(store.profile.timezone)">
-                  <option value="GMT-12">GMT-12 (Línea de cambio de fecha)</option>
-                  <option value="GMT-11">GMT-11 (Islas Samoa)</option>
-                  <option value="GMT-10">GMT-10 (Hawái)</option>
-                  <option value="GMT-9">GMT-9 (Alaska)</option>
-                  <option value="GMT-8">GMT-8 (Hora de la costa del Pacífico)</option>
-                  <option value="GMT-7">GMT-7 (Hora de montaña)</option>
-                  <option value="GMT-6">GMT-6 (América Central)</option>
-                  <option value="GMT-5">GMT-5 (Lima, Perú)</option>
-                  <option value="GMT-4">GMT-4 (Caracas, La Paz)</option>
-                  <option value="GMT-3">GMT-3 (São Paulo, Buenos Aires)</option>
-                  <option value="GMT-2">GMT-2 (Atlántico Medio)</option>
-                  <option value="GMT-1">GMT-1 (Azores)</option>
-                  <option value="GMT">GMT (Londres, Dublín)</option>
-                  <option value="GMT+1">GMT+1 (París, Madrid, Berlín)</option>
-                  <option value="GMT+2">GMT+2 (Estambul, El Cairo)</option>
-                  <option value="GMT+3">GMT+3 (Moscú, Nairobi)</option>
-                  <option value="GMT+4">GMT+4 (Dubai)</option>
-                  <option value="GMT+5">GMT+5 (Pakistán, Tashkent)</option>
-                  <option value="GMT+5:30">GMT+5:30 (India)</option>
-                  <option value="GMT+6">GMT+6 (Bangladés)</option>
-                  <option value="GMT+7">GMT+7 (Tailandia, Bangkok)</option>
-                  <option value="GMT+8">GMT+8 (China, Hong Kong, Singapur)</option>
-                  <option value="GMT+9">GMT+9 (Japón, Seúl)</option>
-                  <option value="GMT+10">GMT+10 (Sídney)</option>
-                  <option value="GMT+11">GMT+11 (Islas Salomón)</option>
-                  <option value="GMT+12">GMT+12 (Nueva Zelanda, Fiji)</option>
+                  <option v-for="tz in timezones" :key="tz.value" :value="tz.value">{{ tz.value }} ({{ tz.label }})</option>
                 </select>
               </div>
             </div>
@@ -138,9 +113,9 @@
                 <i :class="store.profile.isPremium ? 'pi pi-check' : 'pi pi-times'" aria-hidden="true"></i> {{ $t('settings.subscription.features.clinical') }}
               </li>
             </ul>
-            <button class="btn btn-primary full hover-lift theme-transition" v-if="!store.profile.isPremium">
+            <router-link to="/subscription" class="btn btn-primary full hover-lift theme-transition upgrade-link" v-if="!store.profile.isPremium">
               {{ $t('settings.subscription.upgrade') }}
-            </button>
+            </router-link>
           </section>
 
           <section class="card animate-fade-in-up delay-3 theme-transition">
@@ -175,7 +150,7 @@
     <div v-if="showDeleteConfirm" ref="deleteModalRef" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" @click.self="showDeleteConfirm = false" @keydown.escape="showDeleteConfirm = false">
       <div class="modal-card">
         <div class="modal-header">
-          <h3 id="delete-modal-title" class="modal-title">{{ $t('settings.dangerZone.title') }}</h3>
+          <h3 id="delete-modal-title" class="modal-title danger">{{ $t('settings.dangerZone.title') }}</h3>
           <button class="modal-close" :aria-label="$t('settings.dangerZone.cancel')" @click="showDeleteConfirm = false">&times;</button>
         </div>
         <div class="modal-body">
@@ -294,6 +269,35 @@ const router = useRouter()
 const store = useSettingsStore()
 const authStore = useAuthStore()
 const supportApi = new SupportTicketsApi()
+
+const timezones = [
+  { value: 'GMT-12', label: 'Baker Island' },
+  { value: 'GMT-11', label: 'Samoa' },
+  { value: 'GMT-10', label: 'Hawaii' },
+  { value: 'GMT-9', label: 'Alaska' },
+  { value: 'GMT-8', label: 'Pacific Time' },
+  { value: 'GMT-7', label: 'Mountain Time' },
+  { value: 'GMT-6', label: 'Central America' },
+  { value: 'GMT-5', label: 'Lima, New York' },
+  { value: 'GMT-4', label: 'Caracas, La Paz' },
+  { value: 'GMT-3', label: 'São Paulo, Buenos Aires' },
+  { value: 'GMT-2', label: 'Mid-Atlantic' },
+  { value: 'GMT-1', label: 'Azores' },
+  { value: 'GMT', label: 'London, Dublin' },
+  { value: 'GMT+1', label: 'Paris, Madrid, Berlin' },
+  { value: 'GMT+2', label: 'Istanbul, Cairo' },
+  { value: 'GMT+3', label: 'Moscow, Nairobi' },
+  { value: 'GMT+4', label: 'Dubai' },
+  { value: 'GMT+5', label: 'Pakistan, Tashkent' },
+  { value: 'GMT+5:30', label: 'India' },
+  { value: 'GMT+6', label: 'Bangladesh' },
+  { value: 'GMT+7', label: 'Thailand, Bangkok' },
+  { value: 'GMT+8', label: 'China, Hong Kong, Singapore' },
+  { value: 'GMT+9', label: 'Japan, Seoul' },
+  { value: 'GMT+10', label: 'Sydney' },
+  { value: 'GMT+11', label: 'Solomon Islands' },
+  { value: 'GMT+12', label: 'New Zealand, Fiji' }
+]
 
 const showDeleteConfirm = ref(false)
 const isDeleting = ref(false)
@@ -456,7 +460,7 @@ onMounted(async () => {
 
 .card {
   background: var(--bg-surface);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 24px;
   box-shadow: 0 1px 2px color-mix(in srgb, var(--text-primary), transparent 96%);
   transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -554,6 +558,7 @@ onMounted(async () => {
 .btn-danger:hover { background: var(--bg-surface-secondary); }
 .btn-danger:active { transform: scale(0.97); }
 .full { width: 100%; }
+.upgrade-link { text-decoration: none; text-align: center; display: block; }
 .stack { display: flex; flex-direction: column; gap: 12px; }
 .toggle-list { display: flex; flex-direction: column; gap: 20px; }
 .toggle-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }

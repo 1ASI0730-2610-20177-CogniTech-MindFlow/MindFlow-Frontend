@@ -34,7 +34,7 @@
       </router-link>
     </div>
 
-    <p v-if="serverError" class="form-error form-error-center">{{ $t(serverError) }}</p>
+    <p v-if="serverError" class="form-error form-error-center">{{ $t(serverError) === serverError ? serverError : $t(serverError) }}</p>
 
     <button type="submit" class="btn-primary" :disabled="isLoading">
       <template v-if="isLoading">

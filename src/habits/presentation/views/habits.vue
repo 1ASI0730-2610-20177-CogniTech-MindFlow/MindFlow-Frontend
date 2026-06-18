@@ -157,7 +157,6 @@ onMounted(async () => {
 }
 
 .habits-page {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
 }
 

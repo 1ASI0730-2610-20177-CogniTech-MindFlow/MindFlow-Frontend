@@ -109,6 +109,9 @@ const getBarColor = (value) => {
 }
 
 const getDayLabel = (index) => {
+  const labels = dashboardStore.weeklySummary?.labels || []
+  if (labels[index]) return labels[index]
+
   const key = dashboardStore.weeklySummary?.labels_keys?.[index] || ''
   if (!key) return defaultLabels[index] || ''
   const translated = t(key)

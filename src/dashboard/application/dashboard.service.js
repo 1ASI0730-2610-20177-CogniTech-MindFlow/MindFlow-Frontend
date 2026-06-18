@@ -34,8 +34,13 @@ function mapHabits(allHabits) {
 }
 
 function mapWeeklySummary(analyticsData) {
-  const record = analyticsData.find(a => a && a.trend_data)
-  return record ? record.trend_data : null
+  const record = analyticsData.find(a => a && a.fluctuation_data)
+  if (!record) return null
+  const data = record.fluctuation_data
+  if (typeof data === 'string') {
+    try { return JSON.parse(data) } catch { return null }
+  }
+  return data
 }
 
 export async function fetchDashboardAggregatedData(userId) {

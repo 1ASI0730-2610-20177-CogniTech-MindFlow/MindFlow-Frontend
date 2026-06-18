@@ -10,10 +10,6 @@
           </div>
 
           <div class="widget animate-fade-in-up" style="animation-delay: 0.12s">
-            <RecentEntries @open-chat="chatOpen = true" />
-          </div>
-
-          <div class="widget animate-fade-in-up" style="animation-delay: 0.24s">
             <WeeklySummaryWidget />
           </div>
         </div>
@@ -47,14 +43,12 @@ import { onMounted } from 'vue'
 import Layout from '@/shared/presentation/components/layout.vue'
 import { ref } from 'vue'
 import MoodInput from '../components/mood-input.vue'
-import RecentEntries from '../components/recent-entries.vue'
 import AiChat from '../components/ai-chat.vue'
 import WeeklySummaryWidget from '../components/weekly-summary-widget.vue'
 
 const chatOpen = ref(false)
 
 function closeChat() {
-  dashboardStore.saveCurrentConversation()
   chatOpen.value = false
 }
 import QuickInterventions from '../components/quick-interventions.vue'
@@ -86,6 +80,7 @@ onMounted(() => {
   background-image: radial-gradient(circle at center, var(--grid-dot) 1px, transparent 1px);
   background-size: 32px 32px;
   opacity: 0.8;
+  transition: opacity 0.6s ease, transform 0.8s ease;
 }
 
 .dashboard-grid {
@@ -98,7 +93,6 @@ onMounted(() => {
   width: 100%;
 }
 
-/* Animaciones de entrada */
 @keyframes dfadeInUp {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
@@ -107,10 +101,6 @@ onMounted(() => {
 .animate-fade-in-up {
   animation: dfadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
   opacity: 0;
-}
-
-.optical-grid-bg {
-  transition: opacity 0.6s ease, transform 0.8s ease;
 }
 
 .main-column,
@@ -164,7 +154,7 @@ onMounted(() => {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
-  z-index: 9999;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,7 +163,7 @@ onMounted(() => {
 
 .chat-panel {
   width: 100%;
-  max-width: 700px;
+  max-width: 900px;
   height: 80vh;
   max-height: 700px;
 }

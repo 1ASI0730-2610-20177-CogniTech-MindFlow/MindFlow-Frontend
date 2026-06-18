@@ -23,12 +23,21 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import Layout from '@/shared/presentation/components/layout.vue'
+import { useSubscriptionStore } from '@/subscription/application/subscription.store'
 
 const route = useRoute()
+const store = useSubscriptionStore()
 const isSuccess = computed(() => route.path.includes('success'))
+
+onMounted(async () => {
+    const sessionId = route.query.session_id
+    if (isSuccess.value && sessionId) {
+        await store.verifyCheckoutSession(sessionId)
+    }
+})
 </script>
 
 <style scoped>

@@ -152,7 +152,6 @@ onMounted(async () => {
   min-height: 100vh;
   background: var(--bg-primary);
   padding: 28px;
-  font-family: Inter, sans-serif;
 }
 
 .page-header {
@@ -241,7 +240,7 @@ onMounted(async () => {
 
 .card {
   background: var(--bg-surface);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 24px;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm), var(--shadow-lg);

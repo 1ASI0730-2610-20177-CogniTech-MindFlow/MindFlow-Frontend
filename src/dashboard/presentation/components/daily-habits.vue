@@ -7,7 +7,10 @@
           v-for="habit in dashboardStore.habits"
           :key="habit.id"
           class="habit-item"
+          role="button"
+          tabindex="0"
           @click="dashboardStore.toggleHabit(habit.id)"
+          @keydown.enter="dashboardStore.toggleHabit(habit.id)"
       >
         <div class="habit-left">
           <div :class="['custom-checkbox', { 'checked': habit.completed }]">

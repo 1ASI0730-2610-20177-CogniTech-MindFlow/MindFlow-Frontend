@@ -6,18 +6,24 @@
     </div>
 
     <div class="mock-word-cloud">
-      <span
-          v-for="(word, index) in styledWords"
-          :key="`${word.text || word.i18nKey || 'word'}-${index}`"
-          class="cloud-word"
-          :class="[word.weight >= 700 ? 'is-strong' : 'is-soft', { hovered: word.hovered }]"
-          :style="wordStyle(word)"
-          @mouseenter="hoveredWord = index"
-          @mouseleave="hoveredWord = null"
-      >
-        {{ resolveWordText(word) }}
-        <span v-if="hoveredWord === index && word.score" class="word-badge">{{ Math.round(word.score * 100) }}%</span>
-      </span>
+      <template v-if="styledWords.length">
+        <span
+            v-for="(word, index) in styledWords"
+            :key="`${word.text || word.i18nKey || 'word'}-${index}`"
+            class="cloud-word"
+            :class="[word.weight >= 700 ? 'is-strong' : 'is-soft', { hovered: word.hovered }]"
+            :style="wordStyle(word)"
+            @mouseenter="hoveredWord = index"
+            @mouseleave="hoveredWord = null"
+        >
+          {{ resolveWordText(word) }}
+          <span v-if="hoveredWord === index && word.score" class="word-badge">{{ Math.round(word.score * 100) }}%</span>
+        </span>
+      </template>
+      <div v-else class="empty-cloud">
+        <i class="pi pi-cloud"></i>
+        <p>{{ t('analytics.components.wordCloud.empty') || 'No hay datos suficientes' }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -36,16 +42,7 @@ const props = defineProps({
   }
 })
 
-const fallbackWords = computed(() => ([
-  { i18nKey: 'analytics.components.wordCloud.words.calm', size: 28, color: 'var(--accent-primary)', weight: 600, score: 0.85, top: '30%', left: '20%' },
-  { i18nKey: 'analytics.components.wordCloud.words.anxious', size: 12, color: 'var(--text-muted)', weight: 500, score: 0.45, top: '60%', left: '25%' },
-  { i18nKey: 'analytics.components.wordCloud.words.productive', size: 14, color: 'var(--accent-warning)', weight: 500, score: 0.55, top: '40%', left: '50%' },
-  { i18nKey: 'analytics.components.wordCloud.words.grateful', size: 32, color: 'var(--accent-primary)', weight: 700, score: 0.92, top: '50%', left: '45%' },
-  { i18nKey: 'analytics.components.wordCloud.words.family', size: 14, color: 'var(--accent-success)', weight: 700, score: 0.62, top: '35%', left: '75%' },
-  { i18nKey: 'analytics.components.wordCloud.words.tired', size: 18, color: 'var(--text-muted)', weight: 500, score: 0.58, top: '55%', left: '75%' }
-]))
-
-const renderedWords = computed(() => (props.words?.length ? props.words : fallbackWords.value))
+const renderedWords = computed(() => props.words || [])
 
 const styledWords = computed(() => {
   const tilts = ['-7deg', '3deg', '-2deg', '8deg', '-5deg', '2deg', '-4deg', '6deg']
@@ -87,7 +84,8 @@ const wordStyle = (word) => {
 
 <style scoped>
 .word-cloud-container {
-  height: 380px;
+  height: 100%;
+  min-height: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -185,5 +183,23 @@ const wordStyle = (word) => {
 @keyframes cloudFloat {
   0%, 100% { margin-top: 0; }
   50% { margin-top: -3px; }
+}
+
+.empty-cloud {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+
+.empty-cloud i {
+  font-size: 32px;
+  opacity: 0.4;
+}
+
+.empty-cloud p {
+  margin: 0;
+  font-size: 14px;
 }
 </style>

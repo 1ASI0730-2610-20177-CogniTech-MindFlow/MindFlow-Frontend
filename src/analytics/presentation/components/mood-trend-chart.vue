@@ -2,24 +2,27 @@
   <div class="transparent-chart-container large-chart theme-transition">
     <div class="card-header">
       <h3 class="card-title">{{ t('analytics.components.trendChart.title') }}</h3>
-      <div class="chart-legend">
-        <span class="legend-item"><span class="box bg-light"></span> {{ t('analytics.components.trendChart.legend.wellbeing') }}</span>
-        <span class="legend-item"><span class="box bg-blue"></span> {{ t('analytics.components.trendChart.legend.stress') }}</span>
+      <div v-if="translatedChartData?.datasets?.length" class="chart-legend">
+        <span v-for="ds in translatedChartData.datasets" :key="ds.label" class="legend-item">
+          <span class="box" :style="{ background: ds.borderColor || ds.backgroundColor }"></span> {{ ds.label }}
+        </span>
       </div>
     </div>
     <div class="chart-wrapper">
-      <Chart v-if="translatedChartData" type="line" :data="translatedChartData" :options="chartOptions" style="height: 100%; width: 100%;" />
+      <Chart v-if="ready && translatedChartData" type="line" :data="translatedChartData" :options="chartOptions" style="height: 100%; width: 100%;" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Chart from 'primevue/chart'
 
 const props = defineProps({ chartData: Object, chartOptions: Object })
 const { t } = useI18n()
+const ready = ref(false)
+onMounted(() => { setTimeout(() => { ready.value = true }, 800) })
 
 const translateIfNeeded = (key, fallback = '') => {
   if (!key) return fallback
@@ -28,11 +31,11 @@ const translateIfNeeded = (key, fallback = '') => {
 }
 
 const translatedChartData = computed(() => {
-  if (!props.chartData) return null
+  if (!props.chartData?.datasets?.length) return null
 
   return {
     ...props.chartData,
-    labels: (props.chartData.labelsKeys || props.chartData.labels || []).map((item, index) => {
+    labels: (props.chartData.labelsKeys?.length ? props.chartData.labelsKeys : props.chartData.labels || []).map((item, index) => {
       if (typeof item === 'string') {
         return translateIfNeeded(item, props.chartData.labels?.[index] || item)
       }
@@ -62,7 +65,7 @@ const translatedChartData = computed(() => {
 
 .card-header { margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; }
 .card-title {
-  font-size: 18px; color: var(--text-dark); margin: 0; font-weight: 700;
+  font-size: 18px; color: var(--text-primary); margin: 0; font-weight: 700;
   padding-left: 12px; border-left: 3px solid var(--global-blue);
 }
 

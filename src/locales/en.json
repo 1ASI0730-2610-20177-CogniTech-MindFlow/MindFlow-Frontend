@@ -129,7 +129,8 @@
     "buttons": {
       "activePlan": "Active Plan",
       "downgrade": "Downgrade Plan",
-      "upgrade": "Upgrade to Premium"
+      "upgrade": "Upgrade to Premium",
+      "confirmDowngrade": "Are you sure you want to cancel your premium subscription and switch to the free plan?"
     },
     "freemium": {
       "title": "Freemium",
@@ -417,7 +418,15 @@
     },
     "chat": {
       "welcomeTitle": "Hi, how are you feeling today?",
-      "welcomeDesc": "Write what you're thinking or feeling. MindFlow AI will analyze your emotions and give you personalized advice."
+      "welcomeDesc": "Write what you're thinking or feeling. MindFlow AI will analyze your emotions and give you personalized advice.",
+      "history": "History",
+      "newChat": "New chat",
+      "suggestions": {
+        "s1": "I'm feeling anxious about work today",
+        "s2": "Had a good day, feeling grateful",
+        "s3": "I haven't been sleeping well lately",
+        "s4": "I'm stressed about exams"
+      }
     },
     "recentEntries": {
       "title": "Recent Conversations",
@@ -437,7 +446,14 @@
       "microMeditation": "Micro-meditation",
       "microMeditationDesc": "3-minute guided meditation",
       "grounding": "5-4-3-2-1 Grounding",
-      "groundingDesc": "Present-moment awareness exercise"
+      "groundingDesc": "Present-moment awareness exercise",
+      "meditation": {
+        "step1": "Close your eyes and take a deep breath...",
+        "step2": "Observe your thoughts without judging them...",
+        "step3": "Feel your body relax with each breath...",
+        "step4": "Connect with the present moment...",
+        "step5": "Slowly, return to your surroundings..."
+      }
     },
     "interventions": {
       "inhale": "Inhale",
@@ -515,7 +531,8 @@
           "grateful": "Grateful",
           "family": "[FAMILY]",
           "tired": "Tired"
-        }
+        },
+        "empty": "Not enough data to generate the word cloud."
       },
       "export": {
         "title": "Export Clinical Reports",

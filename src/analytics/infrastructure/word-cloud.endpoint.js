@@ -11,8 +11,13 @@ export class WordCloudEndpoint {
     }
 
     async compute() {
-        const response = await apiClient.post('/wordCloud/compute')
-        return response.data
+        try {
+            const response = await apiClient.post('/wordCloud/compute')
+            return response.data
+        } catch (error) {
+            console.error('Error computing word cloud:', error)
+            throw error
+        }
     }
 }
 

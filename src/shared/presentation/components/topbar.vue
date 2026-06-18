@@ -1,6 +1,9 @@
 <template>
   <header class="topbar" :class="{ scrolled: isScrolled }">
     <div class="topbar-left">
+      <button class="hamburger" @click="$emit('toggle-sidebar')" aria-label="Toggle menu">
+        <i class="pi pi-bars"></i>
+      </button>
       <h2 class="greeting" :key="currentTitle">{{ currentTitle }}</h2>
       <p class="subtitle">{{ formattedDate }} · {{ $t('topbar.subtitle') }}</p>
     </div>
@@ -88,6 +91,8 @@ import { useSettingsStore } from '@/settings/application/settings.store.js'
 import { useNotificationsStore } from '@/notifications/application/notifications.store'
 import { useAuthStore } from '@/iam/application/auth.store.js'
 import { useI18n } from 'vue-i18n'
+
+defineEmits(['toggle-sidebar'])
 
 const route = useRoute()
 const router = useRouter()
@@ -214,6 +219,22 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+}
+
+.hamburger {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 4px;
 }
 
 .greeting {
@@ -603,12 +624,16 @@ onUnmounted(() => {
     padding: 0 16px;
   }
 
-  .search input {
-    width: 160px;
+  .hamburger {
+    display: flex;
   }
 
-  .search input:focus {
-    width: 200px;
+  .search {
+    display: none;
+  }
+
+  .subtitle {
+    display: none;
   }
 
   .topbar-actions {

@@ -1,35 +1,11 @@
-import apiClient from '@/shared/infrastructure/base-api'
+import { AuthAPI } from '@/iam/infrastructure/auth-api'
+import { PinAPI } from '@/iam/infrastructure/pin-api'
 
-const USERS_URL = '/api/v1/users'
-
-export class SettingsApiService {
-    async updateProfile(data) {
-        const response = await apiClient.put(`${USERS_URL}/profile`, data)
-        return response.data
-    }
-
-    async deleteAccount() {
-        await apiClient.delete(USERS_URL)
-    }
-
-    async getPinStatus() {
-        const response = await apiClient.get(`${USERS_URL}/pin/status`)
-        return response.data
-    }
-
-    async setPin(pin) {
-        const response = await apiClient.post(`${USERS_URL}/pin`, { pin })
-        return response.data
-    }
-
-    async verifyPin(pin) {
-        const response = await apiClient.post(`${USERS_URL}/pin/verify`, { pin })
-        return response.data
-    }
-
-    async removePin() {
-        await apiClient.delete(`${USERS_URL}/pin`)
-    }
+export const SettingsAPI = {
+    updateProfile: (data) => AuthAPI.updateProfile(data),
+    deleteAccount: () => AuthAPI.deleteAccount(),
+    getPinStatus: () => PinAPI.getStatus(),
+    setPin: (pin) => PinAPI.setPin(pin),
+    verifyPin: (pin) => PinAPI.verifyPin(pin),
+    removePin: () => PinAPI.removePin()
 }
-
-export const SettingsAPI = new SettingsApiService()
