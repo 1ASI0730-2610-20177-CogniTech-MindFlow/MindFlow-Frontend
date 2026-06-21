@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import Layout from '../../../shared/presentation/components/layout.vue'
 import { useHabitsStore } from '../../application/habits.store.js'
 import { useAuthStore } from '@/iam/application/auth.store.js'
@@ -83,6 +83,12 @@ const authStore = useAuthStore()
 onMounted(async () => {
   await store.loadHabits()
   await store.checkStress()
+})
+
+watch(() => store.activeTab, (tab) => {
+  if (tab === 'history') {
+    store.loadHabits()
+  }
 })
 </script>
 
@@ -157,7 +163,7 @@ onMounted(async () => {
 }
 
 .habits-page {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .page-header {

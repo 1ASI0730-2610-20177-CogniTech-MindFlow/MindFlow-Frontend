@@ -93,4 +93,16 @@ const translatedChartData = computed(() => {
 }
 
 .chart-wrapper { flex: 1; position: relative; min-height: 200px; border-radius: 12px; overflow: hidden; }
+
+@media (max-width: 768px) {
+  .transparent-chart-container { height: 300px; padding: 20px; border-radius: 16px; }
+  .card-header { margin-bottom: 12px; }
+  .card-title { font-size: 15px; }
+  .chart-y-label { display: none; }
+}
+
+@media (max-width: 480px) {
+  .transparent-chart-container { height: 260px; padding: 16px; }
+  .chart-wrapper { min-height: 160px; }
+}
 </style>

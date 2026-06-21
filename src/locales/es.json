@@ -88,9 +88,10 @@
   },
   "pin": {
     "title": "Ingresa tu PIN",
-    "subtitle": "Ingresa tu codigo de 4 digitos para acceder",
+    "subtitle": "Ingresa tu código de 4 a 6 dígitos para acceder",
     "error": "PIN incorrecto. Intenta de nuevo.",
-    "verifying": "Verificando..."
+    "verifying": "Verificando...",
+    "verify": "Verificar"
   },
   "menu": {
     "dashboard": "Dashboard",
@@ -232,6 +233,8 @@
       "subjectLabel": "Asunto",
       "messageLabel": "Describe tu problema",
       "send": "Enviar Ticket",
+      "sending": "Enviando...",
+      "ticketError": "Error al enviar el ticket. Intenta de nuevo.",
       "cancel": "Cancelar",
       "close": "Cerrar",
       "ticketNumber": "Tu número de ticket:",
@@ -402,6 +405,7 @@
       "status": "Estado",
       "name": "Hábito",
       "category": "Categoría",
+      "frequency": "Frecuencia",
       "streak": "Racha Actual"
     },
     "emptyFilter": "No hay hábitos que coincidan con el filtro.",
@@ -567,18 +571,15 @@
         }
       },
       "trendChart": {
-        "title": "Tendencia de Ánimo",
+        "title": "Tendencia de Ánimo (Últimas 4 Semanas)",
         "dataset": {
           "wellbeing": "Nivel de Bienestar"
         },
         "labels": {
-          "mon": "Lun",
-          "tue": "Mar",
-          "wed": "Mié",
-          "thu": "Jue",
-          "fri": "Vie",
-          "sat": "Sáb",
-          "sun": "Dom"
+          "week1": "Sem 1",
+          "week2": "Sem 2",
+          "week3": "Sem 3",
+          "week4": "Sem 4"
         },
         "legend": {
           "wellbeing": "Nivel de Bienestar",

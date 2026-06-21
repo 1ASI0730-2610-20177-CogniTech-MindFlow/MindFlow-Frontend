@@ -1,6 +1,16 @@
 import apiClient from '@/shared/infrastructure/base-api'
 
 export class NotificationsApiService {
+    async getAll() {
+        try {
+            const response = await apiClient.get('/notifications')
+            return response.data
+        } catch (error) {
+            console.error('Error fetching notifications:', error)
+            return []
+        }
+    }
+
     async registerDevice(fcmToken, platform = 'web') {
         try {
             const response = await apiClient.post('/notifications/register-device', {

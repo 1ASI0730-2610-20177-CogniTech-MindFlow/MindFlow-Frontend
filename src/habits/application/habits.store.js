@@ -8,7 +8,8 @@ import { SuggestionsAPI } from '../infrastructure/suggestions-api.js'
 import { useSettingsStore } from '@/settings/application/settings.store.js'
 
 function todayISO() {
-    return new Date().toISOString().slice(0, 10)
+    const d = new Date()
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 function extractHabitSequence(id) {
@@ -106,6 +107,26 @@ export const useHabitsStore = defineStore('habits', {
                         category: item.category || habit?.category
                     })
                 })
+
+            const today = todayISO()
+            const completedToday = new Set(
+                this.completionHistory
+                    .filter(log => log.date === today && log.completed)
+                    .map(log => String(log.habitId))
+            )
+
+            for (const habit of this.habits) {
+                if (habit.isPaused()) continue
+                if (habit.frequency === HabitFrequency.DAILY) {
+                    if (completedToday.has(String(habit.id))) {
+                        habit.status = HabitStatus.COMPLETED
+                    } else {
+                        habit.status = HabitStatus.PENDING
+                        habit.currentStreak = 0
+                        habit.streak = 0
+                    }
+                }
+            }
         },
 
         async persistHabit(habit) {
@@ -144,13 +165,18 @@ export const useHabitsStore = defineStore('habits', {
             })
 
             if (existing >= 0) {
-                this.completionHistory[existing] = await HabitsHistoryAPI.update(
+                const updated = await HabitsHistoryAPI.update(
                     this.completionHistory[existing].id,
                     entry
                 )
+                this.completionHistory = [
+                    ...this.completionHistory.slice(0, existing),
+                    updated,
+                    ...this.completionHistory.slice(existing + 1)
+                ]
             } else {
                 const stored = await HabitsHistoryAPI.create(entry)
-                this.completionHistory.push(stored)
+                this.completionHistory = [...this.completionHistory, stored]
             }
         },
 
@@ -181,15 +207,18 @@ export const useHabitsStore = defineStore('habits', {
             if (!habit?.canToggle()) return
 
             habit.toggle()
-
-            if (habit.isCompleted() && habit.currentStreak === 0) {
-                habit.currentStreak = 1
-            }
-
             habit.updatedAt = new Date().toISOString()
 
-            await this.persistHabit(habit)
+            if (habit.isCompleted()) {
+                habit.currentStreak = (habit.currentStreak || 0) + 1
+                habit.streak = habit.currentStreak
+            } else {
+                habit.currentStreak = Math.max(0, (habit.currentStreak || 0) - 1)
+                habit.streak = habit.currentStreak
+            }
+
             await this.recordCompletion(habit, habit.isCompleted())
+            HabitsAPI.update(habit.id, habit).catch((e) => console.error('Error syncing habit:', e))
         },
 
         async checkStress() {

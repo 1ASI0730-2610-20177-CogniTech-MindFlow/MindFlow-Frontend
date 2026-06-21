@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onActivated } from 'vue'
 import { useAnalyticsStore } from '@/analytics/application/analytics.store'
 import Layout from '@/shared/presentation/components/layout.vue'
 
@@ -82,6 +82,10 @@ import ExportBanner from '../components/export-banner.vue'
 const analyticsStore = useAnalyticsStore()
 
 onMounted(() => {
+  analyticsStore.fetchDashboardData()
+})
+
+onActivated(() => {
   analyticsStore.fetchDashboardData()
 })
 </script>
@@ -171,10 +175,19 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .high-end-analytics-page { padding: 32px 16px; }
-  .hero-header { padding-left: 16px; margin-bottom: 32px; }
-  .gradient-title { font-size: 32px; }
-  .asymmetric-content-wrapper { gap: 32px; }
+  .high-end-analytics-page { padding: 24px 12px; }
+  .hero-header { padding-left: 12px; margin-bottom: 24px; }
+  .gradient-title { font-size: 28px; }
+  .asymmetric-content-wrapper { gap: 24px; }
+  .asymmetric-grid { gap: 24px; }
+  .deep-shadow-panel { border-radius: 16px; }
   .deep-shadow-panel:hover { transform: none; }
+}
+
+@media (max-width: 480px) {
+  .high-end-analytics-page { padding: 16px 8px; }
+  .asymmetric-content-wrapper { gap: 16px; }
+  .asymmetric-grid { gap: 16px; }
+  .gradient-title { font-size: 24px; }
 }
 </style>

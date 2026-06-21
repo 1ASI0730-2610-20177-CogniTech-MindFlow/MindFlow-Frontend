@@ -65,9 +65,15 @@ export const useAuthStore = defineStore('auth', {
                     email: data.email,
                     password: data.password
                 })
+
+                if (data.name && !user.name) {
+                    user.name = data.name
+                    AuthAPI.updateProfile({ name: data.name }).catch(() => {})
+                }
+
                 this.user = user
                 this.session = new AuthSession({ token, userId: user.id })
-                SessionManager.save({ token, userId: user.id, email: user.email, name: user.name })
+                SessionManager.save({ token, userId: user.id, email: user.email, name: user.name || data.name })
                 return { success: true }
             } catch (error) {
                 const message = error.response?.data?.error || error.response?.data?.message || 'auth.register.error.generic'

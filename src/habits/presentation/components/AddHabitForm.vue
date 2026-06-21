@@ -185,13 +185,24 @@ const submit = () => {
   transform: rotate(90deg) scale(1.1);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .add-form {
     grid-template-columns: 1fr 1fr;
   }
 
   .add-form input {
     grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-form {
+    grid-template-columns: 1fr;
+  }
+
+  .create-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 </style>

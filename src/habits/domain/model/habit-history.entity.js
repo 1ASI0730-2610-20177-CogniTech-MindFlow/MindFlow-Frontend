@@ -25,7 +25,8 @@ export class HabitCompletionLog {
             habit_name: this.habitName,
             category: this.category,
             date: this.date,
-            completed_at: this.completedAt || new Date().toISOString()
+            completed: this.completed ?? true,
+            completed_at: this.completed ? (this.completedAt || new Date().toISOString()) : null
         }
     }
 
@@ -36,7 +37,7 @@ export class HabitCompletionLog {
             habitId: data.habit_id ?? data.habitId,
             habitName: data.habit_name ?? data.habitName,
             category: data.category,
-            date: data.date ?? (completedAt ? completedAt.slice(0, 10) : null),
+            date: data.date ? String(data.date).slice(0, 10) : (completedAt ? completedAt.slice(0, 10) : null),
             completed: data.completed ?? true,
             completedAt,
             createdAt: data.created_at ?? data.createdAt ?? null
@@ -148,6 +149,7 @@ export function buildWeeklySummaries(logs) {
                 const { _days, completedDates, ...rest } = stat
                 return {
                     ...rest,
+                    completedDates: [...completedDates].sort(),
                     percent: stat.trackedDays
                         ? Math.round((stat.completedDays / stat.trackedDays) * 100)
                         : 0,

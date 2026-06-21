@@ -21,6 +21,9 @@
         {{ habit.category }}
       </span>
     </td>
+    <td>
+      <span class="freq-tag" :class="freqClass">{{ freqLabel }}</span>
+    </td>
     <td class="streak-cell">
       <template v-if="habit.isPaused()">
         <span class="paused-label">{{ $t('habits.pausedByAI') }}</span>
@@ -38,7 +41,8 @@
 
 <script setup>
 import { computed } from 'vue'
-import { HABIT_CATEGORIES } from '../../domain/model/habit.entity.js'
+import { useI18n } from 'vue-i18n'
+import { HABIT_CATEGORIES, HabitFrequency } from '../../domain/model/habit.entity.js'
 
 const props = defineProps({
   habit: { type: Object, required: true }
@@ -46,12 +50,29 @@ const props = defineProps({
 
 defineEmits(['toggle'])
 
+const { t } = useI18n()
+
 const categoryStyle = computed(() => {
   const palette = HABIT_CATEGORIES[props.habit.category] || HABIT_CATEGORIES.Bienestar
   return {
     background: palette.bg,
     color: palette.color
   }
+})
+
+const freqMap = {
+  [HabitFrequency.DAILY]: 'daily',
+  [HabitFrequency.WEEKLY]: 'weekly',
+  [HabitFrequency.MONTHLY]: 'monthly'
+}
+
+const freqLabel = computed(() => {
+  const key = freqMap[props.habit.frequency] || 'daily'
+  return t(`habits.addForm.frequency.${key}`)
+})
+
+const freqClass = computed(() => {
+  return `freq-${freqMap[props.habit.frequency] || 'daily'}`
 })
 </script>
 
@@ -217,6 +238,30 @@ const categoryStyle = computed(() => {
   border: 1px solid transparent;
   transition: all 0.25s ease;
   letter-spacing: 0.02em;
+}
+
+.freq-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.freq-daily {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--accent-primary);
+}
+
+.freq-weekly {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--accent-warning);
+}
+
+.freq-monthly {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-success);
 }
 
 .streak {

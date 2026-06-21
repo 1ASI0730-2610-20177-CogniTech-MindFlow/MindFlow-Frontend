@@ -95,12 +95,13 @@ function mapChartDataset(dataset = {}, fallbackLabel = '') {
 }
 
 function mapSummary(record, legacyData) {
+    const rawLocalized = record.ai_insight_localized || record.aiInsightLocalized || null
     return new AnalyticsSummary({
         score: record.score ?? legacyData?.score ?? 0,
         trendPercentage: record.trend_percentage ?? legacyData?.trend_percentage ?? '+0%',
         startDate: record.start_date ?? legacyData?.startDate ?? '',
         endDate: record.end_date ?? legacyData?.endDate ?? '',
-        aiInsightLocalized: record.ai_insight_localized || record.aiInsightLocalized || null,
+        aiInsightLocalized: parseJson(rawLocalized, null),
         aiInsight: record.ai_insight || record.aiInsight || legacyData?.aiInsight || ''
     })
 }
@@ -241,6 +242,10 @@ export const useAnalyticsStore = defineStore('analytics', {
     actions: {
         async fetchDashboardData() {
             this.isLoading = true
+            this.summary = null
+            this.kpis = []
+            this.fluctuationData = null
+            this.trendData = null
 
             try {
                 const now = new Date()

@@ -255,6 +255,20 @@ watch([year, month], () => loadData(), { immediate: true })
 }
 .dot-positive { background: var(--mood-positive); }
 .dot-neutral { background: var(--mood-neutral); }
-.dot-negative { background: var(--mood-negative);
+.dot-negative { background: var(--mood-negative); }
+
+@media (max-width: 480px) {
+  .mood-calendar {
+    padding: 16px;
+  }
+
+  .calendar-legend {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .days-grid {
+    gap: 3px;
+  }
 }
 </style>
