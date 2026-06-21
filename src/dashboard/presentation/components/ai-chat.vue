@@ -142,7 +142,7 @@ const authStore = useAuthStore()
 
 const message = ref('')
 const selectedTag = ref('Personal')
-const sidebarOpen = ref(true)
+const sidebarOpen = ref(window.innerWidth > 768)
 const messagesRef = ref(null)
 const textareaRef = ref(null)
 

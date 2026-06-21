@@ -37,13 +37,24 @@ export const useSettingsStore = defineStore('settings', {
             this.currentUserId = userId
 
             try {
-                const email = SessionManager.getUserEmail()
-                const name = SessionManager.getUserName()
-                this.profile = Profile.fromJSON({
-                    id: userId,
-                    email: email,
-                    name: name
-                })
+                let profileData
+                try {
+                    profileData = await SettingsAPI.getProfile()
+                } catch {
+                    profileData = null
+                }
+
+                if (profileData) {
+                    this.profile = Profile.fromJSON(profileData)
+                    SessionManager.setUserName(profileData.name)
+                    SessionManager.setUserEmail(profileData.email)
+                } else {
+                    this.profile = Profile.fromJSON({
+                        id: userId,
+                        email: SessionManager.getUserEmail(),
+                        name: SessionManager.getUserName()
+                    })
+                }
 
                 try {
                     const pinStatus = await SettingsAPI.getPinStatus()

@@ -30,9 +30,13 @@ const { t, locale } = useI18n()
 const translatedInsight = computed(() => {
   if (!props.data) return ''
 
-  const localized = props.data.aiInsightLocalized
+  let localized = props.data.aiInsightLocalized
+  if (typeof localized === 'string') {
+    try { localized = JSON.parse(localized) } catch { localized = null }
+  }
+
   if (localized && typeof localized === 'object') {
-    return localized[locale.value] || localized.es || localized.en || props.data.aiInsight || ''
+    return localized[locale.value] || localized[locale.value.split('-')[0]] || localized.es || localized.en || props.data.aiInsight || ''
   }
 
   return props.data.aiInsight || ''
@@ -242,6 +246,29 @@ const translatedInsight = computed(() => {
   .ai-text {
     font-size: 16px;
     text-align: justify;
+  }
+}
+
+@media (max-width: 480px) {
+  .premium-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .summary-card {
+    gap: 20px;
+  }
+
+  .summary-left {
+    padding-bottom: 20px;
+  }
+
+  .huge-score {
+    font-size: 44px;
+  }
+
+  .ai-text {
+    font-size: 14px;
   }
 }
 </style>

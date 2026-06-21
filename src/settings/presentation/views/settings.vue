@@ -5,10 +5,11 @@
         <div class="col">
           <section class="card animate-fade-in-up theme-transition">
             <div class="profile-header">
-              <div class="avatar animate-scale-in">{{ store.profile.initial }}</div>
+              <div class="avatar animate-scale-in" :style="avatarUrl ? { backgroundImage: `url(${avatarUrl})`, backgroundSize: 'cover', backgroundPosition: 'center', fontSize: 0 } : {}">{{ avatarUrl ? '' : store.profile.initial }}</div>
               <div>
                 <p class="username theme-transition">{{ store.profile.name }}</p>
-                <button class="btn btn-outline btn-sm hover-lift theme-transition">{{ $t('settings.profile.changeAvatar') }}</button>
+                <button class="btn btn-outline btn-sm hover-lift theme-transition" @click="triggerAvatarUpload">{{ $t('settings.profile.changeAvatar') }}</button>
+                <input ref="avatarInput" type="file" accept="image/*" style="display:none" @change="handleAvatarChange" />
               </div>
             </div>
 
@@ -200,8 +201,12 @@
           </div>
         </div>
         <div class="modal-footer" v-if="!ticketSubmitted">
-          <button class="btn btn-outline hover-lift" @click="closeTicketForm">{{ $t('settings.support.cancel') }}</button>
-          <button class="btn btn-primary hover-lift" :disabled="!ticketSubject.trim() || !ticketMessage.trim()" @click="submitTicket">{{ $t('settings.support.send') }}</button>
+          <p v-if="ticketError" class="ticket-error-msg">{{ $t(ticketError) === ticketError ? ticketError : $t(ticketError) }}</p>
+          <button class="btn btn-outline hover-lift" :disabled="isSubmittingTicket" @click="closeTicketForm">{{ $t('settings.support.cancel') }}</button>
+          <button class="btn btn-primary hover-lift" :disabled="!ticketSubject.trim() || !ticketMessage.trim() || isSubmittingTicket" @click="submitTicket">
+            <span v-if="isSubmittingTicket" class="spinner-sm"></span>
+            {{ isSubmittingTicket ? $t('settings.support.sending') : $t('settings.support.send') }}
+          </button>
         </div>
         <div class="modal-footer" v-else>
           <button class="btn btn-primary hover-lift" @click="closeTicketForm">{{ $t('settings.support.close') }}</button>
@@ -234,7 +239,7 @@
         </div>
         <div class="modal-body">
           <div class="field">
-            <label>PIN (4-6 digits)</label>
+            <label>PIN (4-6 {{ $t('settings.privacy.digits') || 'digits' }})</label>
             <input
               type="password"
               v-model="pinInput"
@@ -299,6 +304,27 @@ const timezones = [
   { value: 'GMT+12', label: 'New Zealand, Fiji' }
 ]
 
+const avatarInput = ref(null)
+const avatarUrl = ref(localStorage.getItem('mindflow_avatar') || '')
+
+function triggerAvatarUpload() {
+  avatarInput.value?.click()
+}
+
+function handleAvatarChange(event) {
+  const file = event.target.files?.[0]
+  if (!file) return
+  if (file.size > 2 * 1024 * 1024) return
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    const dataUrl = e.target.result
+    avatarUrl.value = dataUrl
+    localStorage.setItem('mindflow_avatar', dataUrl)
+  }
+  reader.readAsDataURL(file)
+}
+
 const showDeleteConfirm = ref(false)
 const isDeleting = ref(false)
 
@@ -307,6 +333,8 @@ const ticketSubject = ref('')
 const ticketMessage = ref('')
 const ticketSubmitted = ref(false)
 const ticketNumber = ref('')
+const isSubmittingTicket = ref(false)
+const ticketError = ref('')
 const showFaq = ref(false)
 
 const faqItems = [
@@ -328,19 +356,20 @@ function closeTicketForm() {
 }
 
 async function submitTicket() {
+  isSubmittingTicket.value = true
+  ticketError.value = ''
   try {
     const result = await supportApi.create({
       subject: ticketSubject.value,
       message: ticketMessage.value
     })
-    ticketNumber.value = result.ticket_number || result.ticketNumber || '#00000'
+    ticketNumber.value = result.ticket_number || result.ticketNumber || result.id || '#00000'
     ticketSubmitted.value = true
   } catch (e) {
     console.error('Error saving ticket:', e)
-    if (e.response) {
-      console.error('Response status:', e.response.status)
-      console.error('Response data:', e.response.data)
-    }
+    ticketError.value = e.response?.data?.message || 'settings.support.ticketError'
+  } finally {
+    isSubmittingTicket.value = false
   }
 }
 
@@ -453,9 +482,9 @@ onMounted(async () => {
 
 .spinner { border: 3px solid var(--border-color); border-top: 3px solid var(--accent-primary); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin-right: 12px; }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 32px 32px 64px 32px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 32px 32px 64px 32px; box-sizing: border-box; }
 .grid { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
-@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
 .col { display: flex; flex-direction: column; gap: 24px; }
 
 .card {
@@ -492,7 +521,11 @@ onMounted(async () => {
 
 .username { font-weight: 500; margin-bottom: 8px; color: var(--text-primary); }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .container { padding: 16px 12px 48px 12px; }
+  .modal-card { margin: 8px; }
+}
 
 .field label {
   display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;
@@ -600,6 +633,9 @@ onMounted(async () => {
 .ticket-number-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 4px; }
 .ticket-number { font-size: 24px; font-weight: 700; color: var(--text-primary); letter-spacing: 2px; margin-bottom: 8px; }
 .ticket-info { font-size: 13px; color: var(--text-muted); }
+
+.ticket-error-msg { font-size: 13px; color: var(--accent-danger); margin: 0 0 8px 0; width: 100%; text-align: center; }
+.spinner-sm { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
 
 .faq-item { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
 .faq-item:last-child { border-bottom: none; }

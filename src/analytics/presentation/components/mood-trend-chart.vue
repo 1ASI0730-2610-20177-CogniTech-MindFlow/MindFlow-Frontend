@@ -33,20 +33,23 @@ const translateIfNeeded = (key, fallback = '') => {
 const translatedChartData = computed(() => {
   if (!props.chartData?.datasets?.length) return null
 
-  return {
-    ...props.chartData,
-    labels: (props.chartData.labelsKeys?.length ? props.chartData.labelsKeys : props.chartData.labels || []).map((item, index) => {
-      if (typeof item === 'string') {
-        return translateIfNeeded(item, props.chartData.labels?.[index] || item)
-      }
+  const rawLabels = props.chartData.labelsKeys?.length
+    ? props.chartData.labelsKeys
+    : props.chartData.labels || []
 
-      return translateIfNeeded(item?.key, item?.fallback || '')
-    }),
-    datasets: (props.chartData.datasets || []).map((dataset) => ({
-      ...dataset,
-      label: translateIfNeeded(dataset.labelKey, dataset.label)
-    }))
-  }
+  const labels = rawLabels.map((item, index) => {
+    if (typeof item === 'string') {
+      return translateIfNeeded(item, props.chartData.labels?.[index] || item)
+    }
+    return translateIfNeeded(item?.key, item?.fallback || '')
+  })
+
+  const datasets = (props.chartData.datasets || []).map((dataset) => ({
+    ...dataset,
+    label: translateIfNeeded(dataset.labelKey, dataset.label)
+  }))
+
+  return { ...props.chartData, labels, datasets }
 })
 </script>
 
@@ -80,4 +83,18 @@ const translatedChartData = computed(() => {
 .bg-blue { background: var(--global-blue); }
 
 .chart-wrapper { flex: 1; position: relative; min-height: 200px; border-radius: 12px; overflow: hidden; }
+
+@media (max-width: 768px) {
+  .large-chart { height: 320px; }
+  .transparent-chart-container { padding: 20px; border-radius: 16px; }
+  .card-header { margin-bottom: 16px; }
+  .card-title { font-size: 15px; }
+  .chart-legend { padding: 6px 12px; gap: 12px; font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+  .large-chart { height: 280px; }
+  .transparent-chart-container { padding: 16px; }
+  .chart-wrapper { min-height: 160px; }
+}
 </style>

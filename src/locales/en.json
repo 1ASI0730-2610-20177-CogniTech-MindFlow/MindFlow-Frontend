@@ -88,9 +88,10 @@
   },
   "pin": {
     "title": "Enter your PIN",
-    "subtitle": "Enter your 4-digit code to access",
+    "subtitle": "Enter your 4 to 6 digit code to access",
     "error": "Incorrect PIN. Try again.",
-    "verifying": "Verifying..."
+    "verifying": "Verifying...",
+    "verify": "Verify"
   },
   "menu": {
     "dashboard": "Dashboard",
@@ -232,6 +233,8 @@
       "subjectLabel": "Subject",
       "messageLabel": "Describe your issue",
       "send": "Send Ticket",
+      "sending": "Sending...",
+      "ticketError": "Error submitting ticket. Please try again.",
       "cancel": "Cancel",
       "close": "Close",
       "ticketNumber": "Your ticket number:",
@@ -397,6 +400,7 @@
       "status": "Status",
       "name": "Habit",
       "category": "Category",
+      "frequency": "Frequency",
       "streak": "Current Streak"
     },
     "emptyFilter": "No habits match the filter.",
@@ -562,18 +566,15 @@
         }
       },
       "trendChart": {
-        "title": "Mood Trend",
+        "title": "Mood Trend (Last 4 Weeks)",
         "dataset": {
           "wellbeing": "Wellbeing Level"
         },
         "labels": {
-          "mon": "Mon",
-          "tue": "Tue",
-          "wed": "Wed",
-          "thu": "Thu",
-          "fri": "Fri",
-          "sat": "Sat",
-          "sun": "Sun"
+          "week1": "Wk 1",
+          "week2": "Wk 2",
+          "week3": "Wk 3",
+          "week4": "Wk 4"
         },
         "legend": {
           "wellbeing": "Wellbeing Level",

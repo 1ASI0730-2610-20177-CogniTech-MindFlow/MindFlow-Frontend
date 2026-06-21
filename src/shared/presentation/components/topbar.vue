@@ -186,6 +186,7 @@ onMounted(() => {
   handleScroll()
   document.addEventListener('scroll', handleScroll, { passive: true })
   document.addEventListener('click', handleClickOutside)
+  notifStore.fetchNotifications()
 })
 
 onUnmounted(() => {
@@ -242,6 +243,9 @@ onUnmounted(() => {
   font-size: 20px;
   font-weight: 700;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   animation: titleEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -266,6 +270,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
 }
 
 .search {
@@ -525,6 +530,7 @@ onUnmounted(() => {
   top: calc(100% + 8px);
   right: 0;
   min-width: 200px;
+  max-width: calc(100vw - 24px);
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -638,6 +644,14 @@ onUnmounted(() => {
 
   .topbar-actions {
     gap: 10px;
+  }
+
+  .greeting {
+    font-size: 16px;
+  }
+
+  .topbar-left {
+    overflow: hidden;
   }
 }
 </style>

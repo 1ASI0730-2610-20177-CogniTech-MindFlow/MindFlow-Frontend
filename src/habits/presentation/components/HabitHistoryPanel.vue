@@ -33,6 +33,9 @@
             <span class="streak theme-transition">
               <i class="pi pi-bolt" aria-hidden="true"></i> {{ $t('habits.history.streak') }} {{ habit.weekStreak }} {{ $t('habits.history.days') }}
             </span>
+            <div v-if="habit.completedDates?.length" class="completed-dates">
+              <span v-for="d in habit.completedDates" :key="d" class="date-chip theme-transition">{{ formatDay(d) }}</span>
+            </div>
           </div>
         </li>
       </ul>
@@ -41,11 +44,20 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 defineProps({
   weeks: { type: Array, default: () => [] }
 })
 
 defineEmits(['view-habit'])
+
+const { locale } = useI18n()
+
+function formatDay(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00')
+  return d.toLocaleDateString(locale.value, { day: 'numeric', month: 'short' })
+}
 </script>
 
 <style scoped>
@@ -172,5 +184,22 @@ defineEmits(['view-habit'])
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+.completed-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.date-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-success);
 }
 </style>

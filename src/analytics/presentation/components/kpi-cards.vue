@@ -194,6 +194,12 @@ const dotStyle = (colorClass = '') => {
 
 @media (max-width: 768px) {
   .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .kpi-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -29,6 +29,7 @@ export class AuthApiService {
     async register(data) {
         try {
             const response = await apiClient.post(`${USERS_URL}/sign-up`, {
+                name: data.name,
                 email: data.email,
                 password: data.password
             })

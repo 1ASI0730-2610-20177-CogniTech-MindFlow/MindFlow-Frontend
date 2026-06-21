@@ -24,6 +24,14 @@
         />
       </div>
 
+      <button
+        v-if="filledCount >= 4 && filledCount < maxDigits && !isVerifying"
+        class="pin-verify-btn"
+        @click="verifyPin"
+      >
+        {{ $t('pin.verify') || 'Verify' }}
+      </button>
+
       <p v-if="hasError" class="pin-error">{{ $t('pin.error') }}</p>
       <p v-if="isVerifying" class="pin-verifying">{{ $t('pin.verifying') }}</p>
     </div>
@@ -31,16 +39,26 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted } from 'vue'
+import { ref, computed, nextTick, onMounted } from 'vue'
 import { PinAPI } from '@/iam/infrastructure/pin-api'
 
 const emit = defineEmits(['verified'])
 
+const maxDigits = 6
 const visible = ref(false)
-const pinDigits = ref(['', '', '', ''])
+const pinDigits = ref(Array(maxDigits).fill(''))
 const hasError = ref(false)
 const isVerifying = ref(false)
 const inputRefs = ref([])
+
+const filledCount = computed(() => {
+  let count = 0
+  for (const d of pinDigits.value) {
+    if (d !== '') count++
+    else break
+  }
+  return count
+})
 
 onMounted(async () => {
   if (sessionStorage.getItem('mindflow_pin_verified')) {
@@ -63,7 +81,7 @@ onMounted(async () => {
 
 function onInput(index) {
   hasError.value = false
-  if (pinDigits.value[index] && index < 3) {
+  if (pinDigits.value[index] && index < maxDigits - 1) {
     nextTick(() => inputRefs.value[index + 1]?.focus())
   }
   if (pinDigits.value.every(d => d !== '')) {
@@ -80,11 +98,16 @@ function onBackspace(index, event) {
 }
 
 function onPaste(event) {
-  const text = (event.clipboardData?.getData('text') || '').replace(/\D/g, '').slice(0, 4)
-  for (let i = 0; i < 4; i++) {
+  const text = (event.clipboardData?.getData('text') || '').replace(/\D/g, '').slice(0, maxDigits)
+  for (let i = 0; i < maxDigits; i++) {
     pinDigits.value[i] = text[i] || ''
   }
-  if (text.length === 4) verifyPin()
+  if (text.length >= 4) verifyPin()
+}
+
+function resetDigits() {
+  pinDigits.value = Array(maxDigits).fill('')
+  nextTick(() => inputRefs.value[0]?.focus())
 }
 
 async function verifyPin() {
@@ -100,13 +123,11 @@ async function verifyPin() {
       emit('verified')
     } else {
       hasError.value = true
-      pinDigits.value = ['', '', '', '']
-      nextTick(() => inputRefs.value[0]?.focus())
+      resetDigits()
     }
   } catch {
     hasError.value = true
-    pinDigits.value = ['', '', '', '']
-    nextTick(() => inputRefs.value[0]?.focus())
+    resetDigits()
   } finally {
     isVerifying.value = false
   }
@@ -130,7 +151,7 @@ async function verifyPin() {
   align-items: center;
   gap: 16px;
   padding: 48px;
-  max-width: 360px;
+  max-width: 400px;
   width: 100%;
 }
 
@@ -162,13 +183,13 @@ h2 {
 
 .pin-inputs {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   margin-top: 8px;
 }
 
 .pin-digit {
-  width: 52px;
-  height: 60px;
+  width: 44px;
+  height: 52px;
   border-radius: 14px;
   border: 2px solid var(--border-color);
   background: var(--bg-surface);
@@ -194,6 +215,24 @@ h2 {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-6px); }
   75% { transform: translateX(6px); }
+}
+
+.pin-verify-btn {
+  margin-top: 8px;
+  padding: 10px 32px;
+  border-radius: 10px;
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pin-verify-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
 }
 
 .pin-error {

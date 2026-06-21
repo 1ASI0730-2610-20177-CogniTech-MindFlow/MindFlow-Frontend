@@ -36,6 +36,20 @@ export const useNotificationsStore = defineStore('notifications', {
     },
 
     actions: {
+        async fetchNotifications() {
+            this.isLoading = true
+            try {
+                const data = await NotificationsAPI.getAll()
+                this.notifications = Array.isArray(data)
+                    ? data.map(n => Notification.fromJSON(n))
+                    : []
+            } catch (error) {
+                console.error('Error loading notifications:', error)
+            } finally {
+                this.isLoading = false
+            }
+        },
+
         async registerDevice(fcmToken) {
             try {
                 await NotificationsAPI.registerDevice(fcmToken, 'web')

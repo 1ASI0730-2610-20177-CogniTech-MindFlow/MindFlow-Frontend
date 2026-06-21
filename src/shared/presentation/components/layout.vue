@@ -106,4 +106,10 @@ onUnmounted(() => window.removeEventListener('resize', onResize))
     padding: 16px;
   }
 }
+
+@media (max-width: 380px) {
+  .content {
+    padding: 12px 8px;
+  }
+}
 </style>

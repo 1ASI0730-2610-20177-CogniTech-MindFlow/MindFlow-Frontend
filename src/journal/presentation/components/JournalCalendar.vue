@@ -258,9 +258,8 @@ const getDayStyle = (day) => {
 
 .weekdays {
   display: grid;
-  grid-template-columns: repeat(7, 38px);
+  grid-template-columns: repeat(7, 1fr);
   gap: 6px;
-  justify-content: center;
   text-align: center;
   font-size: 12px;
   color: var(--text-muted);
@@ -269,14 +268,13 @@ const getDayStyle = (day) => {
 
 .days-grid {
   display: grid;
-  grid-template-columns: repeat(7, 38px);
-  justify-content: center;
+  grid-template-columns: repeat(7, 1fr);
   gap: 6px;
 }
 
 .day {
-  width: 38px;
-  height: 38px;
+  aspect-ratio: 1;
+  width: 100%;
   border-radius: 10px;
   display: flex;
   align-items: center;

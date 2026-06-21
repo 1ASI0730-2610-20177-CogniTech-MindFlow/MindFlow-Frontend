@@ -6,6 +6,7 @@
           <th class="theme-transition">{{ $t('habits.table.status') }}</th>
           <th class="theme-transition">{{ $t('habits.table.name') }}</th>
           <th class="theme-transition">{{ $t('habits.table.category') }}</th>
+          <th class="theme-transition">{{ $t('habits.table.frequency') }}</th>
           <th class="theme-transition">{{ $t('habits.table.streak') }}</th>
         </tr>
       </thead>
@@ -17,7 +18,7 @@
             @toggle="$emit('toggle', $event)"
         />
         <tr v-if="habits.length === 0" key="empty-row">
-          <td colspan="4" class="empty">{{ $t('habits.emptyFilter') }}</td>
+          <td colspan="5" class="empty">{{ $t('habits.emptyFilter') }}</td>
         </tr>
       </TransitionGroup>
     </table>
@@ -121,6 +122,17 @@ defineEmits(['toggle'])
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .habit-list-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .habit-table {
+    min-width: 580px;
   }
 }
 </style>
