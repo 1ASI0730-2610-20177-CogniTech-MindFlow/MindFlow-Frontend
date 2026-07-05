@@ -1,10 +1,11 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
+import i18n from '@/i18n'
 
 const INACTIVITY_THRESHOLD = 7200000
 const CHECK_INTERVAL = 60000
 
-export function useHydrationReminder({ title, message } = {}) {
+export function useHydrationReminder() {
   const route = useRoute()
   const showToast = ref(false)
   const toastNotification = ref(null)
@@ -19,10 +20,11 @@ export function useHydrationReminder({ title, message } = {}) {
   }
 
   function showHydrationToast() {
+    // Se traduce aquí (y no en el setup) para respetar cambios de idioma en caliente.
     toastNotification.value = {
       id: 'hydration-' + Date.now(),
-      title: title || 'Hora de hidratarse',
-      message: message || 'Bebe un poco de agua',
+      title: i18n.global.t('hydration.title'),
+      message: i18n.global.t('hydration.message'),
       type: 'REMINDER',
       sentAt: new Date().toISOString()
     }

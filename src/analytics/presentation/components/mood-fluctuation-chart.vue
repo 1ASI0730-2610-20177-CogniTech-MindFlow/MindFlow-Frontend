@@ -6,7 +6,7 @@
         <span class="mono-subtitle">{{ $t('analytics.components.fluctuationChart.subtitle') }}</span>
       </div>
       <div class="chart-status">
-        <span class="live-dot"></span> {{ $t('analytics.components.fluctuationChart.live') }}
+        {{ $t('analytics.components.fluctuationChart.scale') }}
       </div>
     </div>
 
@@ -76,13 +76,9 @@ const translatedChartData = computed(() => {
 .mono-subtitle { font-size: 9px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
 .chart-status {
-  display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600; color: var(--global-blue);
-  letter-spacing: 0.1em; background: rgba(59, 130, 246, 0.1); padding: 4px 10px; border-radius: 50px;
-  backdrop-filter: blur(8px);
+  display: flex; align-items: center; font-size: 10px; font-weight: 600; color: var(--text-muted);
+  letter-spacing: 0.08em; background: var(--bg-surface-secondary); padding: 4px 10px; border-radius: 50px;
 }
-
-.live-dot { width: 6px; height: 6px; background: var(--global-blue); border-radius: 50%; animation: pulse 2s infinite; box-shadow: 0 0 8px var(--global-blue); }
-@keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
 
 .chart-content { flex: 1; display: flex; position: relative; }
 

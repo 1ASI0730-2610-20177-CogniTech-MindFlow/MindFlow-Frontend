@@ -10,7 +10,7 @@
     </div>
 
     <div class="weekdays">
-      <span v-for="d in weekdays" :key="d">{{ d }}</span>
+      <span v-for="(d, i) in weekdays" :key="i">{{ d }}</span>
     </div>
 
     <div class="days-grid">

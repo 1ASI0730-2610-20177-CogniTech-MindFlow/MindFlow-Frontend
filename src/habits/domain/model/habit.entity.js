@@ -122,7 +122,7 @@ export class Habit {
             name: data.name,
             category: data.category,
             frequency: data.frequency,
-            currentStreak: data.currentStreak,
+            currentStreak: data.currentStreak ?? data.current_streak,
             status: data.status,
             pausedByAi: data.pausedByAi ?? data.paused_by_ai ?? false,
             createdAt: data.created_at ?? data.createdAt ?? null,

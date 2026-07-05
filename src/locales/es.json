@@ -348,6 +348,8 @@
       "stress": "Estres",
       "adopt": "Adoptar",
       "allAdopted": "Ya adoptaste todas las sugerencias. Sigue asi!",
+      "loadError": "No se pudieron cargar las sugerencias. Inténtalo de nuevo.",
+      "retry": "Reintentar",
       "reasons": {
         "breathingReason": "Reduce la ansiedad y mejora el enfoque en momentos de estres.",
         "walkReason": "Mejora el animo y la creatividad. Ideal para despejar la mente.",
@@ -435,7 +437,8 @@
         "s2": "Tuve un buen dia, estoy agradecido",
         "s3": "No puedo dormir bien ultimamente",
         "s4": "Me siento estresado por los examenes"
-      }
+      },
+      "error": "Error al procesar tu mensaje. Intenta de nuevo."
     },
     "recentEntries": {
       "title": "Conversaciones Recientes",
@@ -445,7 +448,8 @@
     },
     "dailyHabits": {
       "title": "Hábitos Diarios",
-      "days": "días"
+      "days": "días",
+      "fallbackName": "Hábito"
     },
     "quickInterventions": {
       "title": "Intervenciones Rápidas",
@@ -504,8 +508,8 @@
   },
   "analytics": {
     "title": "Tu Panorama Emocional",
-    "telemetry": "SINC. BIOMÉTRICA ACTIVA // V.3.1.0",
-    "loading": "Cifrando y analizando datos biométricos...",
+    "telemetry": "Basado en tus registros recientes",
+    "loading": "Analizando tus registros...",
     "insights": {
       "u1": "Has mostrado una gran resiliencia esta semana. El estrés relacionado con el trabajo disminuyó significativamente después del miércoles.",
       "u2": "Tu carga de trabajo estuvo más alta esta semana; conviene pausar un poco y priorizar descanso.",
@@ -514,9 +518,9 @@
       "u5": "Tu descanso digital está mejorando tu calidad de sueño y la constancia de hábitos nocturnos."
     },
     "kpis": {
-      "entriesMonth": "ENTRADAS ESTE MES",
-      "moodAverage": "ÁNIMO PROMEDIO",
-      "maxHabitStreak": "MAYOR RACHA HÁBITOS"
+      "entriesMonth": "Entradas este mes",
+      "moodAverage": "Ánimo promedio",
+      "maxHabitStreak": "Mayor racha de hábitos"
     },
     "moodCalendar": {
       "title": "Calendario de Animo"
@@ -526,19 +530,24 @@
       "neutral": "Neutral",
       "negative": "Negativo"
     },
+    "levels": {
+      "high": "Alto",
+      "moderate": "Medio",
+      "low": "Bajo"
+    },
     "units": {
       "days": "días"
     },
     "components": {
       "wordCloud": {
         "title": "nube de palabras frecuentes",
-        "subtitle": "ANÁLISIS_NLP",
+        "subtitle": "Análisis de lenguaje",
         "words": {
           "calm": "Calma",
-          "anxious": "> ansioso.log",
+          "anxious": "Ansioso",
           "productive": "Productivo",
           "grateful": "Agradecido",
-          "family": "[FAMILIA]",
+          "family": "Familia",
           "tired": "Cansado"
         },
         "empty": "No hay datos suficientes para generar la nube de palabras."
@@ -548,16 +557,15 @@
         "desc": "Descarga tu historial estructurado con gráficas para compartirlo formalmente con tu psicólogo."
       },
       "weeklySummary": {
-        "logDateRange": "FECHA_LOG: {start} - {end}",
+        "logDateRange": "Semana: {start} – {end}",
         "trendRange": "{trend} (7D)",
         "stabilityIndex": "Índice de Estabilidad",
-        "aiAnalysis": "ANÁLISIS_IA_NEXUS",
-        "active": "ACTIVO"
+        "aiAnalysis": "Análisis de IA"
       },
       "fluctuationChart": {
         "title": "Nivel de Actividad en Sesiones",
-        "subtitle": "DISTRIBUCIÓN_DE_FRECUENCIA",
-        "live": "EN VIVO",
+        "subtitle": "Distribución de frecuencia",
+        "scale": "Escala: 0–10",
         "yLabel": "Cantidad de tareas / Fase",
         "dataset": {
           "interactions": "Interacciones"

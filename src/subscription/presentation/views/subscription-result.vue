@@ -3,19 +3,19 @@
     <main class="result-container">
       <div v-if="isSuccess" class="result-card success">
         <i class="pi pi-check-circle result-icon"></i>
-        <h1>{{ $t('plansPage.result.successTitle') || 'Pago exitoso' }}</h1>
-        <p>{{ $t('plansPage.result.successDesc') || 'Tu suscripcion premium ha sido activada. Disfruta de todas las funciones.' }}</p>
+        <h1>{{ $t('plansPage.result.successTitle') }}</h1>
+        <p>{{ $t('plansPage.result.successDesc') }}</p>
         <router-link to="/subscription" class="btn btn-primary">
-          {{ $t('plansPage.result.viewPlan') || 'Ver mi plan' }}
+          {{ $t('plansPage.result.viewPlan') }}
         </router-link>
       </div>
 
       <div v-else class="result-card cancel">
         <i class="pi pi-times-circle result-icon"></i>
-        <h1>{{ $t('plansPage.result.cancelTitle') || 'Pago cancelado' }}</h1>
-        <p>{{ $t('plansPage.result.cancelDesc') || 'El proceso de pago fue cancelado. Puedes intentarlo de nuevo cuando quieras.' }}</p>
+        <h1>{{ $t('plansPage.result.cancelTitle') }}</h1>
+        <p>{{ $t('plansPage.result.cancelDesc') }}</p>
         <router-link to="/subscription" class="btn btn-primary">
-          {{ $t('plansPage.result.backToPlans') || 'Volver a planes' }}
+          {{ $t('plansPage.result.backToPlans') }}
         </router-link>
       </div>
     </main>

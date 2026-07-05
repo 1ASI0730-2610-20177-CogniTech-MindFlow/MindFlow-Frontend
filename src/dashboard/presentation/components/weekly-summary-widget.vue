@@ -15,7 +15,15 @@
 
     <div v-if="hasData" class="chart-container">
       <div class="bars-row">
-        <div class="bar-group" v-for="(item, index) in chartData" :key="index">
+        <div
+          class="bar-group"
+          v-for="(item, index) in chartData"
+          :key="index"
+          :data-tooltip="`${getDayLabel(index)} · ${formatValue(item)}`"
+          :aria-label="`${getDayLabel(index)}: ${formatValue(item)}`"
+          role="img"
+          tabindex="0"
+        >
           <div class="bar-track">
             <div
               class="bar"
@@ -25,6 +33,12 @@
           </div>
           <span class="day-label">{{ getDayLabel(index) }}</span>
         </div>
+      </div>
+
+      <div class="mood-legend">
+        <span class="legend-item"><span class="legend-dot dot-positive"></span>{{ t('analytics.moods.positive') }} (7–10)</span>
+        <span class="legend-item"><span class="legend-dot dot-neutral"></span>{{ t('analytics.moods.neutral') }} (4–6)</span>
+        <span class="legend-item"><span class="legend-dot dot-negative"></span>{{ t('analytics.moods.negative') }} (0–3)</span>
       </div>
 
       <div class="chart-footer">
@@ -101,12 +115,16 @@ const low = computed(() => {
   return Math.min(...chartData.value).toFixed(1)
 })
 
+// Mismos umbrales que la gráfica de analytics y el calendario de ánimo:
+// >= 7 positivo, >= 4 neutral, < 4 negativo.
 const getBarColor = (value) => {
-  if (value > 7) return 'color-green'
-  if (value > 4) return 'color-yellow'
-  if (value > 0) return 'color-red'
-  return 'color-light'
+  if (value >= 7) return 'color-positive'
+  if (value >= 4) return 'color-neutral'
+  if (value > 0) return 'color-negative'
+  return 'color-empty'
 }
+
+const formatValue = (value) => Number(value).toFixed(1)
 
 const getDayLabel = (index) => {
   const labels = dashboardStore.weeklySummary?.labels || []
@@ -116,7 +134,9 @@ const getDayLabel = (index) => {
   if (!key) return defaultLabels[index] || ''
   const translated = t(key)
   if (translated && translated !== key) {
-    return translated.slice(0, 1).toUpperCase()
+    // Abreviatura de 3 letras: en inglés las iniciales se repiten (T, S).
+    const short = translated.slice(0, 3)
+    return short.charAt(0).toUpperCase() + short.slice(1)
   }
   const suffix = key.split('.').pop()?.toLowerCase()
   if (!suffix) return defaultLabels[index] || ''
@@ -224,6 +244,41 @@ const getDayLabel = (index) => {
   align-items: center;
   gap: 8px;
   height: 100%;
+  position: relative;
+  cursor: default;
+  border-radius: 6px;
+}
+
+.bar-group:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Tooltip: día + valor exacto, visible en hover y en foco de teclado.
+   Mismo estilo que los tooltips de Chart.js en analytics. */
+.bar-group::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 2;
+}
+
+.bar-group:hover::after,
+.bar-group:focus-visible::after {
+  opacity: 1;
 }
 
 .bar-track {
@@ -231,54 +286,38 @@ const getDayLabel = (index) => {
   width: 100%;
   display: flex;
   align-items: flex-end;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
-  overflow: hidden;
-  position: relative;
+  justify-content: center;
+  border-bottom: 1px solid var(--chart-grid);
 }
 
 .bar {
   width: 100%;
-  border-radius: 6px 6px 0 0;
-  min-height: 0;
+  max-width: 24px;
+  border-radius: 4px 4px 0 0;
+  min-height: 2px;
   animation: barGrow 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: opacity 0.3s, transform 0.3s ease;
-  position: relative;
+  transition: filter 0.2s ease;
 }
 
-.bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  border-radius: 6px 6px 0 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.25), transparent);
+.bar-group:hover .bar,
+.bar-group:focus-visible .bar {
+  filter: brightness(1.12);
 }
 
-.bar-group:hover .bar {
-  transform: scaleX(1.05);
+.color-positive {
+  background: var(--mood-positive-strong);
 }
 
-.color-green {
-  background: linear-gradient(180deg, #34d399, #10b981);
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+.color-neutral {
+  background: var(--mood-neutral-strong);
 }
 
-.color-yellow {
-  background: linear-gradient(180deg, #fbbf24, #f59e0b);
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+.color-negative {
+  background: var(--mood-negative-strong);
 }
 
-.color-red {
-  background: linear-gradient(180deg, #f87171, #ef4444);
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-}
-
-.color-light {
-  background: linear-gradient(180deg, rgba(148, 163, 184, 0.25), rgba(148, 163, 184, 0.1));
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+.color-empty {
+  background: var(--chart-grid);
 }
 
 .day-label {
@@ -286,7 +325,35 @@ const getDayLabel = (index) => {
   font-weight: 500;
   color: var(--text-muted);
   flex-shrink: 0;
+  padding-bottom: 2px;
 }
+
+/* Misma anatomía que la leyenda del calendario de ánimo en analytics. */
+.mood-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-positive { background: var(--mood-positive-strong); }
+.dot-neutral { background: var(--mood-neutral-strong); }
+.dot-negative { background: var(--mood-negative-strong); }
 
 .chart-footer {
   display: flex;

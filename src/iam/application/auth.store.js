@@ -45,6 +45,8 @@ export const useAuthStore = defineStore('auth', {
                 this.user = user
                 this.session = new AuthSession({ token, userId: user.id })
                 SessionManager.save({ token, userId: user.id, email: user.email, name: user.name })
+                // Acaba de autenticarse con credenciales completas: no pedir PIN en esta sesión.
+                sessionStorage.setItem('mindflow_pin_verified', '1')
                 return { success: true }
             } catch (error) {
                 const message = error.response?.data?.error || error.response?.data?.message || 'auth.login.error.invalid'
@@ -74,6 +76,7 @@ export const useAuthStore = defineStore('auth', {
                 this.user = user
                 this.session = new AuthSession({ token, userId: user.id })
                 SessionManager.save({ token, userId: user.id, email: user.email, name: user.name || data.name })
+                sessionStorage.setItem('mindflow_pin_verified', '1')
                 return { success: true }
             } catch (error) {
                 const message = error.response?.data?.error || error.response?.data?.message || 'auth.register.error.generic'
@@ -105,6 +108,7 @@ export const useAuthStore = defineStore('auth', {
                 this.user = user
                 this.session = new AuthSession({ token, userId: user.id })
                 SessionManager.save({ token, userId: user.id, email: user.email, name: user.name })
+                sessionStorage.setItem('mindflow_pin_verified', '1')
                 return { success: true }
             } catch (error) {
                 const message = error.response?.data?.message || 'auth.login.error.generic'

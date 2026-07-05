@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { ChatAPI } from '../infrastructure/chat-api'
 import { useAuthStore } from '@/iam/application/auth.store.js'
+import { useHabitsStore } from '@/habits/application/habits.store.js'
 import { fetchDashboardAggregatedData } from './dashboard.service'
 import { AiFeedbackAPI } from '@/shared/infrastructure/ai-feedback-api'
+import i18n from '@/i18n'
 
 export const useDashboardStore = defineStore('dashboard', {
     state: () => ({
@@ -89,8 +91,8 @@ export const useDashboardStore = defineStore('dashboard', {
                     await this.fetchConversations()
                 }
             } catch (error) {
-                console.error("Error al procesar con IA:", error)
-                this.aiFeedback = "Error al procesar tu mensaje. Intenta de nuevo."
+                console.error('Error processing AI message:', error)
+                this.aiFeedback = i18n.global.t('dashboard.chat.error')
             } finally {
                 this.isAnalyzing = false
             }
@@ -118,12 +120,27 @@ export const useDashboardStore = defineStore('dashboard', {
             this.ratingSubmitted = true
         },
 
-        toggleHabit(id) {
-            const habit = this.habits.find(h => h.id === id)
-            if (habit) {
-                habit.completed = !habit.completed
-                if (habit.completed) habit.streak++
-                else habit.streak--
+        async toggleHabit(id) {
+            const habit = this.habits.find(h => String(h.id) === String(id))
+            if (!habit) return
+
+            const previous = { completed: habit.completed, streak: habit.streak }
+            habit.completed = !habit.completed
+            habit.streak = Math.max(0, habit.streak + (habit.completed ? 1 : -1))
+
+            try {
+                const habitsStore = useHabitsStore()
+                await habitsStore.loadHabits()
+                await habitsStore.toggleHabit(id)
+                const synced = habitsStore.habits.find(h => String(h.id) === String(id))
+                if (synced) {
+                    habit.completed = synced.isCompleted()
+                    habit.streak = synced.currentStreak
+                }
+            } catch (error) {
+                console.error('Error syncing habit from dashboard:', error)
+                habit.completed = previous.completed
+                habit.streak = previous.streak
             }
         }
     }

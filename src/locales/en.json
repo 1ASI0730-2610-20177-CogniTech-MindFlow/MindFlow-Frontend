@@ -301,6 +301,7 @@
       "attachments": "Attachments"
     },
     "filters": {
+      "stats": "Statistics",
       "searchPlaceholder": "Search in your thoughts...",
       "tabs": {
         "all": "All",
@@ -313,7 +314,11 @@
         "positive": "Positive",
         "neutral": "Neutral",
         "negative": "Negative"
-      }
+      },
+      "sort": "Sort by",
+      "sortRecent": "Most recent",
+      "sortOldest": "Oldest first",
+      "clear": "Clear filters"
     },
     "calendar": {
       "previousMonth": "View Previous Month",
@@ -343,6 +348,8 @@
       "stress": "Stress",
       "adopt": "Adopt",
       "allAdopted": "You've adopted all suggestions. Keep it up!",
+      "loadError": "Suggestions could not be loaded. Please try again.",
+      "retry": "Retry",
       "reasons": {
         "breathingReason": "Reduces anxiety and improves focus during stressful moments.",
         "walkReason": "Boosts mood and creativity. Great for clearing your mind.",
@@ -430,7 +437,8 @@
         "s2": "Had a good day, feeling grateful",
         "s3": "I haven't been sleeping well lately",
         "s4": "I'm stressed about exams"
-      }
+      },
+      "error": "There was an error processing your message. Please try again."
     },
     "recentEntries": {
       "title": "Recent Conversations",
@@ -440,7 +448,8 @@
     },
     "dailyHabits": {
       "title": "Daily Habits",
-      "days": "days"
+      "days": "days",
+      "fallbackName": "Habit"
     },
     "quickInterventions": {
       "title": "Quick Interventions",
@@ -499,8 +508,8 @@
   },
   "analytics": {
     "title": "Your Emotional Landscape",
-    "telemetry": "BIOMETRIC SYNC ACTIVE // V.3.1.0",
-    "loading": "Encrypting and analyzing biometric data...",
+    "telemetry": "Based on your recent entries",
+    "loading": "Analyzing your entries...",
     "insights": {
       "u1": "You showed strong resilience this week. Work-related stress dropped significantly after Wednesday.",
       "u2": "Your workload was higher this week; it may help to pause a little and prioritize rest.",
@@ -509,9 +518,9 @@
       "u5": "Your digital rest is improving your sleep quality and night routine consistency."
     },
     "kpis": {
-      "entriesMonth": "ENTRIES THIS MONTH",
-      "moodAverage": "AVERAGE MOOD",
-      "maxHabitStreak": "LONGEST HABIT STREAK"
+      "entriesMonth": "Entries this month",
+      "moodAverage": "Average mood",
+      "maxHabitStreak": "Longest habit streak"
     },
     "moodCalendar": {
       "title": "Mood Calendar"
@@ -521,19 +530,24 @@
       "neutral": "Neutral",
       "negative": "Negative"
     },
+    "levels": {
+      "high": "High",
+      "moderate": "Moderate",
+      "low": "Low"
+    },
     "units": {
       "days": "days"
     },
     "components": {
       "wordCloud": {
         "title": "frequent word cloud",
-        "subtitle": "NLP_ANALYSIS",
+        "subtitle": "Language analysis",
         "words": {
           "calm": "Calm",
-          "anxious": "> anxious.log",
+          "anxious": "Anxious",
           "productive": "Productive",
           "grateful": "Grateful",
-          "family": "[FAMILY]",
+          "family": "Family",
           "tired": "Tired"
         },
         "empty": "Not enough data to generate the word cloud."
@@ -543,16 +557,15 @@
         "desc": "Download your structured history with charts to formally share with your therapist."
       },
       "weeklySummary": {
-        "logDateRange": "LOG_DATE: {start} - {end}",
+        "logDateRange": "Week: {start} – {end}",
         "trendRange": "{trend} (7D)",
         "stabilityIndex": "Stability Index",
-        "aiAnalysis": "NEXUS_AI_ANALYSIS",
-        "active": "ACTIVE"
+        "aiAnalysis": "AI analysis"
       },
       "fluctuationChart": {
         "title": "Activity Level in Sessions",
-        "subtitle": "FREQ_DISTRIBUTION",
-        "live": "LIVE",
+        "subtitle": "Frequency distribution",
+        "scale": "Scale: 0–10",
         "yLabel": "Task count / Phase",
         "dataset": {
           "interactions": "Interactions"

@@ -43,6 +43,15 @@
       </div>
     </div>
 
+    <div v-else-if="store.suggestionsError" class="empty-suggestions">
+      <i class="pi pi-exclamation-circle"></i>
+      <p>{{ $t('habits.suggestions.loadError') }}</p>
+      <button class="retry-btn" @click="store.loadSuggestions()">
+        <i class="pi pi-refresh"></i>
+        {{ $t('habits.suggestions.retry') }}
+      </button>
+    </div>
+
     <div v-else-if="store.suggestionsLoaded" class="empty-suggestions">
       <i class="pi pi-check-circle"></i>
       <p>{{ $t('habits.suggestions.allAdopted') }}</p>
@@ -263,5 +272,30 @@ onMounted(() => {
   margin: 0;
   font-size: 14px;
   color: var(--text-secondary);
+}
+
+.empty-suggestions:has(.retry-btn) {
+  color: var(--accent-warning);
+}
+
+.retry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 8px);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.retry-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 </style>
