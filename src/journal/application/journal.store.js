@@ -7,8 +7,8 @@ export const useJournalStore = defineStore('journal', {
         entries: [],
         isLoading: false,
         error: null,
-        selectedCategory: 'Todos',
-        selectedSentiment: 'Todos',
+        selectedCategory: 'all',
+        selectedSentiment: 'all',
         selectedDate: '',
         searchQuery: ''
     }),
@@ -85,7 +85,11 @@ export const useJournalStore = defineStore('journal', {
 
     getters: {
         getEntriesByDate: (state) => (date) => {
-            const dateStr = typeof date === 'string' ? date : date.toISOString().substr(0, 10)
+            let dateStr = date
+            if (typeof date !== 'string') {
+                const pad = (n) => String(n).padStart(2, '0')
+                dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+            }
             return state.entries.filter(e => e.date === dateStr)
         },
 
@@ -98,17 +102,12 @@ export const useJournalStore = defineStore('journal', {
         getFilteredEntries: (state) => {
             let filtered = [...state.entries]
 
-            if (state.selectedCategory !== 'Todos') {
+            if (state.selectedCategory !== 'all') {
                 filtered = filtered.filter(e => e.category === state.selectedCategory)
             }
 
-            if (state.selectedSentiment !== 'Todos') {
-                const sentimentMap = {
-                    'Positivo': 'positive',
-                    'Neutral': 'neutral',
-                    'Negativo': 'negative'
-                }
-                filtered = filtered.filter(e => e.sentiment === sentimentMap[state.selectedSentiment])
+            if (state.selectedSentiment !== 'all') {
+                filtered = filtered.filter(e => e.sentiment === state.selectedSentiment)
             }
 
             if (state.selectedDate) {

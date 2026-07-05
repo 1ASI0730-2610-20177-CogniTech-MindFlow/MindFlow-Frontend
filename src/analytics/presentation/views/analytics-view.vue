@@ -129,9 +129,7 @@ onActivated(() => {
 }
 .telemetry-led {
   width: 8px; height: 8px; border-radius: 50%; background-color: var(--global-green);
-  box-shadow: 0 0 12px rgba(52, 211, 153, 0.8); animation: dataPulse 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
-@keyframes dataPulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
 
 .typewriter-text { font-size: 11px; color: var(--text-muted); letter-spacing: 0.15em; font-weight: 600; }
 

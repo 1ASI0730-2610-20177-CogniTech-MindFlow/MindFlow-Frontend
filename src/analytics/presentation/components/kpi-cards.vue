@@ -2,10 +2,8 @@
   <div class="kpi-grid" v-if="kpis && kpis.length > 0">
     <div v-for="(kpi, index) in localizedKpis" :key="index" class="premium-card kpi-card theme-transition">
       <div class="kpi-header">
+        <span class="status-dot" :style="dotStyle(kpi.colorClass)"></span>
         <span class="kpi-label theme-transition">{{ kpi.localizedLabel }}</span>
-        <div class="active-badge theme-transition">
-          <span class="status-dot" :style="dotStyle(kpi.colorClass)"></span> {{ t('analytics.components.weeklySummary.active') }}
-        </div>
       </div>
       <h2 class="kpi-value theme-transition">{{ kpi.localizedValue }}</h2>
     </div>
@@ -46,14 +44,14 @@ const localizedKpis = computed(() => {
 
 const dotStyle = (colorClass = '') => {
   if (colorClass.includes('green')) {
-    return { background: 'var(--global-green)', boxShadow: '0 0 6px var(--global-green)' }
+    return { background: 'var(--global-green)' }
   }
 
   if (colorClass.includes('orange')) {
-    return { background: 'var(--global-orange)', boxShadow: '0 0 6px var(--global-orange)' }
+    return { background: 'var(--global-orange)' }
   }
 
-  return { background: 'var(--global-blue)', boxShadow: '0 0 6px var(--global-blue)' }
+  return { background: 'var(--global-blue)' }
 }
 </script>
 
@@ -117,52 +115,27 @@ const dotStyle = (colorClass = '') => {
 
 .kpi-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 8px;
   margin-bottom: 24px;
   position: relative;
   z-index: 1;
 }
 
 .kpi-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: 0.02em;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   transition: color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.active-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(99, 102, 241, 0.06);
-  border: 1px solid rgba(99, 102, 241, 0.15);
-  padding: 6px 10px;
-  border-radius: 50px;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  backdrop-filter: blur(4px);
-}
-
-.premium-card:hover .active-badge {
-  background: var(--bg-primary);
-  border-color: var(--border-color);
 }
 
 .status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  animation: dotPulse 2s ease-in-out infinite;
-}
-
-@keyframes dotPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+  flex-shrink: 0;
 }
 
 .kpi-value {

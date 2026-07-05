@@ -2,6 +2,22 @@ import { defineStore } from 'pinia'
 import { NotificationsAPI } from '../infrastructure/notifications-api'
 import { Notification } from '../domain/model/notification.entity'
 
+// El backend aún no expone un endpoint para marcar como leída; se persiste
+// localmente para que el estado sobreviva a recargas de página.
+const READ_STORAGE_KEY = 'mindflow_read_notifications'
+
+function loadReadMap() {
+    try {
+        return JSON.parse(localStorage.getItem(READ_STORAGE_KEY)) || {}
+    } catch {
+        return {}
+    }
+}
+
+function saveReadMap(map) {
+    localStorage.setItem(READ_STORAGE_KEY, JSON.stringify(map))
+}
+
 export const useNotificationsStore = defineStore('notifications', {
     state: () => ({
         notifications: [],
@@ -40,8 +56,14 @@ export const useNotificationsStore = defineStore('notifications', {
             this.isLoading = true
             try {
                 const data = await NotificationsAPI.getAll()
+                const readMap = loadReadMap()
                 this.notifications = Array.isArray(data)
-                    ? data.map(n => Notification.fromJSON(n))
+                    ? data.map(n => {
+                        if (!n.read_at && readMap[n.id]) {
+                            return Notification.fromJSON({ ...n, read_at: readMap[n.id] })
+                        }
+                        return Notification.fromJSON(n)
+                    })
                     : []
             } catch (error) {
                 console.error('Error loading notifications:', error)
@@ -75,25 +97,31 @@ export const useNotificationsStore = defineStore('notifications', {
         },
 
         markAsRead(notificationId) {
+            const readMap = loadReadMap()
             this.notifications = this.notifications.map(n => {
                 if (n.id === notificationId && n.isUnread) {
                     const json = n.toJSON()
                     json.read_at = new Date().toISOString()
+                    readMap[n.id] = json.read_at
                     return Notification.fromJSON(json)
                 }
                 return n
             })
+            saveReadMap(readMap)
         },
 
         markAllAsRead() {
+            const readMap = loadReadMap()
             this.notifications = this.notifications.map(n => {
                 if (n.isUnread) {
                     const json = n.toJSON()
                     json.read_at = new Date().toISOString()
+                    readMap[n.id] = json.read_at
                     return Notification.fromJSON(json)
                 }
                 return n
             })
+            saveReadMap(readMap)
         },
 
         dismissNotification(notificationId) {

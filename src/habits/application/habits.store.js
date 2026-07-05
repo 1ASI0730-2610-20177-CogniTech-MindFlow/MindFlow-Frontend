@@ -6,10 +6,20 @@ import { HabitsHistoryAPI } from '../infrastructure/habits-history-api.js'
 import { WellnessAPI } from '../infrastructure/wellness-api.js'
 import { SuggestionsAPI } from '../infrastructure/suggestions-api.js'
 import { useSettingsStore } from '@/settings/application/settings.store.js'
+import { SessionManager } from '@/iam/infrastructure/session-manager.js'
+
+function toISODate(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
 
 function todayISO() {
+    return toISODate(new Date())
+}
+
+function yesterdayISO() {
     const d = new Date()
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    d.setDate(d.getDate() - 1)
+    return toISODate(d)
 }
 
 function extractHabitSequence(id) {
@@ -27,7 +37,7 @@ function buildHabitId(sequence) {
 
 function resolveCurrentUserId() {
     const settingsStore = useSettingsStore()
-    return settingsStore.currentUserId || null
+    return settingsStore.currentUserId || SessionManager.getUserId() || null
 }
 
 export const useHabitsStore = defineStore('habits', {
@@ -44,6 +54,7 @@ export const useHabitsStore = defineStore('habits', {
         stressScore: 0,
         aiSuggestions: [],
         suggestionsLoaded: false,
+        suggestionsError: false,
         nextId: 1
     }),
 
@@ -109,11 +120,20 @@ export const useHabitsStore = defineStore('habits', {
                 })
 
             const today = todayISO()
+            const yesterday = yesterdayISO()
             const completedToday = new Set(
                 this.completionHistory
                     .filter(log => log.date === today && log.completed)
                     .map(log => String(log.habitId))
             )
+
+            const lastCompletionByHabit = new Map()
+            for (const log of this.completionHistory) {
+                if (!log.completed) continue
+                const key = String(log.habitId)
+                const prev = lastCompletionByHabit.get(key)
+                if (!prev || log.date > prev) lastCompletionByHabit.set(key, log.date)
+            }
 
             for (const habit of this.habits) {
                 if (habit.isPaused()) continue
@@ -122,8 +142,13 @@ export const useHabitsStore = defineStore('habits', {
                         habit.status = HabitStatus.COMPLETED
                     } else {
                         habit.status = HabitStatus.PENDING
-                        habit.currentStreak = 0
-                        habit.streak = 0
+                        // La racha solo se rompe si el último día completado
+                        // es anterior a ayer; si se completó ayer, sigue viva.
+                        const lastCompleted = lastCompletionByHabit.get(String(habit.id))
+                        if (!lastCompleted || lastCompleted < yesterday) {
+                            habit.currentStreak = 0
+                            habit.streak = 0
+                        }
                     }
                 }
             }
@@ -250,13 +275,15 @@ export const useHabitsStore = defineStore('habits', {
         },
 
         async loadSuggestions() {
+            this.suggestionsError = false
             try {
                 const data = await SuggestionsAPI.getSuggestions()
                 this.aiSuggestions = data.suggestions || data || []
-                this.suggestionsLoaded = true
             } catch (error) {
                 console.error('Error loading suggestions:', error)
                 this.aiSuggestions = []
+                this.suggestionsError = true
+            } finally {
                 this.suggestionsLoaded = true
             }
         },

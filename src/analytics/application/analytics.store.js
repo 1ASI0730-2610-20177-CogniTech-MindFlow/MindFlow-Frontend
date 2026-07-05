@@ -3,7 +3,7 @@ import { AnalyticsSummary, KpiData } from '../domain/model/analytics.model'
 import { analyticsApi } from '@/analytics/infrastructure/analytics.endpoint'
 import { wordCloudApi } from '@/analytics/infrastructure/word-cloud.endpoint'
 import { moodCalendarApi } from '@/analytics/infrastructure/mood-calendar.endpoint'
-import { useSettingsStore } from '@/settings/application/settings.store'
+import i18n from '@/i18n'
 
 function resolveCssVar(varName, fallback) {
     if (typeof window === 'undefined') return fallback
@@ -73,24 +73,38 @@ function mapKpis(kpis = []) {
     }))
 }
 
-function mapChartDataset(dataset = {}, fallbackLabel = '') {
-    return {
+function mapChartDataset(dataset = {}, fallbackLabel = '', chartType = 'bar') {
+    const base = {
         labelKey: dataset.labelKey || dataset.label_key || null,
         label: dataset.label || fallbackLabel || '',
         data: dataset.data || [],
         backgroundColor: dataset.backgroundColor,
         hoverBackgroundColor: dataset.hoverBackgroundColor,
-        borderRadius: dataset.borderRadius,
-        borderSkipped: dataset.borderSkipped,
-        barPercentage: dataset.barPercentage,
-        categoryPercentage: dataset.categoryPercentage,
         fill: dataset.fill,
-        borderColor: dataset.borderColor,
-        tension: dataset.tension,
+        borderColor: dataset.borderColor
+    }
+
+    if (chartType === 'bar') {
+        return {
+            ...base,
+            // Extremo de dato redondeado, base cuadrada; barras finas con aire.
+            borderRadius: dataset.borderRadius ?? { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 },
+            borderSkipped: dataset.borderSkipped ?? false,
+            maxBarThickness: 24,
+            barPercentage: dataset.barPercentage ?? 0.7,
+            categoryPercentage: dataset.categoryPercentage ?? 0.7
+        }
+    }
+
+    return {
+        ...base,
+        borderWidth: 2,
+        tension: dataset.tension ?? 0.35,
         pointBackgroundColor: dataset.pointBackgroundColor,
+        // Anillo del color de superficie para que el punto se lea sobre la línea.
         pointBorderColor: dataset.pointBorderColor,
-        pointBorderWidth: dataset.pointBorderWidth,
-        pointRadius: dataset.pointRadius
+        pointBorderWidth: dataset.pointBorderWidth ?? 2,
+        pointRadius: dataset.pointRadius ?? 4
     }
 }
 
@@ -111,7 +125,7 @@ function mapFluctuationData(record) {
     return {
         labelsKeys: data.labels_keys || data.labelsKeys || [],
         labels: data.labels || [],
-        datasets: (data.datasets || []).map((dataset) => mapChartDataset(dataset, data.dataset_label || ''))
+        datasets: (data.datasets || []).map((dataset) => mapChartDataset(dataset, data.dataset_label || '', 'bar'))
     }
 }
 
@@ -120,7 +134,7 @@ function mapTrendData(record) {
     return {
         labelsKeys: data.labels_keys || data.labelsKeys || [],
         labels: data.labels || [],
-        datasets: (data.datasets || []).map((dataset) => mapChartDataset(dataset, data.dataset_label || ''))
+        datasets: (data.datasets || []).map((dataset) => mapChartDataset(dataset, data.dataset_label || '', 'line'))
     }
 }
 
@@ -199,10 +213,17 @@ function mapWordCloudWords(wordCloudRecord) {
 }
 
 async function loadAnalyticsRecord() {
+    // Lunes de la semana actual en fecha local (toISOString usaría UTC y
+    // puede correrse un día según la zona horaria).
     const today = new Date()
     const dayOfWeek = today.getDay()
-    const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)
-    const weekStart = new Date(today.setDate(diff)).toISOString().slice(0, 10)
+    const monday = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)
+    )
+    const pad = (n) => String(n).padStart(2, '0')
+    const weekStart = `${monday.getFullYear()}-${pad(monday.getMonth() + 1)}-${pad(monday.getDate())}`
 
     try {
         const result = await analyticsApi.getByWeekStart(weekStart)
@@ -293,8 +314,8 @@ export const useAnalyticsStore = defineStore('analytics', {
                             callbacks: {
                                 label: (ctx) => {
                                     const val = ctx.parsed.y
-                                    const label = val >= 7 ? 'High' : val >= 4 ? 'Moderate' : 'Low'
-                                    return ` ${val} — ${label}`
+                                    const levelKey = val >= 7 ? 'high' : val >= 4 ? 'moderate' : 'low'
+                                    return ` ${val} — ${i18n.global.t(`analytics.levels.${levelKey}`)}`
                                 }
                             }
                         }
@@ -304,17 +325,18 @@ export const useAnalyticsStore = defineStore('analytics', {
                             grid: { display: false },
                             border: { display: false },
                             ticks: {
-                                font: { size: 10 },
+                                font: { size: 11 },
                                 color: tickColor,
-                                maxRotation: 40,
-                                minRotation: 40
+                                maxRotation: 0,
+                                minRotation: 0,
+                                autoSkip: true
                             }
                         },
                         y: {
                             display: true,
-                            grid: { color: chartGridColor, drawBorder: false },
+                            grid: { color: chartGridColor },
                             border: { display: false },
-                            ticks: { stepSize: 5, font: { size: 10 }, color: tickColor },
+                            ticks: { stepSize: 2, font: { size: 10 }, color: tickColor },
                             min: 0,
                             max: 10
                         }

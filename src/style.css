@@ -27,6 +27,13 @@
   --mood-neutral: #f2c94c;
   --mood-negative: #f58c8c;
 
+  /* Variantes "strong" para marcas pequeñas (barras, puntos): pasos más oscuros
+     de los mismos tonos, validados con contraste >= 3:1 sobre --bg-surface.
+     Los tokens base quedan para rellenos grandes (celdas de calendario, badges). */
+  --mood-positive-strong: #2f9e63;
+  --mood-neutral-strong: #c08a00;
+  --mood-negative-strong: #d9534f;
+
   --habit-cat-salud-fisica-bg: #dbeafe;
   --habit-cat-salud-fisica-color: #1d4ed8;
   --habit-cat-bienestar-bg: #fef3c7;
@@ -81,6 +88,10 @@ html.dark-mode {
   --mood-positive: #4ade80;
   --mood-neutral: #facc15;
   --mood-negative: #f87171;
+
+  --mood-positive-strong: #4ade80;
+  --mood-neutral-strong: #facc15;
+  --mood-negative-strong: #f87171;
 
   --habit-cat-salud-fisica-bg: rgba(59, 130, 246, 0.14);
   --habit-cat-salud-fisica-color: #93c5fd;

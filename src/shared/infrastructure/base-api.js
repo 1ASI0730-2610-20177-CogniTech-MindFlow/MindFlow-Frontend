@@ -1,6 +1,11 @@
 import axios from 'axios'
+import { SessionManager } from '@/iam/infrastructure/session-manager.js'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://mindflow-backend-mlbg.onrender.com'
+
+// El backend responde 401 también en estos endpoints (p. ej. credenciales
+// inválidas en sign-in); ahí el error debe llegar al formulario, no forzar logout.
+const AUTH_PATHS = ['/sign-in', '/sign-up', '/google-auth', '/forgot-password', '/reset-password']
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -23,12 +28,14 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token')
-      localStorage.removeItem('auth_user_id')
-      localStorage.removeItem('auth_user_email')
-      localStorage.removeItem('auth_user_name')
-      window.location.href = '/login'
+    const requestUrl = error.config?.url || ''
+    const isAuthRequest = AUTH_PATHS.some((path) => requestUrl.includes(path))
+
+    if (error.response?.status === 401 && !isAuthRequest) {
+      SessionManager.clear()
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }

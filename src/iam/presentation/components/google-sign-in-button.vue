@@ -37,9 +37,12 @@ function initGoogle() {
     client_id: clientId,
     callback: handleCredential
   })
+  // GSI solo acepta un ancho numérico en píxeles (120–400), no porcentajes.
+  const containerWidth = googleBtnRef.value?.offsetWidth || 0
+  const width = Math.max(120, Math.min(400, containerWidth || 400))
   window.google.accounts.id.renderButton(
     googleBtnRef.value,
-    { theme: 'outline', size: 'large', text: 'continue_with', width: '100%' }
+    { theme: 'outline', size: 'large', text: 'continue_with', width }
   )
 }
 

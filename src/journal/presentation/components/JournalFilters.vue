@@ -12,8 +12,8 @@
     <div class="tabs">
       <button
           class="tab theme-transition"
-          :class="{ active: selectedTab === 'Todos' }"
-          @click="selectedTab = 'Todos'"
+          :class="{ active: selectedTab === 'all' }"
+          @click="selectedTab = 'all'"
       >
         {{ $t('journal.filters.tabs.all') }}
       </button>
@@ -42,10 +42,10 @@
 
     <div class="bottom-filters">
       <select v-model="selectedState" class="select theme-transition">
-        <option value="Todos">{{ $t('journal.filters.states.all') }}</option>
-        <option value="Positivo">{{ $t('journal.filters.states.positive') }}</option>
-        <option value="Neutral">{{ $t('journal.filters.states.neutral') }}</option>
-        <option value="Negativo">{{ $t('journal.filters.states.negative') }}</option>
+        <option value="all">{{ $t('journal.filters.states.all') }}</option>
+        <option value="positive">{{ $t('journal.filters.states.positive') }}</option>
+        <option value="neutral">{{ $t('journal.filters.states.neutral') }}</option>
+        <option value="negative">{{ $t('journal.filters.states.negative') }}</option>
       </select>
 
       <input
@@ -63,8 +63,8 @@ import { useJournalStore } from '@/journal/application/journal.store'
 
 const journalStore = useJournalStore()
 
-const selectedTab = ref('Todos')
-const selectedState = ref('Todos')
+const selectedTab = ref('all')
+const selectedState = ref('all')
 const search = ref('')
 const selectedDateModel = computed({
   get: () => journalStore.selectedDate,

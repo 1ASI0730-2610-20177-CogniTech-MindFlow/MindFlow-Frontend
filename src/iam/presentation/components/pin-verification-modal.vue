@@ -29,7 +29,7 @@
         class="pin-verify-btn"
         @click="verifyPin"
       >
-        {{ $t('pin.verify') || 'Verify' }}
+        {{ $t('pin.verify') }}
       </button>
 
       <p v-if="hasError" class="pin-error">{{ $t('pin.error') }}</p>

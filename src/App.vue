@@ -17,25 +17,28 @@
 <script setup>
 import { computed, ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import { useSettingsStore } from '@/settings/application/settings.store'
 import { useHydrationReminder } from '@/shared/presentation/composables/useHydrationReminder'
 import { SessionManager } from '@/iam/infrastructure/session-manager'
 import NotificationToast from '@/notifications/presentation/components/notification-toast.vue'
 import PinVerificationModal from '@/iam/presentation/components/pin-verification-modal.vue'
 
+const route = useRoute()
 const pinVerified = ref(false)
-const requiresPinCheck = computed(() => SessionManager.isAuthenticated() && !pinVerified.value)
+// route.path fuerza la reevaluación en cada navegación: isAuthenticated()
+// lee localStorage, que por sí solo no es reactivo.
+const requiresPinCheck = computed(() =>
+  route.path !== null && SessionManager.isAuthenticated() && !pinVerified.value
+)
 
-const { t, locale } = useI18n()
+const { locale } = useI18n()
 
 watch(locale, (val) => {
   document.documentElement.lang = val
 })
 
-const { showToast, toastNotification } = useHydrationReminder({
-  title: t('hydration.title'),
-  message: t('hydration.message')
-})
+const { showToast, toastNotification } = useHydrationReminder()
 
 const currentToast = computed(() => toastNotification.value || { id: 0, title: '', message: '' })
 
