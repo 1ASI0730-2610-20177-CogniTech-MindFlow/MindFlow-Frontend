@@ -13,6 +13,18 @@
         </button>
       </div>
 
+      <div v-if="journalStore.lastConflict" class="conflict-banner theme-transition">
+        <i class="pi pi-exclamation-triangle"></i>
+        <span>{{ $t('journal.offline.conflictMessage') }}</span>
+        <button type="button" class="conflict-close" :aria-label="$t('journal.offline.dismiss')" @click="journalStore.clearConflict()">&times;</button>
+      </div>
+
+      <div v-if="attachmentsSkippedNotice" class="conflict-banner theme-transition info">
+        <i class="pi pi-info-circle"></i>
+        <span>{{ $t('journal.offline.attachmentsSkipped') }}</span>
+        <button type="button" class="conflict-close" :aria-label="$t('journal.offline.dismiss')" @click="attachmentsSkippedNotice = false">&times;</button>
+      </div>
+
       <div class="journal-grid">
         <div class="left-panel animate-fade-in-left delay-1">
           <div class="card hover-lift theme-transition">
@@ -49,9 +61,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import Layout from '../../../shared/presentation/components/layout.vue'
 import { useAuthStore } from '@/iam/application/auth.store.js'
+import { useConnectivity } from '@/shared/presentation/composables/useConnectivity'
 import JournalCalendar from '../components/JournalCalendar.vue'
 import JournalFilters from '../components/JournalFilters.vue'
 import JournalEntryCard from '../components/JournalEntryCard.vue'
@@ -61,10 +74,16 @@ import { JournalAPI } from '@/journal/infrastructure/journal-api'
 
 const journalStore = useJournalStore()
 const authStore = useAuthStore()
+const { isOnline } = useConnectivity()
 const isComposerOpen = ref(false)
 const isSaving = ref(false)
+const attachmentsSkippedNotice = ref(false)
 
 const filteredEntries = computed(() => journalStore.getFilteredEntries)
+
+watch(isOnline, (online) => {
+  if (online) journalStore.syncPendingEntries()
+})
 
 const openComposer = () => {
   isComposerOpen.value = true
@@ -89,7 +108,9 @@ const handleCreateEntry = async (entryData) => {
       userId: authStore.currentUserId
     })
 
-    if (entryData.files?.length && savedEntry?.id) {
+    if (entryData.files?.length && savedEntry?.pendingSync) {
+      attachmentsSkippedNotice.value = true
+    } else if (entryData.files?.length && savedEntry?.id) {
       await Promise.all(
         entryData.files.map(file =>
           JournalAPI.uploadMedia(savedEntry.id, file.file)
@@ -106,6 +127,7 @@ const handleCreateEntry = async (entryData) => {
 
 onMounted(async () => {
   await journalStore.fetchEntries()
+  await journalStore.syncPendingEntries()
 })
 </script>
 
@@ -231,6 +253,53 @@ onMounted(async () => {
   border-color: var(--accent-primary);
   box-shadow:
       0 0 0 4px rgba(91,141,239,.12);
+}
+
+.conflict-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent-danger) 10%, var(--bg-surface));
+  border: 1px solid color-mix(in srgb, var(--accent-danger) 30%, transparent);
+  color: var(--text-primary);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.conflict-banner.info {
+  background: color-mix(in srgb, var(--accent-primary) 10%, var(--bg-surface));
+  border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+
+.conflict-banner i {
+  color: var(--accent-danger);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.conflict-banner.info i {
+  color: var(--accent-primary);
+}
+
+.conflict-banner span {
+  flex: 1;
+}
+
+.conflict-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.conflict-close:hover {
+  color: var(--text-primary);
 }
 
 .journal-grid {

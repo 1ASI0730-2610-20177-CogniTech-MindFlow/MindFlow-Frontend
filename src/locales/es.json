@@ -308,6 +308,12 @@
       "entryCard": {
         "attachments": "Adjuntos"
       },
+      "offline": {
+        "pendingBadge": "Pendiente de sincronizar",
+        "conflictMessage": "Una de tus entradas no se pudo sincronizar porque fue modificada desde otro dispositivo; se actualizó con la versión más reciente del servidor.",
+        "attachmentsSkipped": "Tu entrada se guardó sin conexión. Los archivos adjuntos no se subieron; agrégalos de nuevo cuando vuelvas a tener internet.",
+        "dismiss": "Cerrar aviso"
+      },
       "filters": {
         "stats": "Estadísticas",
        "searchPlaceholder": "Busca una palabra completa en tus pensamientos...",

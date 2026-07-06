@@ -308,6 +308,12 @@
     "entryCard": {
       "attachments": "Attachments"
     },
+    "offline": {
+      "pendingBadge": "Pending sync",
+      "conflictMessage": "One of your entries couldn't sync because it was changed on another device; it was updated with the latest server version.",
+      "attachmentsSkipped": "Your entry was saved offline. Attachments weren't uploaded; add them again once you're back online.",
+      "dismiss": "Dismiss"
+    },
     "filters": {
       "stats": "Statistics",
       "searchPlaceholder": "Search a full word in your thoughts...",

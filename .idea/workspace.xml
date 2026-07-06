@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="fix: allow Google OAuth popup via COOP header, fix HTTPS on journal media, redesign subscription downgrade modal, and add trace-ID surfacing on auth errors">
+    <list default="true" id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="feat: update journal search copy and empty state for US53 full-word indexed search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/journal/application/journal.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/journal/application/journal.store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/journal/domain/model/journal-entry.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/journal/domain/model/journal-entry.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/journal/infrastructure/journal-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/journal/infrastructure/journal-api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/journal/presentation/components/JournalEntryCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/journal/presentation/components/JournalEntryCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/journal/presentation/views/journal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/journal/presentation/views/journal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/locales/es.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/es.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,61 +56,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.7157092118866029" />
-      <entry key="MS500" value="4.171386133384271" />
-      <entry key="S2" value="7.601616488543444" />
-      <entry key="S5" value="9.362271184133807" />
-      <entry key="S10" value="10.124857942811007" />
-      <entry key="S30" value="10.694685158676014" />
-      <entry key="S60" value="10.84556891528185" />
-      <entry key="M2" value="10.922464211976314" />
-      <entry key="M5" value="11.107090723056444" />
-      <entry key="M10" value="12.53764536718418" />
-      <entry key="M15" value="14.672303748599056" />
-      <entry key="M30" value="20.348075396432424" />
-      <entry key="H1" value="28.81177932190251" />
-      <entry key="H2" value="47.63313431576167" />
-      <entry key="H4" value="81.32525597207629" />
-      <entry key="D1" value="166.80979647369668" />
-      <entry key="W1" value="195.51162862076094" />
+      <entry key="MS100" value="1.0036641704150076" />
+      <entry key="MS500" value="1.8883576681531706" />
+      <entry key="S2" value="4.917235658866737" />
+      <entry key="S5" value="6.516355386018879" />
+      <entry key="S10" value="7.207729262411326" />
+      <entry key="S30" value="7.723735124866306" />
+      <entry key="S60" value="7.86028092170373" />
+      <entry key="M2" value="7.929738757023198" />
+      <entry key="M5" value="7.971798440394684" />
+      <entry key="M10" value="7.985882988337166" />
+      <entry key="M15" value="7.9905850486793994" />
+      <entry key="M30" value="7.995453459849688" />
+      <entry key="H1" value="8.079126403933287" />
+      <entry key="H2" value="10.531929834301248" />
+      <entry key="H4" value="26.75357339393189" />
+      <entry key="D1" value="138.62709373074375" />
+      <entry key="W1" value="196.80037491040784" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
-      <entry key="S5" value="5.323844730097272E-216" />
-      <entry key="S10" value="2.3073458193554906E-108" />
-      <entry key="S30" value="1.321409922051432E-36" />
-      <entry key="S60" value="1.1495259553622226E-18" />
-      <entry key="M2" value="1.0721594822423685E-9" />
-      <entry key="M5" value="2.582877186478773E-4" />
-      <entry key="M10" value="0.016071332198914857" />
-      <entry key="M15" value="0.0636846234736427" />
-      <entry key="M30" value="0.2523581254361399" />
-      <entry key="H1" value="0.5023525907528896" />
-      <entry key="H2" value="0.7087683618453134" />
-      <entry key="H4" value="0.8418838173081328" />
-      <entry key="D1" value="0.9717219811334844" />
-      <entry key="W1" value="0.9959104503516413" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="1.4120627739320457E-171" />
+      <entry key="M2" value="3.7577423726647986E-86" />
+      <entry key="M5" value="6.760375213726063E-35" />
+      <entry key="M10" value="8.222150092114632E-18" />
+      <entry key="M15" value="4.07371148014475E-12" />
+      <entry key="M30" value="2.018343746774751E-6" />
+      <entry key="H1" value="0.0014206842530185067" />
+      <entry key="H2" value="0.03769196536423253" />
+      <entry key="H4" value="0.19414418704723704" />
+      <entry key="D1" value="0.7609463974215268" />
+      <entry key="W1" value="0.9617242805135272" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.547291158707645" />
-      <entry key="MS500" value="3.701288650626743" />
-      <entry key="S2" value="7.363813268711651" />
-      <entry key="S5" value="9.251225935305754" />
-      <entry key="S10" value="10.066320153358829" />
-      <entry key="S30" value="10.674464650899923" />
-      <entry key="S60" value="10.83536768259315" />
-      <entry key="M2" value="10.917340633825326" />
-      <entry key="M5" value="11.105280519382836" />
-      <entry key="M10" value="12.552557378557497" />
-      <entry key="M15" value="14.73502446193186" />
-      <entry key="M30" value="20.599610444046952" />
-      <entry key="H1" value="29.313478926817616" />
-      <entry key="H2" value="48.34141340993863" />
-      <entry key="H4" value="82.16678728808361" />
-      <entry key="D1" value="167.7814210796369" />
-      <entry key="W1" value="196.50752343791027" />
+      <entry key="MS100" value="0.07478264364255484" />
+      <entry key="MS500" value="1.4550678291887857" />
+      <entry key="S2" value="4.7729697598095" />
+      <entry key="S5" value="6.4540342725621125" />
+      <entry key="S10" value="7.175686085868262" />
+      <entry key="S30" value="7.712845495589837" />
+      <entry key="S60" value="7.8548092034712464" />
+      <entry key="M2" value="7.926996107377556" />
+      <entry key="M5" value="7.970699742441009" />
+      <entry key="M10" value="7.985333365643036" />
+      <entry key="M15" value="7.990218572675828" />
+      <entry key="M30" value="7.995272203154597" />
+      <entry key="H1" value="8.080453599658464" />
+      <entry key="H2" value="10.569549957817014" />
+      <entry key="H4" value="26.947613379870536" />
+      <entry key="D1" value="139.38796005584777" />
+      <entry key="W1" value="197.76208354882073" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -165,7 +174,7 @@
       <workItem from="1781979541166" duration="25893000" />
       <workItem from="1782248767230" duration="4265000" />
       <workItem from="1782944916668" duration="14707000" />
-      <workItem from="1783294621538" duration="14090000" />
+      <workItem from="1783294621538" duration="15361000" />
     </task>
     <task id="LOCAL-00001" summary="feat: update project">
       <option name="closed" value="true" />
@@ -223,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783323722886</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: update journal search copy and empty state for US53 full-word indexed search">
+      <option name="closed" value="true" />
+      <created>1783324215881</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1783324215881</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,6 +254,7 @@
     <MESSAGE value="fix: resolve user-reported bugs, improve habits logic, and add mobile responsive design.md" />
     <MESSAGE value="fix: sync habit streaks with backend, harden auth 401 handling, and expand i18n coverage" />
     <MESSAGE value="fix: allow Google OAuth popup via COOP header, fix HTTPS on journal media, redesign subscription downgrade modal, and add trace-ID surfacing on auth errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: allow Google OAuth popup via COOP header, fix HTTPS on journal media, redesign subscription downgrade modal, and add trace-ID surfacing on auth errors" />
+    <MESSAGE value="feat: update journal search copy and empty state for US53 full-word indexed search" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update journal search copy and empty state for US53 full-word indexed search" />
   </component>
 </project>

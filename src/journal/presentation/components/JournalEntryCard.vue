@@ -6,7 +6,12 @@
         <span class="date">{{ entry.formattedDate }}</span>
         <span v-if="entry.sentiment" class="sentiment-dot" :class="entry.sentiment"></span>
       </div>
-      <span class="badge theme-transition">{{ entry.category }}</span>
+      <div class="badge-group">
+        <span v-if="entry.pendingSync" class="badge pending-badge theme-transition">
+          <i class="pi pi-clock"></i> {{ $t('journal.offline.pendingBadge') }}
+        </span>
+        <span class="badge theme-transition">{{ entry.category }}</span>
+      </div>
     </div>
 
     <h2 class="title theme-transition">{{ entry.title }}</h2>
@@ -102,6 +107,12 @@ const mediaIcon = (type) => {
   gap: 8px;
 }
 
+.badge-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .icon {
   font-size: 13px;
   color: var(--text-muted);
@@ -144,6 +155,18 @@ const mediaIcon = (type) => {
 }
 .entry-card:hover .badge {
   background: rgba(99, 102, 241, 0.15);
+}
+
+.pending-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-warning, #f59e0b);
+}
+
+.entry-card:hover .pending-badge {
+  background: rgba(245, 158, 11, 0.18);
 }
 
 .title {

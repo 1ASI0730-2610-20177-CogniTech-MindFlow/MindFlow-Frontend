@@ -13,7 +13,8 @@ export class JournalEntry {
         updatedAt,
         deletedAt,
         tags = [],
-        media = []
+        media = [],
+        pendingSync = false
     }) {
         this.id = id
         this.userId = userId
@@ -29,6 +30,7 @@ export class JournalEntry {
         this.deletedAt = deletedAt || null
         this.tags = Array.isArray(tags) ? tags : []
         this.media = Array.isArray(media) ? media : []
+        this.pendingSync = Boolean(pendingSync)
     }
 
     get formattedDate() {

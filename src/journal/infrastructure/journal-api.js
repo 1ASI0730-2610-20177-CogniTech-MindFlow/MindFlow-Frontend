@@ -154,6 +154,11 @@ export class JournalApiService extends BaseEndpoint {
         }
     }
 
+    async syncEntries(items) {
+        const response = await apiClient.post('/journal/entries/sync', items)
+        return Array.isArray(response.data) ? response.data : []
+    }
+
     async uploadMedia(entryId, file) {
         const formData = new FormData()
         formData.append('entryId', entryId)
