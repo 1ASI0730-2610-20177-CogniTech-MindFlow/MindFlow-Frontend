@@ -19,6 +19,7 @@
       </div>
 
       <p v-if="store.error" class="form-error form-error-center">{{ $t(store.error) }}</p>
+      <p v-if="store.error && store.errorReference" class="form-error-reference">{{ $t('common.errorReference', { traceId: store.errorReference }) }}</p>
 
       <button type="submit" class="btn-primary" :disabled="store.isLoading">
         <template v-if="store.isLoading">
@@ -151,6 +152,13 @@ async function handleSubmit() {
 .form-error-center {
   text-align: center;
   font-size: 13px;
+}
+
+.form-error-reference {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: -12px 0 0;
 }
 
 .form-link {

@@ -37,6 +37,11 @@ apiClient.interceptors.response.use(
         window.location.href = '/login'
       }
     }
+
+    // US51: el backend agrega traceId (body) / X-Correlation-Id (header) en
+    // errores para que soporte pueda buscarlos en los logs.
+    error.traceId = error.response?.data?.traceId || error.response?.headers?.['x-correlation-id'] || null
+
     return Promise.reject(error)
   }
 )

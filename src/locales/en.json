@@ -2,6 +2,9 @@
   "greeting": {
     "hello": "Hello"
   },
+  "common": {
+    "errorReference": "Reference: {traceId}"
+  },
   "profile": {
     "user": "User"
   },
@@ -131,7 +134,11 @@
       "activePlan": "Active Plan",
       "downgrade": "Downgrade Plan",
       "upgrade": "Upgrade to Premium",
-      "confirmDowngrade": "Are you sure you want to cancel your premium subscription and switch to the free plan?"
+      "confirmDowngradeTitle": "Switch to the free plan",
+      "confirmDowngradeText": "Are you sure you want to cancel your premium subscription and switch to the free plan? You will lose access to premium features.",
+      "confirmDowngradeCancel": "Keep Premium",
+      "confirmDowngradeConfirm": "Yes, downgrade",
+      "downgrading": "Processing..."
     },
     "freemium": {
       "title": "Freemium",

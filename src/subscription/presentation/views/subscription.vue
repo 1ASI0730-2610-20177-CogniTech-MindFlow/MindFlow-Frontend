@@ -72,19 +72,60 @@
         <p>{{ $t('plansPage.loading') }}</p>
       </div>
     </transition>
+
+    <div
+      v-if="showDowngradeConfirm"
+      ref="downgradeModalRef"
+      class="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="downgrade-modal-title"
+      @click.self="closeDowngradeConfirm"
+      @keydown.escape="closeDowngradeConfirm"
+    >
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="downgrade-modal-title" class="modal-title danger">{{ $t('plansPage.buttons.confirmDowngradeTitle') }}</h3>
+          <button class="modal-close" :aria-label="$t('plansPage.buttons.confirmDowngradeCancel')" @click="closeDowngradeConfirm">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-warning">{{ $t('plansPage.buttons.confirmDowngradeText') }}</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline hover-lift"
+            :disabled="store.isProcessingPayment"
+            @click="closeDowngradeConfirm"
+          >
+            {{ $t('plansPage.buttons.confirmDowngradeCancel') }}
+          </button>
+          <button
+            class="btn btn-danger hover-lift"
+            :disabled="store.isProcessingPayment"
+            @click="confirmDowngrade"
+          >
+            <span v-if="store.isProcessingPayment" class="spinner-sm"></span>
+            {{ store.isProcessingPayment ? $t('plansPage.buttons.downgrading') : $t('plansPage.buttons.confirmDowngradeConfirm') }}
+          </button>
+        </div>
+      </div>
+    </div>
   </Layout>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { onMounted, ref } from 'vue'
 import { useSubscriptionStore } from '../../application/subscription.store'
 import { useAuthStore } from '@/iam/application/auth.store.js'
+import { useFocusTrap } from '@/shared/presentation/composables/useFocusTrap'
 import Layout from '@/shared/presentation/components/layout.vue'
 
-const { t } = useI18n()
 const store = useSubscriptionStore()
 const authStore = useAuthStore()
+
+const showDowngradeConfirm = ref(false)
+const downgradeModalRef = ref(null)
+useFocusTrap(downgradeModalRef, showDowngradeConfirm)
 
 onMounted(() => {
   store.fetchSubscription()
@@ -98,12 +139,22 @@ async function handleUpgrade() {
   }
 }
 
-async function handleDowngrade() {
-  if (!confirm(t('plansPage.buttons.confirmDowngrade'))) return
+function handleDowngrade() {
+  showDowngradeConfirm.value = true
+}
+
+function closeDowngradeConfirm() {
+  if (store.isProcessingPayment) return
+  showDowngradeConfirm.value = false
+}
+
+async function confirmDowngrade() {
   try {
     await store.cancelSubscription()
   } catch (error) {
     console.error('Downgrade failed:', error)
+  } finally {
+    showDowngradeConfirm.value = false
   }
 }
 </script>
@@ -292,6 +343,25 @@ async function handleDowngrade() {
 
 .btn-outline:active:not(:disabled) {
   transform: scale(0.98);
+}
+
+.btn-danger {
+  background: var(--bg-surface);
+  color: var(--accent-danger);
+  border-color: var(--accent-danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--bg-surface-secondary);
+}
+
+.btn-danger:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-danger:disabled {
+  cursor: default;
+  opacity: 0.7;
 }
 
 .btn-gradient {

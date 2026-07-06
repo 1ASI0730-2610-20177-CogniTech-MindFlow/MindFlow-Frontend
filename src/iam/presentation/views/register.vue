@@ -5,6 +5,7 @@
     <RegisterForm
       :is-loading="store.isLoading"
       :server-error="store.error"
+      :server-error-reference="store.errorReference"
       @register="handleRegister"
       @google-login="handleGoogleLogin"
       @clear-error="store.clearError()"

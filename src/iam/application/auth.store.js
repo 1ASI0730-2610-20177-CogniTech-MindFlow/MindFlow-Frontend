@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('auth', {
         session: null,
         isLoading: false,
         error: null,
+        errorReference: null,
         returnUrl: '/dashboard'
     }),
 
@@ -39,6 +40,7 @@ export const useAuthStore = defineStore('auth', {
         async login(credentials) {
             this.isLoading = true
             this.error = null
+            this.errorReference = null
 
             try {
                 const { user, token } = await AuthAPI.login(credentials)
@@ -51,7 +53,8 @@ export const useAuthStore = defineStore('auth', {
             } catch (error) {
                 const message = error.response?.data?.error || error.response?.data?.message || 'auth.login.error.invalid'
                 this.error = message
-                return { success: false, error: message }
+                this.errorReference = error.traceId || null
+                return { success: false, error: message, traceId: this.errorReference }
             } finally {
                 this.isLoading = false
             }
@@ -60,6 +63,7 @@ export const useAuthStore = defineStore('auth', {
         async register(data) {
             this.isLoading = true
             this.error = null
+            this.errorReference = null
 
             try {
                 await AuthAPI.register(data)
@@ -81,7 +85,8 @@ export const useAuthStore = defineStore('auth', {
             } catch (error) {
                 const message = error.response?.data?.error || error.response?.data?.message || 'auth.register.error.generic'
                 this.error = message
-                return { success: false, error: message }
+                this.errorReference = error.traceId || null
+                return { success: false, error: message, traceId: this.errorReference }
             } finally {
                 this.isLoading = false
             }
@@ -90,6 +95,7 @@ export const useAuthStore = defineStore('auth', {
         async googleLogin(credential) {
             this.isLoading = true
             this.error = null
+            this.errorReference = null
 
             try {
                 const { user, token } = await AuthAPI.googleAuth(credential)
@@ -113,7 +119,8 @@ export const useAuthStore = defineStore('auth', {
             } catch (error) {
                 const message = error.response?.data?.message || 'auth.login.error.generic'
                 this.error = message
-                return { success: false, error: message }
+                this.errorReference = error.traceId || null
+                return { success: false, error: message, traceId: this.errorReference }
             } finally {
                 this.isLoading = false
             }
@@ -123,6 +130,7 @@ export const useAuthStore = defineStore('auth', {
             this.user = null
             this.session = null
             this.error = null
+            this.errorReference = null
             SessionManager.clear()
             sessionStorage.removeItem('mindflow_pin_verified')
         },
@@ -163,6 +171,7 @@ export const useAuthStore = defineStore('auth', {
         async forgotPassword(email) {
             this.isLoading = true
             this.error = null
+            this.errorReference = null
 
             try {
                 await AuthAPI.forgotPassword(email)
@@ -170,7 +179,8 @@ export const useAuthStore = defineStore('auth', {
             } catch (error) {
                 const message = error.response?.data?.message || 'auth.forgotPassword.error.generic'
                 this.error = message
-                return { success: false, error: message }
+                this.errorReference = error.traceId || null
+                return { success: false, error: message, traceId: this.errorReference }
             } finally {
                 this.isLoading = false
             }
@@ -182,6 +192,7 @@ export const useAuthStore = defineStore('auth', {
 
         clearError() {
             this.error = null
+            this.errorReference = null
         }
     }
 })
