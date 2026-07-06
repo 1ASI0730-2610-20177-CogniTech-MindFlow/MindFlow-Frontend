@@ -2,6 +2,9 @@
   "greeting": {
     "hello": "Hola"
   },
+  "common": {
+    "errorReference": "Referencia: {traceId}"
+  },
   "profile": {
     "user": "Usuario"
   },
@@ -131,7 +134,11 @@
       "activePlan": "Plan Activo",
       "downgrade": "Bajar de Plan",
       "upgrade": "Actualizar a Premium",
-      "confirmDowngrade": "¿Estás seguro de que deseas cancelar tu suscripción premium y cambiar al plan gratuito?"
+      "confirmDowngradeTitle": "Cambiar al plan gratuito",
+      "confirmDowngradeText": "¿Estás seguro de que deseas cancelar tu suscripción premium y cambiar al plan gratuito? Perderás el acceso a las funciones premium.",
+      "confirmDowngradeCancel": "Mantener Premium",
+      "confirmDowngradeConfirm": "Sí, bajar de plan",
+      "downgrading": "Procesando..."
     },
     "freemium": {
       "title": "Freemium",
@@ -263,6 +270,7 @@
       "subtitle": "Registra una nueva entrada cuando quieras volver sobre un momento importante.",
       "newEntry": "Nueva entrada",
      "noEntries": "No se encontraron entradas con los filtros seleccionados",
+     "noEntriesSearch": "No se encontraron entradas para \"{query}\". Prueba con la palabra completa.",
       "composer": {
         "eyebrow": "Nueva reflexión",
         "title": "Agregar otra entrada al journal",
@@ -300,9 +308,15 @@
       "entryCard": {
         "attachments": "Adjuntos"
       },
+      "offline": {
+        "pendingBadge": "Pendiente de sincronizar",
+        "conflictMessage": "Una de tus entradas no se pudo sincronizar porque fue modificada desde otro dispositivo; se actualizó con la versión más reciente del servidor.",
+        "attachmentsSkipped": "Tu entrada se guardó sin conexión. Los archivos adjuntos no se subieron; agrégalos de nuevo cuando vuelvas a tener internet.",
+        "dismiss": "Cerrar aviso"
+      },
       "filters": {
         "stats": "Estadísticas",
-       "searchPlaceholder": "Buscar en tus pensamientos...",
+       "searchPlaceholder": "Busca una palabra completa en tus pensamientos...",
        "tabs": {
          "all": "Todos",
          "work": "Trabajo",
@@ -454,27 +468,29 @@
     "quickInterventions": {
       "title": "Intervenciones Rápidas",
       "live": "EN VIVO",
-      "breathing": "Respiración 4-7-8",
-      "breathingDesc": "Técnica de respiración para reducir la ansiedad",
-      "microMeditation": "Micro-meditación",
-      "microMeditationDesc": "Meditación guiada de 3 minutos",
+      "breathing": "Respiración guiada",
+      "breathingDesc": "Técnicas de respiración para reducir la ansiedad",
+      "microMeditation": "Meditación guiada",
+      "microMeditationDesc": "Pausas guiadas para enfocar tu atención",
       "grounding": "Conexión 5-4-3-2-1",
-      "groundingDesc": "Ejercicio de conexión con el presente",
-      "meditation": {
-        "step1": "Cierra los ojos y respira profundo...",
-        "step2": "Observa tus pensamientos sin juzgarlos...",
-        "step3": "Siente tu cuerpo relajarse con cada respiración...",
-        "step4": "Conecta con el momento presente...",
-        "step5": "Lentamente, vuelve a tu entorno..."
-      }
+      "groundingDesc": "Ejercicio de conexión con el presente"
     },
     "interventions": {
+      "chooseBreathing": "Elegí una técnica de respiración",
+      "chooseMeditation": "Elegí una meditación",
+      "loadingExercises": "Cargando ejercicios...",
+      "loadError": "No se pudieron cargar los ejercicios.",
+      "retry": "Reintentar",
+      "noExercises": "No hay ejercicios disponibles por ahora.",
+      "back": "Volver",
       "inhale": "Inhala",
-      "inhaleDesc": "Respira profundamente por la nariz durante 4 segundos",
+      "inhaleDesc": "Respira profundamente por la nariz durante {seconds} segundos",
       "hold": "Sostén",
-      "holdDesc": "Mantén el aire en tus pulmones durante 7 segundos",
+      "holdDesc": "Mantén el aire en tus pulmones durante {seconds} segundos",
       "exhale": "Exhala",
-      "exhaleDesc": "Suelta el aire lentamente por la boca durante 8 segundos",
+      "exhaleDesc": "Suelta el aire lentamente por la boca durante {seconds} segundos",
+      "holdAfterExhale": "Sostén vacío",
+      "holdAfterExhaleDesc": "Mantén los pulmones vacíos durante {seconds} segundos",
       "round": "Ronda",
       "see": "Vista",
       "seeDesc": "Nombra 5 cosas que puedas ver a tu alrededor",

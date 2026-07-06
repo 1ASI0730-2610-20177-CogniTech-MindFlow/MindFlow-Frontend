@@ -15,8 +15,12 @@ function mapJournalTag(data) {
     return { id: data.id, name: data.name }
 }
 
+function toHttps(url) {
+    return typeof url === 'string' ? url.replace(/^http:\/\//, 'https://') : url
+}
+
 function mapJournalMedia(data) {
-    return { id: data.id, entryId: data.entryId ?? data.entry_id, url: data.url, type: data.type, createdAt: data.createdAt ?? data.created_at ?? null }
+    return { id: data.id, entryId: data.entryId ?? data.entry_id, url: toHttps(data.url), type: data.type, createdAt: data.createdAt ?? data.created_at ?? null }
 }
 
 function toArray(value) {
@@ -148,6 +152,11 @@ export class JournalApiService extends BaseEndpoint {
             console.error('Error deleting journal entry:', error)
             throw error
         }
+    }
+
+    async syncEntries(items) {
+        const response = await apiClient.post('/journal/entries/sync', items)
+        return Array.isArray(response.data) ? response.data : []
     }
 
     async uploadMedia(entryId, file) {

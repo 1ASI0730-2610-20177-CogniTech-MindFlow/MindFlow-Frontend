@@ -57,6 +57,7 @@
     </div>
 
     <p v-if="serverError" class="form-error form-error-center">{{ $t(serverError) === serverError ? serverError : $t(serverError) }}</p>
+    <p v-if="serverError && serverErrorReference" class="form-error-reference">{{ $t('common.errorReference', { traceId: serverErrorReference }) }}</p>
 
     <button type="submit" class="btn-primary" :disabled="isLoading">
       <template v-if="isLoading">
@@ -92,7 +93,8 @@ const submitted = ref(false)
 
 const props = defineProps({
   isLoading: { type: Boolean, default: false },
-  serverError: { type: String, default: null }
+  serverError: { type: String, default: null },
+  serverErrorReference: { type: String, default: null }
 })
 
 const nameError = computed(() => {
@@ -187,6 +189,13 @@ async function handleSubmit() {
 .form-error-center {
   text-align: center;
   font-size: 13px;
+}
+
+.form-error-reference {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: -12px 0 0;
 }
 
 .form-link {
