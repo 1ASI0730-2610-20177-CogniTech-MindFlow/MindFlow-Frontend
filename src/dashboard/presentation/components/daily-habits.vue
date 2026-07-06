@@ -47,8 +47,10 @@ const dashboardStore = useDashboardStore()
 
 .habit-item {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 8px 12px;
   cursor: pointer;
   padding: 12px 16px;
   border-radius: 14px;
@@ -91,6 +93,7 @@ const dashboardStore = useDashboardStore()
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 0 1 auto;
 }
 
 .custom-checkbox {
@@ -139,6 +142,7 @@ const dashboardStore = useDashboardStore()
   color: var(--text-primary);
   transition: all 0.3s ease;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .habit-item:hover .habit-title:not(.text-strikethrough) {
@@ -165,6 +169,9 @@ const dashboardStore = useDashboardStore()
   letter-spacing: 0.02em;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 .habit-item:hover .streak-badge {

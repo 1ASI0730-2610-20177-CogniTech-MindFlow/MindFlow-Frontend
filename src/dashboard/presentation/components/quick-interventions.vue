@@ -5,7 +5,7 @@
     </div>
 
     <div class="interventions-list">
-      <button class="intervention-card" style="--card-color: 16, 185, 129; --bar-color: var(--accent-success)" @click="activeExercise = 'breathing'">
+      <button class="intervention-card" style="--card-color: 16, 185, 129; --bar-color: var(--accent-success)" @click="openCategory('breathing')">
         <div class="intervention-icon breathing-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6a6 6 0 1 0 6 6"/><path d="M12 10a2 2 0 1 0 2 2"/>
@@ -16,12 +16,11 @@
           <span class="intervention-desc">{{ t('dashboard.quickInterventions.breathingDesc') }}</span>
         </div>
         <div class="intervention-meta">
-          <span class="duration-badge">4-7-8</span>
           <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </button>
 
-      <button class="intervention-card" style="--card-color: 99, 102, 241; --bar-color: var(--accent-primary)" @click="activeExercise = 'meditation'">
+      <button class="intervention-card" style="--card-color: 99, 102, 241; --bar-color: var(--accent-primary)" @click="openCategory('meditation')">
         <div class="intervention-icon meditation-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"/><path d="M17 10a3 3 0 0 0-3-3"/><path d="M7 10a3 3 0 0 1 3-3"/>
@@ -32,7 +31,6 @@
           <span class="intervention-desc">{{ t('dashboard.quickInterventions.microMeditationDesc') }}</span>
         </div>
         <div class="intervention-meta">
-          <span class="duration-badge">3 min</span>
           <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </button>
@@ -60,10 +58,47 @@
       <div v-if="activeExercise" class="exercise-overlay" @click.self="stop">
         <div class="exercise-modal">
           <button class="exercise-close" @click="stop"><i class="pi pi-times"></i></button>
+          <button
+            v-if="(activeExercise === 'breathing' || activeExercise === 'meditation') && exerciseStage === 'active'"
+            class="exercise-back"
+            @click="backToList"
+          >
+            <i class="pi pi-arrow-left"></i> {{ t('dashboard.interventions.back') }}
+          </button>
 
-          <!-- Breathing 4-7-8 -->
-          <template v-if="activeExercise === 'breathing'">
-            <div class="exercise-circle" :class="breathingPhase" :key="breathingKey">
+          <!-- Picker: lista de ejercicios traída de la API -->
+          <template v-if="(activeExercise === 'breathing' || activeExercise === 'meditation') && exerciseStage === 'list'">
+            <h3 class="picker-title">
+              {{ activeExercise === 'breathing' ? t('dashboard.interventions.chooseBreathing') : t('dashboard.interventions.chooseMeditation') }}
+            </h3>
+            <p v-if="isLoadingExercises" class="picker-status">{{ t('dashboard.interventions.loadingExercises') }}</p>
+            <div v-else-if="exercisesError" class="picker-status">
+              <p>{{ t('dashboard.interventions.loadError') }}</p>
+              <button class="exercise-next-btn" @click="retryLoad">{{ t('dashboard.interventions.retry') }}</button>
+            </div>
+            <p v-else-if="currentExerciseList.length === 0" class="picker-status">{{ t('dashboard.interventions.noExercises') }}</p>
+            <div v-else class="exercise-picker-list">
+              <button
+                v-for="exercise in currentExerciseList"
+                :key="exercise.id"
+                class="exercise-picker-card"
+                @click="selectExercise(exercise)"
+              >
+                <span class="picker-card-name">{{ exercise.name }}</span>
+                <span class="picker-card-desc">{{ exercise.description }}</span>
+                <span class="picker-card-duration">{{ formatTime(exercise.durationSeconds) }}</span>
+              </button>
+            </div>
+          </template>
+
+          <!-- Breathing activo -->
+          <template v-if="activeExercise === 'breathing' && exerciseStage === 'active'">
+            <div
+              class="exercise-circle"
+              :class="breathingPhase"
+              :key="breathingKey"
+              :style="{ animationDuration: breathingDuration + 's' }"
+            >
               <div class="circle-ring"></div>
               <div class="circle-inner">
                 <span class="phase-label">{{ breathingLabel }}</span>
@@ -71,11 +106,11 @@
               </div>
             </div>
             <p class="exercise-instruction">{{ breathingInstruction }}</p>
-            <p class="exercise-round">{{ t('dashboard.interventions.round') }} {{ currentRound }}/4</p>
+            <p class="exercise-round">{{ t('dashboard.interventions.round') }} {{ currentRound }}/{{ totalCycles }}</p>
           </template>
 
-          <!-- Meditation -->
-          <template v-if="activeExercise === 'meditation'">
+          <!-- Meditation activa -->
+          <template v-if="activeExercise === 'meditation' && exerciseStage === 'active'">
             <div class="exercise-circle meditation-active">
               <div class="circle-ring"></div>
               <div class="circle-inner">
@@ -83,7 +118,7 @@
                 <span class="phase-count">{{ formatTime(meditationTimer) }}</span>
               </div>
             </div>
-            <p class="exercise-instruction">{{ meditationSteps[meditationStep] }}</p>
+            <p class="exercise-instruction">{{ selectedExercise?.description }}</p>
           </template>
 
           <!-- Grounding 5-4-3-2-1 -->
@@ -113,86 +148,168 @@
 <script setup>
 import { ref, computed, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { WellnessAPI } from '@/habits/infrastructure/wellness-api'
 
 const { t } = useI18n()
 
 const activeExercise = ref(null)
+const exerciseStage = ref('list')
 const intervalId = ref(null)
 
-// === BREATHING 4-7-8 ===
+// === EJERCICIOS DESDE LA API (US55) ===
+const breathingExercises = ref(null)
+const meditationExercises = ref(null)
+const isLoadingExercises = ref(false)
+const exercisesError = ref(false)
+const selectedExercise = ref(null)
+
+const currentExerciseList = computed(() => {
+  if (activeExercise.value === 'breathing') return breathingExercises.value || []
+  if (activeExercise.value === 'meditation') return meditationExercises.value || []
+  return []
+})
+
+function openCategory(type) {
+  activeExercise.value = type
+}
+
+async function ensureExercisesLoaded(type) {
+  const cache = type === 'breathing' ? breathingExercises : meditationExercises
+  if (cache.value !== null) return
+
+  isLoadingExercises.value = true
+  exercisesError.value = false
+  try {
+    cache.value = await WellnessAPI.getExercises(type)
+  } catch (error) {
+    exercisesError.value = true
+  } finally {
+    isLoadingExercises.value = false
+  }
+}
+
+function retryLoad() {
+  if (activeExercise.value === 'breathing') breathingExercises.value = null
+  else if (activeExercise.value === 'meditation') meditationExercises.value = null
+  ensureExercisesLoaded(activeExercise.value)
+}
+
+function selectExercise(exercise) {
+  selectedExercise.value = exercise
+  exerciseStage.value = 'active'
+  if (activeExercise.value === 'breathing') startBreathing(exercise)
+  else if (activeExercise.value === 'meditation') startMeditation(exercise)
+}
+
+function backToList() {
+  if (intervalId.value) clearInterval(intervalId.value)
+  intervalId.value = null
+  selectedExercise.value = null
+  exerciseStage.value = 'list'
+}
+
+// === BREATHING (fases y ciclos vienen del ejercicio elegido) ===
 const breathingPhase = ref('inhale')
 const breathingKey = ref(0)
+const breathingDuration = ref(4)
 const timer = ref(4)
 const currentRound = ref(1)
+const totalCycles = ref(1)
 const breathingLabel = ref('')
 const breathingInstruction = ref('')
 
-const breathingSequence = [
-  { phase: 'inhale', duration: 4, label: () => t('dashboard.interventions.inhale'), instruction: () => t('dashboard.interventions.inhaleDesc') },
-  { phase: 'hold', duration: 7, label: () => t('dashboard.interventions.hold'), instruction: () => t('dashboard.interventions.holdDesc') },
-  { phase: 'exhale', duration: 8, label: () => t('dashboard.interventions.exhale'), instruction: () => t('dashboard.interventions.exhaleDesc') }
-]
+function buildBreathingSequence(exercise) {
+  const seq = []
+  if (exercise.inhaleSeconds) {
+    seq.push({
+      phase: 'inhale',
+      duration: exercise.inhaleSeconds,
+      label: () => t('dashboard.interventions.inhale'),
+      instruction: () => t('dashboard.interventions.inhaleDesc', { seconds: exercise.inhaleSeconds })
+    })
+  }
+  if (exercise.holdSeconds) {
+    seq.push({
+      phase: 'hold',
+      duration: exercise.holdSeconds,
+      label: () => t('dashboard.interventions.hold'),
+      instruction: () => t('dashboard.interventions.holdDesc', { seconds: exercise.holdSeconds })
+    })
+  }
+  if (exercise.exhaleSeconds) {
+    seq.push({
+      phase: 'exhale',
+      duration: exercise.exhaleSeconds,
+      label: () => t('dashboard.interventions.exhale'),
+      instruction: () => t('dashboard.interventions.exhaleDesc', { seconds: exercise.exhaleSeconds })
+    })
+  }
+  if (exercise.holdAfterExhaleSeconds) {
+    seq.push({
+      phase: 'hold-after-exhale',
+      duration: exercise.holdAfterExhaleSeconds,
+      label: () => t('dashboard.interventions.holdAfterExhale'),
+      instruction: () => t('dashboard.interventions.holdAfterExhaleDesc', { seconds: exercise.holdAfterExhaleSeconds })
+    })
+  }
+  return seq
+}
 
-function startBreathing() {
+function startBreathing(exercise) {
+  const sequence = buildBreathingSequence(exercise)
+  if (sequence.length === 0) return
+
   let seqIndex = 0
   currentRound.value = 1
-  setBreathingStep(seqIndex)
+  totalCycles.value = exercise.cycles || 1
+  setBreathingStep(sequence, seqIndex)
 
   intervalId.value = setInterval(() => {
     timer.value--
     if (timer.value <= 0) {
       seqIndex++
-      if (seqIndex >= breathingSequence.length) {
+      if (seqIndex >= sequence.length) {
         seqIndex = 0
         currentRound.value++
-        if (currentRound.value > 4) {
+        if (currentRound.value > totalCycles.value) {
           stop()
           return
         }
       }
-      setBreathingStep(seqIndex)
+      setBreathingStep(sequence, seqIndex)
     }
   }, 1000)
 }
 
-function setBreathingStep(index) {
-  const step = breathingSequence[index]
+function setBreathingStep(sequence, index) {
+  const step = sequence[index]
   breathingPhase.value = step.phase
+  breathingDuration.value = step.duration
   breathingKey.value++
   timer.value = step.duration
   breathingLabel.value = step.label()
   breathingInstruction.value = step.instruction()
 }
 
-// === MEDITATION ===
-const meditationTimer = ref(180)
-const meditationStep = ref(0)
-const meditationSteps = computed(() => [
-  t('dashboard.quickInterventions.meditation.step1'),
-  t('dashboard.quickInterventions.meditation.step2'),
-  t('dashboard.quickInterventions.meditation.step3'),
-  t('dashboard.quickInterventions.meditation.step4'),
-  t('dashboard.quickInterventions.meditation.step5')
-])
+// === MEDITATION (duración y texto vienen del ejercicio elegido) ===
+const meditationTimer = ref(0)
 
-function startMeditation() {
-  meditationTimer.value = 180
-  meditationStep.value = 0
+function startMeditation(exercise) {
+  meditationTimer.value = exercise.durationSeconds || 0
   intervalId.value = setInterval(() => {
     meditationTimer.value--
-    const stepDuration = 36
-    meditationStep.value = Math.min(Math.floor((180 - meditationTimer.value) / stepDuration), meditationSteps.length - 1)
     if (meditationTimer.value <= 0) stop()
   }, 1000)
 }
 
 function formatTime(s) {
-  const m = Math.floor(s / 60)
-  const sec = s % 60
+  const total = Math.max(0, Math.round(s || 0))
+  const m = Math.floor(total / 60)
+  const sec = total % 60
   return `${m}:${String(sec).padStart(2, '0')}`
 }
 
-// === GROUNDING 5-4-3-2-1 ===
+// === GROUNDING 5-4-3-2-1 (sin cambios, no viene de la API) ===
 const groundingCurrent = ref(5)
 const groundingSenses = [
   { sense: () => t('dashboard.interventions.see'), instruction: () => t('dashboard.interventions.seeDesc') },
@@ -228,12 +345,17 @@ function stop() {
   if (intervalId.value) clearInterval(intervalId.value)
   intervalId.value = null
   activeExercise.value = null
+  exerciseStage.value = 'list'
+  selectedExercise.value = null
 }
 
 watch(activeExercise, (val) => {
-  if (val === 'breathing') startBreathing()
-  else if (val === 'meditation') startMeditation()
-  else if (val === 'grounding') startGrounding()
+  if (val === 'grounding') {
+    startGrounding()
+  } else if (val === 'breathing' || val === 'meditation') {
+    exerciseStage.value = 'list'
+    ensureExercisesLoaded(val)
+  }
 })
 
 onUnmounted(() => stop())
@@ -375,23 +497,77 @@ onUnmounted(() => stop())
 .exercise-close { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 10; }
 .exercise-close:hover { background: rgba(255,255,255,0.2); }
 
+.exercise-back {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+.exercise-back:hover { background: rgba(255,255,255,0.2); }
+
+/* Picker de ejercicios */
+.picker-title { font-size: 18px; font-weight: 700; color: #fff; margin: 0; text-align: center; }
+.picker-status { color: rgba(255,255,255,0.7); font-size: 14px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+.exercise-picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.exercise-picker-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  transition: all 0.2s;
+}
+.exercise-picker-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+
+.picker-card-name { font-size: 14px; font-weight: 700; }
+.picker-card-desc { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.4; }
+.picker-card-duration { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
 .exercise-circle { width: 200px; height: 200px; border-radius: 50%; position: relative; display: flex; align-items: center; justify-content: center; }
 .circle-ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); }
 .circle-inner { display: flex; flex-direction: column; align-items: center; gap: 4px; z-index: 1; }
 .phase-label { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.1em; }
 .phase-count { font-size: 48px; font-weight: 700; color: #fff; line-height: 1; }
 
-/* Breathing phases */
+/* Breathing phases (animation-duration real llega por :style, esto es solo fallback) */
 .inhale { animation: breatheIn 4s ease-in-out; }
 .hold { animation: breatheHold 7s ease; }
 .exhale { animation: breatheOut 8s ease-in-out; }
+.hold-after-exhale { animation: breatheHoldEmpty 4s ease; }
 .inhale .circle-ring { border-color: var(--accent-success); box-shadow: 0 0 40px rgba(16,185,129,0.4); }
 .hold .circle-ring { border-color: var(--accent-primary); box-shadow: 0 0 40px rgba(99,102,241,0.4); }
 .exhale .circle-ring { border-color: var(--accent-warning); box-shadow: 0 0 40px rgba(245,158,11,0.4); }
+.hold-after-exhale .circle-ring { border-color: var(--accent-warning); box-shadow: 0 0 40px rgba(245,158,11,0.4); }
 
 @keyframes breatheIn { from { transform: scale(0.8); } to { transform: scale(1.15); } }
 @keyframes breatheHold { 0%,100% { transform: scale(1.15); } 50% { transform: scale(1.12); } }
 @keyframes breatheOut { from { transform: scale(1.15); } to { transform: scale(0.8); } }
+@keyframes breatheHoldEmpty { 0%,100% { transform: scale(0.8); } 50% { transform: scale(0.77); } }
 
 /* Meditation */
 .meditation-active .circle-ring { border-color: var(--accent-primary); box-shadow: 0 0 60px rgba(99,102,241,0.3); animation: meditationPulse 4s ease-in-out infinite; }
