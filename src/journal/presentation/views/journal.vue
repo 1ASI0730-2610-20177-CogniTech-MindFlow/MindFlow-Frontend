@@ -31,7 +31,8 @@
           />
           <div v-if="filteredEntries.length === 0" class="no-entries">
             <i class="pi pi-book"></i>
-            <p>{{ $t('journal.noEntries') }}</p>
+            <p v-if="journalStore.searchQuery.trim()">{{ $t('journal.noEntriesSearch', { query: journalStore.searchQuery.trim() }) }}</p>
+            <p v-else>{{ $t('journal.noEntries') }}</p>
           </div>
         </div>
       </div>

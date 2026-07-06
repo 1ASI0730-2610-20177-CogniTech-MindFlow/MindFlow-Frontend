@@ -4,55 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="feat: integrate chat system, fix subscription endpoints, improve analytics parsing and UI consistency">
-      <change afterPath="$PROJECT_DIR$/scripts/seed-test-data.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dashboard/infrastructure/chat-api.js" afterDir="false" />
+    <list default="true" id="048104ed-59b6-4e7a-b246-31ba4dae43fb" name="Changes" comment="fix: allow Google OAuth popup via COOP header, fix HTTPS on journal media, redesign subscription downgrade modal, and add trace-ID surfacing on auth errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/application/analytics.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/application/analytics.store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/infrastructure/analytics.endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/infrastructure/analytics.endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/infrastructure/mood-calendar.endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/infrastructure/mood-calendar.endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/infrastructure/word-cloud.endpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/infrastructure/word-cloud.endpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/export-banner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/export-banner.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/mood-calendar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/mood-calendar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/mood-fluctuation-chart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/mood-fluctuation-chart.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/mood-trend-chart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/mood-trend-chart.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/components/word-cloud.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/components/word-cloud.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/analytics/presentation/views/analytics-view.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/analytics/presentation/views/analytics-view.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/application/dashboard.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/application/dashboard.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/application/dashboard.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/application/dashboard.store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/infrastructure/dashboard.endpoint.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/ai-chat.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/ai-chat.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/daily-habits.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/daily-habits.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/mood-input.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/mood-input.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/quick-interventions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/quick-interventions.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/recent-entries.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/recent-entries.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/components/weekly-summary-widget.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/components/weekly-summary-widget.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dashboard/presentation/views/dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/dashboard/presentation/views/dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/habits/infrastructure/suggestions-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/habits/infrastructure/suggestions-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/habits/infrastructure/wellness-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/habits/infrastructure/wellness-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/habits/presentation/views/habits.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/habits/presentation/views/habits.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/iam/application/auth.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/iam/application/auth.store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/iam/presentation/components/login-form.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/iam/presentation/components/login-form.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/iam/presentation/components/register-form.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/iam/presentation/components/register-form.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/journal/presentation/views/journal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/journal/presentation/views/journal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/locales/es.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/es.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notifications/infrastructure/notifications-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/notifications/infrastructure/notifications-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings/infrastructure/settings-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings/infrastructure/settings-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings/presentation/views/settings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings/presentation/views/settings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/ai-feedback-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/ai-feedback-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/infrastructure/reporting-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/infrastructure/reporting-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/layout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/sidebar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/presentation/components/topbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/presentation/components/topbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscription/application/subscription.store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/application/subscription.store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscription/infrastructure/subscription-api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/infrastructure/subscription-api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscription/presentation/views/subscription-result.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/presentation/views/subscription-result.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/subscription/presentation/views/subscription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/subscription/presentation/views/subscription.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +19,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="125" />
+    <option name="cachedIndexableFilesCount" value="130" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -94,61 +47,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.019598876609499" />
-      <entry key="MS500" value="2.2501685291432088" />
-      <entry key="S2" value="5.21389521239935" />
-      <entry key="S5" value="6.672547829398464" />
-      <entry key="S10" value="7.293634933611389" />
-      <entry key="S30" value="7.754282383369869" />
-      <entry key="S60" value="7.875805550126475" />
-      <entry key="M2" value="7.937565209021089" />
-      <entry key="M5" value="7.989259486095443" />
-      <entry key="M10" value="8.455700243503356" />
-      <entry key="M15" value="9.596703979220807" />
-      <entry key="M30" value="15.639212388656098" />
-      <entry key="H1" value="32.02749410453171" />
-      <entry key="H2" value="58.725091789075904" />
-      <entry key="H4" value="89.09116387826161" />
-      <entry key="D1" value="145.42661998958022" />
-      <entry key="W1" value="161.92771860205835" />
+      <entry key="MS100" value="1.7157092118866029" />
+      <entry key="MS500" value="4.171386133384271" />
+      <entry key="S2" value="7.601616488543444" />
+      <entry key="S5" value="9.362271184133807" />
+      <entry key="S10" value="10.124857942811007" />
+      <entry key="S30" value="10.694685158676014" />
+      <entry key="S60" value="10.84556891528185" />
+      <entry key="M2" value="10.922464211976314" />
+      <entry key="M5" value="11.107090723056444" />
+      <entry key="M10" value="12.53764536718418" />
+      <entry key="M15" value="14.672303748599056" />
+      <entry key="M30" value="20.348075396432424" />
+      <entry key="H1" value="28.81177932190251" />
+      <entry key="H2" value="47.63313431576167" />
+      <entry key="H4" value="81.32525597207629" />
+      <entry key="D1" value="166.80979647369668" />
+      <entry key="W1" value="195.51162862076094" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="0.0" />
-      <entry key="S30" value="0.0" />
-      <entry key="S60" value="0.0" />
-      <entry key="M2" value="0.0" />
-      <entry key="M5" value="0.0" />
-      <entry key="M10" value="0.0" />
-      <entry key="M15" value="0.0" />
-      <entry key="M30" value="0.0" />
-      <entry key="H1" value="0.0" />
-      <entry key="H2" value="0.0" />
-      <entry key="H4" value="0.0" />
-      <entry key="D1" value="0.0" />
-      <entry key="W1" value="0.0" />
+      <entry key="S5" value="5.323844730097272E-216" />
+      <entry key="S10" value="2.3073458193554906E-108" />
+      <entry key="S30" value="1.321409922051432E-36" />
+      <entry key="S60" value="1.1495259553622226E-18" />
+      <entry key="M2" value="1.0721594822423685E-9" />
+      <entry key="M5" value="2.582877186478773E-4" />
+      <entry key="M10" value="0.016071332198914857" />
+      <entry key="M15" value="0.0636846234736427" />
+      <entry key="M30" value="0.2523581254361399" />
+      <entry key="H1" value="0.5023525907528896" />
+      <entry key="H2" value="0.7087683618453134" />
+      <entry key="H4" value="0.8418838173081328" />
+      <entry key="D1" value="0.9717219811334844" />
+      <entry key="W1" value="0.9959104503516413" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.10026513276380612" />
-      <entry key="MS500" value="1.8468813585057748" />
-      <entry key="S2" value="5.0884163042609245" />
-      <entry key="S5" value="6.619480427028042" />
-      <entry key="S10" value="7.266559178344127" />
-      <entry key="S30" value="7.745129605632217" />
-      <entry key="S60" value="7.871212741502775" />
-      <entry key="M2" value="7.935264662197953" />
-      <entry key="M5" value="7.988336458614399" />
-      <entry key="M10" value="8.455210043139845" />
-      <entry key="M15" value="9.596329525862384" />
-      <entry key="M30" value="15.638897678008973" />
-      <entry key="H1" value="32.02716162891785" />
-      <entry key="H2" value="58.72478421943081" />
-      <entry key="H4" value="89.09093268832997" />
-      <entry key="D1" value="145.42655902770863" />
-      <entry key="W1" value="161.92770899420879" />
+      <entry key="MS100" value="1.547291158707645" />
+      <entry key="MS500" value="3.701288650626743" />
+      <entry key="S2" value="7.363813268711651" />
+      <entry key="S5" value="9.251225935305754" />
+      <entry key="S10" value="10.066320153358829" />
+      <entry key="S30" value="10.674464650899923" />
+      <entry key="S60" value="10.83536768259315" />
+      <entry key="M2" value="10.917340633825326" />
+      <entry key="M5" value="11.105280519382836" />
+      <entry key="M10" value="12.552557378557497" />
+      <entry key="M15" value="14.73502446193186" />
+      <entry key="M30" value="20.599610444046952" />
+      <entry key="H1" value="29.313478926817616" />
+      <entry key="H2" value="48.34141340993863" />
+      <entry key="H4" value="82.16678728808361" />
+      <entry key="D1" value="167.7814210796369" />
+      <entry key="W1" value="196.50752343791027" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -160,30 +113,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Node.js.base-api.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/WebstormProjects/MindFlow-Frontend/docs&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\User\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.base-api.js.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "develop",
+    "javascript.preferred.runtime.type.id": "node",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/User/WebstormProjects/MindFlow-Frontend/docs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "C:\\Users\\User\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\User\WebstormProjects\MindFlow-Frontend\docs" />
@@ -192,7 +146,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.25134.101" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.26222.58" />
       </set>
     </attachedChunks>
   </component>
@@ -206,7 +160,12 @@
       <workItem from="1778872070076" duration="1642000" />
       <workItem from="1781660004467" duration="27220000" />
       <workItem from="1781750025457" duration="9209000" />
-      <workItem from="1781797259737" duration="19359000" />
+      <workItem from="1781797259737" duration="21174000" />
+      <workItem from="1781968652001" duration="2000" />
+      <workItem from="1781979541166" duration="25893000" />
+      <workItem from="1782248767230" duration="4265000" />
+      <workItem from="1782944916668" duration="14707000" />
+      <workItem from="1783294621538" duration="14090000" />
     </task>
     <task id="LOCAL-00001" summary="feat: update project">
       <option name="closed" value="true" />
@@ -216,7 +175,55 @@
       <option name="project" value="LOCAL" />
       <updated>1781687507166</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: integrate chat system, fix subscription endpoints, improve analytics parsing and UI consistency">
+      <option name="closed" value="true" />
+      <created>1781818201670</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1781818201670</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: integrate chat system, fix subscriptions, improve analytics and UI polish">
+      <option name="closed" value="true" />
+      <created>1781818955861</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1781818955861</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: update README.md">
+      <option name="closed" value="true" />
+      <created>1781819158221</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1781819158221</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix: resolve user-reported bugs, improve habits logic, and add mobile responsive design.md">
+      <option name="closed" value="true" />
+      <created>1782011016649</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1782011016649</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix: sync habit streaks with backend, harden auth 401 handling, and expand i18n coverage">
+      <option name="closed" value="true" />
+      <created>1783295183859</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1783295183859</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix: allow Google OAuth popup via COOP header, fix HTTPS on journal media, redesign subscription downgrade modal, and add trace-ID surfacing on auth errors">
+      <option name="closed" value="true" />
+      <created>1783323722886</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1783323722886</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,6 +232,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: update project" />
     <MESSAGE value="feat: integrate chat system, fix subscription endpoints, improve analytics parsing and UI consistency" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: integrate chat system, fix subscription endpoints, improve analytics parsing and UI consistency" />
+    <MESSAGE value="feat: integrate chat system, fix subscriptions, improve analytics and UI polish" />
+    <MESSAGE value="feat: update README.md" />
+    <MESSAGE value="fix: resolve user-reported bugs, improve habits logic, and add mobile responsive design.md" />
+    <MESSAGE value="fix: sync habit streaks with backend, harden auth 401 handling, and expand i18n coverage" />
+    <MESSAGE value="fix: allow Google OAuth popup via COOP header, fix HTTPS on journal media, redesign subscription downgrade modal, and add trace-ID surfacing on auth errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: allow Google OAuth popup via COOP header, fix HTTPS on journal media, redesign subscription downgrade modal, and add trace-ID surfacing on auth errors" />
   </component>
 </project>

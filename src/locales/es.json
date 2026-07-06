@@ -270,6 +270,7 @@
       "subtitle": "Registra una nueva entrada cuando quieras volver sobre un momento importante.",
       "newEntry": "Nueva entrada",
      "noEntries": "No se encontraron entradas con los filtros seleccionados",
+     "noEntriesSearch": "No se encontraron entradas para \"{query}\". Prueba con la palabra completa.",
       "composer": {
         "eyebrow": "Nueva reflexión",
         "title": "Agregar otra entrada al journal",
@@ -309,7 +310,7 @@
       },
       "filters": {
         "stats": "Estadísticas",
-       "searchPlaceholder": "Buscar en tus pensamientos...",
+       "searchPlaceholder": "Busca una palabra completa en tus pensamientos...",
        "tabs": {
          "all": "Todos",
          "work": "Trabajo",

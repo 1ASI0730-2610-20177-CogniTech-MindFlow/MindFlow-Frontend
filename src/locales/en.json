@@ -270,6 +270,7 @@
     "subtitle": "Add a new entry whenever you want to revisit an important moment.",
     "newEntry": "New entry",
     "noEntries": "No entries found with the selected filters",
+    "noEntriesSearch": "No entries found for \"{query}\". Try the full word.",
     "composer": {
       "eyebrow": "New reflection",
       "title": "Add another journal entry",
@@ -309,7 +310,7 @@
     },
     "filters": {
       "stats": "Statistics",
-      "searchPlaceholder": "Search in your thoughts...",
+      "searchPlaceholder": "Search a full word in your thoughts...",
       "tabs": {
         "all": "All",
         "work": "Work",
